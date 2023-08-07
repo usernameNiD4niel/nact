@@ -3,6 +3,7 @@ import "../../styles/auth.css";
 import React, { useState } from "react";
 import SignupForm from "../components/SignupForm";
 import { POST } from "../api/login";
+import logo from "../assets/logo.svg";
 
 const Index = () => {
 	const [phoneNumber, setPhoneNumber] = useState("");
@@ -44,7 +45,7 @@ const Index = () => {
 					isSignUpClick ? "rounded-l-xl" : "rounded-r-xl"
 				}`}>
 				<a href="/">
-					<img src="src/assets/logo.svg" alt="NACT logo" />
+					<img src={logo} alt="NACT logo" />
 				</a>
 				<h2 className="text-2xl font-bold mt-10 text-center leading-9 tracking-tight text-gray-900">
 					{isSignUpClick
