@@ -1,63 +1,61 @@
 import "../../styles/unstyle-input.css";
 import "../../styles/auth.css";
-import { useState } from "react";
+import React, { useState } from "react";
+import SignupForm from "../components/SignupForm";
+import { POST } from "../api/login";
 
 const Index = () => {
 	const [phoneNumber, setPhoneNumber] = useState("");
 	const [pin, setPin] = useState("");
+	const [isSignUpClick, setIsSignUpClick] = useState(false);
 
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
-		const formData = new FormData();
-		formData.append("phoneNumber", phoneNumber.toString());
-		formData.append("pin", pin.toString());
-
-		try {
-			// TODO: add a valid url to the fetch request
-			const response = await fetch("", {
-				method: "POST",
-				body: formData,
-			});
-
-			if (response.ok) {
-				console.log("Sucessfully created a POST request");
-				const data = await response.json();
-
-				// TODO: change this if there's no status from the response
-				if (data.status === "success") {
-					console.log("Redirecting to the dashboard...");
-				} else {
-					console.error("Error: " + data.status);
-				}
-			} else {
-				console.log("Successfully failed!");
-			}
-		} catch (e: unknown) {
-			if (typeof e === "string") {
-				console.log(e);
-			} else if (e instanceof Error) {
-				console.log("Error: " + e.message);
-			}
+		const data = await POST({ phoneNumber, pin });
+		if (data) {
+			alert("success");
+		} else {
+			alert("error");
 		}
 	};
 	return (
-		<main className=" w-full md:grid grid-cols-2  rounded-xl md:min-h-[500px] md:mx-5 md:max-w-4xl md:shadow-xl">
-			<section className="items-center justify-center h-full bg-[#44C6F3] rounded-l-xl hidden md:flex flex-col">
-				<h1 className="text-6xl font-bold text-white">
-					Adventure <br /> start here
+		<main className=" w-full md:grid grid-cols-2 rounded-xl md:min-h-[500px] md:mx-5 md:max-w-4xl md:shadow-2xl">
+			<section
+				className={`items-center justify-center h-full bg-[#017DC3] hidden md:flex flex-col ${
+					isSignUpClick ? "rounded-r-xl order-2" : "rounded-l-xl"
+				}`}>
+				<h1 className={`text-6xl font-bold text-white text-center`}>
+					{!isSignUpClick ? (
+						<>
+							Adventure <br /> start here
+						</>
+					) : (
+						<>
+							Start your dream with <br /> us
+						</>
+					)}
 				</h1>
-				<p className="text-white font-medium text-xl">
+				<p className={`text-white font-medium text-xl mr-5 text-center`}>
 					Create an account to Join Our <br /> Community
 				</p>
 			</section>
-			<section className="flex items-center justify-center flex-col md:bg-gray-50 rounded-r-xl w-full h-full space-y-6">
+			<section
+				className={`flex items-center px-5 py-10 justify-center flex-col md:bg-gray-50 w-full h-full space-y-6  ${
+					isSignUpClick ? "rounded-l-xl" : "rounded-r-xl"
+				}`}>
 				<a href="/">
 					<img src="src/assets/logo.svg" alt="NACT logo" />
 				</a>
 				<h2 className="text-2xl font-bold mt-10 text-center leading-9 tracking-tight text-gray-900">
-					Sign in to your account
+					{isSignUpClick
+						? "Register to create new account"
+						: "Sign in to your account"}
 				</h2>
-				<form className="w-full px-5 space-y-4" onSubmit={handleSubmit}>
+				<form
+					className={`w-full px-5 space-y-4 ${
+						isSignUpClick ? "hidden" : "flex flex-col"
+					}`}
+					onSubmit={handleSubmit}>
 					<label
 						className="block font-medium text-sm leading-6 text-gray-900"
 						htmlFor="phoneNumber">
@@ -91,26 +89,59 @@ const Index = () => {
 					<div className="w-full flex justify-end">
 						<a
 							href="#"
-							className="font-semibold text-[#44C6F3] hover:text-[#007DC4]">
+							className="font-semibold text-[#017DC3] hover:text-[#44C6F3]">
 							Forgot Password?
 						</a>
 					</div>
 					<button
 						type="submit"
-						className="text-center w-full justify-center rounded-md transition-colors duration-300 bg-[#44C6F3] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-[#007DC4] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+						className="text-center w-full justify-center rounded-md transition-colors duration-300 bg-[#017DC3] px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-[#44C6F3] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
 						Submit
 					</button>
 				</form>
-				<p className="text-gray-500 text-sm mt-6 text-center">
-					Don't have an account yet?{" "}
-					<a
-						className="text-[#44C6F3] font-semibold leading-6 hover:text-[#007DC4] transition-colors"
-						href="#">
-						Sign up
-					</a>
-				</p>
+				{isSignUpClick ? (
+					<>
+						<SignupForm />
+						<Footer
+							buttonText="Sign in"
+							setIsSignUpClick={setIsSignUpClick}
+							text="Already have an account?"
+							key="signUpFormFoooter"
+						/>
+					</>
+				) : (
+					<Footer
+						buttonText="Sign up"
+						setIsSignUpClick={setIsSignUpClick}
+						text="Don't have an account yet?"
+					/>
+				)}
 			</section>
 		</main>
+	);
+};
+
+type FooterProps = {
+	text: string;
+	buttonText: string;
+	setIsSignUpClick: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const Footer = ({
+	setIsSignUpClick,
+	buttonText,
+	text,
+}: FooterProps): JSX.Element => {
+	return (
+		<p className="text-gray-500 text-sm mt-6 text-center">
+			{text}{" "}
+			<button
+				className="text-[#017DC3] font-semibold leading-6 hover:text-[#44C6F3] transition-colors"
+				type="button"
+				onClick={() => setIsSignUpClick((prev) => !prev)}>
+				{buttonText}
+			</button>
+		</p>
 	);
 };
 
