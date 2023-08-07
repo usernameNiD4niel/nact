@@ -10,12 +10,19 @@ export type PersonalDetailProps = {
 export type CustomDropdownProps = {
 	gender: string;
 	setGender: React.Dispatch<React.SetStateAction<string>>;
-}
+};
 
 export type LoginFormProps = {
 	pin: string;
 	phoneNumber: string;
-}
+};
+
+export type RegisterFormProps = {
+	mobileNumber: string;
+	pin: string;
+	recoveryQuestion: string;
+	recoveryAnswer: string;
+};
 
 export type AccountDetailProps = {
 	mobileNumber: string;
@@ -28,4 +35,4 @@ export type AccountDetailProps = {
 	setConfirmPin: React.Dispatch<React.SetStateAction<string>>;
 	setRecoveryQuestion: React.Dispatch<React.SetStateAction<string>>;
 	setRecoveryAnswer: React.Dispatch<React.SetStateAction<string>>;
-}
+};
