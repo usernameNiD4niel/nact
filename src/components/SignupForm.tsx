@@ -61,6 +61,7 @@ const SignupForm = () => {
 	const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 		// Validate the form using Zod
+
 		if (submitRef.current?.textContent?.trim() === "Submit") {
 			await POST({
 				mobileNumber,
