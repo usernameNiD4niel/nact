@@ -17,11 +17,22 @@ export type LoginFormProps = {
 	phoneNumber: string;
 };
 
-export type RegisterFormProps = {
+export type RegistrationSignature = {
+	success: boolean;
+	message: string;
+	user: User;
+};
+export type User = {
+	firstName: string;
+	middleName: string;
+	lastName: string;
+	birthDate: Date | null;
+	gender: string;
 	mobileNumber: string;
 	pin: string;
 	recoveryQuestion: string;
 	recoveryAnswer: string;
+	setResponse?: React.Dispatch<React.SetStateAction<User | null>>;
 };
 
 export type AccountDetailProps = {

@@ -10,7 +10,11 @@ import {
 } from "../constants/reusable-class";
 import { BsFillCalendarPlusFill } from "react-icons/bs";
 import CustomDropdown from "./CustomDropdown";
-import { AccountDetailProps, PersonalDetailProps } from "../constants/props";
+import {
+	AccountDetailProps,
+	PersonalDetailProps,
+	User,
+} from "../constants/props";
 import AccountDetail from "./AccountDetail";
 import { POST } from "../api/register";
 
@@ -19,7 +23,7 @@ const SignupForm = () => {
 	const [firstName, setFirstName] = useState("");
 	const [middleName, setMiddleName] = useState("");
 	const [lastName, setLastName] = useState("");
-	const [birthDate, setBirthDate] = useState(null);
+	const [birthDate, setBirthDate] = useState<Date | null>(null);
 	const [gender, setGender] = useState("Male");
 
 	// Form fields - Account Detail
@@ -28,6 +32,8 @@ const SignupForm = () => {
 	const [pin, setPin] = useState("");
 	const [recoveryQuestion, setRecoveryQuestion] = useState("");
 	const [recoveryAnswer, setRecoveryAnswer] = useState("");
+
+	const [response, setResponse] = useState<User | null>(null);
 
 	const personalDetailData: PersonalDetailProps = {
 		firstName,
@@ -61,18 +67,18 @@ const SignupForm = () => {
 		event.preventDefault();
 		// Validate the form using Zod
 		if (submitRef.current?.textContent?.trim() === "Submit") {
-			const data = await POST({
+			await POST({
 				mobileNumber,
 				pin,
 				recoveryAnswer,
 				recoveryQuestion,
+				birthDate,
+				firstName,
+				gender,
+				lastName,
+				middleName,
+				setResponse,
 			});
-			if (data) {
-				alert("success!");
-			} else {
-				alert("failed!");
-			}
-			return;
 		}
 		setIsOneCurrentSlide(false);
 	};
@@ -144,6 +150,10 @@ const SignupForm = () => {
 					className="flex items-center justify-center gap-4 px-4 ring-1 ring-[#017DC3] py-2 bg-[#017DC3] text-white text-center rounded-lg font-bold">
 					{isOneCurrentSlide ? "Next" : "Submit"} <AiOutlineArrowRight />
 				</button>
+			</div>
+			<div className="w-[70vw] h-[70vh] z-50 bg-slate-400">
+				<h1 className="font-bold text-3xl">Successfully Failed!</h1>
+				<pre>{JSON.stringify(response, null, 2)}</pre>
 			</div>
 		</form>
 	);
