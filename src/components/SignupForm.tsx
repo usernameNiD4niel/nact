@@ -151,10 +151,12 @@ const SignupForm = () => {
 					{isOneCurrentSlide ? "Next" : "Submit"} <AiOutlineArrowRight />
 				</button>
 			</div>
-			<div className="w-[70vw] h-[70vh] z-50 bg-slate-400">
-				<h1 className="font-bold text-3xl">Successfully Failed!</h1>
-				<pre>{JSON.stringify(response, null, 2)}</pre>
-			</div>
+			{response && (
+				<div className="w-[70vw] h-[70vh] z-50 bg-slate-400">
+					<h1 className="font-bold text-3xl">Successfully Failed!</h1>
+					<pre>{JSON.stringify(response, null, 2)}</pre>
+				</div>
+			)}
 		</form>
 	);
 };
