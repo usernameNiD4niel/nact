@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { labelClass } from "../../constants/reusable-class";
-import { CustomDropdownProps } from "../../constants/props";
+import { labelClass } from "../constants/reusable-class";
+import { CustomDropdownProps } from "../constants/props";
 
 const CustomDropdown = ({
 	gender,

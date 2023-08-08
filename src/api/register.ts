@@ -1,4 +1,4 @@
-import { RegisterFormProps } from "../../constants/props";
+import { RegisterFormProps } from "../constants/props";
 
 export const POST = async ({
 	mobileNumber,

@@ -1,5 +1,9 @@
-import { inputClass, labelClass } from "../../constants/reusable-class";
-import { PersonalDetailProps } from "../../constants/props";
+import "../index.css";
+import {
+	animatedInputClass,
+	animatedSpanClass,
+} from "../constants/reusable-class";
+import { PersonalDetailProps } from "../constants/props";
 
 const PersonalDetail = ({
 	firstName,
@@ -11,47 +15,50 @@ const PersonalDetail = ({
 }: PersonalDetailProps) => {
 	return (
 		<>
-			<label className={labelClass} htmlFor="firstName">
-				First Name
+			<label className="relative" htmlFor="firstName">
 				<input
 					type="text"
-					className={inputClass}
+					className={animatedInputClass}
 					id="firstName"
 					name="firstName"
-					placeholder="Juan"
 					value={firstName}
 					onChange={(e) => setFirstName(e.target.value)}
 					required
 				/>
+				<span
+					className={`${animatedSpanClass} ${firstName && "input-contains"}`}>
+					First Name
+				</span>
 			</label>
-			<label className={labelClass} htmlFor="middleName">
-				Middle Name
+			<label className="relative" htmlFor="middleName">
 				<input
 					type="text"
-					className={inputClass}
+					className={animatedInputClass}
 					id="middleName"
 					name="middleName"
-					placeholder="V"
 					value={middleName}
 					onChange={(e) => setMiddleName(e.target.value)}
 					required
 				/>
+				<span
+					className={`${animatedSpanClass} ${middleName && "input-contains"}`}>
+					Middle Name
+				</span>
 			</label>
-			<label className={labelClass} htmlFor="lastName">
-				Last Name
+			<label className="relative" htmlFor="lastName">
 				<input
 					type="text"
-					className={inputClass}
+					className={animatedInputClass}
 					id="lastName"
 					value={lastName}
 					onChange={(e) => setLastName(e.target.value)}
 					name="lastName"
-					placeholder="Tamad"
 					required
 				/>
-			</label>
-			<label htmlFor="birthdate" className={`relative ${labelClass}`}>
-				Birth Date
+				<span
+					className={`${animatedSpanClass} ${lastName && "input-contains"}`}>
+					Last Name
+				</span>
 			</label>
 		</>
 	);

@@ -1,4 +1,4 @@
-import { LoginFormProps } from "../../constants/props";
+import { LoginFormProps } from "../constants/props";
 
 export const POST = async ({
 	phoneNumber,

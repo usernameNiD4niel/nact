@@ -28,7 +28,7 @@ const Marker = ({
 			/>
 		</div>
 		<p
-			className={`text-sm ${
+			className={`text-[17px] ${
 				isActive ? "text-[#017DC3] font-bold" : "text-gray-500 font-medium"
 			}`}>
 			{text}

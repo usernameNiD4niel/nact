@@ -1,5 +1,5 @@
-import { AccountDetailProps } from "../../constants/props";
-import { inputClass, labelClass } from "../../constants/reusable-class";
+import { AccountDetailProps } from "../constants/props";
+import { inputClass, labelClass } from "../constants/reusable-class";
 import "../../styles/unstyle-input.css";
 
 const AccountDetail = ({

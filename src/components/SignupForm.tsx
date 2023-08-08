@@ -4,10 +4,13 @@ import "react-datepicker/dist/react-datepicker.css";
 import { AiOutlineArrowRight, AiOutlineArrowLeft } from "react-icons/ai";
 import PersonalDetail from "./PersonalDetail";
 import SlidingForm from "./SlidingForm";
-import { inputClass } from "../../constants/reusable-class";
+import {
+	animatedInputClass,
+	animatedSpanClassHigh,
+} from "../constants/reusable-class";
 import { BsFillCalendarPlusFill } from "react-icons/bs";
 import CustomDropdown from "./CustomDropdown";
-import { AccountDetailProps, PersonalDetailProps } from "../../constants/props";
+import { AccountDetailProps, PersonalDetailProps } from "../constants/props";
 import AccountDetail from "./AccountDetail";
 import { POST } from "../api/register";
 
@@ -16,7 +19,7 @@ const SignupForm = () => {
 	const [firstName, setFirstName] = useState("");
 	const [middleName, setMiddleName] = useState("");
 	const [lastName, setLastName] = useState("");
-	const [birthDate, setBirthDate] = useState(new Date());
+	const [birthDate, setBirthDate] = useState(null);
 	const [gender, setGender] = useState("Male");
 
 	// Form fields - Account Detail
@@ -78,7 +81,7 @@ const SignupForm = () => {
 
 	return (
 		<form
-			className={`w-full px-5 space-y-2`}
+			className={`w-full px-5 space-y-6`}
 			onSubmit={handleFormSubmit}
 			key="signUpForm">
 			<SlidingForm
@@ -90,29 +93,37 @@ const SignupForm = () => {
 					<AccountDetail {...accountDetailData} />
 				</div>
 			) : (
-				<div className={`w-full space-y-2`}>
+				<div className={`w-full flex flex-col gap-4`}>
 					<PersonalDetail
 						key="signUpFormPersonalDetails"
 						{...personalDetailData}
 					/>
-					<div className=" relative w-fit">
-						<DatePicker
-							className={`${inputClass}`}
-							ref={datePickerRef}
-							selected={birthDate}
-							children={<h1 className="font-bold">hello</h1>}
-							required
-							onChange={(date) => {
-								if (date) {
-									setBirthDate(date);
-								}
-							}}
-						/>
-						<div
-							className="absolute right-2 top-0 mt-4 text-[#017DC3] z-0 cursor-pointer"
-							onClick={() => datePickerRef.current?.setOpen(true)}>
-							<BsFillCalendarPlusFill />
-						</div>
+					<div className=" relative">
+						<label htmlFor="birthdate" className={`relative`}>
+							<DatePicker
+								className={`${animatedInputClass} relative`}
+								ref={datePickerRef}
+								selected={birthDate}
+								calendarClassName="absolute top-[250px] md:left-[200px] left-0"
+								required
+								onChange={(date) => {
+									if (date === null) {
+										setBirthDate(date);
+									}
+								}}
+							/>
+							<div
+								className="absolute right-2 top-1 text-[#017DC3] z-0 cursor-pointer"
+								onClick={() => datePickerRef.current?.setOpen(true)}>
+								<BsFillCalendarPlusFill />
+							</div>
+							<span
+								className={`${animatedSpanClassHigh} ${
+									birthDate && "input-contains"
+								}`}>
+								Birth Date
+							</span>
+						</label>
 					</div>
 					<CustomDropdown gender={gender} setGender={setGender} />
 				</div>
