@@ -6,6 +6,7 @@ import {
 import { PersonalDetailProps } from "../constants/props";
 import { useRef } from "react";
 import "../../styles/no-input-default.css";
+import "../../styles/remove-calendar-icon.css";
 
 const PersonalDetail = ({
 	firstName,

@@ -62,20 +62,20 @@ const SignupForm = () => {
 		event.preventDefault();
 		// Validate the form using Zod
 
-		if (submitRef.current?.textContent?.trim() === "Submit") {
-			await POST({
-				mobileNumber,
-				pin,
-				recoveryAnswer,
-				recoveryQuestion,
-				birthDate,
-				firstName,
-				gender,
-				lastName,
-				middleName,
-				setResponse,
-			});
-		}
+		await POST({
+			mobileNumber,
+			pin,
+			recoveryAnswer,
+			recoveryQuestion,
+			birthDate,
+			firstName,
+			gender,
+			lastName,
+			middleName,
+			setResponse,
+		});
+		// if (submitRef.current?.textContent?.trim() === "Submit") {
+		// }
 		setIsOneCurrentSlide(false);
 	};
 

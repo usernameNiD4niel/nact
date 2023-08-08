@@ -12,7 +12,7 @@ export const POST = async ({
 	middleName,
 	setResponse,
 }: User) => {
-	const apiEndpoint: string = "";
+	const apiEndpoint: string = "https://jsonplaceholder.typicode.com/posts";
 
 	const formData = new FormData();
 	formData.append("firstName", firstName.toString());
@@ -25,21 +25,25 @@ export const POST = async ({
 	formData.append("recoveryQuestion", recoveryQuestion.toString());
 	formData.append("recoveryAnswer", recoveryAnswer.toString());
 
-	const postData = {
-		user: formData,
+	const placeHolder = {
+		title: "foo",
+		body: "bar",
+		userId: 1,
 	};
 
 	try {
 		// TODO: add a valid url to the fetch request
+
 		const response = await fetch(apiEndpoint, {
 			method: "POST",
 			headers: {
-				"Content-Type": "application/json",
+				"Content-type": "application/json; charset=UTF-8",
 			},
-			body: JSON.stringify(postData),
+			body: JSON.stringify(placeHolder),
 		});
 
 		const data = await response.json();
+		console.log(data);
 		if (setResponse) {
 			setResponse(data);
 		}
@@ -50,4 +54,7 @@ export const POST = async ({
 			console.log("Error: " + e.message);
 		}
 	}
+	fetch("https://jsonplaceholder.typicode.com/posts")
+		.then((response) => response.json())
+		.then((json) => console.log(json));
 };
