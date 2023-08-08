@@ -2,9 +2,11 @@ export type PersonalDetailProps = {
 	firstName: string;
 	middleName: string;
 	lastName: string;
+	birthDate: string;
 	setFirstName: React.Dispatch<React.SetStateAction<string>>;
 	setMiddleName: React.Dispatch<React.SetStateAction<string>>;
 	setLastName: React.Dispatch<React.SetStateAction<string>>;
+	setBirthDate: React.Dispatch<React.SetStateAction<string>>;
 };
 
 export type CustomDropdownProps = {
@@ -26,7 +28,7 @@ export type User = {
 	firstName: string;
 	middleName: string;
 	lastName: string;
-	birthDate: Date | null;
+	birthDate: string;
 	gender: string;
 	mobileNumber: string;
 	pin: string;

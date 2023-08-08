@@ -4,15 +4,26 @@ import {
 	animatedSpanClass,
 } from "../constants/reusable-class";
 import { PersonalDetailProps } from "../constants/props";
+import { useRef } from "react";
+import "../../styles/no-input-default.css";
 
 const PersonalDetail = ({
 	firstName,
 	lastName,
 	middleName,
+	birthDate,
 	setFirstName,
 	setLastName,
 	setMiddleName,
+	setBirthDate,
 }: PersonalDetailProps) => {
+	const birthdateRef = useRef<HTMLInputElement | null>(null);
+	const spanRef = useRef<HTMLSpanElement | null>(null);
+
+	const handleBirthDateClick = () => {
+		birthdateRef.current?.showPicker();
+	};
+
 	return (
 		<>
 			<label className="relative" htmlFor="firstName">
@@ -58,6 +69,24 @@ const PersonalDetail = ({
 				<span
 					className={`${animatedSpanClass} ${lastName && "input-contains"}`}>
 					Last Name
+				</span>
+			</label>
+			<label className="relative" htmlFor="birthDate">
+				<input
+					type="date"
+					className={`hover:cursor-pointer ${animatedInputClass}`}
+					id="birthDate"
+					value={birthDate}
+					ref={birthdateRef}
+					onClick={handleBirthDateClick}
+					onChange={(e) => setBirthDate(e.target.value)}
+					name="birthDate"
+					required
+				/>
+				<span
+					ref={spanRef}
+					className={`${animatedSpanClass} ${birthDate && "input-contains"}`}>
+					Birth Date
 				</span>
 			</label>
 		</>

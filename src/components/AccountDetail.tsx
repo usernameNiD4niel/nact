@@ -1,5 +1,8 @@
 import { AccountDetailProps } from "../constants/props";
-import { inputClass, labelClass } from "../constants/reusable-class";
+import {
+	animatedInputClass,
+	animatedSpanClass,
+} from "../constants/reusable-class";
 import "../../styles/unstyle-input.css";
 
 const AccountDetail = ({
@@ -16,70 +19,85 @@ const AccountDetail = ({
 }: AccountDetailProps): JSX.Element => {
 	return (
 		<>
-			<label className={labelClass} htmlFor="mobileNumber">
-				Mobile Number
+			<label className="relative" htmlFor="mobileNumber">
 				<input
 					type="number"
-					className={inputClass}
+					className={animatedInputClass}
 					id="mobileNumber"
 					name="mobileNumber"
-					placeholder="09876543212"
 					value={mobileNumber}
 					onChange={(e) => setMobileNumber(e.target.value)}
 					required
 				/>
+				<span
+					className={`${animatedSpanClass} ${
+						mobileNumber && "input-contains"
+					}`}>
+					Mobile Number
+				</span>
 			</label>
-			<label className={labelClass} htmlFor="pinCode">
-				Pin Code
+			<label className="relative" htmlFor="pinCode">
 				<input
 					type="password"
-					className={inputClass}
+					className={animatedInputClass}
 					id="pinCode"
 					name="pinCode"
-					placeholder="1234"
 					value={pin}
 					onChange={(e) => setPin(e.target.value)}
 					required
 				/>
+				<span className={`${animatedSpanClass} ${pin && "input-contains"}`}>
+					Pin Code
+				</span>
 			</label>
-			<label className={labelClass} htmlFor="confirmPinCode">
-				Confirm Pin Code
+			<label className="relative" htmlFor="confirmPinCode">
 				<input
 					type="password"
-					className={inputClass}
+					className={animatedInputClass}
 					id="confirmPinCode"
 					value={confirmPin}
 					onChange={(e) => setConfirmPin(e.target.value)}
 					name="confirmPinCode"
-					placeholder="1234"
 					required
 				/>
+				<span
+					className={`${animatedSpanClass} ${confirmPin && "input-contains"}`}>
+					Confirm Pin Code
+				</span>
 			</label>
-			<label className={labelClass} htmlFor="recoveryQuestion">
-				Recovery Question
+			<label className="relative" htmlFor="recoveryQuestion">
 				<input
 					type="text"
-					className={inputClass}
+					className={animatedInputClass}
 					id="recoveryQuestion"
 					value={recoveryQuestion}
 					onChange={(e) => setRecoveryQuestion(e.target.value)}
 					name="recoveryQuestion"
-					placeholder="Who's your first dog?"
 					required
 				/>
+				<span
+					className={`${animatedSpanClass} ${
+						recoveryQuestion && "input-contains"
+					}`}>
+					Recovery Question
+				</span>
 			</label>
-			<label className={labelClass} htmlFor="recoveryAnswer">
-				Recovery Answer
+			<label className="relative" htmlFor="recoveryAnswer">
 				<input
 					type="text"
-					className={inputClass}
+					className={animatedInputClass}
 					id="recoveryAnswer"
 					value={recoveryAnswer}
 					onChange={(e) => setRecoveryAnswer(e.target.value)}
 					name="recoveryAnswer"
-					placeholder="Alex"
 					required
 				/>
+				<span
+					className={`${animatedSpanClass} ${
+						recoveryAnswer && "input-contains"
+					}`}>
+					Recovery Answer
+				</span>
 			</label>
 		</>
 	);
