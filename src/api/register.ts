@@ -12,34 +12,29 @@ export const POST = async ({
 	middleName,
 	setResponse,
 }: User) => {
-	const apiEndpoint: string = "https://jsonplaceholder.typicode.com/posts";
+	const apiEndpoint: string = "";
 
-	const formData = new FormData();
-	formData.append("firstName", firstName.toString());
-	formData.append("lastName", lastName.toString());
-	formData.append("middleName", middleName.toString());
-	formData.append("gender", gender.toString());
-	formData.append("birthDate", birthDate!.toString());
-	formData.append("mobileNumber", mobileNumber.toString());
-	formData.append("pin", pin.toString());
-	formData.append("recoveryQuestion", recoveryQuestion.toString());
-	formData.append("recoveryAnswer", recoveryAnswer.toString());
-
-	const placeHolder = {
-		title: "foo",
-		body: "bar",
-		userId: 1,
+	const formData = {
+		user: {
+			firstName,
+			lastName,
+			middleName,
+			gender,
+			birthDate,
+			mobileNumber,
+			pin,
+			recoveryQuestion,
+			recoveryAnswer,
+		},
 	};
 
 	try {
-		// TODO: add a valid url to the fetch request
-
 		const response = await fetch(apiEndpoint, {
 			method: "POST",
 			headers: {
-				"Content-type": "application/json; charset=UTF-8",
+				"Content-type": "application/json",
 			},
-			body: JSON.stringify(placeHolder),
+			body: JSON.stringify(formData),
 		});
 
 		const data = await response.json();
@@ -54,7 +49,4 @@ export const POST = async ({
 			console.log("Error: " + e.message);
 		}
 	}
-	fetch("https://jsonplaceholder.typicode.com/posts")
-		.then((response) => response.json())
-		.then((json) => console.log(json));
 };

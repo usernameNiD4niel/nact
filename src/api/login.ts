@@ -2,11 +2,11 @@ import { LoginFormProps } from "../constants/props";
 
 export const POST = async ({
 	phoneNumber,
-	pin,
+	extractedPin,
 }: LoginFormProps): Promise<boolean> => {
 	const formData = new FormData();
 	formData.append("phoneNumber", phoneNumber.toString());
-	formData.append("pin", pin.toString());
+	formData.append("pin", extractedPin.toString());
 
 	try {
 		// TODO: add a valid url to the fetch request

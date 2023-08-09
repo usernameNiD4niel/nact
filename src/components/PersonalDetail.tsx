@@ -7,6 +7,7 @@ import { PersonalDetailProps } from "../constants/props";
 import { useRef } from "react";
 import "../../styles/no-input-default.css";
 import "../../styles/remove-calendar-icon.css";
+import { AiFillCalendar } from "react-icons/ai";
 
 const PersonalDetail = ({
 	firstName,
@@ -72,18 +73,29 @@ const PersonalDetail = ({
 					Last Name
 				</span>
 			</label>
-			<label className="relative" htmlFor="birthDate">
-				<input
-					type="date"
-					className={`hover:cursor-pointer ${animatedInputClass}`}
-					id="birthDate"
-					value={birthDate}
-					ref={birthdateRef}
-					onClick={handleBirthDateClick}
-					onChange={(e) => setBirthDate(e.target.value)}
-					name="birthDate"
-					required
-				/>
+			<label
+				className="relative border-[1px] border-black border-opacity-30 rounded-lg"
+				htmlFor="birthDate">
+				<div className="relative hover:cursor-pointer">
+					<input
+						type="date"
+						className={`hover:cursor-pointer ${animatedInputClass} invisible`}
+						id="birthDate"
+						value={birthDate}
+						ref={birthdateRef}
+						onClick={handleBirthDateClick}
+						onChange={(e) => setBirthDate(e.target.value)}
+						name="birthDate"
+						required
+					/>
+					<p className="absolute top-4 left-4">{birthDate}</p>
+					<button
+						type="button"
+						className="absolute right-4 top-4 text-black opacity-30 hover:text-[#017DC3] hover:opacity-100"
+						onClick={handleBirthDateClick}>
+						<AiFillCalendar />
+					</button>
+				</div>
 				<span
 					ref={spanRef}
 					className={`${animatedSpanClass} ${birthDate && "input-contains"}`}>

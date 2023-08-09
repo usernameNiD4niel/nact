@@ -62,20 +62,20 @@ const SignupForm = () => {
 		event.preventDefault();
 		// Validate the form using Zod
 
-		await POST({
-			mobileNumber,
-			pin,
-			recoveryAnswer,
-			recoveryQuestion,
-			birthDate,
-			firstName,
-			gender,
-			lastName,
-			middleName,
-			setResponse,
-		});
-		// if (submitRef.current?.textContent?.trim() === "Submit") {
-		// }
+		if (submitRef.current?.textContent?.trim() === "Submit") {
+			await POST({
+				mobileNumber,
+				pin,
+				recoveryAnswer,
+				recoveryQuestion,
+				birthDate,
+				firstName,
+				gender,
+				lastName,
+				middleName,
+				setResponse,
+			});
+		}
 		setIsOneCurrentSlide(false);
 	};
 
@@ -123,7 +123,7 @@ const SignupForm = () => {
 				</button>
 			</div>
 			{response && (
-				<div className="w-[70vw] h-[70vh] z-50 bg-slate-400">
+				<div className="w-[70vw] h-[70vh] z-50 bg-slate-400 rounded-lg absolute drop-shadow-lg left-[30%] top-[30%]">
 					<h1 className="font-bold text-3xl">Successfully Failed!</h1>
 					<pre>{JSON.stringify(response, null, 2)}</pre>
 				</div>

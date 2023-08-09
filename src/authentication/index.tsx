@@ -9,15 +9,17 @@ import {
 	animatedInputClass,
 	animatedSpanClass,
 } from "../constants/reusable-class";
+import OTPField from "../components/CustomOTPField";
 
 const Index = () => {
 	const [phoneNumber, setPhoneNumber] = useState("");
-	const [pin, setPin] = useState("");
+	const [pin, setPin] = useState<string[]>(new Array(4).fill(""));
 	const [isSignUpClick, setIsSignUpClick] = useState(false);
 
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
-		const data = await POST({ phoneNumber, pin });
+		const extractedPin: string = pin.join("");
+		const data = await POST({ phoneNumber, extractedPin });
 		if (data) {
 			alert("success");
 		} else {
@@ -77,19 +79,9 @@ const Index = () => {
 							Phone Number
 						</span>
 					</label>
-					<label className="relative" htmlFor="fourDigitPin">
-						<input
-							type="password"
-							id="fourDigitPin"
-							className={animatedInputClass}
-							name="fourDigitPin"
-							onChange={(e) => setPin(e.target.value)}
-							value={pin}
-							required
-						/>
-						<span className={`${animatedSpanClass} ${pin && "input-contains"}`}>
-							Pin Code
-						</span>
+					<label>
+						<span className="text-black opacity-80 ml-3">Pin code</span>
+						<OTPField otp={pin} setOtp={setPin} />
 					</label>
 					<div className="w-full flex justify-end">
 						<a

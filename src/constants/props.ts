@@ -15,8 +15,13 @@ export type CustomDropdownProps = {
 };
 
 export type LoginFormProps = {
-	pin: string;
+	extractedPin: string;
 	phoneNumber: string;
+};
+
+export type OTPFieldProps = {
+	otp: string[];
+	setOtp: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
 export type RegistrationSignature = {

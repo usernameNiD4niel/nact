@@ -26,7 +26,7 @@ const CustomDropdown = ({
 						aria-haspopup="true">
 						{gender}
 						<svg
-							className={`-mr-1 h-5 w-5 text-gray-400 absolute right-2 ${
+							className={`-mr-1 h-5 w-5 text-gray-400 absolute right-4 ${
 								isShowing ? "rotate-180" : "rotate-0"
 							}`}
 							viewBox="0 0 20 20"
