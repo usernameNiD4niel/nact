@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export default SignupValidationSchema = z.object({
+export const SignupValidationSchema = z.object({
 	firstName: z
 		.string()
 		.trim()
