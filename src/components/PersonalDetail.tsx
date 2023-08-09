@@ -82,6 +82,7 @@ const PersonalDetail = ({
 						className={`hover:cursor-pointer ${animatedInputClass} invisible`}
 						id="birthDate"
 						value={birthDate}
+						onFocus={() => handleBirthDateClick()}
 						ref={birthdateRef}
 						onClick={handleBirthDateClick}
 						onChange={(e) => setBirthDate(e.target.value)}
