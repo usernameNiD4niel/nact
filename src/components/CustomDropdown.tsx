@@ -4,10 +4,12 @@ import {
 	animatedSpanClass,
 } from "../constants/reusable-class";
 import { CustomDropdownProps } from "../constants/props";
+import DisplayErrorMessage from "./DisplayErrorMessage";
 
 const CustomDropdown = ({
 	gender,
 	setGender,
+	hasGenderError,
 }: CustomDropdownProps): JSX.Element => {
 	const [isShowing, setIsShowing] = useState(false);
 	const handleShowGender = () => {
@@ -72,6 +74,9 @@ const CustomDropdown = ({
 					</a>
 				</div>
 			</div>
+			{hasGenderError && (
+				<DisplayErrorMessage errorMessage="Gender cannot be empty" />
+			)}
 		</div>
 	);
 };

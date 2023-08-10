@@ -10,11 +10,16 @@ import {
 	animatedSpanClass,
 } from "../constants/reusable-class";
 import OTPField from "../components/CustomOTPField";
+import { usePersonalDetailStore } from "../utils/personal-detail";
+import { useAccountDetailStore } from "../utils/account-detail";
 
 const Index = () => {
 	const [phoneNumber, setPhoneNumber] = useState("");
 	const [pin, setPin] = useState<string[]>(new Array(4).fill(""));
 	const [isSignUpClick, setIsSignUpClick] = useState(false);
+
+	const reset = usePersonalDetailStore((state) => state.reset);
+	const resetAccount = useAccountDetailStore((state) => state.reset);
 
 	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
@@ -104,6 +109,8 @@ const Index = () => {
 							setIsSignUpClick={setIsSignUpClick}
 							text="Already have an account?"
 							key="signUpFormFoooter"
+							resetPersonalDetail={reset}
+							resetAccountDetail={resetAccount}
 						/>
 					</>
 				) : (
@@ -121,6 +128,8 @@ const Index = () => {
 type FooterProps = {
 	text: string;
 	buttonText: string;
+	resetPersonalDetail?: () => void;
+	resetAccountDetail?: () => void;
 	setIsSignUpClick: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
@@ -128,6 +137,8 @@ const Footer = ({
 	setIsSignUpClick,
 	buttonText,
 	text,
+	resetAccountDetail,
+	resetPersonalDetail,
 }: FooterProps): JSX.Element => {
 	return (
 		<p className="text-gray-900 text-[14px] mt-6 text-center">
@@ -135,7 +146,15 @@ const Footer = ({
 			<button
 				className="text-[#017DC3] font-semibold leading-6 hover:text-[#44C6F3] transition-colors"
 				type="button"
-				onClick={() => setIsSignUpClick((prev) => !prev)}>
+				onClick={() => {
+					if (resetAccountDetail) {
+						resetAccountDetail();
+					}
+					if (resetPersonalDetail) {
+						resetPersonalDetail();
+					}
+					setIsSignUpClick((prev) => !prev);
+				}}>
 				{buttonText}
 			</button>
 		</p>

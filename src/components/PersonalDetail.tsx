@@ -3,36 +3,93 @@ import {
 	animatedInputClass,
 	animatedSpanClass,
 } from "../constants/reusable-class";
-import { PersonalDetailProps } from "../constants/props";
-import { useRef } from "react";
+import { PersonalDetailDatatypes } from "../constants/props";
+import { useRef, useState } from "react";
 import "../../styles/no-input-default.css";
 import "../../styles/remove-calendar-icon.css";
-import { AiFillCalendar } from "react-icons/ai";
+import { AiFillCalendar, AiOutlineArrowRight } from "react-icons/ai";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { PersonalDetailSchema } from "../models/Signup";
+import { useForm } from "react-hook-form";
+import CustomDropdown from "./CustomDropdown";
+import { usePersonalDetailStore } from "../utils/personal-detail";
+import DisplayErrorMessage from "./DisplayErrorMessage";
 
-const PersonalDetail = ({
-	firstName,
-	lastName,
-	middleName,
-	birthDate,
-	setFirstName,
-	setLastName,
-	setMiddleName,
-	setBirthDate,
-}: PersonalDetailProps) => {
+type PersonalDetailProps = {
+	setIsOneCurrentSlide: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const PersonalDetail = ({ setIsOneCurrentSlide }: PersonalDetailProps) => {
+	const [
+		firstName,
+		lastName,
+		middleInitial,
+		birthDate,
+		gender,
+		setFirstName,
+		setLastName,
+		setMiddleInitial,
+		setBirthDate,
+		setGender,
+	] = usePersonalDetailStore((state) => [
+		state.firstName,
+		state.lastName,
+		state.middleInitial,
+		state.birthDate,
+		state.gender,
+		state.setFirstName,
+		state.setLastName,
+		state.setMiddleInitial,
+		state.setBirthDate,
+		state.setGender,
+	]);
+
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm<PersonalDetailDatatypes>({
+		resolver: zodResolver(PersonalDetailSchema),
+	});
+
+	const [hasBirthDateError, setHasBirthDateError] = useState(false);
+	const [hasGenderError, setHasGenderError] = useState(false);
+
 	const birthdateRef = useRef<HTMLInputElement | null>(null);
-	const spanRef = useRef<HTMLSpanElement | null>(null);
 
 	const handleBirthDateClick = () => {
 		birthdateRef.current?.showPicker();
 	};
 
+	const handleFormSubmit = (data: PersonalDetailDatatypes) => {
+		if (!birthDate) {
+			setHasBirthDateError(true);
+			return;
+		} else {
+			setHasBirthDateError(false);
+		}
+
+		if (!gender) {
+			setHasGenderError(true);
+			return;
+		} else {
+			setHasGenderError(false);
+		}
+		setIsOneCurrentSlide(false);
+		console.log(data);
+	};
+
 	return (
-		<>
+		<form
+			className={`w-full flex flex-col gap-4 px-4`}
+			onSubmit={handleSubmit(handleFormSubmit)}>
 			<label className="relative" htmlFor="firstName">
 				<input
+					{...register("firstName")}
 					type="text"
 					className={animatedInputClass}
 					id="firstName"
+					autoComplete="no"
 					name="firstName"
 					value={firstName}
 					onChange={(e) => setFirstName(e.target.value)}
@@ -42,21 +99,33 @@ const PersonalDetail = ({
 					className={`${animatedSpanClass} ${firstName && "input-contains"}`}>
 					First Name
 				</span>
+				{errors?.firstName && (
+					<DisplayErrorMessage errorMessage={`${errors?.firstName?.message}`} />
+				)}
 			</label>
-			<label className="relative" htmlFor="middleName">
+			<label className="relative" htmlFor="middleInitial">
 				<input
+					{...register("middleInitial")}
 					type="text"
 					className={animatedInputClass}
-					id="middleName"
-					name="middleName"
-					value={middleName}
-					onChange={(e) => setMiddleName(e.target.value)}
+					autoComplete="no"
+					id="middleInitial"
+					name="middleInitial"
+					value={middleInitial}
+					onChange={(e) => setMiddleInitial(e.target.value)}
 					required
 				/>
 				<span
-					className={`${animatedSpanClass} ${middleName && "input-contains"}`}>
-					Middle Name
+					className={`${animatedSpanClass} ${
+						middleInitial && "input-contains"
+					}`}>
+					Middle Initial
 				</span>
+				{errors?.middleInitial && (
+					<DisplayErrorMessage
+						errorMessage={`${errors?.middleInitial?.message}`}
+					/>
+				)}
 			</label>
 			<label className="relative" htmlFor="lastName">
 				<input
@@ -64,46 +133,66 @@ const PersonalDetail = ({
 					className={animatedInputClass}
 					id="lastName"
 					value={lastName}
-					onChange={(e) => setLastName(e.target.value)}
+					{...register("lastName")}
 					name="lastName"
+					autoComplete="no"
+					onChange={(e) => setLastName(e.target.value)}
 					required
 				/>
 				<span
 					className={`${animatedSpanClass} ${lastName && "input-contains"}`}>
 					Last Name
 				</span>
+				{errors?.lastName && (
+					<DisplayErrorMessage errorMessage={`${errors?.lastName?.message}`} />
+				)}
 			</label>
-			<label
-				className="relative border-[1px] border-black border-opacity-30 rounded-lg"
-				htmlFor="birthDate">
-				<div className="relative hover:cursor-pointer">
-					<input
-						type="date"
-						className={`hover:cursor-pointer ${animatedInputClass} invisible`}
-						id="birthDate"
-						value={birthDate}
-						onFocus={() => handleBirthDateClick()}
-						ref={birthdateRef}
-						onClick={handleBirthDateClick}
-						onChange={(e) => setBirthDate(e.target.value)}
-						name="birthDate"
-						required
-					/>
-					<p className="absolute top-4 left-4">{birthDate}</p>
-					<button
-						type="button"
-						className="absolute right-4 top-4 text-black opacity-30 hover:text-[#017DC3] hover:opacity-100"
-						onClick={handleBirthDateClick}>
-						<AiFillCalendar />
-					</button>
-				</div>
+			<label className="relative rounded-lg" htmlFor="birthDate">
+				<input
+					type="date"
+					className={`hover:cursor-pointer ${animatedInputClass}`}
+					ref={birthdateRef}
+					id="birthDate"
+					value={birthDate}
+					autoComplete="no"
+					onFocus={() => handleBirthDateClick()}
+					onChange={(e) => setBirthDate(e.target.value)}
+					name="birthDate"
+					required
+				/>
+				<button
+					type="button"
+					className="absolute right-4 top-4 text-black opacity-80 hover:text-[#017DC3] hover:opacity-100"
+					onClick={handleBirthDateClick}>
+					<AiFillCalendar />
+				</button>
 				<span
-					ref={spanRef}
 					className={`${animatedSpanClass} ${birthDate && "input-contains"}`}>
 					Birth Date
 				</span>
+				<button
+					type="button"
+					className="absolute right-4 top-4 z-100 text-black opacity-90 bg-white md:bg-gray-50 hover:text-[#017DC3] hover:opacity-100"
+					onClick={handleBirthDateClick}>
+					<AiFillCalendar />
+				</button>
+				{hasBirthDateError && (
+					<DisplayErrorMessage errorMessage="Please enter your birth date first" />
+				)}
 			</label>
-		</>
+
+			<CustomDropdown
+				gender={gender}
+				setGender={setGender}
+				hasGenderError={hasGenderError}
+			/>
+
+			<button
+				type="submit"
+				className="flex items-center justify-center w-full gap-4 px-4 ring-1 ring-[#017DC3] py-2 bg-[#017DC3] text-white text-center rounded-lg font-bold">
+				Next <AiOutlineArrowRight />
+			</button>
+		</form>
 	);
 };
 
