@@ -52,6 +52,7 @@ const AccountDetail = ({
 
 	const handleFormSubmit = (data: AccountDetailDatatypes) => {
 		// Get global state of all the fields
+
 		console.log(data);
 	};
 

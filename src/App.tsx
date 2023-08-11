@@ -1,11 +1,22 @@
-import Index from "./authentication";
+import logo from "./assets/logo.svg";
+import Header from "./dashboard/Header";
 
 function App() {
 	return (
-		<div className="flex items-center justify-center h-screen">
-			{/* https://www.behance.net/gallery/145046493/Login-Sign-Up-UIUX-Page-Template-Design?tracking_source=search_projects|login */}
-			<Index />
-		</div>
+		<>
+			<Header />
+			<main className="grid grid-cols-[20%_1fr] h-screen">
+				<aside className="bg-primary hidden flex-col items-center py-5">
+					<a href="/">
+						<img
+							className="mask mask-hexagon bg-white w-10 md:w-24 p-5"
+							src={logo}
+						/>
+					</a>
+				</aside>
+				<div>dasdasdas</div>
+			</main>
+		</>
 	);
 }
 
