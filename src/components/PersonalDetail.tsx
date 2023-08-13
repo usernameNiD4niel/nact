@@ -162,7 +162,7 @@ const PersonalDetail = ({ setIsOneCurrentSlide }: PersonalDetailProps) => {
 				/>
 				<button
 					type="button"
-					className="absolute w-10 h-8 flex items-center justify-center bg-white md:bg-gray-50 z-50 right-2 top-2 text-black hover:text-primary"
+					className="absolute w-10 h-8 flex items-center justify-center bg-white md:bg-gray-50 z-50 right-[2px] top-2 text-black hover:text-primary"
 					onClick={handleBirthDateClick}>
 					<AiFillCalendar />
 				</button>
@@ -172,7 +172,7 @@ const PersonalDetail = ({ setIsOneCurrentSlide }: PersonalDetailProps) => {
 				</span>
 				<button
 					type="button"
-					className="absolute right-4 top-4 z-100 text-black opacity-90 bg-white md:bg-gray-50 hover:text-[#017DC3] hover:opacity-100"
+					className="absolute right-4 top-4 z-100 text-black opacity-90 bg-white md:bg-gray-500 hover:text-[#017DC3] hover:opacity-100"
 					onClick={handleBirthDateClick}>
 					<AiFillCalendar />
 				</button>
