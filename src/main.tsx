@@ -12,13 +12,15 @@ import Root from "@/components/dashboard/Root.tsx";
 import Store from "@/components/store/Store.tsx";
 import Account from "@/components/accounts/Account.tsx";
 import Index from "@/authentication";
+import Sale from "./components/sale";
 
 const router = createBrowserRouter(
 	createRoutesFromElements(
 		<Route>
 			<Route element={<Header />} path="/">
-				<Route element={<Root />} />
+				<Route index element={<Root />} />
 				<Route path="store" element={<Store />} />
+				<Route path="sale" element={<Sale />} />
 				<Route path="account" element={<Account />} />
 			</Route>
 			<Route path="login" element={<Index />} />

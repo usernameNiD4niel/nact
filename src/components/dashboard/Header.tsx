@@ -29,42 +29,44 @@ const Header = () => {
 				style={{ background: "rgba(0, 0, 0, 0.75)" }}>
 				<SideNavigation />
 			</section>
-			<nav className="w-full flex justify-between px-2 items-center md:items-start py-3 border-b-[1px] border-b-black border-opacity-20">
-				<div className="flex gap-2 w-full">
-					<button
-						className="text-2xl opacity-70 md:hidden"
-						onClick={handleMenuNav}>
-						<RiMenu2Fill />
-					</button>
-					<div className="flex justify-center opacity-50 items-center text-2xl"></div>
-					<div className="w-[1px] my-2 bg-black opacity-25 h-7 mr-2 md:hidden" />
-					<form className="text-lg flex items-center relative w-full mr-4 justify-center">
-						<span className="text-2xl opacity-50">
-							<IoIosSearch />
-						</span>
-						<input
-							type="text"
-							value={search}
-							onChange={(e) => setSearch(e.target.value)}
-							placeholder="Search..."
-							className="input w-full min-w-[200px] text-sm focus:outline-none focus:border-0"
-						/>
-						{search && (
-							<button
-								type="reset"
-								onClick={() => setSearch("")}
-								className="text-sm">
-								<GrClose />
-							</button>
-						)}
-					</form>
-				</div>
-				<div className="mt-2">
-					<Avatar />
-				</div>
-			</nav>
+			<section className="flex w-full flex-col">
+				<nav className="w-full flex justify-between px-2 items-center md:items-start py-3 border-b-[1px] border-b-black border-opacity-20">
+					<div className="flex gap-2 w-full">
+						<button
+							className="text-2xl opacity-70 md:hidden"
+							onClick={handleMenuNav}>
+							<RiMenu2Fill />
+						</button>
+						<div className="flex justify-center opacity-50 items-center text-2xl"></div>
+						<div className="w-[1px] my-2 bg-black opacity-25 h-7 mr-2 md:hidden" />
+						<form className="text-lg flex items-center relative w-full mr-4 justify-center">
+							<span className="text-2xl opacity-50">
+								<IoIosSearch />
+							</span>
+							<input
+								type="text"
+								value={search}
+								onChange={(e) => setSearch(e.target.value)}
+								placeholder="Search..."
+								className="input w-full min-w-[200px] text-sm focus:outline-none focus:border-0"
+							/>
+							{search && (
+								<button
+									type="reset"
+									onClick={() => setSearch("")}
+									className="text-sm">
+									<GrClose />
+								</button>
+							)}
+						</form>
+					</div>
+					<div className="mt-2">
+						<Avatar />
+					</div>
+				</nav>
 
-			<Outlet />
+				<Outlet />
+			</section>
 		</main>
 	);
 };

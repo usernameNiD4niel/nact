@@ -76,3 +76,21 @@ export type AccountDetailProps = {
 	register: UseFormRegister<User>;
 	errors?: FieldErrors<User>;
 };
+
+type CardTypes = {
+	transaction: string;
+	description: string;
+};
+
+export const cardData: CardTypes[] = [
+	{ description: "TOTAL TRANSACTION", transaction: "1,500" },
+	{ description: "AVERAGENORTH", transaction: "5,350" },
+	{
+		description: "TOTAL REVENUES",
+		transaction: "₱ 25,325.00",
+	},
+	{
+		description: "AVERAGE REVENUE PER SUBSCRIPTION",
+		transaction: "₱ 5,405.00",
+	},
+];

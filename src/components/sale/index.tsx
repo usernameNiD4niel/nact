@@ -2,18 +2,18 @@ import { ButtonList } from "@/constants/enums";
 import { useSelectedStore } from "@/utils/HomePageState";
 import { useEffect } from "react";
 
-const Account = () => {
+const Sale = () => {
 	const [selected, setSelected] = useSelectedStore((state) => [
 		state.selected,
 		state.setSelected,
 	]);
 
 	useEffect(() => {
-		if (selected !== ButtonList.Account) {
-			setSelected(ButtonList.Account);
+		if (selected !== ButtonList.Sale) {
+			setSelected(ButtonList.Sale);
 		}
 	}, []);
-	return <div>Account</div>;
+	return <h1>Sale</h1>;
 };
 
-export default Account;
+export default Sale;
