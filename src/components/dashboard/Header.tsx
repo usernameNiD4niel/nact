@@ -61,7 +61,12 @@ const Header = () => {
 						</form>
 					</div>
 					<div className="mt-2">
-						<Avatar />
+						<Avatar
+							width={"w-9"}
+							height={"h-9"}
+							alt="Logo image"
+							key="Header avatar"
+						/>
 					</div>
 				</nav>
 

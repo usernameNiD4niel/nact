@@ -12,3 +12,6 @@ export const animatedSpanClassHigh: string =
 	"text-[16px] text-black hover:cursor-text text-opacity-80 absolute left-0 top-0 mx-2 px-2 transition duration-200 bg-white md:bg-gray-50 input-text";
 
 export const formClass: string = "w-full px-5 space-y-6";
+
+export const cardClass: string =
+	"flex justify-between px-8 py-10 border-2 border-slate-300 items-center border-opacity-30 rounded-2xl";

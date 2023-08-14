@@ -13,7 +13,7 @@ export default {
 				light: {
 					...theme["[data-theme=light]"],
 					primary: "#017DC3",
-					"primary-focus": "mediumblue",
+					"primary-focus": "#005382",
 					secondary: "#D6D6D6",
 					"secondary-focus": "#8B8B8B",
 				},

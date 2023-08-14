@@ -1,15 +1,22 @@
 import React, { FC, useEffect, useRef, useState } from "react";
 import "../../styles/remove-scroll-bar.css";
 import { GrLinkNext } from "react-icons/gr";
+import { LoginProps } from "@/models/Login";
+import { UseFormRegister } from "react-hook-form";
 
 export type OTPFieldProps = {
 	otp: string[];
 	setOtp: React.Dispatch<React.SetStateAction<string[]>>;
+	register: UseFormRegister<LoginProps>;
 };
 
 let currentOtpIndex: number = 0;
 
-const OTPField: FC<OTPFieldProps> = ({ otp, setOtp }): JSX.Element => {
+const OTPField: FC<OTPFieldProps> = ({
+	otp,
+	setOtp,
+	register,
+}): JSX.Element => {
 	const inputRef = useRef<HTMLInputElement>(null);
 
 	const [activeOTPIndex, setActiveOTPIndex] = useState<number>(0);
@@ -50,9 +57,11 @@ const OTPField: FC<OTPFieldProps> = ({ otp, setOtp }): JSX.Element => {
 				return (
 					<React.Fragment key={index}>
 						<input
+							{...register("pin")}
 							ref={index === activeOTPIndex ? inputRef : null}
 							onChange={handleOnChange}
 							key={index}
+							name="pin"
 							onKeyDown={(e) => handleOnKeyDown(e, index)}
 							type="password"
 							value={otp[index]}

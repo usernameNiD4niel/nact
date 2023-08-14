@@ -12,25 +12,40 @@ import {
 import OTPField from "../components/CustomOTPField";
 import { usePersonalDetailStore } from "../utils/personal-detail";
 import { useAccountDetailStore } from "../utils/account-detail";
+import { useForm } from "react-hook-form";
+
+import { LoginProps, LoginSchema } from "@/models/Login";
+import { zodResolver } from "@hookform/resolvers/zod";
+import DisplayErrorMessage from "@/components/DisplayErrorMessage";
 
 const Index = () => {
 	const [phoneNumber, setPhoneNumber] = useState("");
 	const [pin, setPin] = useState<string[]>(new Array(4).fill(""));
 	const [isSignUpClick, setIsSignUpClick] = useState(false);
 
+	const {
+		register,
+		handleSubmit,
+		formState: { errors },
+	} = useForm<LoginProps>({
+		resolver: zodResolver(LoginSchema),
+	});
+
 	const reset = usePersonalDetailStore((state) => state.reset);
 	const resetAccount = useAccountDetailStore((state) => state.reset);
 
-	const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-		event.preventDefault();
+	const handleSubmitForm = async (data: LoginProps) => {
 		const extractedPin: string = pin.join("");
-		const data = await POST({ phoneNumber, extractedPin });
-		if (data) {
+
+		const req = await POST({ phoneNumber, extractedPin });
+		if (req) {
 			alert("success");
 		} else {
 			alert("error");
 		}
+		console.log(data);
 	};
+
 	return (
 		<main
 			data-theme="light"
@@ -69,13 +84,14 @@ const Index = () => {
 						className={`w-full px-5 space-y-6 ${
 							isSignUpClick ? "hidden" : "flex flex-col"
 						}`}
-						onSubmit={handleSubmit}>
+						onSubmit={handleSubmit(handleSubmitForm)}>
 						<label className="relative" htmlFor="phoneNumber">
 							<input
+								{...register("phoneNumber")}
+								name="phoneNumber"
 								type="number"
 								id="phoneNumber"
 								className={animatedInputClass}
-								name="phoneNumber"
 								onChange={(e) => setPhoneNumber(e.target.value)}
 								value={phoneNumber}
 								required
@@ -86,10 +102,18 @@ const Index = () => {
 								}`}>
 								Phone Number
 							</span>
+							{errors.phoneNumber && (
+								<DisplayErrorMessage
+									errorMessage={`${errors.phoneNumber?.message}`}
+								/>
+							)}
 						</label>
 						<label>
 							<span className="text-black opacity-80 ml-3">Pin code</span>
-							<OTPField otp={pin} setOtp={setPin} />
+							<OTPField otp={pin} setOtp={setPin} register={register} />
+							{errors.pin && (
+								<DisplayErrorMessage errorMessage={`${errors.pin.message}`} />
+							)}
 						</label>
 						<div className="w-full flex justify-end">
 							<a
