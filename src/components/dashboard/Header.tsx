@@ -22,14 +22,13 @@ const Header = () => {
 	return (
 		<main className="flex w-full relative flex-col md:flex-row">
 			<section
-				className={`absolute md:static top-0 left-0 h-screen z-50 drop-shadow-lg w-full md:w-96 ${
+				className={`fixed top-0 left-0 h-screen z-50 drop-shadow-lg w-full md:w-96 ${
 					isOPen ? "block" : "hidden"
 				} md:block`}
-				onClick={handleSideNav}
-				style={{ background: "rgba(0, 0, 0, 0.75)" }}>
+				onClick={handleSideNav}>
 				<SideNavigation />
 			</section>
-			<section className="flex w-full flex-col">
+			<section className="flex w-full flex-col md:ml-96">
 				<nav className="w-full flex justify-between px-2 items-center md:items-start py-3 border-b-[1px] border-b-black border-opacity-20">
 					<div className="flex gap-2 w-full">
 						<button
