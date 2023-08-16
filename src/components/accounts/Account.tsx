@@ -241,6 +241,7 @@ const ChangePassword = ({ isSaved }: { isSaved: boolean }) => {
 						key="confirmPasswordKeyAccount"
 					/>
 				</div>
+				{/* https://www.behance.net/gallery/175120525/Account-Settings-Profile-User-Information?tracking_source=search_projects|account+page */}
 			</div>
 		</div>
 	);
