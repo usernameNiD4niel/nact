@@ -28,7 +28,7 @@ const Header = () => {
 				onClick={handleSideNav}>
 				<SideNavigation />
 			</section>
-			<section className="flex w-full flex-col md:ml-96">
+			<section className="flex w-full flex-col md:ml-[17rem] lg:ml-[19rem]">
 				<nav className="w-full flex justify-between px-2 items-center md:items-start py-3 border-b-[1px] border-b-black border-opacity-20">
 					<div className="flex gap-2 w-full">
 						<button
