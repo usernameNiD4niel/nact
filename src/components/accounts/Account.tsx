@@ -36,7 +36,7 @@ const Account = () => {
 	}, []);
 	return (
 		<section className="flex items-center justify-center py-5 pb-20">
-			<section className="w-4/5 flex flex-col gap-y-5">
+			<section className="w-[95%] lg:w-4/5 flex flex-col gap-y-5">
 				<div>
 					<h2 className="font-bold text-xl">My Profile</h2>
 					<p>Update your account information</p>
@@ -82,8 +82,8 @@ const ProfileComponent: FC<UserInformation> = ({
 	isSaved,
 }): JSX.Element => {
 	return (
-		<div className={`${cardClass} items-center`}>
-			<div className="flex gap-x-3 justify-center">
+		<div className={`${cardClass} items-start gap-y-4 md:items-center flex-col md:flex-row`}>
+			<div className="flex gap-x-3 w-full">
 				<Avatar
 					width={"w-16"}
 					height={"h-16"}
@@ -98,11 +98,11 @@ const ProfileComponent: FC<UserInformation> = ({
 				</div>
 			</div>
 			{isSaved && (
-				<div className="flex gap-x-2">
-					<button className="bg-primary hover:bg-primary-focus transition-opacity duration-150 text-white font-light px-3 py-[0.70rem] rounded-md text-sm ">
+				<div className="flex gap-x-2 w-full justify-end items-center">
+					<button className="bg-primary hover:bg-primary-focus transition-opacity duration-150 text-white font-light px-3 py-[0.70rem] rounded-md text-xs ">
 						Upload new picture
 					</button>
-					<button className="hover:text-[#EF4D21] text-primary bg-white border-2 border-primary hover:border-[#EF4D21] font-light px-3 py-[0.60rem] rounded-md text-sm ">
+					<button className="hover:text-[#EF4D21] text-primary bg-white border-2 border-primary hover:border-[#EF4D21] font-light px-3 py-[0.60rem] rounded-md text-xs">
 						Remove
 					</button>
 				</div>
@@ -124,7 +124,7 @@ const PersonalInformation: FC<UserInformation> = ({
 				<h2 className="font-bold">Personal Information</h2>
 				<p className="">Update your personal information</p>
 			</div>
-			<div className="grid grid-cols-2 gap-3 max-w-xl">
+			<div className="grid sm:grid-cols-2 gap-3 max-w-xl">
 				{!isSaved ? (
 					<div>
 						<h3 className="font-medium">First Name</h3>
@@ -156,7 +156,7 @@ const PersonalInformation: FC<UserInformation> = ({
 					/>
 				)}
 			</div>
-			<div className="grid grid-cols-2 gap-3 max-w-xl">
+			<div className="grid sm:grid-cols-2 gap-3 max-w-xl">
 				{!isSaved ? (
 					<div>
 						<h3 className="font-medium">Email Address</h3>

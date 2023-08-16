@@ -23,7 +23,7 @@ const AnimatedInputs: FC<AnimatedInputProps> = ({
 		<label className="relative" htmlFor={inputType}>
 			<input
 				type={type}
-				className={animatedInputClass}
+				className={`${animatedInputClass}`}
 				id={inputType}
 				name={inputType}
 				value={value}
@@ -32,7 +32,7 @@ const AnimatedInputs: FC<AnimatedInputProps> = ({
 				}}
 				required
 			/>
-			<span className={`${animatedSpanClass} ${value && "input-contains"}`}>
+			<span className={`${`${animatedSpanClass} whitespace-nowrap`} ${value && "input-contains"}`}>
 				{label}
 			</span>
 		</label>

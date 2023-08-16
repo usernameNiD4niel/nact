@@ -18,7 +18,7 @@ const SideNavigation = () => {
 	const activeButtonClass = "bg-[#043b5b] opacity-100 font-semibold";
 
 	return (
-		<aside className="max-w-[370px] w-[80%] md:w-full bg-primary h-full flex flex-col pt-5 pb-2 z-[100] md:items-center">
+		<aside className="max-w-[370px] w-[80%] md:w-[70%] lg:w-[80%] bg-primary h-full flex flex-col pt-5 pb-2 z-[100] md:items-center">
 			<Link to="/" className="mx-5">
 				<img
 					className="mask mask-hexagon bg-white w-14 p-3"
