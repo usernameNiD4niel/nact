@@ -6,10 +6,12 @@ import "../../styles/unstyle-input.css";
 import { useForm } from "react-hook-form";
 import { AccountDetailSchema } from "../models/Signup";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { AccountDetailDatatypes } from "../constants/props";
+import { AccountDetailDatatypes, FormDataProps } from "../constants/props";
 import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 import { useAccountDetailStore } from "../utils/account-detail";
 import DisplayErrorMessage from "./DisplayErrorMessage";
+import { POST } from "@/api/register";
+import { usePersonalDetailStore } from "@/utils/personal-detail";
 
 type AccountDetailProps = {
 	setIsOneCurrentSlide: React.Dispatch<React.SetStateAction<boolean>>;
@@ -42,6 +44,20 @@ const AccountDetail = ({
 		state.setConfirmPin,
 	]);
 
+	const [
+		firstName,
+		lastName,
+		middleInitial,
+		birthDate,
+		gender,
+	] = usePersonalDetailStore((state) => [
+		state.firstName,
+		state.lastName,
+		state.middleInitial,
+		state.birthDate,
+		state.gender,
+	]);
+
 	const {
 		register,
 		handleSubmit,
@@ -50,10 +66,34 @@ const AccountDetail = ({
 		resolver: zodResolver(AccountDetailSchema),
 	});
 
-	const handleFormSubmit = (data: AccountDetailDatatypes) => {
+	const handleFormSubmit = async (data: AccountDetailDatatypes) => {
 		// Get global state of all the fields
 
-		console.log(data);
+		const {mobileNumber, pin, recoveryAnswer, recoveryQuestion} = data;
+
+		const formData: FormDataProps = {
+			firstName,
+			lastName,
+			middleName: middleInitial,
+			birthDate,
+			gender,
+			mobileNumber,
+			pin,
+			recoveryAnswer,
+			recoveryQuestion
+		}
+
+		const response = await POST(formData);
+
+		if (typeof response === "boolean") {
+			alert("error occured");
+		} else {
+			alert("successfully created post request!");
+			if(typeof response === "object") {
+				console.log("Hello pare: " + response.firstName);
+			}
+		}
+		console.log(response);
 	};
 
 	return (

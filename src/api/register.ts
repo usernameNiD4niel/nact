@@ -1,52 +1,44 @@
-import { User } from "../constants/props";
+import { FormDataProps } from "@/constants/props";
 
-export const POST = async ({
-	mobileNumber,
-	pin,
-	recoveryAnswer,
-	recoveryQuestion,
-	birthDate,
-	firstName,
-	gender,
-	lastName,
-	middleName,
-	setResponse,
-}: User) => {
-	const apiEndpoint: string = "";
+export const POST = async ({birthDate, firstName, gender, lastName, middleName, mobileNumber, pin, recoveryAnswer, recoveryQuestion}:FormDataProps): Promise<FormDataProps | boolean> => {
+	const apiEndpoint: string = "https://backend-api87.000webhostapp.com/api/register";
 
-	const formData = {
-		user: {
-			firstName,
+	const formData: FormDataProps = {
 			lastName,
+			firstName,
 			middleName,
 			gender,
 			birthDate,
 			mobileNumber,
 			pin,
 			recoveryQuestion,
-			recoveryAnswer,
-		},
+			recoveryAnswer
 	};
 
 	try {
 		const response = await fetch(apiEndpoint, {
 			method: "POST",
 			headers: {
-				"Content-type": "application/json",
+				"Content-Type": "application/json",
 			},
 			body: JSON.stringify(formData),
 		});
 
-		const data = await response.json();
-		console.log(data);
-		if (setResponse) {
-			setResponse(data);
-		}
+		const data:FormDataProps = await response.json();
+
+		return data;
+		
 	} catch (e: unknown) {
 		if (typeof e === "string") {
 			console.log(e);
+			return false;
 		} else if (e instanceof Error) {
 			console.log("Error: " + e.message);
+			return false;
+		} else {
+			return false;
+
 		}
 	}
+
 };

@@ -1,11 +1,9 @@
 const DisplayErrorMessage = ({
-	errorMessage,
+  errorMessage,
 }: {
-	errorMessage: string;
+  errorMessage: string;
 }): JSX.Element => {
-	return (
-		<span className="text-red-500 text-xs font-semibold">{errorMessage}</span>
-	);
+  return <p className="text-red-500 text-xs font-semibold">{errorMessage}</p>;
 };
 
 export default DisplayErrorMessage;

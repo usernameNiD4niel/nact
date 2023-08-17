@@ -10,7 +10,7 @@ export const POST = async ({
 
 	try {
 		// TODO: add a valid url to the fetch request
-		const response = await fetch("", {
+		const response = await fetch("https://backend-api87.000webhostapp.com/api/login", {
 			method: "POST",
 			body: formData,
 		});

@@ -3,7 +3,7 @@ import {
 	animatedInputClass,
 	animatedSpanClass,
 } from "../constants/reusable-class";
-import { PersonalDetailDatatypes } from "../constants/props";
+import { FormDataProps, PersonalDetailDatatypes } from "../constants/props";
 import { useRef, useState } from "react";
 import "../../styles/no-input-default.css";
 import "../../styles/remove-calendar-icon.css";
@@ -14,6 +14,7 @@ import { useForm } from "react-hook-form";
 import CustomDropdown from "./CustomDropdown";
 import { usePersonalDetailStore } from "../utils/personal-detail";
 import DisplayErrorMessage from "./DisplayErrorMessage";
+import { POST } from "@/api/register";
 
 type PersonalDetailProps = {
 	setIsOneCurrentSlide: React.Dispatch<React.SetStateAction<boolean>>;
@@ -62,6 +63,12 @@ const PersonalDetail = ({ setIsOneCurrentSlide }: PersonalDetailProps) => {
 	};
 
 	const handleFormSubmit = (data: PersonalDetailDatatypes) => {
+
+		if (!data.firstName) {
+			console.log(data.firstName);
+			return;
+		}
+
 		if (!birthDate) {
 			setHasBirthDateError(true);
 			return;
@@ -75,6 +82,7 @@ const PersonalDetail = ({ setIsOneCurrentSlide }: PersonalDetailProps) => {
 		} else {
 			setHasGenderError(false);
 		}
+
 		setIsOneCurrentSlide(false);
 		console.log(data);
 	};

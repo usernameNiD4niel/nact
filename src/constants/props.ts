@@ -19,6 +19,19 @@ export type CustomDropdownProps = {
 	hasGenderError: boolean;
 };
 
+export type FormDataProps = {
+	firstName: string;
+	lastName: string;
+	middleName: string;
+	gender: string;
+	birthDate: string;
+	mobileNumber: string;
+	pin: string;
+	recoveryQuestion: string;
+	recoveryAnswer: string;
+}
+
+
 export type LoginFormProps = {
 	extractedPin: string;
 	phoneNumber: string;
