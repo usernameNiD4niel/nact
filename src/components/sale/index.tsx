@@ -3,17 +3,17 @@ import { useSelectedStore } from "@/utils/HomePageState";
 import { useEffect } from "react";
 
 const Sale = () => {
-	const [selected, setSelected] = useSelectedStore((state) => [
-		state.selected,
-		state.setSelected,
-	]);
+  const [selected, setSelected] = useSelectedStore((state) => [
+    state.selected,
+    state.setSelected,
+  ]);
 
-	useEffect(() => {
-		if (selected !== ButtonList.Sale) {
-			setSelected(ButtonList.Sale);
-		}
-	}, []);
-	return <h1>Sale</h1>;
+  useEffect(() => {
+    if (selected !== ButtonList.Sale) {
+      setSelected(ButtonList.Sale);
+    }
+  }, []);
+  return <h1></h1>;
 };
 
 export default Sale;
