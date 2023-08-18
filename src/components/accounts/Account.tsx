@@ -35,7 +35,7 @@ const Account = () => {
 		}
 	}, []);
 	return (
-		<section className="flex items-center justify-center py-5 pb-20">
+		<section className="flex items-center justify-center py-5 pb-20 container">
 			<section className="w-[95%] lg:w-4/5 flex flex-col gap-y-5">
 				<div>
 					<h2 className="font-bold text-xl">My Profile</h2>
@@ -123,7 +123,7 @@ const PersonalInformation: FC<UserInformation> = ({
 		<div className={`${cardClass} flex-col gap-y-4`}>
 			<div>
 				<h2 className="font-bold">Personal Information</h2>
-				<p className="text-sm">Update your personal information</p>
+				<p className="">Update your personal information</p>
 			</div>
 			<div className="grid sm:grid-cols-2 gap-3 max-w-xl">
 				{!isSaved ? (
@@ -196,10 +196,10 @@ const ChangePassword = ({ isSaved }: { isSaved: boolean }) => {
 	const [newPassword, setNewPassword] = useState<string>("");
 
 	return (
-		<div className={`${cardClass} flex-col gap-y-4 w-full`}>
-			<div className="w-full">
+		<div className={`${cardClass} flex-col gap-y-4`}>
+			<div>
 				<h2 className="font-bold">Change Password</h2>
-				<p className="text-sm md:text-base">
+				<p className="">
 					Your new password must be different from previous used passwords
 				</p>
 			</div>
@@ -224,7 +224,7 @@ const ChangePassword = ({ isSaved }: { isSaved: boolean }) => {
 						</span>
 					</label>
 				</div>
-				<div className="grid gap-y-5 md:grid-cols-2 gap-x-3">
+				<div className="grid md:grid-cols-2 gap-5">
 					<AnimatedInputs
 						inputType="newPassword"
 						label="New Password"
