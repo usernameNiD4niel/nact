@@ -1,8 +1,4 @@
-import {
-  AiOutlineClose,
-  AiOutlineHome,
-  AiOutlineUserSwitch,
-} from "react-icons/ai";
+import { AiOutlineHome, AiOutlineUserSwitch } from "react-icons/ai";
 import { BiStore } from "react-icons/bi";
 import { BsShopWindow } from "react-icons/bs";
 import { Link } from "react-router-dom";
