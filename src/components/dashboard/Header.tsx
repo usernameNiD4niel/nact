@@ -22,7 +22,7 @@ const Header = () => {
 	return (
 		<main className="flex w-full relative flex-col md:flex-row">
 			<section
-				className={`fixed top-0 left-0 h-screen z-50 drop-shadow-lg w-full md:w-96 ${
+				className={`fixed top-0 left-0 bottom-0 z-50 drop-shadow-lg w-full md:w-96 ${
 					isOPen ? "block" : "hidden"
 				} md:block`}
 				onClick={handleSideNav}>

@@ -1,6 +1,5 @@
 export enum ButtonList {
 	Home,
-	Sale,
-	Store,
+	Module,
 	Account,
 }

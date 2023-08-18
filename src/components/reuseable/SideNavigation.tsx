@@ -4,7 +4,6 @@ import {
 	AiOutlineUserSwitch,
 } from "react-icons/ai";
 import { BiStore } from "react-icons/bi";
-import { BsShopWindow } from "react-icons/bs";
 import { Link } from "react-router-dom";
 import logo from "@/assets/logo.svg";
 import { ButtonList } from "@/constants/enums";
@@ -40,20 +39,11 @@ const SideNavigation = () => {
 					</li>
 					<li>
 						<Link
-							to="/sale"
+							to="/module"
 							className={`${buttonClass} ${
-								selected === ButtonList.Sale && activeButtonClass
+								selected === ButtonList.Module && activeButtonClass
 							} hover:bg-[#043b5b] hover:opacity-100 hover:font-semibold`}>
-							<BiStore /> <span className="text-sm">Sale</span>
-						</Link>
-					</li>
-					<li>
-						<Link
-							to="/store"
-							className={`${buttonClass} ${
-								selected === ButtonList.Store && activeButtonClass
-							} hover:bg-[#043b5b] hover:opacity-100 hover:font-semibold`}>
-							<BsShopWindow /> <span className="text-sm">Store</span>
+							<BiStore /> <span className="text-sm">Module</span>
 						</Link>
 					</li>
 				</div>

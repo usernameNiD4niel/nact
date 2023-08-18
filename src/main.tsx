@@ -9,18 +9,16 @@ import {
 	createRoutesFromElements,
 } from "react-router-dom";
 import Root from "@/components/dashboard/Root.tsx";
-import Store from "@/components/store/Store.tsx";
 import Account from "@/components/accounts/Account.tsx";
 import Index from "@/authentication";
-import Sale from "./components/sale";
+import Module from "@/components/module";
 
 const router = createBrowserRouter(
 	createRoutesFromElements(
 		<Route>
 			<Route element={<Header />} path="/">
 				<Route index element={<Root />} />
-				<Route path="store" element={<Store />} />
-				<Route path="sale" element={<Sale />} />
+				<Route path="module" element={<Module />} />
 				<Route path="account" element={<Account />} />
 			</Route>
 			<Route path="login" element={<Index />} />
