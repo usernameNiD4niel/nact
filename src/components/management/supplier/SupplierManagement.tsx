@@ -1,7 +1,7 @@
 import { ButtonList } from "@/constants/enums";
 import { SupplierManagementProps } from "@/constants/props";
 import { useSelectedStore } from "@/utils/HomePageState";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { GrAddCircle } from "react-icons/gr";
 
 const SupplierManagement = () => {
