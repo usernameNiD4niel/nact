@@ -72,6 +72,54 @@ const DrawerRight = () => {
 					</li>
 					<li>
 						<Link
+							to="/costumer"
+							className={`${buttonClass} ${
+								selected === ButtonList.Costumer
+									? "text-primary font-semibold bg-slate-50"
+									: "text-white"
+							} ${hoverButtonClass}`}
+							onClick={toggleDrawer}>
+							Customer
+						</Link>
+					</li>
+					<li>
+						<Link
+							to="/supplier"
+							className={`${buttonClass} ${
+								selected === ButtonList.Supplier
+									? "text-primary font-semibold bg-slate-50"
+									: "text-white"
+							} ${hoverButtonClass}`}
+							onClick={toggleDrawer}>
+							Supplier Management
+						</Link>
+					</li>
+					<li>
+						<Link
+							to="/sales-agent"
+							className={`${buttonClass} ${
+								selected === ButtonList.SalesAgent
+									? "text-primary font-semibold bg-slate-50"
+									: "text-white"
+							} ${hoverButtonClass}`}
+							onClick={toggleDrawer}>
+							Sales Agent
+						</Link>
+					</li>
+					<li>
+						<Link
+							to="/inventory-officer"
+							className={`${buttonClass} ${
+								selected === ButtonList.InventoryOfficer
+									? "text-primary font-semibold bg-slate-50"
+									: "text-white"
+							} ${hoverButtonClass}`}
+							onClick={toggleDrawer}>
+							Inventory Officer
+						</Link>
+					</li>
+					<li>
+						<Link
 							to="/account"
 							className={`${buttonClass} ${
 								selected === ButtonList.Account

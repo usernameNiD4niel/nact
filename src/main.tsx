@@ -12,6 +12,10 @@ import Root from "@/components/dashboard/Root.tsx";
 import Account from "@/components/accounts/Account.tsx";
 import Index from "@/authentication";
 import Module from "@/components/module";
+import SupplierManagement from "./components/management/supplier/SupplierManagement";
+import SalesAgentManagement from "./components/management/sales-agent/SalesAgentManagement";
+import CostumerManagement from "./components/management/customer/CustomerManagement";
+import InventoryOfficerManagement from "./components/management/inventory-officer/InventoryOfficerManagement";
 
 const router = createBrowserRouter(
 	createRoutesFromElements(
@@ -19,6 +23,13 @@ const router = createBrowserRouter(
 			<Route element={<Header />} path="/">
 				<Route index element={<Root />} />
 				<Route path="module" element={<Module />} />
+				<Route path="supplier" element={<SupplierManagement />} />
+				<Route path="costumer" element={<CostumerManagement />} />
+				<Route path="sales-agent" element={<SalesAgentManagement />} />
+				<Route
+					path="inventory-officer"
+					element={<InventoryOfficerManagement />}
+				/>
 				<Route path="account" element={<Account />} />
 			</Route>
 			<Route path="login" element={<Index />} />

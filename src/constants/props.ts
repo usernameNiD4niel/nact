@@ -29,8 +29,7 @@ export type FormDataProps = {
 	pin: string;
 	recoveryQuestion: string;
 	recoveryAnswer: string;
-}
-
+};
 
 export type LoginFormProps = {
 	extractedPin: string;
@@ -105,5 +104,29 @@ export const cardData: CardTypes[] = [
 	{
 		description: "AVERAGE REVENUE PER SUBSCRIPTION",
 		transaction: "₱ 5,405.00",
+	},
+];
+
+type SupplierManagementCard = {
+	title: string;
+	subtitle: string;
+	phoneNumber: string;
+};
+
+export const SupplierManagementProps: SupplierManagementCard[] = [
+	{
+		title: "East Pacific Container",
+		subtitle: "Chicago, USA",
+		phoneNumber: "09154814993",
+	},
+	{
+		title: "North Pacific Container",
+		subtitle: "New York, USA",
+		phoneNumber: "09154814993",
+	},
+	{
+		title: "South Atlantic",
+		subtitle: "California, USA",
+		phoneNumber: "09154814993",
 	},
 ];
