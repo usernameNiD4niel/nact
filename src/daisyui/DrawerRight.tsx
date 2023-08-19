@@ -10,8 +10,7 @@ const DrawerRight = () => {
 	const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
 
 	const buttonClass =
-		"flex gap-x-3 py-2 mb-2 font-medium mx-3 px-2 text-md rounded-md text-white items-center transition-opacity duration-300";
-	const activeButtonClass = "text-blue-900 font-semibold bg-slate-50";
+		"flex gap-x-3 py-2 mb-2 font-medium mx-3 px-2 text-md rounded-md items-center transition-opacity duration-300";
 	const hoverButtonClass =
 		"hover:text-blue-500 hover:font-semibold hover:bg-white";
 
@@ -51,7 +50,9 @@ const DrawerRight = () => {
 						<Link
 							to="/"
 							className={`${buttonClass} ${
-								selected === ButtonList.Home && activeButtonClass
+								selected === ButtonList.Home
+									? "text-primary font-semibold bg-slate-50"
+									: "text-white"
 							} ${hoverButtonClass}`}
 							onClick={toggleDrawer}>
 							Home
@@ -61,7 +62,9 @@ const DrawerRight = () => {
 						<Link
 							to="/module"
 							className={`${buttonClass} ${
-								selected === ButtonList.Module && activeButtonClass
+								selected === ButtonList.Module
+									? "text-primary font-semibold bg-slate-50"
+									: "text-white"
 							} ${hoverButtonClass}`}
 							onClick={toggleDrawer}>
 							Module
@@ -71,7 +74,9 @@ const DrawerRight = () => {
 						<Link
 							to="/account"
 							className={`${buttonClass} ${
-								selected === ButtonList.Account && activeButtonClass
+								selected === ButtonList.Account
+									? "text-primary font-semibold bg-slate-50"
+									: "text-white"
 							} ${hoverButtonClass}`}
 							onClick={toggleDrawer}>
 							Account
