@@ -5,7 +5,6 @@ import {
 } from "react-icons/ai";
 import { BiStore } from "react-icons/bi";
 import { Link } from "react-router-dom";
-import logo from "@/assets/logo.svg";
 import { ButtonList } from "@/constants/enums";
 import { useSelectedStore } from "@/utils/HomePageState";
 
@@ -17,15 +16,15 @@ const SideNavigation = () => {
 	const activeButtonClass = "bg-[#043b5b] opacity-100 font-semibold";
 
 	return (
-		<aside className="max-w-[370px] w-[80%] md:w-[70%] lg:w-[80%] bg-primary h-full flex flex-col pt-5 pb-2 z-[100] md:items-center">
-			<Link to="/" className="mx-5">
+		<aside className="max-w-[370px] w-full fixed top-[8rem] right-0 bottom-0 hidden lg:flex bg-primary flex-col pt-5 pb-2 z-[100] md:items-center">
+			{/* <Link to="/" className="mx-5">
 				<img
 					className="mask mask-hexagon bg-white w-14 p-3"
 					src={logo}
 					id="home-id"
 					alt="NACT logo"
 				/>
-			</Link>
+			</Link> */}
 			<ul className="mt-10 flex flex-col justify-between h-full w-full">
 				<div>
 					<li>

@@ -35,7 +35,7 @@ const Account = () => {
 		}
 	}, []);
 	return (
-		<section className="flex items-center justify-center py-5 pb-20 container">
+		<section className="flex items-center justify-center py-5 pb-20">
 			<section className="w-[95%] lg:w-4/5 flex flex-col gap-y-5">
 				<div>
 					<h2 className="font-bold text-xl">My Profile</h2>

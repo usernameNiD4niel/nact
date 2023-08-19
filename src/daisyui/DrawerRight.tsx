@@ -11,7 +11,7 @@ const DrawerRight = () => {
 
 	const buttonClass =
 		"flex gap-x-3 py-2 mb-2 font-medium mx-3 px-2 text-md rounded-md text-white items-center transition-opacity duration-300";
-	const activeButtonClass = "text-blue-600 font-semibold bg-slate-50";
+	const activeButtonClass = "text-blue-900 font-semibold bg-slate-50";
 	const hoverButtonClass =
 		"hover:text-blue-500 hover:font-semibold hover:bg-white";
 

@@ -1,61 +1,30 @@
-import { IoIosSearch } from "react-icons/io";
-import { GrClose } from "react-icons/gr";
-import { useState } from "react";
 import { Outlet } from "react-router-dom";
 import DrawerRight from "@/daisyui/DrawerRight";
+import Search from "../reuseable/Search";
+import SideNavigation from "../reuseable/SideNavigation";
 
 const Header = () => {
-	const [search, setSearch] = useState<string>("");
-	const [isShowInput, setIsShowInput] = useState<boolean>(
-		window.innerWidth >= 768,
-	);
-
-	const handleSerchIconClick = () => {
-		if (window.innerWidth < 768) {
-			setIsShowInput(!isShowInput);
-		}
-	};
-
 	return (
 		<main className="flex container relative flex-col md:flex-row mx-auto my-0">
 			<section className="flex w-full flex-col">
-				<nav className="flex justify-center items-center fixed left-0 right-0 top-0 bg-primary w-full">
-					<div className="flex justify-evenly items-center p-5 md:p-3 bg-primary text-white container gap-x-5">
-						<div className="flex items-center justify-center">
+				<nav className="flex justify-center items-center gap-y-2 py-4 flex-col fixed left-0 right-0 top-0 bg-primary w-full">
+					<div className="flex justify-evenly items-center p-5 lg:p-3 bg-primary text-white container gap-x-5">
+						<div className="flex items-center justify-center flex-1">
 							<a href="/" className="font-bold">
 								NACT
 							</a>
 						</div>
-						<form className="text-lg flex items-center relative w-full justify-end md:justify-center max-w-lg flex-1">
-							<span
-								className="text-2xl md:text-black md:absolute left-2 top-3 md:opacity-50"
-								onClick={handleSerchIconClick}>
-								<IoIosSearch />
-							</span>
-							<input
-								type="text"
-								value={search}
-								onChange={(e) => setSearch(e.target.value)}
-								placeholder="Search..."
-								className={`input w-full text-sm focus:outline-none focus:border-0 hidden md:block pl-10 text-black`}
-							/>
-							{search && (
-								<button
-									type="reset"
-									onClick={() => setSearch("")}
-									className="text-sm md:absolute right-2 top-4">
-									<GrClose />
-								</button>
-							)}
-						</form>
-						<div>
+
+						<div className="lg:hidden">
 							<DrawerRight />
 						</div>
 					</div>
+					<Search />
 				</nav>
 
-				<div className="mt-20">
+				<div className="mt-40 lg:mt-36 w-full">
 					<Outlet />
+					<SideNavigation />
 				</div>
 			</section>
 		</main>

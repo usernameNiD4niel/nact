@@ -13,7 +13,11 @@ const Module = () => {
 			setSelected(ButtonList.Module);
 		}
 	}, []);
-	return <h1>Module</h1>;
+	return (
+		<div className="px-4 w-[95%] lg:w-4/5">
+			<h1>Module</h1>
+		</div>
+	);
 };
 
 export default Module;
