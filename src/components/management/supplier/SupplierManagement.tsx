@@ -2,7 +2,8 @@ import { ButtonList } from "@/constants/enums";
 import { SupplierManagementProps } from "@/constants/props";
 import { useSelectedStore } from "@/utils/HomePageState";
 import { useEffect } from "react";
-import { GrAddCircle } from "react-icons/gr";
+import { IoAdd } from "react-icons/io5";
+import { Link, Outlet } from "react-router-dom";
 
 const SupplierManagement = () => {
 	const [selected, setSelected] = useSelectedStore((state) => [
@@ -17,7 +18,7 @@ const SupplierManagement = () => {
 	}, []);
 	return (
 		<section className="w-full flex flex-col">
-			<div className="w-full flex text-white py-2">
+			<div className="w-full flex text-white py-2 text-sm">
 				<button className="flex-1 text-center pb-3 border-b-2 border-b-primary text-primary font-bold">
 					List
 				</button>
@@ -25,29 +26,34 @@ const SupplierManagement = () => {
 					Analytics
 				</button>
 			</div>
-			<div className="w-full flex justify-end items-center py-4 pr-2">
-				<button className="flex gap-x-2 items-center justify-center text-primary text-sm">
-					<span className="text-blue-600 text-xl">
-						<GrAddCircle />
+			<div className="fixed bottom-2 right-4 md:right-6 md:bottom-4 drop-shadow-lg">
+				<Link
+					to="/supplier/add"
+					className="flex gap-x-2 w-14 h-14 md:w-auto md:h-auto md:py-3 md:px-6 rounded-full bg-primary items-center justify-center text-white text-sm right-0">
+					<span className="text-white text-2xl">
+						<IoAdd />
 					</span>
-					SUPPLIER
-				</button>
+					<span className="hidden md:block">SUPPLIER</span>
+				</Link>
 			</div>
 			<CardSupplierManagement />
+			<Outlet />
 		</section>
 	);
 };
 
 const CardSupplierManagement = () => {
 	return (
-		<div className="flex p-2 items-center flex-col w-full gap-y-6">
+		<div className="flex py-2 px-5 items-center flex-col w-full gap-y-2">
 			{SupplierManagementProps.map((value, index) => (
-				<div className="flex justify-between w-full items-center " key={index}>
+				<div
+					className="flex p-4 justify-between w-full items-center border border-3 border-black border-opacity-20 rounded-md"
+					key={index}>
 					<div className="flex gap-y-1 flex-col justify-center">
-						<h3 className="font-bold text-lg">{value.title}</h3>
-						<p className="text-sm font-thin">{value.subtitle}</p>
+						<h3 className="font-bold text-sm text-primary">{value.title}</h3>
+						<p className="text-xs font-thin">{value.subtitle}</p>
 					</div>
-					<p className="text-sm font-thin">{value.phoneNumber}</p>
+					<p className="font-thin text-xs">{value.phoneNumber}</p>
 				</div>
 			))}
 		</div>

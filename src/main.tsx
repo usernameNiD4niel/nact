@@ -16,6 +16,9 @@ import SupplierManagement from "./components/management/supplier/SupplierManagem
 import SalesAgentManagement from "./components/management/sales-agent/SalesAgentManagement";
 import CostumerManagement from "./components/management/customer/CustomerManagement";
 import InventoryOfficerManagement from "./components/management/inventory-officer/InventoryOfficerManagement";
+import AddSupplier from "./components/management/supplier/AddSupplier";
+import Shipping from "./components/management/supplier/Shipping";
+import Trucking from "./components/management/supplier/Trucking";
 
 const router = createBrowserRouter(
 	createRoutesFromElements(
@@ -23,7 +26,12 @@ const router = createBrowserRouter(
 			<Route element={<Header />} path="/">
 				<Route index element={<Root />} />
 				<Route path="module" element={<Module />} />
-				<Route path="supplier" element={<SupplierManagement />} />
+				<Route path="supplier" element={<SupplierManagement />}>
+					<Route path="add" element={<AddSupplier />}>
+						<Route path="shipping" element={<Shipping />} />
+						<Route path="trucking" element={<Trucking />} />
+					</Route>
+				</Route>
 				<Route path="costumer" element={<CostumerManagement />} />
 				<Route path="sales-agent" element={<SalesAgentManagement />} />
 				<Route

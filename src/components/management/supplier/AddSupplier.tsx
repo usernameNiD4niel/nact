@@ -1,0 +1,30 @@
+import HeaderWithBack from "@/components/reuseable/HeaderWithBack";
+import { CustomerType } from "@/constants/objects";
+import { headerBackClass } from "@/constants/reusable-class";
+import { Link, Outlet } from "react-router-dom";
+
+const AddSupplier = () => {
+	return (
+		<div className={headerBackClass}>
+			<HeaderWithBack text="Add Supplier" route="/supplier" />
+			<div className="py-2 px-4">
+				<p className="text-sm py-2">Select customer type</p>
+				<hr />
+				<ul>
+					{CustomerType.map((value, index) => (
+						<li key={index} className="py-2">
+							<Link to={`/supplier/add/${value.route}`}>
+								<h3 className="font-bold text-primary">{value.title}</h3>
+								<p className="font-thin text-xs">{value.description}</p>
+								<hr className="mt-2" />
+							</Link>
+						</li>
+					))}
+				</ul>
+			</div>
+			<Outlet />
+		</div>
+	);
+};
+
+export default AddSupplier;
