@@ -3,11 +3,18 @@ import { IoChevronBackOutline } from "react-icons/io5";
 import { Link } from "react-router-dom";
 import { useSelectedStore } from "@/utils/HomePageState";
 import { ButtonList } from "@/constants/enums";
-import { useState } from "react";
+import { FC } from "react";
 
-const DrawerRight = () => {
+type DrawerRightProps = {
+	isDrawerOpen: boolean;
+	setIsDrawerOpen: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const DrawerRight: FC<DrawerRightProps> = ({
+	isDrawerOpen,
+	setIsDrawerOpen,
+}) => {
 	const [selected] = useSelectedStore((state) => [state.selected]);
-	const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
 
 	const buttonClass =
 		"flex gap-x-3 py-2 mb-2 font-medium mx-3 px-2 text-md rounded-md items-center transition-opacity duration-300";
@@ -19,8 +26,7 @@ const DrawerRight = () => {
 	};
 
 	return (
-		<div
-			className={`drawer drawer-end z-[110] ${isDrawerOpen ? "active" : ""}`}>
+		<div className={`drawer drawer-end ${isDrawerOpen ? "active" : ""}`}>
 			<input
 				id="my-drawer-4"
 				type="checkbox"

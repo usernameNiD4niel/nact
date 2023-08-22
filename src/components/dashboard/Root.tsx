@@ -17,7 +17,7 @@ const Root = () => {
 	}, []);
 
 	return (
-		<main className="p-4 lg:w-[80%] xl:w-[85%] mx-auto space-y-4">
+		<main className="p-4 space-y-4">
 			<h1>Key Metrics</h1>
 			<div className="flex flex-wrap w-full gap-y-2 sm:gap-5 ">
 				{cardData.map((data, index) => (

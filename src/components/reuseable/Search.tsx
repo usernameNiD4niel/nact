@@ -2,11 +2,11 @@ import { useState } from "react";
 import { GrClose } from "react-icons/gr";
 import { IoIosSearch } from "react-icons/io";
 
-const Search = () => {
+const Search = ({ isDrawerOpen }: { isDrawerOpen: boolean }) => {
 	const [search, setSearch] = useState<string>("");
 	return (
-		<form className="text-lg flex items-center relative w-full justify-center max-w-lg flex-1 px-5 md:px-0">
-			<span className="text-2xl md:text-black absolute left-6 md:left-2 top-3 opacity-50">
+		<form className="text-lg flex items-center w-full px-5 md:px-3">
+			<span className="text-2xl md:text-black absolute opacity-50 left-6">
 				<IoIosSearch />
 			</span>
 			<input
@@ -14,16 +14,18 @@ const Search = () => {
 				value={search}
 				onChange={(e) => setSearch(e.target.value)}
 				placeholder="Search..."
-				className={`input w-full text-sm focus:outline-none focus:border-0 px-10 text-black`}
+				className={`input w-[100%] text-sm focus:outline-primary border-1 focus:outline-1 focus:border-0 px-10 text-black`}
 			/>
-			{search && (
-				<button
-					type="reset"
-					onClick={() => setSearch("")}
-					className="text-sm absolute right-7 md:right-2 top-4">
-					<GrClose />
-				</button>
-			)}
+			<div className={`relative ${isDrawerOpen ? "-z-10" : "z-0"}`}>
+				{search && (
+					<button
+						type="reset"
+						onClick={() => setSearch("")}
+						className="text-sm absolute -top-2 right-2">
+						<GrClose />
+					</button>
+				)}
+			</div>
 		</form>
 	);
 };

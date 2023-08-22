@@ -17,12 +17,12 @@ const SupplierManagement = () => {
 		}
 	}, []);
 	return (
-		<section className="w-full flex flex-col">
-			<div className="w-full flex text-white py-2 text-sm">
-				<button className="flex-1 text-center pb-3 border-b-2 border-b-primary text-primary font-bold">
+		<section className="w-full flex flex-col md:mt-10">
+			<div className="w-[95%] flex text-white mx-5 md:w-[96%] border-b-2 md:border-b-black md:border-opacity-20 items-center text-sm gap-x-4">
+				<button className="flex-1 text-center md:text-base md:flex-none pb-3 md:w-24 border-b-2 border-b-primary text-primary font-bold">
 					List
 				</button>
-				<button className="flex-1 text-center pb-3 text-slate-600">
+				<button className="flex-1 md:flex-none text-center md:text-base pb-3 md:w-24 text-slate-600">
 					Analytics
 				</button>
 			</div>
