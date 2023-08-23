@@ -26,9 +26,9 @@ const Header = () => {
           </div>
         </nav>
 
-        <div className="w-full flex items-center flex-col justify-center relative">
+        <div className="w-full flex flex-col justify-center relative mt-14 md:mt-4">
           <SideNavigation />
-          <div className="flex flex-col items-center justify-center absolute right-0 top-2 md:w-2/3 lg:w-[80%]">
+          <div className="flex flex-col absolute right-0 w-full top-2 md:w-[70%]">
             <Search isDrawerOpen={isDrawerOpen} />
             <Outlet />
           </div>

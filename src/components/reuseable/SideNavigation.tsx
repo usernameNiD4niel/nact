@@ -12,7 +12,7 @@ const SideNavigation = () => {
     "hover:text-blue-500 hover:font-semibold hover:bg-white";
 
   return (
-    <aside className="max-w-[370px] w-full fixed top-0 md:w-[30%] lg:w-full left-0 bottom-0 drop-shadow-md hidden md:flex bg-primary flex-col pt-5 pb-2 z-[100] md:items-center">
+    <aside className="max-w-[370px] w-full fixed top-0 md:w-[30%] xl:w-full left-0 bottom-0 drop-shadow-md hidden md:flex bg-primary flex-col pt-5 pb-2 z-[100] md:items-center">
       <Link to="/" className="mx-5">
         <img
           className="mask mask-hexagon bg-white w-14 p-3"
