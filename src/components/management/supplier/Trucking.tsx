@@ -1,9 +1,9 @@
 import HeaderWithBack from "@/components/reuseable/HeaderWithBack";
-import { headerBackClass } from "@/constants/reusable-class";
+import { headerClass } from "@/constants/reusable-class";
 
 const Trucking = () => {
 	return (
-		<div className={headerBackClass}>
+		<div className={headerClass}>
 			<HeaderWithBack text="Trucking" route="/supplier/add" />
 		</div>
 	);
