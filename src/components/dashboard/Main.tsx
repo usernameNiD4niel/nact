@@ -120,6 +120,17 @@ const SideNavigation = ({ selected }: { selected: ButtonList | null }) => {
 							Inventory Officer
 						</Link>
 					</li>
+					<li>
+						<Link
+							to="/inventory"
+							className={`${buttonClass} ${
+								selected === ButtonList.Inventory
+									? "text-primary font-semibold bg-slate-50"
+									: "text-white font-thin"
+							} ${hoverButtonClass}`}>
+							Inventory
+						</Link>
+					</li>
 				</div>
 				<li>
 					<Link
