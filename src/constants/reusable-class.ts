@@ -17,7 +17,4 @@ export const cardClass: string =
 	"flex justify-between px-8 py-10 border-2 border-slate-300 border-opacity-30 rounded-2xl drop-shadow-sm bg-white -z-30";
 
 export const headerBackClass =
-	"z-10 absolute -top-16 left-0 right-0 bg-white h-screen";
-
-export const headerClass =
-	"z-10 absolute top-0 left-0 right-0 bg-white h-screen";
+	"z-10 absolute inset-0 bg-white h-screen md:inset-auto md:w-[70%] lg:w-[80%] md:top-0";

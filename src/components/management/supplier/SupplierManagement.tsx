@@ -17,8 +17,8 @@ const SupplierManagement = () => {
 		}
 	}, []);
 	return (
-		<section className="w-full flex flex-col md:mt-10 items-center justify-center lg:w-[80%]">
-			<div className="w-[95%] flex text-white mx-5 md:w-[96%] border-b-2 -z-10 md:border-b-black md:border-opacity-20 items-center text-sm gap-x-4">
+		<section className="w-full flex flex-col items-center justify-center px-5 py-6">
+			<div className="w-full flex text-white border-b-2 md:border-b-black md:border-opacity-20 items-center text-sm gap-x-4">
 				<button className="flex-1 text-center md:text-base md:flex-none pb-3 md:w-24 border-b-2 border-b-primary text-primary font-bold">
 					List
 				</button>
@@ -44,15 +44,15 @@ const SupplierManagement = () => {
 
 const CardSupplierManagement = () => {
 	return (
-		<div className="flex py-2 px-5 items-center flex-col w-full gap-y-2">
+		<div className="flex py-2 items-center flex-col w-full gap-y-2">
 			{SupplierManagementProps.map((value, index) => (
 				<div
-					className="flex p-4 justify-between w-full items-center -z-10 border-b-[1px] border-black border-opacity-20 hover:cursor-pointer hover:border-primary"
+					className="flex p-4 md:justify-between w-full md:items-center flex-col md:flex-row border-b-[1px] border-black border-opacity-20 hover:cursor-pointer hover:border-b-2"
 					key={index}>
-					<div className="flex gap-y-1 flex-col justify-center">
+					<Link to="#" className="flex gap-y-1 flex-col justify-center">
 						<h3 className="font-bold text-sm text-primary">{value.title}</h3>
 						<p className="text-xs font-thin">{value.subtitle}</p>
-					</div>
+					</Link>
 					<p className="font-thin text-xs">{value.phoneNumber}</p>
 				</div>
 			))}
