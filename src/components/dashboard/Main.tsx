@@ -4,15 +4,17 @@ import { Link, Outlet } from "react-router-dom";
 import logo from "@/assets/logo.svg";
 import { ButtonList } from "@/constants/enums";
 import { useSelectedStore } from "@/utils/HomePageState";
+import { buttons } from "@/constants/arrays";
 const Main = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
+  const [selected] = useSelectedStore((state) => [state.selected]);
 
   return (
     <React.Fragment>
       <header className="w-full flex p-4 bg-primary md:hidden text-white">
         <div className="flex items-center justify-center flex-1">
           <Link to="/" className="font-bold">
-            HELLO
+            {selected ? buttons[parseInt(selected?.toString())] : "NACT"}
           </Link>
         </div>
 
@@ -25,7 +27,7 @@ const Main = () => {
       </header>
       <main className="flex">
         <aside className="w-[30%] lg:w-[20%] bg-primary text-white box-border fixed h-full hidden pt-5 md:flex flex-col items-center">
-          <SideNavigation />
+          <SideNavigation selected={selected} />
         </aside>
         <section className="md:w-[70%] md:ml-[30%] lg:w-[80%] lg:ml-[20%] md:box-border w-full ml-0">
           <Outlet />
@@ -35,8 +37,7 @@ const Main = () => {
   );
 };
 
-const SideNavigation = () => {
-  const [selected] = useSelectedStore((state) => [state.selected]);
+const SideNavigation = ({ selected }: { selected: ButtonList | null }) => {
   const buttonClass =
     "flex gap-x-3 py-2 mb-2 mx-3 px-2 text-sm rounded-md items-center transition-opacity duration-300";
   const hoverButtonClass =
