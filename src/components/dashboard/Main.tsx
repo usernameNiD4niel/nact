@@ -1,18 +1,48 @@
-import { Link } from "react-router-dom";
+import DrawerRight from "@/daisyui/DrawerRight";
+import React, { useState } from "react";
+import { Link, Outlet } from "react-router-dom";
+import logo from "@/assets/logo.svg";
 import { ButtonList } from "@/constants/enums";
 import { useSelectedStore } from "@/utils/HomePageState";
-import logo from "@/assets/logo.svg";
+const Main = () => {
+  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
+
+  return (
+    <React.Fragment>
+      <header className="w-full flex p-4 bg-primary md:hidden text-white">
+        <div className="flex items-center justify-center flex-1">
+          <Link to="/" className="font-bold">
+            HELLO
+          </Link>
+        </div>
+
+        <div className="md:hidden">
+          <DrawerRight
+            isDrawerOpen={isDrawerOpen}
+            setIsDrawerOpen={setIsDrawerOpen}
+          />
+        </div>
+      </header>
+      <main className="flex">
+        <aside className="w-[30%] lg:w-[20%] bg-primary text-white box-border fixed h-full hidden pt-5 md:flex flex-col items-center">
+          <SideNavigation />
+        </aside>
+        <section className="md:w-[70%] md:ml-[30%] lg:w-[80%] lg:ml-[20%] md:box-border w-full ml-0">
+          <Outlet />
+        </section>
+      </main>
+    </React.Fragment>
+  );
+};
 
 const SideNavigation = () => {
   const [selected] = useSelectedStore((state) => [state.selected]);
-
   const buttonClass =
     "flex gap-x-3 py-2 mb-2 mx-3 px-2 text-sm rounded-md items-center transition-opacity duration-300";
   const hoverButtonClass =
     "hover:text-blue-500 hover:font-semibold hover:bg-white";
-
   return (
-    <aside className="max-w-[370px] w-full fixed top-0 md:w-[30%] xl:w-full left-0 bottom-0 drop-shadow-md hidden md:flex bg-primary flex-col pt-5 pb-2 z-[100] md:items-center">
+    <React.Fragment>
       <Link to="/" className="mx-5">
         <img
           className="mask mask-hexagon bg-white w-14 p-3"
@@ -62,7 +92,7 @@ const SideNavigation = () => {
           <li>
             <Link
               to="/supplier"
-              className={`${buttonClass} ${
+              className={`${buttonClass} flex justify-between items-center group ${
                 selected === ButtonList.Supplier
                   ? "text-primary font-semibold bg-slate-50"
                   : "text-white font-thin"
@@ -109,8 +139,8 @@ const SideNavigation = () => {
           </Link>
         </li>
       </ul>
-    </aside>
+    </React.Fragment>
   );
 };
 
-export default SideNavigation;
+export default Main;
