@@ -1,6 +1,5 @@
 import SearchWithFilter from "@/components/reuseable/SearchWithFilter";
 import { ButtonList } from "@/constants/enums";
-import add from "@/assets/add.svg";
 import { useSelectedStore } from "@/utils/HomePageState";
 import { useEffect } from "react";
 import { Link, Outlet } from "react-router-dom";
