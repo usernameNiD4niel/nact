@@ -10,9 +10,9 @@ body {
 input[type="number"]:focus ~ span.input-text,
 input[type="text"]:focus ~ span.input-text,
 input[type="password"]:focus ~ span.input-text {
-	@apply text-[#017DC3] bg-white md:bg-gray-50 transform -translate-y-5 -translate-x-4 scale-75 mx-5;
+	@apply text-[#017DC3] bg-white transform -translate-y-5 -translate-x-4 scale-75 mx-5;
 }
 
 .input-contains {
-	@apply md:bg-gray-50 bg-white transform -translate-y-5 -translate-x-4 scale-75 mx-5;
+	@apply bg-white transform -translate-y-5 -translate-x-4 scale-75 mx-5;
 }

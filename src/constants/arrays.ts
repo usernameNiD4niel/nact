@@ -6,4 +6,5 @@ export const buttons: string[] = [
   "Sales Agent",
   "Inventory Officer",
   "Account",
+  "Inventory",
 ];
