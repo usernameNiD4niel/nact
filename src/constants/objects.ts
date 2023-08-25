@@ -28,3 +28,31 @@ export const CustomerType: CustomerTypeProps[] = [
 		route: "trucking",
 	},
 ];
+
+type InventoryType = {
+	title: string;
+	location: string;
+	quantity: string;
+	price: string;
+};
+
+export const InventoryObject: InventoryType[] = [
+	{
+		location: "025145 | Chicago, USA | Depot",
+		price: "$ 1,250",
+		quantity: "12 PCS",
+		title: "20 STD - CW",
+	},
+	{
+		location: "025145 | Chicago, USA | Depot",
+		price: "$ 1,250",
+		quantity: "12 PCS",
+		title: "40 HC - CW",
+	},
+	{
+		location: "025145 | Chicago, USA | Depot",
+		price: "$ 1,250",
+		quantity: "12 PCS",
+		title: "20 STD - OT",
+	},
+];

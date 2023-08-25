@@ -15,14 +15,13 @@ const AddSupplier = () => {
 						<li key={index}>
 							<Link
 								to={`/supplier/add/${value.route}`}
-								className="flex flex-col md:p-4 p-2 border-black border-opacity-40 rounded-md border-[1px] hover:bg-primary group hover:border-0 transition-all duration-150 ease-in-out">
+								className="flex flex-col md:p-4 p-2 border-black border-opacity-20 rounded-md border-[1px] hover:bg-primary group hover:border-0 transition-all duration-150 ease-in-out">
 								<h3 className="font-bold text-primary group-hover:text-white">
 									{value.title}
 								</h3>
 								<p className="font-thin text-xs group-hover:text-white">
 									{value.description}
 								</p>
-								{/* <hr className="mt-2" /> */}
 							</Link>
 						</li>
 					))}

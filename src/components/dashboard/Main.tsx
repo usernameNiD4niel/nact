@@ -18,7 +18,7 @@ const Main = () => {
 					</Link>
 				</div>
 
-				<div className="md:hidden">
+				<div className="md:hidden z-50">
 					<DrawerRight
 						isDrawerOpen={isDrawerOpen}
 						setIsDrawerOpen={setIsDrawerOpen}
