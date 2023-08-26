@@ -12,7 +12,7 @@ const Tabs: FC<TabsProps> = ({ activeTabIndex, arrayOfText }) => {
 				<button
 					className={`flex-1 text-center md:text-base md:flex-none pb-3 ${
 						index === activeTabIndex
-							? "text-white border-b-2 border-b-primary font-bold"
+							? "text-white border-b-2 border-b-white font-bold"
 							: "text-slate-300 border-0 font-normal"
 					}`}
 					key={index}>

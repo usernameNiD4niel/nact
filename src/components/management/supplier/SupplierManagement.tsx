@@ -20,7 +20,7 @@ const SupplierManagement = () => {
 	}, []);
 	return (
 		<section className="w-full flex flex-col items-center justify-center gap-y-4">
-			<div className="w-full bg-primary px-5 mb-0 pt-6 border-t-primary border-t-2">
+			<div className="w-full bg-[#1F2123] px-5 mb-0 pt-6 border-t-[#1F2123] border-t-2">
 				<Tabs
 					activeTabIndex={0}
 					arrayOfText={["List", "Analytics"]}

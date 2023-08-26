@@ -130,3 +130,28 @@ export const SupplierManagementProps: SupplierManagementCard[] = [
 		phoneNumber: "09154814993",
 	},
 ];
+
+export type ContainerInformationProps = {
+	containerType: string;
+	condition: string;
+	city: string;
+	state: string;
+	region: string;
+	country: string;
+	depot: string;
+	validUntil: string;
+	quantity: string;
+	buyingRate: string;
+	sellingRate: string;
+	setContainerType: React.Dispatch<React.SetStateAction<string>>;
+	setCondition: React.Dispatch<React.SetStateAction<string>>;
+	setCity: React.Dispatch<React.SetStateAction<string>>;
+	setState: React.Dispatch<React.SetStateAction<string>>;
+	setRegion: React.Dispatch<React.SetStateAction<string>>;
+	setCountry: React.Dispatch<React.SetStateAction<string>>;
+	setDepot: React.Dispatch<React.SetStateAction<string>>;
+	setValidUntil: React.Dispatch<React.SetStateAction<string>>;
+	setQuantity: React.Dispatch<React.SetStateAction<string>>;
+	setBuyingRate: React.Dispatch<React.SetStateAction<string>>;
+	setSellingRate: React.Dispatch<React.SetStateAction<string>>;
+};

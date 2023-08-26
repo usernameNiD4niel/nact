@@ -20,6 +20,7 @@ import Shipping from "./components/management/supplier/Shipping";
 import Trucking from "./components/management/supplier/Trucking";
 import Main from "./components/dashboard/Main";
 import InventoryManagement from "./components/management/inventory/InventoryManagement";
+import AddInventory from "./components/management/inventory/AddInventory";
 
 const router = createBrowserRouter(
 	createRoutesFromElements(
@@ -39,7 +40,9 @@ const router = createBrowserRouter(
 					path="inventory-officer"
 					element={<InventoryOfficerManagement />}
 				/>
-				<Route path="inventory" element={<InventoryManagement />} />
+				<Route path="inventory" element={<InventoryManagement />}>
+					<Route path="add" element={<AddInventory />} />
+				</Route>
 				<Route path="account" element={<Account />} />
 			</Route>
 			<Route path="login" element={<Index />} />

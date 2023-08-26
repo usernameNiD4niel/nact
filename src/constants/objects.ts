@@ -56,3 +56,35 @@ export const InventoryObject: InventoryType[] = [
 		title: "20 STD - OT",
 	},
 ];
+
+type SupplierManagementTypes = {
+	id: number;
+	title: string;
+	subtitle: string;
+	price: string;
+	quantity: string;
+};
+
+export const SupplierManagementData: SupplierManagementTypes[] = [
+	{
+		id: 1,
+		title: "20 STD - CW",
+		subtitle: "025145 | Chicago, USA | Depot",
+		price: "$ 1,250",
+		quantity: "12 PCS",
+	},
+	{
+		id: 2,
+		title: "40 HC - CW",
+		subtitle: "025145 | Chicago, USA | Depot",
+		price: "$ 1,250",
+		quantity: "12 PCS",
+	},
+	{
+		id: 3,
+		title: "20 STD - OT",
+		subtitle: "025145 | Chicago, USA | Depot",
+		price: "$ 1,250",
+		quantity: "12 PCS",
+	},
+];
