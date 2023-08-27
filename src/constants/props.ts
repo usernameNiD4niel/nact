@@ -131,6 +131,42 @@ export const SupplierManagementProps: SupplierManagementCard[] = [
 	},
 ];
 
+type InventoryTypes = {
+	productName: string;
+	state: string;
+	city: string;
+	price: string;
+	quantity: string;
+	depot: string;
+};
+
+export const InventoryObjects: InventoryTypes[] = [
+	{
+		productName: "20 STD - CW",
+		city: "Chicago",
+		state: "USA",
+		depot: "Depot",
+		price: "$ 1,250",
+		quantity: "12 PCS",
+	},
+	{
+		productName: "40 HC - CW",
+		city: "Chicago",
+		state: "USA",
+		depot: "Depot",
+		price: "$ 1,250",
+		quantity: "12 PCS",
+	},
+	{
+		productName: "20 STD - OT",
+		city: "Chicago",
+		state: "USA",
+		depot: "Depot",
+		price: "$ 1,250",
+		quantity: "12 PCS",
+	},
+];
+
 export type ContainerInformationProps = {
 	containerType: string;
 	condition: string;

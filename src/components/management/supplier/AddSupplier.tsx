@@ -7,7 +7,7 @@ const AddSupplier = () => {
 	return (
 		<div className={headerBackClass}>
 			<HeaderWithBack text="Add Supplier" route="/supplier" />
-			<div className="py-2 px-4">
+			<div className="py-2 px-4 lg:w-[60%]">
 				<p className="text-sm py-2">Select customer type</p>
 				<hr className="mb-5" />
 				<ul className="space-y-2 lg:flex lg:space-y-0 lg:gap-x-4 flex-col">

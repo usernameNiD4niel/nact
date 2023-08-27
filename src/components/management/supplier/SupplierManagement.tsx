@@ -8,6 +8,65 @@ import Table from "@/components/reuseable/Table";
 import { IoMdAdd } from "react-icons/io";
 
 const SupplierManagement = () => {
+	const header: string[] = [
+		"Product Name",
+		"State",
+		"City",
+		"Price",
+		"Quantity",
+		"Depot",
+	];
+	const body: string[][] = [
+		[
+			"Product Name body 1",
+			"State body 2",
+			"Price body 3",
+			"City body 4",
+			"Quantity body 5",
+			"Depot body 6",
+		],
+		[
+			"Product Name body 1",
+			"State body 2",
+			"Price body 3",
+			"City body 4",
+			"Quantity body 5",
+			"Depot body 6",
+		],
+		[
+			"Product Name body 1",
+			"State body 2",
+			"Price body 3",
+			"City body 4",
+			"Quantity body 5",
+			"Depot body 6",
+		],
+		[
+			"Product Name body 1",
+			"State body 2",
+			"Price body 3",
+			"City body 4",
+			"Quantity body 5",
+			"Depot body 6",
+		],
+		[
+			"Product Name body 1",
+			"State body 2",
+			"Price body 3",
+			"City body 4",
+			"Quantity body 5",
+			"Depot body 6",
+		],
+		[
+			"Product Name body 1",
+			"State body 2",
+			"Price body 3",
+			"City body 4",
+			"Quantity body 5",
+			"Depot body 6",
+		],
+	];
+
 	const [selected, setSelected] = useSelectedStore((state) => [
 		state.selected,
 		state.setSelected,
@@ -29,7 +88,7 @@ const SupplierManagement = () => {
 			</div>
 			<div className="md:px-10 w-full space-y-5 px-5 py-6">
 				<SearchWithFilter placeHolder="Search Supplier" />
-				<Table />
+				<Table body={body} header={header} key="SupplierManagementKey" />
 			</div>
 			<AddButton />
 			<Outlet />

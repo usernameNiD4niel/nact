@@ -52,7 +52,7 @@ const AddInventory = () => {
 					<div className="flex flex-col w-full gap-y-4">
 						<ContainerInformation {...containerInformation} />
 					</div>
-					<div className="w-full flex justify-end items-center gap-3 mt-5">
+					<div className="w-full flex flex-col md:flex-row-reverse items-center gap-3 mt-5">
 						<button
 							type="submit"
 							className="w-full text-center p-3 md:w-fit md:px-9 text-white rounded-md bg-primary">

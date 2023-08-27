@@ -88,3 +88,8 @@ export const SupplierManagementData: SupplierManagementTypes[] = [
 		quantity: "12 PCS",
 	},
 ];
+
+export type TableTypes<Header, Body> = {
+	tableHeader: Header[];
+	tableBody: Body[];
+};

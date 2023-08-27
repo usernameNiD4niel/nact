@@ -1,5 +1,7 @@
 import AddButton from "@/components/reuseable/AddButton";
 import SearchWithFilter from "@/components/reuseable/SearchWithFilter";
+import Table from "@/components/reuseable/Table";
+import TableSixCol from "@/components/reuseable/TableSixCol";
 import Tabs from "@/components/reuseable/Tabs";
 import { ButtonList } from "@/constants/enums";
 import { SupplierManagementData } from "@/constants/objects";
@@ -44,7 +46,9 @@ const InventoryManagement = () => {
 const DisplayInventoryData = (): JSX.Element => {
 	return (
 		<section className="w-full flex items-center justify-center flex-col gap-y-2">
-			{SupplierManagementData.map((supplier) => (
+			<TableSixCol />
+
+			{/* {SupplierManagementData.map((supplier) => (
 				<div
 					className="w-full hover:cursor-pointer group flex items-center justify-between border-b-black border-b-2 border-opacity-20 py-4"
 					key={supplier.id}>
@@ -65,7 +69,7 @@ const DisplayInventoryData = (): JSX.Element => {
 						</p>
 					</div>
 				</div>
-			))}
+			))} */}
 		</section>
 	);
 };
