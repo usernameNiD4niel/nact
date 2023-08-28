@@ -1,20 +1,31 @@
+import Filter from "@/components/reuseable/Filter";
 import SearchWithFilter from "@/components/reuseable/SearchWithFilter";
 import TableSixCol from "@/components/reuseable/TableSixCol";
 import { useInventoryState } from "@/utils/InventoryState";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { IoMdAdd } from "react-icons/io";
 import { Link } from "react-router-dom";
 
 const Available = (): JSX.Element => {
 	const [setActiveTab] = useInventoryState((state) => [state.setActiveTab]);
 
+	const [isShowingFilter, setIsShowingFilter] = useState<boolean>(false);
+
 	useEffect(() => setActiveTab(0), []);
 	return (
-		<div className="md:px-10 w-full space-y-5 px-5 py-6">
-			<SearchWithFilter placeHolder="Search Inventory" />
-			<AddButton />
-			<DisplayInventoryData />
-		</div>
+		<>
+			<div className="md:px-10 w-full space-y-5 px-5 py-6">
+				<SearchWithFilter
+					placeHolder="Search Inventory"
+					setIsShowingFilter={setIsShowingFilter}
+				/>
+				<AddButton />
+				<DisplayInventoryData />
+			</div>
+			{isShowingFilter && (
+				<Filter setIsFilterShowing={setIsShowingFilter} isInventory={true} />
+			)}
+		</>
 	);
 };
 
