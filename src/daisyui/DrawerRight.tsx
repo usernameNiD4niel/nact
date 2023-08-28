@@ -138,6 +138,18 @@ const DrawerRight: FC<DrawerRightProps> = ({
 					</li>
 					<li>
 						<Link
+							to="/order-generator"
+							className={`${buttonClass} ${
+								selected === ButtonList.OrderGenerator
+									? "text-primary font-semibold bg-slate-50"
+									: "text-white"
+							} ${hoverButtonClass}`}
+							onClick={toggleDrawer}>
+							Order Generator
+						</Link>
+					</li>
+					<li>
+						<Link
 							to="/account"
 							className={`${buttonClass} ${
 								selected === ButtonList.Account

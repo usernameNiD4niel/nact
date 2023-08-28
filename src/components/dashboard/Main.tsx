@@ -131,6 +131,17 @@ const SideNavigation = ({ selected }: { selected: ButtonList | null }) => {
 							Inventory
 						</Link>
 					</li>
+					<li>
+						<Link
+							to="/order-generator"
+							className={`${buttonClass} ${
+								selected === ButtonList.OrderGenerator
+									? "text-primary font-semibold bg-slate-50"
+									: "text-white font-thin"
+							} ${hoverButtonClass}`}>
+							Order Generator
+						</Link>
+					</li>
 				</div>
 				<li>
 					<Link

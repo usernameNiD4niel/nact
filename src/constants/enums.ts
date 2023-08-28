@@ -7,4 +7,5 @@ export enum ButtonList {
 	InventoryOfficer,
 	Account,
 	Inventory,
+	OrderGenerator,
 }

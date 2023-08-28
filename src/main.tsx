@@ -27,6 +27,7 @@ import Available from "./components/management/inventory/Available";
 import FullList from "./components/management/inventory/FullList";
 import Abcd from "./components/management/supplier/Abcd";
 import NewFeatures from "./components/management/inventory/NewFeatures";
+import OrderGenerator from "./components/order-generator/OrderGenerator";
 
 const router = createBrowserRouter(
 	createRoutesFromElements(
@@ -56,6 +57,7 @@ const router = createBrowserRouter(
 					<Route path="add" element={<AddInventory />} />
 				</Route>
 				<Route path="account" element={<Account />} />
+				<Route path="order-generator" element={<OrderGenerator />} />
 			</Route>
 			<Route path="login" element={<Index />} />
 		</Route>,
