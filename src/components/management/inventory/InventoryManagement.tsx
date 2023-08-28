@@ -20,11 +20,11 @@ const InventoryManagement = () => {
 	}, []);
 	return (
 		<section className="w-full flex flex-col items-center justify-center gap-y-4">
-			<div className="bg-[#1F2123] w-full  px-5 pt-6">
+			<div className="bg-[#1F2123] w-full  px-1 md:px-5 pt-6">
 				<Tabs
 					activeTabIndex={tab}
 					arrayOfText={["Available", "Full List", "Abcd", "New Feature"]}
-					key="TabsInventoryManagementkey"
+					// key="TabsInventoryManagementkey"
 					arrayOfRoutes={[
 						"/inventory/",
 						"/inventory/full-list",

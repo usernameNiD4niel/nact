@@ -13,12 +13,12 @@ const Tabs: FC<TabsProps> = ({
 	arrayOfRoutes,
 }) => {
 	return (
-		<div className="w-full flex text-white md:border-opacity-20 items-center text-sm gap-x-6">
+		<div className="w-full flex text-white md:border-opacity-20 items-center text-sm gap-x-0 md:gap-x-6">
 			{arrayOfText.map((item, index) => (
 				<>
 					<Link
 						to={arrayOfRoutes[index]}
-						className={`flex-1 text-center md:text-base md:flex-none pb-3 ${
+						className={`flex-1 text-center text-xs sm:text-sm md:text-base md:flex-none pb-3 ${
 							index === activeTabIndex
 								? "text-white border-b-2 border-b-white font-bold"
 								: "text-slate-300 border-0 font-normal"
