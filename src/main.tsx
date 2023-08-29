@@ -28,6 +28,7 @@ import FullList from "./components/management/inventory/FullList";
 import Abcd from "./components/management/supplier/Abcd";
 import NewFeatures from "./components/management/inventory/NewFeatures";
 import OrderGenerator from "./components/order-generator/OrderGenerator";
+import { SupplierTableItem } from "./components/management/supplier/SupplierTableItem";
 
 const router = createBrowserRouter(
 	createRoutesFromElements(
@@ -42,6 +43,7 @@ const router = createBrowserRouter(
 						<Route path="shipping" element={<Shipping />} />
 						<Route path="trucking" element={<Trucking />} />
 					</Route>
+					<Route path=":route" element={<SupplierTableItem />} />
 				</Route>
 				<Route path="costumer" element={<CostumerManagement />} />
 				<Route path="sales-agent" element={<SalesAgentManagement />} />

@@ -9,7 +9,7 @@ const AddSupplier = () => {
 			<HeaderWithBack text="Add Supplier" route="/supplier" />
 			<div className="py-2 mt-12 px-4 lg:w-full">
 				<p className="text-sm py-2">Select customer type</p>
-				<hr className="" />
+				<hr />
 				<ul className="space-y-0 lg:flex lg:space-y-0 lg:gap-x-4 flex-col">
 					{CustomerType.map((value, index) => (
 						<li key={index}>

@@ -1,6 +1,16 @@
-import { SupplierManagementProps } from "@/constants/props";
+import {
+	SupplierManagementCard,
+	SupplierManagementProps,
+} from "@/constants/props";
+import { useNavigate } from "react-router-dom";
 
 const Table = () => {
+	const navigate = useNavigate();
+
+	const handleAddingNewForm = (data: SupplierManagementCard) => {
+		navigate(`${data.route}`, { state: data });
+	};
+
 	return (
 		<div className="overflow-x-auto w-full">
 			<table className="table">
@@ -19,10 +29,15 @@ const Table = () => {
 				</thead>
 				<tbody>
 					{/* row 1 */}
-					{SupplierManagementProps.map((value, index) => (
+					{SupplierManagementProps.map((value) => (
 						<tr
-							key={`SupplierManagementKey${index}`}
-							className="hover:cursor-pointer hover:text-primary">
+							key={`SupplierManagementKey${value.route}`}
+							className="hover:cursor-pointer hover:text-primary"
+							onClick={() => handleAddingNewForm(value)}>
+							{/* <Link
+								to={`supplier/${value.id}`}
+								state={{ state: value }}
+								className="w-full"> */}
 							<td className="flex flex-col gap-y-2">
 								{value.title}{" "}
 								<span className="sm:hidden">{value.subtitle}</span>

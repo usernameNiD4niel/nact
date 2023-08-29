@@ -107,7 +107,8 @@ export const cardData: CardTypes[] = [
 	},
 ];
 
-type SupplierManagementCard = {
+export type SupplierManagementCard = {
+	route: string;
 	title: string;
 	subtitle: string;
 	phoneNumber: string;
@@ -115,16 +116,19 @@ type SupplierManagementCard = {
 
 export const SupplierManagementProps: SupplierManagementCard[] = [
 	{
+		route: "east-pacific-container",
 		title: "East Pacific Container",
 		subtitle: "Chicago, USA",
 		phoneNumber: "09154814993",
 	},
 	{
+		route: "north-pacific-container",
 		title: "North Pacific Container",
 		subtitle: "New York, USA",
 		phoneNumber: "09154814993",
 	},
 	{
+		route: "south-atlantic",
 		title: "South Atlantic",
 		subtitle: "California, USA",
 		phoneNumber: "09154814993",
