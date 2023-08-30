@@ -2,10 +2,10 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "@/index.css";
 import {
-	Route,
-	RouterProvider,
-	createBrowserRouter,
-	createRoutesFromElements,
+  Route,
+  RouterProvider,
+  createBrowserRouter,
+  createRoutesFromElements,
 } from "react-router-dom";
 import Root from "@/components/dashboard/Root.tsx";
 import Account from "@/components/accounts/Account.tsx";
@@ -29,45 +29,47 @@ import Abcd from "./components/management/supplier/Abcd";
 import NewFeatures from "./components/management/inventory/NewFeatures";
 import OrderGenerator from "./components/order-generator/OrderGenerator";
 import { SupplierTableItem } from "./components/management/supplier/SupplierTableItem";
+import InventoryTableItem from "./components/management/inventory/InventoryTableItem";
 
 const router = createBrowserRouter(
-	createRoutesFromElements(
-		<Route>
-			<Route element={<Main />} path="/">
-				<Route index element={<Root />} />
-				<Route path="module" element={<Module />} />
-				<Route path="supplier" element={<SupplierManagement />}>
-					<Route index element={<List />} />
-					<Route path="analytics" element={<Analytics />} />
-					<Route path="add" element={<AddSupplier />}>
-						<Route path="shipping" element={<Shipping />} />
-						<Route path="trucking" element={<Trucking />} />
-					</Route>
-					<Route path=":route" element={<SupplierTableItem />} />
-				</Route>
-				<Route path="costumer" element={<CostumerManagement />} />
-				<Route path="sales-agent" element={<SalesAgentManagement />} />
-				<Route
-					path="inventory-officer"
-					element={<InventoryOfficerManagement />}
-				/>
-				<Route path="inventory" element={<InventoryManagement />}>
-					<Route index element={<Available />} />
-					<Route path="full-list" element={<FullList />} />
-					<Route path="new-feature" element={<NewFeatures />} />
-					<Route path="abcd" element={<Abcd />} />
-					<Route path="add" element={<AddInventory />} />
-				</Route>
-				<Route path="account" element={<Account />} />
-				<Route path="order-generator" element={<OrderGenerator />} />
-			</Route>
-			<Route path="login" element={<Index />} />
-		</Route>,
-	),
+  createRoutesFromElements(
+    <Route>
+      <Route element={<Main />} path="/">
+        <Route index element={<Root />} />
+        <Route path="module" element={<Module />} />
+        <Route path="supplier" element={<SupplierManagement />}>
+          <Route index element={<List />} />
+          <Route path="analytics" element={<Analytics />} />
+          <Route path="add" element={<AddSupplier />}>
+            <Route path="shipping" element={<Shipping />} />
+            <Route path="trucking" element={<Trucking />} />
+          </Route>
+          <Route path=":route" element={<SupplierTableItem />} />
+        </Route>
+        <Route path="costumer" element={<CostumerManagement />} />
+        <Route path="sales-agent" element={<SalesAgentManagement />} />
+        <Route
+          path="inventory-officer"
+          element={<InventoryOfficerManagement />}
+        />
+        <Route path="inventory" element={<InventoryManagement />}>
+          <Route index element={<Available />} />
+          <Route path="full-list" element={<FullList />} />
+          <Route path="new-feature" element={<NewFeatures />} />
+          <Route path="abcd" element={<Abcd />} />
+          <Route path="add" element={<AddInventory />} />
+          <Route path=":id" element={<InventoryTableItem />} />
+        </Route>
+        <Route path="account" element={<Account />} />
+        <Route path="order-generator" element={<OrderGenerator />} />
+      </Route>
+      <Route path="login" element={<Index />} />
+    </Route>
+  )
 );
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-	<React.StrictMode>
-		<RouterProvider router={router} />
-	</React.StrictMode>,
+  <React.StrictMode>
+    <RouterProvider router={router} />
+  </React.StrictMode>
 );
