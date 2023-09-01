@@ -21,7 +21,7 @@ const HeaderWithBack: FC<HeaderWithBackProps> = ({ text, route }) => {
 					</p>
 					{text}
 				</Link>
-				<div>
+				<div className="md:hidden">
 					<DrawerRight
 						drawerId="my-drawer-5"
 						isDrawerOpen={isDrawerOpen}
