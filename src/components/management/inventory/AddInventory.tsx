@@ -74,6 +74,7 @@ const ContainerInformation: FC<ContainerInformationProps> = (props) => {
 	return (
 		<React.Fragment>
 			<AnimatedInputs
+				isDisabled={false}
 				type="text"
 				inputType="containerType"
 				value={props.containerType}
@@ -82,6 +83,7 @@ const ContainerInformation: FC<ContainerInformationProps> = (props) => {
 				key="ContainerTypeKey"
 			/>
 			<AnimatedInputs
+				isDisabled={false}
 				type="text"
 				inputType="condition"
 				value={props.condition}
@@ -90,6 +92,7 @@ const ContainerInformation: FC<ContainerInformationProps> = (props) => {
 				key="ConditionKey"
 			/>
 			<AnimatedInputs
+				isDisabled={false}
 				type="text"
 				inputType="city"
 				value={props.city}
@@ -98,6 +101,7 @@ const ContainerInformation: FC<ContainerInformationProps> = (props) => {
 				key="CityKey"
 			/>
 			<AnimatedInputs
+				isDisabled={false}
 				type="text"
 				inputType="city"
 				value={props.state}
@@ -106,6 +110,7 @@ const ContainerInformation: FC<ContainerInformationProps> = (props) => {
 				key="StateKey"
 			/>
 			<AnimatedInputs
+				isDisabled={false}
 				type="text"
 				inputType="region"
 				value={props.region}
@@ -114,6 +119,7 @@ const ContainerInformation: FC<ContainerInformationProps> = (props) => {
 				key="RegionKey"
 			/>
 			<AnimatedInputs
+				isDisabled={false}
 				type="text"
 				inputType="country"
 				value={props.country}
@@ -122,6 +128,7 @@ const ContainerInformation: FC<ContainerInformationProps> = (props) => {
 				key="CountryKey"
 			/>
 			<AnimatedInputs
+				isDisabled={false}
 				type="text"
 				inputType="depot"
 				value={props.depot}
@@ -130,6 +137,7 @@ const ContainerInformation: FC<ContainerInformationProps> = (props) => {
 				key="DepotKey"
 			/>
 			<AnimatedInputs
+				isDisabled={false}
 				type="text"
 				inputType="validUntil"
 				value={props.validUntil}
@@ -138,6 +146,7 @@ const ContainerInformation: FC<ContainerInformationProps> = (props) => {
 				key="ValidUntilKey"
 			/>
 			<AnimatedInputs
+				isDisabled={false}
 				type="text"
 				inputType="quantity"
 				value={props.quantity}
@@ -146,6 +155,7 @@ const ContainerInformation: FC<ContainerInformationProps> = (props) => {
 				key="QuantityKey"
 			/>
 			<AnimatedInputs
+				isDisabled={false}
 				type="text"
 				inputType="buyingRates"
 				value={props.buyingRate}
@@ -154,6 +164,7 @@ const ContainerInformation: FC<ContainerInformationProps> = (props) => {
 				key="BuyingRateKey"
 			/>
 			<AnimatedInputs
+				isDisabled={false}
 				type="text"
 				inputType="sellingRate"
 				value={props.sellingRate}

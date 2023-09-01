@@ -118,6 +118,7 @@ const DisplaySupplierManagementInputs: FC<SupplierManagementTypes> = ({
 	return (
 		<>
 			<AnimatedInputs
+				isDisabled={false}
 				inputType="supplier"
 				label="Supplier"
 				setValue={setSupplier}
@@ -126,6 +127,7 @@ const DisplaySupplierManagementInputs: FC<SupplierManagementTypes> = ({
 				key="SupplierKey"
 			/>
 			<AnimatedInputs
+				isDisabled={false}
 				inputType="location"
 				label="Location"
 				setValue={setLocation}
@@ -134,6 +136,7 @@ const DisplaySupplierManagementInputs: FC<SupplierManagementTypes> = ({
 				key="LocationKey"
 			/>
 			<AnimatedInputs
+				isDisabled={false}
 				inputType="abcde"
 				label="Abcde"
 				setValue={setAbcde}
@@ -142,6 +145,7 @@ const DisplaySupplierManagementInputs: FC<SupplierManagementTypes> = ({
 				key="AbcdeKey"
 			/>
 			<AnimatedInputs
+				isDisabled={false}
 				inputType="contact"
 				label="Contact"
 				setValue={setContact}
@@ -185,6 +189,7 @@ const DisplayInputs: FC<InputFieldsTypes> = ({
 	return (
 		<>
 			<AnimatedInputs
+				isDisabled={false}
 				inputType="productName"
 				label="Product Name"
 				setValue={setProductName}
@@ -193,6 +198,7 @@ const DisplayInputs: FC<InputFieldsTypes> = ({
 				key="ProductNameKey"
 			/>
 			<AnimatedInputs
+				isDisabled={false}
 				inputType="city"
 				label="City"
 				setValue={setCity}
@@ -201,6 +207,7 @@ const DisplayInputs: FC<InputFieldsTypes> = ({
 				key="CityKey"
 			/>
 			<AnimatedInputs
+				isDisabled={false}
 				inputType="state"
 				label="State"
 				setValue={setState}
@@ -209,6 +216,7 @@ const DisplayInputs: FC<InputFieldsTypes> = ({
 				key="StateKey"
 			/>
 			<AnimatedInputs
+				isDisabled={false}
 				inputType="quantity"
 				label="Quantity"
 				setValue={setQuantity}
@@ -217,6 +225,7 @@ const DisplayInputs: FC<InputFieldsTypes> = ({
 				key="QuantityKey"
 			/>
 			<AnimatedInputs
+				isDisabled={false}
 				inputType="depot"
 				label="Depot"
 				setValue={setDepot}
@@ -225,6 +234,7 @@ const DisplayInputs: FC<InputFieldsTypes> = ({
 				key="DepotKey"
 			/>
 			<AnimatedInputs
+				isDisabled={false}
 				inputType="price"
 				label="Price"
 				setValue={setPrice}

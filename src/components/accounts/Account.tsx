@@ -133,6 +133,7 @@ const PersonalInformation: FC<UserInformation> = ({
 					</div>
 				) : (
 					<AnimatedInputs
+						isDisabled={false}
 						inputType="firstName"
 						label="First Name"
 						setValue={setFirstName}
@@ -148,6 +149,7 @@ const PersonalInformation: FC<UserInformation> = ({
 					</div>
 				) : (
 					<AnimatedInputs
+						isDisabled={false}
 						inputType="lastName"
 						label="Last Name"
 						setValue={setLastName}
@@ -165,6 +167,7 @@ const PersonalInformation: FC<UserInformation> = ({
 					</div>
 				) : (
 					<AnimatedInputs
+						isDisabled={false}
 						inputType="email"
 						label="Email Address"
 						setValue={null}
@@ -180,6 +183,7 @@ const PersonalInformation: FC<UserInformation> = ({
 					</div>
 				) : (
 					<AnimatedInputs
+						isDisabled={false}
 						inputType="phoneNumber"
 						label="Phone Number"
 						setValue={null}
@@ -226,6 +230,7 @@ const ChangePassword = ({ isSaved }: { isSaved: boolean }) => {
 				</div>
 				<div className="grid md:grid-cols-2 gap-5">
 					<AnimatedInputs
+						isDisabled={false}
 						inputType="newPassword"
 						label="New Password"
 						setValue={null}
@@ -234,6 +239,7 @@ const ChangePassword = ({ isSaved }: { isSaved: boolean }) => {
 						key="newPasswordKeyAccount"
 					/>
 					<AnimatedInputs
+						isDisabled={false}
 						inputType="confirmPassword"
 						label="Confirm New Password"
 						setValue={null}
