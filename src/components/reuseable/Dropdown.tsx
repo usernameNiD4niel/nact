@@ -1,5 +1,7 @@
 import React, { useState, useRef, useEffect } from "react";
 import { BsChevronDown } from "react-icons/bs";
+import { LiaEdit } from "react-icons/lia";
+import { RiDeleteBin6Line } from "react-icons/ri";
 
 const Dropdown: React.FC = () => {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
@@ -31,22 +33,34 @@ const Dropdown: React.FC = () => {
   };
 
   return (
-    <div className="dropdown" ref={dropdownRef}>
+    <div className="dropdown dropdown-end" ref={dropdownRef}>
       <label
         tabIndex={0}
-        className="flex gap-x-2 items-center justify-center p-2 rounded outline outline-1 outline-black m-1"
+        className="flex gap-x-2 items-center justify-center p-2 rounded border border-1 m-1 text-sm hover:cursor-pointer"
         onClick={toggleDropdown}
       >
         <span>Options</span>
         <BsChevronDown />
       </label>
       {isDropdownOpen && (
-        <ul className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+        <ul className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded w-48">
           <li>
-            <a onClick={closeDropdown}>Item 1</a>
+            <a
+              onClick={closeDropdown}
+              className="flex items-center p-2 gap-x-2"
+            >
+              <LiaEdit />
+              Edit
+            </a>
           </li>
           <li>
-            <a onClick={closeDropdown}>Item 2</a>
+            <a
+              onClick={closeDropdown}
+              className="flex items-center p-2 gap-x-2"
+            >
+              <RiDeleteBin6Line />
+              Delete
+            </a>
           </li>
         </ul>
       )}

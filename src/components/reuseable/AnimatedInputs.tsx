@@ -27,6 +27,7 @@ const AnimatedInputs: FC<AnimatedInputProps> = ({
         id={inputType}
         name={inputType}
         value={value}
+        autoComplete="no"
         onChange={(e) => {
           if (setValue != null) setValue(e.target.value);
         }}
