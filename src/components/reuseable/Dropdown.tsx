@@ -40,7 +40,7 @@ const Dropdown: React.FC = () => {
 				tabIndex={0}
 				className="flex gap-x-2 items-center justify-center p-2 rounded border border-1 m-1 text-sm hover:cursor-pointer"
 				onClick={toggleDropdown}>
-				<span className="text-xs md:text-sm">Options</span>
+				<span className="text-xs md:text-sm font-semibold">Options</span>
 				<HiChevronDown />
 			</label>
 			{isDropdownOpen && (
@@ -48,7 +48,7 @@ const Dropdown: React.FC = () => {
 					<li>
 						<a
 							onClick={closeDropdown}
-							className="flex items-center p-2 gap-x-2">
+							className="flex items-center p-2 gap-x-2 text-xs md:text-sm">
 							<HiOutlinePencilSquare />
 							Edit
 						</a>
@@ -56,7 +56,7 @@ const Dropdown: React.FC = () => {
 					<li>
 						<a
 							onClick={closeDropdown}
-							className="flex items-center p-2 gap-x-2">
+							className="flex items-center p-2 gap-x-2 text-xs md:text-sm">
 							<HiOutlineTrash />
 							Delete
 						</a>

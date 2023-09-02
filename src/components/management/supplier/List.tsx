@@ -3,38 +3,20 @@ import Table from "@/components/reuseable/Table";
 import { useInventoryState } from "@/utils/InventoryState";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { useState } from "react";
-import Filter from "@/components/reuseable/Filter";
 import { HiOutlinePlus } from "react-icons/hi2";
 
 const List = () => {
 	const [setTab] = useInventoryState((state) => [state.setActiveTab]);
-	const [isShowingFilter, setIsShowingFilter] = useState<boolean>(false);
 
 	useEffect(() => setTab(0), []);
 
-	const handleMappingButton = (event: React.MouseEvent) => {
-		const target = event.target as HTMLElement;
-
-		if (target.id === "filter-btn") {
-			setIsShowingFilter(true);
-		}
-	};
 	return (
 		<div className="w-full">
-			<div
-				className="md:px-10 w-full space-y-5 px-5 py-6"
-				onClick={handleMappingButton}>
-				<SearchWithFilter
-					placeHolder="Search Supplier"
-					setIsShowingFilter={setIsShowingFilter}
-				/>
+			<div className="md:px-10 w-full space-y-5 px-5 py-6">
+				<SearchWithFilter placeHolder="Search Supplier" />
 				<Table />
 			</div>
 			<AddButton />
-			{isShowingFilter && (
-				<Filter setIsFilterShowing={setIsShowingFilter} isInventory={false} />
-			)}
 		</div>
 	);
 };

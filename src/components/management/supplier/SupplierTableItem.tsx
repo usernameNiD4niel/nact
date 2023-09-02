@@ -187,43 +187,75 @@ const DisplayBusinessInformation: FC<DisplayProps> = (props) => {
 
 const DisplayContactInformation: FC<ContactInformationProps> = (props) => {
 	return (
-		<>
-			<div className="flex items-center justify-between">
-				<h3 className="text-sm font-bold my-3">Contact Information</h3>
+		<React.Fragment>
+			<hr className="mt-10" />
+			<div className="flex justify-between items-center">
+				<h3 className="text-sm font-bold mt-5">Contact Information</h3>
 			</div>
-			<div className="flex flex-col w-full gap-y-4">
-				<AnimatedInputs
-					type="text"
-					inputType="contactPersonFirstName"
-					value={props.contactPersonFirstName}
-					setValue={props.setContactPersonFirstName}
-					label="Contact Person First Name"
-					key="Contact Person First Name Key"
-					isDisabled={true}
-				/>
-			</div>
-		</>
+			<AnimatedInputs
+				isDisabled={true}
+				type="text"
+				inputType="contactPersonFirstName"
+				value={props.contactPersonFirstName}
+				setValue={props.setContactPersonFirstName}
+				label="Contact Person First Name"
+				key="ContactPersonFirstKey"
+			/>
+			<AnimatedInputs
+				isDisabled={true}
+				type="text"
+				inputType="contactPersonLastName"
+				value={props.contactPersonFirstName}
+				setValue={props.setContactPersonLastName}
+				label="Contact Person Last Name"
+				key="ContactPersonLastKey"
+			/>
+			<AnimatedInputs
+				isDisabled={true}
+				type="text"
+				inputType="contactPersonMI"
+				value={props.contactPersonMI}
+				setValue={props.setContactPersonMI}
+				label="Contact Person MI Name"
+				key="ContactPersonMIKey"
+			/>
+			<AnimatedInputs
+				isDisabled={true}
+				type="text"
+				inputType="jobTitle"
+				value={props.jobTitle}
+				setValue={props.setJobTitle}
+				label="Job Title"
+				key="JobTitleKey"
+			/>
+			<AnimatedInputs
+				isDisabled={true}
+				type="tel"
+				inputType="contactNumber"
+				value={props.contactNumber}
+				setValue={props.setContactNumber}
+				label="Contact Number"
+				key="ContactNumberKey"
+			/>
+			<AnimatedInputs
+				isDisabled={true}
+				type="email"
+				inputType="email"
+				value={props.email}
+				setValue={props.setEmail}
+				label="Email"
+				key="EmailKey"
+			/>
+		</React.Fragment>
 	);
 };
 
 const DisplayForm: FC<FormProps> = (props) => {
 	return (
 		<div className="flex flex-col items-center justify-center mt-10">
-			<form className="p-2 flex flex-col gap-y-2 w-full lg:w-[60%] py-10 bg-white px-6">
+			<form className="p-2 flex flex-col gap-y-4 w-full lg:w-[60%] py-10 bg-white px-6">
 				<DisplayBusinessInformation {...props.businessInformation} />
 				<DisplayContactInformation {...props.contactInformation} />
-				<div className="w-full flex items-center gap-3 mt-5 flex-col md:flex-row-reverse">
-					<button
-						type="submit"
-						className="w-full text-center p-3 md:w-fit md:px-9 text-white rounded-md bg-primary">
-						Submit
-					</button>
-					<button
-						type="reset"
-						className="w-full text-center p-3 md:w-fit md:px-9 text-primary">
-						Reset
-					</button>
-				</div>
 			</form>
 		</div>
 	);

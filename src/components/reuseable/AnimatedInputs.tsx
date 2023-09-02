@@ -25,7 +25,7 @@ const AnimatedInputs: FC<AnimatedInputProps> = ({
 		<label className="relative" htmlFor={inputType}>
 			<input
 				type={type}
-				className={`${animatedInputClass}`}
+				className={`${animatedInputClass} disabled:bg-gray-100`}
 				id={inputType}
 				name={inputType}
 				value={value}
