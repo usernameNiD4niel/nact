@@ -7,11 +7,11 @@ import { useForm } from "react-hook-form";
 import { AccountDetailSchema } from "../models/Signup";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AccountDetailDatatypes, FormDataProps } from "../constants/props";
-import { AiOutlineArrowLeft, AiOutlineArrowRight } from "react-icons/ai";
 import { useAccountDetailStore } from "../utils/account-detail";
 import DisplayErrorMessage from "./DisplayErrorMessage";
 import { POST } from "@/api/register";
 import { usePersonalDetailStore } from "@/utils/personal-detail";
+import { HiOutlineArrowLeft, HiOutlineArrowRight } from "react-icons/hi2";
 
 type AccountDetailProps = {
 	setIsOneCurrentSlide: React.Dispatch<React.SetStateAction<boolean>>;
@@ -44,19 +44,14 @@ const AccountDetail = ({
 		state.setConfirmPin,
 	]);
 
-	const [
-		firstName,
-		lastName,
-		middleInitial,
-		birthDate,
-		gender,
-	] = usePersonalDetailStore((state) => [
-		state.firstName,
-		state.lastName,
-		state.middleInitial,
-		state.birthDate,
-		state.gender,
-	]);
+	const [firstName, lastName, middleInitial, birthDate, gender] =
+		usePersonalDetailStore((state) => [
+			state.firstName,
+			state.lastName,
+			state.middleInitial,
+			state.birthDate,
+			state.gender,
+		]);
 
 	const {
 		register,
@@ -69,7 +64,7 @@ const AccountDetail = ({
 	const handleFormSubmit = async (data: AccountDetailDatatypes) => {
 		// Get global state of all the fields
 
-		const {mobileNumber, pin, recoveryAnswer, recoveryQuestion} = data;
+		const { mobileNumber, pin, recoveryAnswer, recoveryQuestion } = data;
 
 		const formData: FormDataProps = {
 			firstName,
@@ -80,8 +75,8 @@ const AccountDetail = ({
 			mobileNumber,
 			pin,
 			recoveryAnswer,
-			recoveryQuestion
-		}
+			recoveryQuestion,
+		};
 
 		const response = await POST(formData);
 
@@ -89,7 +84,7 @@ const AccountDetail = ({
 			alert("error occured");
 		} else {
 			alert("successfully created post request!");
-			if(typeof response === "object") {
+			if (typeof response === "object") {
 				console.log("Hello pare: " + response.firstName);
 			}
 		}
@@ -211,14 +206,14 @@ const AccountDetail = ({
 					type="button"
 					onClick={() => setIsOneCurrentSlide(true)}
 					className="flex items-center justify-center gap-4 px-3 py-2 ring-1 ring-[#017DC3] text-[#017DC3] text-center rounded-lg font-bold">
-					<AiOutlineArrowLeft />
+					<HiOutlineArrowLeft />
 					Previous
 				</button>
 
 				<button
 					type="submit"
 					className="flex items-center justify-center gap-4 px-4 ring-1 ring-[#017DC3] py-2 bg-[#017DC3] text-white text-center rounded-lg font-bold">
-					Submit <AiOutlineArrowRight />
+					Submit <HiOutlineArrowRight />
 				</button>
 			</div>
 		</form>

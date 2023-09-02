@@ -1,8 +1,7 @@
 import AnimatedInputs from "@/components/reuseable/AnimatedInputs";
 import HeaderWithBack from "@/components/reuseable/HeaderWithBack";
 import React, { FC, useState } from "react";
-import { AiFillFileAdd } from "react-icons/ai";
-import { IoMdRemoveCircle } from "react-icons/io";
+import { HiOutlineMinus, HiOutlinePlus } from "react-icons/hi2";
 
 const Shipping = () => {
 	return (
@@ -144,7 +143,7 @@ const ContactInformation: FC<ContactInformationAdds> = ({
 						type="button"
 						onClick={() => handleRemoveContact(index)}
 						className="flex items-center text-red-600 uppercase gap-x-2 text-sm">
-						<IoMdRemoveCircle /> Remove
+						<HiOutlineMinus /> Remove
 					</button>
 				)}
 			</div>
@@ -209,7 +208,7 @@ const ContactInformation: FC<ContactInformationAdds> = ({
 						setContactInformation((prev) => [...prev, prev.length])
 					}
 					className="text-primary pb-2 flex gap-x-2 items-center text-sm">
-					<AiFillFileAdd />
+					<HiOutlinePlus />
 					ADD OTHER CONTACT PERSON
 				</button>
 			</div>

@@ -1,5 +1,5 @@
-import search_filter from "@/assets/search-filter.svg";
 import { FC } from "react";
+import { HiOutlineAdjustmentsHorizontal } from "react-icons/hi2";
 
 type SearchWithFilterProps = {
 	placeHolder: string;
@@ -27,17 +27,11 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 				/>
 				<button
 					type="submit"
-					className="border-l-[1px] border-black border-opacity-10 rounded-sm p-3 absolute right-0 top-0 bottom-0"
+					className="border-l-[1px] text-primary text-xl border-black border-opacity-10 rounded-sm p-3 absolute right-0 top-0 bottom-0"
 					id="filter-btn">
-					<img src={search_filter} alt="Search filter icon" />
+					<HiOutlineAdjustmentsHorizontal />
 				</button>
 			</form>
-			{/* {isShowingFilter && (
-				<Filter
-					setIsFilterShowing={setIsShowingFilter}
-					isInventory={isInventory}
-				/>
-			)} */}
 		</>
 	);
 };

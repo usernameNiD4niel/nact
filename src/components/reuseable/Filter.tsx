@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
-import { IoIosArrowBack } from "react-icons/io";
 import AnimatedInputs from "./AnimatedInputs";
+import { HiOutlineAdjustmentsHorizontal } from "react-icons/hi2";
 
 type FilterProps = {
 	setIsFilterShowing: React.Dispatch<React.SetStateAction<boolean>>;
@@ -81,7 +81,7 @@ const Filter: FC<FilterProps> = ({ setIsFilterShowing, isInventory }) => {
 						type="button"
 						className="flex gap-x-2 text-2xl text-primary w-fit"
 						onClick={() => setIsFilterShowing(false)}>
-						<IoIosArrowBack />
+						<HiOutlineAdjustmentsHorizontal />
 						<span className="font-bold text-sm md:text-base">Filter</span>
 					</button>
 					{inputs}

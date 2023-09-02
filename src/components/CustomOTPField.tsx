@@ -1,8 +1,8 @@
 import React, { FC, useEffect, useRef, useState } from "react";
 import "../../styles/remove-scroll-bar.css";
-import { GrLinkNext } from "react-icons/gr";
 import { UseFormRegister } from "react-hook-form";
 import { LoginProps } from "@/models/Login";
+import { HiOutlineArrowRight } from "react-icons/hi2";
 
 export type OTPFieldProps = {
 	otp: string[];
@@ -75,7 +75,7 @@ const OTPField: FC<OTPFieldProps> = ({
 						/>
 						{index === otp.length - 1 ? null : (
 							<p className="text-[10px]">
-								<GrLinkNext />
+								<HiOutlineArrowRight />
 							</p>
 						)}
 					</React.Fragment>

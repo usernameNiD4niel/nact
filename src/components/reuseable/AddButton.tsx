@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import add from "@/assets/add.svg";
 import { FC } from "react";
+import { HiPlus } from "react-icons/hi2";
 
 type AddButtonProps = {
 	textButton: string;
@@ -13,7 +13,7 @@ const AddButton: FC<AddButtonProps> = ({ redirectUrl, textButton }) => {
 			<Link
 				to={redirectUrl}
 				className="flex items-center justify-center gap-x-2 text-primary text-sm">
-				<img src={add} alt="add icon" />
+				<HiPlus />
 				{textButton}
 			</Link>
 		</div>

@@ -3,7 +3,7 @@ import SearchWithFilter from "@/components/reuseable/SearchWithFilter";
 import TableSixCol from "@/components/reuseable/TableSixCol";
 import { useInventoryState } from "@/utils/InventoryState";
 import { useEffect, useState } from "react";
-import { IoMdAdd } from "react-icons/io";
+import { HiOutlinePlus } from "react-icons/hi2";
 import { Link } from "react-router-dom";
 
 const Available = (): JSX.Element => {
@@ -42,7 +42,7 @@ const AddButton = () => {
 		<Link
 			to="/inventory/add"
 			className="absolute right-2 bottom-4 md:right-10 hover:opacity-90 flex rounded-full items-center justify-center gap-x-2 w-14 h-14 bg-primary md:w-32 text-white text-2xl">
-			<IoMdAdd />
+			<HiOutlinePlus />
 			<span className="hidden md:block text-sm">INVENTORY</span>
 		</Link>
 	);
