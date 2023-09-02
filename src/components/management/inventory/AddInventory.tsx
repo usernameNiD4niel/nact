@@ -1,6 +1,10 @@
 import ContainerInformationForm from "@/components/reuseable/ContainerInformationForm";
 import HeaderWithBack from "@/components/reuseable/HeaderWithBack";
-import { ContainerInformationProps } from "@/constants/props";
+import SupplierFormInventory from "@/components/reuseable/SupplierFormInventory";
+import {
+	ContainerInformationProps,
+	SuplierFormInventoryProps,
+} from "@/constants/props";
 import { headerBackClass } from "@/constants/reusable-class";
 import { useState } from "react";
 
@@ -17,6 +21,12 @@ const AddInventory = () => {
 	const [quantity, setQuantity] = useState<string>("");
 	const [buyingRate, setBuyingRate] = useState<string>("");
 	const [sellingRate, setSellingRate] = useState<string>("");
+
+	// Supplier state fields
+	const [supplierName, setSupplierName] = useState<string>("");
+	const [businessName, setBusinessName] = useState<string>("");
+	const [completeAddress, setCompleteAddress] = useState<string>("");
+	const [contactNumber, setContactNumber] = useState<string>("");
 
 	const containerInformation: ContainerInformationProps = {
 		buyingRate,
@@ -43,6 +53,17 @@ const AddInventory = () => {
 		setValidUntil,
 	};
 
+	const supplierStateFieldObject: SuplierFormInventoryProps = {
+		businessName,
+		completeAddress,
+		contactNumber,
+		setBusinessName,
+		setCompleteAddress,
+		setContactNumber,
+		setSupplierName,
+		supplierName,
+	};
+
 	return (
 		<div className={headerBackClass}>
 			<div className="flex items-center justify-center flex-col w-full mt-10">
@@ -55,6 +76,10 @@ const AddInventory = () => {
 							props={containerInformation}
 							key="AddInventoryFormKey"
 						/>
+					</div>
+					<h3 className="text-sm font-bold my-3">Supplier</h3>
+					<div className="flex flex-col w-full gap-y-4">
+						<SupplierFormInventory props={supplierStateFieldObject} />
 					</div>
 					<div className="w-full flex flex-col md:flex-row-reverse items-center gap-3 mt-5">
 						<button
