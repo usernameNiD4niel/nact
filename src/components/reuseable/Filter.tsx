@@ -48,10 +48,10 @@ const Filter = ({
 
 	return (
 		<main
-			className={`fixed z-30 w-full h-full flex cursor-pointer overflow-auto bg-black main-class bg-opacity-40 items-center justify-end -top-5 right-0`}
+			className={`fixed z-30 w-full h-full flex cursor-pointer overflow-auto bg-black main-class bg-opacity-40 items-center justify-end -top-5  bottom-0 right-0`}
 			onClick={handleBackButton}>
 			<aside className="h-full w-[70%] sm:w-[40%] md:w-[30%] bg-white cursor-auto pt-2">
-				<form className="w-full flex p-5 flex-col h-full gap-y-4 bg-white">
+				<form className="w-full flex p-5 flex-col gap-y-4 bg-white">
 					<button
 						type="button"
 						className="flex gap-x-2 text-2xl text-primary w-fit"
@@ -70,25 +70,27 @@ const Filter = ({
 
 const SearchComponent = (): JSX.Element => {
 	return (
-		<div className="border border-1 border-black border-opacity-10 w-full rounded-md py-3 flex flex-col">
+		<div className="border border-1 border-black border-opacity-20 w-full rounded-md py-3 flex flex-col bg-white">
 			<input
 				type="text"
 				placeholder="Search"
-				className="p-2 rounded text-sm px-3"
+				className="p-2 rounded-md text-[16px] px-3 focus:outline-none border border-1 border-black border-opacity-20 mx-3 my-1"
 			/>
-			<hr className="my-2" />
-			<label htmlFor="New York" className="text-sm text-gray-400 px-2">
-				<input type="checkbox" name="newYork" />
-				New York
-			</label>
-			<label htmlFor="California" className="text-sm text-gray-400 px-2">
-				<input type="checkbox" name="california" />
-				California
-			</label>
-			<label htmlFor="abcde" className="text-sm text-gray-400 px-2">
-				<input type="checkbox" name="abcde" />
-				Abcde
-			</label>
+			<div className="w-full h-[1px] bg-black bg-opacity-20 mt-2 mb-4" />
+			<div className="flex flex-col gap-y-2">
+				<label className="text-xs text-gray-400 px-2 w-fit">
+					<input type="checkbox" name="newYork" className="mr-2" />
+					New York
+				</label>
+				<label className="text-xs text-gray-400 px-2 w-fit">
+					<input type="checkbox" name="california" className="mr-2" />
+					California
+				</label>
+				<label className="text-xs text-gray-400 px-2 w-fit">
+					<input type="checkbox" name="abcde" className="mr-2" />
+					Abcde
+				</label>
+			</div>
 		</div>
 	);
 };
