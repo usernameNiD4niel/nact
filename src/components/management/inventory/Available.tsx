@@ -15,16 +15,11 @@ const Available = (): JSX.Element => {
 	return (
 		<>
 			<div className="md:px-10 w-full space-y-5 px-5 py-6">
-				<SearchWithFilter
-					placeHolder="Search Inventory"
-					setIsShowingFilter={setIsShowingFilter}
-				/>
+				<SearchWithFilter placeHolder="Search Inventory" />
 				<AddButton />
 				<DisplayInventoryData />
 			</div>
-			{isShowingFilter && (
-				<Filter setIsFilterShowing={setIsShowingFilter} isInventory={true} />
-			)}
+			{isShowingFilter && <Filter setIsShowingFilter={setIsShowingFilter} />}
 		</>
 	);
 };
