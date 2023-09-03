@@ -39,7 +39,7 @@ const AnimatedInputs: FC<AnimatedInputProps> = ({
 			<span
 				className={`${`${animatedSpanClass} whitespace-nowrap`} ${
 					value && "input-contains"
-				}`}>
+				} ${isDisabled && "disabled-label"}`}>
 				{label}
 			</span>
 		</label>
