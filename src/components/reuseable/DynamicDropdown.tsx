@@ -70,7 +70,15 @@ const DynamicDropdown: React.FC<DynamicDropdownProps> = ({
 				{dropDownItems.map((item, index) => (
 					<li className="flex w-full items-center justify-center" key={index}>
 						<label className="w-full flex justify-center items-center gap-x-2 hover:cursor-pointer py-2 text-sm pl-4 text-gray-900 hover:bg-slate-100">
-							<input type="checkbox" />
+							<input
+								type="checkbox"
+								className={`${dropdownText === "Sort" && "hidden"}`}
+								onClick={() => {
+									if (dropdownText === "Sort") {
+										setIsOpen(false);
+									}
+								}}
+							/>
 							<span className="w-full">{item}</span>
 						</label>
 					</li>
