@@ -210,3 +210,8 @@ export type SuplierFormInventoryProps = {
 	contactNumber: string;
 	setContactNumber: React.Dispatch<React.SetStateAction<string>>;
 };
+
+export type DynamicDropdownProps = {
+	dropdownText: string;
+	dropDownItems: string[];
+};

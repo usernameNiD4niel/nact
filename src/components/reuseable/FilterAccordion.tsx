@@ -1,5 +1,5 @@
 import { FC, useState } from "react";
-import { HiMinus, HiPlus } from "react-icons/hi2";
+import { HiOutlineChevronDown, HiOutlineChevronUp } from "react-icons/hi2";
 
 type FilterAccordionType = {
 	accordionText: string;
@@ -22,9 +22,9 @@ const FilterAccordion: FC<FilterAccordionType> = ({
 				className={`flex w-full justify-between items-center group`}
 				type="button"
 				onClick={handleAccordion}>
-				<span>{accordionText}</span>
+				<span className="font-medium">{accordionText}</span>
 				<span className="text-xl group-hover:text-opacity-100 text-black text-opacity-30 transition duration-300 ease-in-out">
-					{!isAccordionOpen ? <HiPlus /> : <HiMinus />}
+					{!isAccordionOpen ? <HiOutlineChevronDown /> : <HiOutlineChevronUp />}
 				</span>
 			</button>
 			<ul
@@ -33,7 +33,7 @@ const FilterAccordion: FC<FilterAccordionType> = ({
 				} flex-col gap-y-2 mt-2`}>
 				{accordionItems.map((item, index) => (
 					<li key={index}>
-						<label className="flex items-center gap-x-2 hover:cursor-pointer">
+						<label className="flex items-center text-sm gap-x-2 opacity-75 hover:cursor-pointer mx-1 my-2">
 							<input type="checkbox" name={item} />
 							{item}
 						</label>

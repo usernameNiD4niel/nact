@@ -1,8 +1,9 @@
+import DynamicDropdown from "@/components/reuseable/DynamicDropdown";
 import Filter from "@/components/reuseable/Filter";
 import SearchWithFilter from "@/components/reuseable/SearchWithFilter";
 import TableSixCol from "@/components/reuseable/TableSixCol";
 import { useInventoryState } from "@/utils/InventoryState";
-import { useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { HiOutlinePlus } from "react-icons/hi2";
 import { Link } from "react-router-dom";
 
@@ -17,10 +18,52 @@ const Available = (): JSX.Element => {
 			<div className="md:px-10 w-full space-y-5 px-5 py-6">
 				<SearchWithFilter placeHolder="Search Inventory" />
 				<AddButton />
+				<TableMutator setIsShowingFilter={setIsShowingFilter} />
 				<DisplayInventoryData />
 			</div>
 			{isShowingFilter && <Filter setIsShowingFilter={setIsShowingFilter} />}
 		</>
+	);
+};
+
+type TableMutatorProps = {
+	setIsShowingFilter: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const TableMutator: FC<TableMutatorProps> = ({ setIsShowingFilter }) => {
+	return (
+		<div className="w-full flex items-center justify-between flex-wrap">
+			<div>
+				<DynamicDropdown
+					dropdownText="Sort"
+					dropDownItems={[
+						"Product Name",
+						"City",
+						"State",
+						"Quantity",
+						"Depot",
+						"Price",
+					]}
+				/>
+			</div>
+			<div className="items-center hidden lg:flex">
+				<DynamicDropdown
+					dropdownText="Product Name"
+					dropDownItems={["20 STD - CW", "40 HC - CW", "20 STD - OT"]}
+				/>
+				<DynamicDropdown dropdownText="City" dropDownItems={["Chicago"]} />
+				<DynamicDropdown dropdownText="State" dropDownItems={["USA"]} />
+				<DynamicDropdown dropdownText="Quantity" dropDownItems={["12 PCS"]} />
+				<DynamicDropdown dropdownText="Depot" dropDownItems={["Depot"]} />
+				<DynamicDropdown dropdownText="Price" dropDownItems={["$1,250"]} />
+			</div>
+			<button
+				className="text-gray-700 lg:hidden"
+				type="button"
+				onClick={() => setIsShowingFilter((prev) => !prev)}>
+				Filter
+			</button>
+		</div>
 	);
 };
 

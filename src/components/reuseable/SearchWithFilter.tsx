@@ -1,5 +1,4 @@
 import { FC, useState } from "react";
-import { HiOutlineAdjustmentsHorizontal } from "react-icons/hi2";
 import Filter from "./Filter";
 
 type SearchWithFilterProps = {
@@ -13,9 +12,9 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({ placeHolder }) => {
 		event.preventDefault();
 	};
 
-	const handleShowingFilter = () => {
-		setIsShowingFilter(true);
-	};
+	// const handleShowingFilter = () => {
+	// 	setIsShowingFilter(true);
+	// };
 
 	return (
 		<>
@@ -27,13 +26,13 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({ placeHolder }) => {
 					placeholder={placeHolder}
 					className="border-[1px] rounded-lg border-black border-opacity-10 w-full p-3 focus:outline-primary focus:outline-1"
 				/>
-				<button
+				{/* <button
 					type="button"
 					onClick={handleShowingFilter}
 					className="border-l-[1px] text-primary text-xl border-black border-opacity-10 rounded-sm p-3 absolute right-0 top-0 bottom-0"
 					id="filter-btn">
 					<HiOutlineAdjustmentsHorizontal />
-				</button>
+				</button> */}
 			</form>
 			{isShowingFilter && <Filter setIsShowingFilter={setIsShowingFilter} />}
 		</>
