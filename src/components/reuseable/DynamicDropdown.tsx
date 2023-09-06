@@ -1,5 +1,5 @@
 import { DynamicDropdownProps } from "@/constants/props";
-import React, { FC, useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { HiChevronDown } from "react-icons/hi2";
 
 const DynamicDropdown: React.FC<DynamicDropdownProps> = ({
