@@ -4,7 +4,7 @@ import SearchWithFilter from "@/components/reuseable/SearchWithFilter";
 import TableSixCol from "@/components/reuseable/TableSixCol";
 import { useInventoryState } from "@/utils/InventoryState";
 import { FC, useEffect, useState } from "react";
-import { HiOutlinePlus } from "react-icons/hi2";
+import { HiOutlinePlus, HiXMark } from "react-icons/hi2";
 import { Link } from "react-router-dom";
 
 const Available = (): JSX.Element => {
@@ -96,19 +96,24 @@ const TableMutator: FC<TableMutatorProps> = ({ setIsShowingFilter }) => {
 					Filter
 				</button>
 			</div>
-			<ul className="flex w-full items-center gap-x-3 bg-zinc-200 py-2 px-4">
-				<li className="flex items-center gap-x-4">
-					<span className=" text-xs">Filter</span>
-					<div className="h-5 w-[1px] bg-slate-400" />
-				</li>
-				{uniqueItems.map((unique) => (
-					<li
-						key={unique}
-						className="text-xs font-bold bg-white rounded-2xl py-2 px-4">
-						{unique}
+			{uniqueItems.length !== 0 && (
+				<ul className="flex w-full items-center gap-x-3 bg-zinc-200 py-2 px-4">
+					<li className="flex items-center gap-x-4">
+						<span className=" text-xs">Filter</span>
+						<div className="h-5 w-[1px] bg-slate-400" />
 					</li>
-				))}
-			</ul>
+					{uniqueItems.map((unique) => (
+						<li
+							key={unique}
+							className="text-xs font-bold bg-white rounded-2xl p-2 flex items-center gap-x-2">
+							{unique}{" "}
+							<span className="text-sm hover:cursor-pointer">
+								<HiXMark />
+							</span>
+						</li>
+					))}
+				</ul>
+			)}
 		</div>
 	);
 };
