@@ -214,4 +214,6 @@ export type SuplierFormInventoryProps = {
 export type DynamicDropdownProps = {
 	dropdownText: string;
 	dropDownItems: string[];
+	uniqueItems: string[];
+	setUniqueItems: React.Dispatch<React.SetStateAction<string[]>>;
 };
