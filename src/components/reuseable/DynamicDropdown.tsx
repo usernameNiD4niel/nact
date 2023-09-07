@@ -6,27 +6,14 @@ const DynamicDropdown: React.FC<DynamicDropdownProps> = ({
 	dropDownItems,
 	dropdownText,
 }) => {
-	// return (
-	// <div className="dropdown dropdown-end">
-	// 	<label tabIndex={0} className="btn m-1">
-	// 		{dropdownText}
-	// 	</label>
-	// 	<ul
-	// 		tabIndex={0}
-	// 		className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-	// 		{dropDownItems.map((item, index) => (
-	// 			<li key={index}>
-	// 				<label htmlFor={`item${index}`}>
-	// 					<input type="checkbox" id={`item${index}`} />
-	// 					{item}
-	// 				</label>
-	// 			</li>
-	// 		))}
-	// 	</ul>
-	// </div>
-	// );
 	const [isOpen, setIsOpen] = useState(false);
 	const dropdownRef = useRef<HTMLDivElement | null>(null);
+	const [productNameCounter, setProductNameCounter] = useState(0);
+	const [cityCounter, setCityCounter] = useState(0);
+	const [stateCounter, setStateCounter] = useState(0);
+	const [quantityCounter, setQuantityCounter] = useState(0);
+	const [depotCounter, setDepotCounter] = useState(0);
+	const [priceCounter, setPriceCounter] = useState(0);
 
 	useEffect(() => {
 		const handleOutsideClick = (event: MouseEvent) => {
@@ -45,6 +32,29 @@ const DynamicDropdown: React.FC<DynamicDropdownProps> = ({
 		};
 	}, []);
 
+	const handleIncrement = () => {
+		switch (dropdownText) {
+			case "Product Name":
+				setProductNameCounter((prev) => (prev += 1));
+				break;
+			case "City":
+				setCityCounter((prev) => (prev += 1));
+				break;
+			case "State":
+				setStateCounter((prev) => (prev += 1));
+				break;
+			case "Quantity":
+				setQuantityCounter((prev) => (prev += 1));
+				break;
+			case "Depot":
+				setDepotCounter((prev) => (prev += 1));
+				break;
+			case "Price":
+				setPriceCounter((prev) => (prev += 1));
+				break;
+		}
+	};
+
 	return (
 		<div className="relative w-full" ref={dropdownRef}>
 			<button
@@ -57,6 +67,7 @@ const DynamicDropdown: React.FC<DynamicDropdownProps> = ({
 					}`}>
 					{dropdownText}
 				</span>{" "}
+				<span>{productNameCounter}</span>
 				<span>
 					<HiChevronDown />
 				</span>
@@ -69,7 +80,9 @@ const DynamicDropdown: React.FC<DynamicDropdownProps> = ({
 				} ${dropdownText === "Sort" && "left-1"}`}>
 				{dropDownItems.map((item, index) => (
 					<li className="flex w-full items-center justify-center" key={index}>
-						<label className="w-full flex justify-center items-center gap-x-2 hover:cursor-pointer py-2 text-sm pl-4 text-gray-900 hover:bg-slate-100">
+						<label
+							className="w-full flex justify-center items-center gap-x-2 hover:cursor-pointer py-2 text-sm pl-4 text-gray-900 hover:bg-slate-100"
+							onClick={handleIncrement}>
 							<input
 								type="checkbox"
 								className={`${dropdownText === "Sort" && "hidden"}`}
