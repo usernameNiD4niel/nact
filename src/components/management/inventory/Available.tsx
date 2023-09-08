@@ -33,8 +33,14 @@ type TableMutatorProps = {
 const TableMutator: FC<TableMutatorProps> = ({ setIsShowingFilter }) => {
 	const [uniqueItems, setUniqueItems] = useState<string[]>([]);
 
+	const handleRemoveSelected = (selectedItem: string) => {
+		const removeItem = uniqueItems.filter((item) => item !== selectedItem);
+		setUniqueItems(removeItem);
+	};
+
 	return (
 		<div>
+			<hr className="mb-2" />
 			<div className="w-full flex items-center justify-between flex-wrap">
 				<div>
 					<DynamicDropdown
@@ -97,7 +103,7 @@ const TableMutator: FC<TableMutatorProps> = ({ setIsShowingFilter }) => {
 				</button>
 			</div>
 			{uniqueItems.length !== 0 && (
-				<ul className="flex w-full items-center gap-x-3 bg-zinc-200 py-2 px-4">
+				<ul className="flex w-full items-center gap-x-3 bg-zinc-200 py-2 px-4 flex-wrap">
 					<li className="flex items-center gap-x-4">
 						<span className=" text-xs">Filter</span>
 						<div className="h-5 w-[1px] bg-slate-400" />
@@ -107,7 +113,9 @@ const TableMutator: FC<TableMutatorProps> = ({ setIsShowingFilter }) => {
 							key={unique}
 							className="text-xs font-bold bg-white rounded-2xl p-2 flex items-center gap-x-2">
 							{unique}{" "}
-							<span className="text-sm hover:cursor-pointer">
+							<span
+								className="text-sm hover:cursor-pointer"
+								onClick={() => handleRemoveSelected(unique)}>
 								<HiXMark />
 							</span>
 						</li>

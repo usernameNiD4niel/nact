@@ -29,7 +29,10 @@ const DynamicDropdown: React.FC<DynamicDropdownProps> = ({
 		};
 	}, []);
 
-	const handleCheckboxChange = (event: React.MouseEvent, i: string) => {
+	const handleCheckboxChange = (
+		event: React.ChangeEvent<HTMLInputElement>,
+		i: string,
+	) => {
 		if (dropdownText === "Sort") {
 			setIsOpen(false);
 			return;
@@ -59,14 +62,16 @@ const DynamicDropdown: React.FC<DynamicDropdownProps> = ({
 			<button
 				type="button"
 				onClick={() => setIsOpen((prev) => !prev)}
-				className="flex items-center gap-x-2 px-3 py-2 text-base w-full">
+				className="flex items-center gap-x-1 px-3 py-2 text-sm w-full text-black">
 				<span
 					className={`inline-block ${
-						dropdownText === "Product Name" && "min-w-[120px]"
+						dropdownText === "Product Name" && "min-w-[105px]"
 					}`}>
 					{dropdownText}
 				</span>{" "}
-				<span>{counter !== 0 && counter}</span>
+				<span className="text-xs bg-gray-300 px-1 font-medium">
+					{counter !== 0 && counter}
+				</span>
 				<span>
 					<HiChevronDown />
 				</span>
@@ -83,7 +88,8 @@ const DynamicDropdown: React.FC<DynamicDropdownProps> = ({
 							<input
 								type="checkbox"
 								className={`${dropdownText === "Sort" && "hidden"}`}
-								onClick={(e) => handleCheckboxChange(e, item)}
+								onChange={(e) => handleCheckboxChange(e, item)}
+								checked={uniqueItems.includes(item)}
 							/>
 							<span className="w-full">{item}</span>
 						</label>
