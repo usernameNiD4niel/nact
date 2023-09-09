@@ -1,11 +1,16 @@
 import { FC, useState } from "react";
 import Filter from "./Filter";
+import { InventoryTableData, SupplierTableData } from "@/constants/objects";
 
 type SearchWithFilterProps = {
 	placeHolder: string;
+	isList: boolean;
 };
 
-const SearchWithFilter: FC<SearchWithFilterProps> = ({ placeHolder }) => {
+const SearchWithFilter: FC<SearchWithFilterProps> = ({
+	placeHolder,
+	isList,
+}) => {
 	const [isShowingFilter, setIsShowingFilter] = useState<boolean>(false);
 
 	const handleOnSubmit = (event: React.FormEvent) => {
@@ -34,7 +39,22 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({ placeHolder }) => {
 					<HiOutlineAdjustmentsHorizontal />
 				</button> */}
 			</form>
-			{isShowingFilter && <Filter setIsShowingFilter={setIsShowingFilter} />}
+
+			{isShowingFilter && (
+				<>
+					{isList ? (
+						<Filter
+							setIsShowingFilter={setIsShowingFilter}
+							data={SupplierTableData}
+						/>
+					) : (
+						<Filter
+							setIsShowingFilter={setIsShowingFilter}
+							data={InventoryTableData}
+						/>
+					)}
+				</>
+			)}
 		</>
 	);
 };

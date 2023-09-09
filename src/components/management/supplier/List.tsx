@@ -18,7 +18,7 @@ const List = () => {
 	return (
 		<div className="w-full">
 			<div className="md:px-10 w-full space-y-5 px-5 py-6">
-				<SearchWithFilter placeHolder="Search Supplier" />
+				<SearchWithFilter placeHolder="Search Supplier" isList={true} />
 				<TableMutator setIsShowingFilter={setIsShowingFilter} />
 				<Table />
 			</div>

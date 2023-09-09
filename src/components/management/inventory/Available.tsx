@@ -18,7 +18,7 @@ const Available = (): JSX.Element => {
 	return (
 		<>
 			<div className="md:px-10 w-full space-y-5 px-5 py-6">
-				<SearchWithFilter placeHolder="Search Inventory" />
+				<SearchWithFilter placeHolder="Search Inventory" isList={false} />
 				<AddButton />
 				<TableMutator setIsShowingFilter={setIsShowingFilter} />
 				<DisplayInventoryData />
