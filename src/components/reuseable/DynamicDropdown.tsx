@@ -62,19 +62,26 @@ const DynamicDropdown: React.FC<DynamicDropdownProps> = ({
 			<button
 				type="button"
 				onClick={() => setIsOpen((prev) => !prev)}
-				className="flex items-center gap-x-1 px-3 py-2 text-sm w-full text-black">
-				<span
-					className={`inline-block ${
-						dropdownText === "Product Name" && "min-w-[105px]"
-					}`}>
-					{dropdownText}
-				</span>{" "}
-				<span className="text-xs bg-gray-300 px-1 font-medium">
-					{counter !== 0 && counter}
-				</span>
-				<span>
+				className="flex items-center gap-x-3 px-3 py-2 text-sm w-full text-black">
+				<p className="flex items-center gap-x-1">
+					<span
+						className={`inline-block ${
+							dropdownText === "Product Name" ? "min-w-[105px]" : "w-fit"
+						}`}>
+						{dropdownText}
+					</span>{" "}
+					{counter !== 0 && (
+						<span className="text-xs bg-gray-300 px-1 font-medium">
+							{counter}
+						</span>
+					)}
+				</p>
+				<span className="text-gray-500 text-xs">
 					<HiChevronDown />
 				</span>
+				{dropdownText !== "Price" && dropdownText !== "Sort" && (
+					<div className="h-5 w-[1px] bg-slate-200" />
+				)}
 			</button>
 			<ul
 				className={`w-52 bg-white z-[1] py-3 ${

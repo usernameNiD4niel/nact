@@ -40,7 +40,6 @@ const TableMutator: FC<TableMutatorProps> = ({ setIsShowingFilter }) => {
 
 	return (
 		<div>
-			<hr className="mb-2" />
 			<div className="w-full flex items-center justify-between flex-wrap">
 				<div>
 					<DynamicDropdown
@@ -96,22 +95,22 @@ const TableMutator: FC<TableMutatorProps> = ({ setIsShowingFilter }) => {
 					/>
 				</div>
 				<button
-					className="text-gray-700 lg:hidden"
+					className="text-gray-700 lg:hidden text-sm"
 					type="button"
 					onClick={() => setIsShowingFilter((prev) => !prev)}>
 					Filter
 				</button>
 			</div>
 			{uniqueItems.length !== 0 && (
-				<ul className="flex w-full items-center gap-x-3 bg-zinc-200 py-2 px-4 flex-wrap">
+				<ul className="flex w-full items-center gap-x-3 bg-[#f3f4f6] py-2 px-4 flex-wrap">
 					<li className="flex items-center gap-x-4">
 						<span className=" text-xs">Filter</span>
-						<div className="h-5 w-[1px] bg-slate-400" />
+						<div className="h-5 w-[1px] bg-slate-200" />
 					</li>
 					{uniqueItems.map((unique) => (
 						<li
 							key={unique}
-							className="text-xs font-bold bg-white rounded-2xl p-2 flex items-center gap-x-2">
+							className="text-xs bg-white rounded-2xl p-2 flex items-center gap-x-2">
 							{unique}{" "}
 							<span
 								className="text-sm hover:cursor-pointer"
