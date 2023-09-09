@@ -137,7 +137,7 @@ const AddButton = () => {
 	return (
 		<Link
 			to="/inventory/add"
-			className="absolute right-2 bottom-4 md:right-10 hover:opacity-90 flex rounded-full items-center justify-center gap-x-2 w-14 h-14 bg-primary md:w-32 text-white text-2xl">
+			className="fixed right-2 bottom-4 md:right-10 hover:opacity-90 flex rounded-full items-center justify-center gap-x-2 w-14 h-14 bg-primary md:w-32 text-white text-2xl">
 			<HiOutlinePlus />
 			<span className="hidden md:block text-sm">INVENTORY</span>
 		</Link>

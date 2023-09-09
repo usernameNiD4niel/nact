@@ -79,7 +79,7 @@ const DynamicDropdown: React.FC<DynamicDropdownProps> = ({
 						}`}>
 						{dropdownText}
 					</span>{" "}
-					{signal && <div className="bg-primary rounded-full w-2 h-2"></div>}
+					{signal && <span className="bg-primary rounded-full w-2 h-2"></span>}
 				</p>
 				<span className="text-gray-500 text-xs">
 					<HiChevronDown />
