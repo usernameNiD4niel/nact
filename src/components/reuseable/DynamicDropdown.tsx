@@ -12,6 +12,12 @@ const DynamicDropdown: React.FC<DynamicDropdownProps> = ({
 	const dropdownRef = useRef<HTMLDivElement | null>(null);
 	const [signal, setSignal] = useState(false);
 
+	if (dropDownItems) {
+		const hash: Set<string> = new Set(dropDownItems);
+		const uniqueArray = Array.from(hash);
+		dropDownItems = uniqueArray;
+	}
+
 	useEffect(() => {
 		const handleOutsideClick = (event: MouseEvent) => {
 			if (
@@ -30,6 +36,9 @@ const DynamicDropdown: React.FC<DynamicDropdownProps> = ({
 	}, []);
 
 	useEffect(() => {
+		if (!dropDownItems) {
+			return;
+		}
 		const array2Set = new Set(uniqueItems);
 
 		// Check if any element in array1 exists in array2Set
@@ -79,34 +88,51 @@ const DynamicDropdown: React.FC<DynamicDropdownProps> = ({
 						}`}>
 						{dropdownText}
 					</span>{" "}
-					{signal && <span className="bg-primary rounded-full w-2 h-2"></span>}
+					{signal && dropdownText !== "Sort" && (
+						<span className="bg-primary rounded-full w-2 h-2"></span>
+					)}
 				</p>
 				<span className="text-gray-500 text-xs">
 					<HiChevronDown />
 				</span>
-				{dropdownText !== "Price" && dropdownText !== "Sort" && (
-					<div className="h-5 w-[1px] bg-slate-200" />
-				)}
+				{dropdownText !== "Price" &&
+					dropdownText !== "Sort" &&
+					dropdownText !== "Contact" && (
+						<div className="h-5 w-[1px] bg-slate-200" />
+					)}
 			</button>
+
 			<ul
 				className={`w-52 bg-white z-[1] py-3 ${
 					isOpen
 						? "flex items-center flex-col absolute top-9 rounded-md drop-shadow-lg right-1"
 						: "hidden"
 				} ${dropdownText === "Sort" && "left-1"}`}>
-				{dropDownItems.map((item, index) => (
-					<li className="flex w-full items-center justify-center" key={index}>
-						<label className="w-full flex justify-center items-center gap-x-2 hover:cursor-pointer py-2 text-sm pl-4 text-gray-900 hover:bg-slate-100">
-							<input
-								type="checkbox"
-								className={`${dropdownText === "Sort" && "hidden"}`}
-								onChange={(e) => handleCheckboxChange(e, item)}
-								checked={uniqueItems.includes(item)}
-							/>
-							<span className="w-full">{item}</span>
-						</label>
+				{!dropDownItems ? (
+					<li className="flex w-full items-center justify-center">
+						<p className="text-xs font-thin">
+							No item for column {dropdownText}
+						</p>
 					</li>
-				))}
+				) : (
+					<>
+						{dropDownItems.map((item, index) => (
+							<li
+								className="flex w-full items-center justify-center"
+								key={index}>
+								<label className="w-full flex justify-center items-center gap-x-2 hover:cursor-pointer py-2 text-sm pl-4 text-gray-900 hover:bg-slate-100">
+									<input
+										type="checkbox"
+										className={`${dropdownText === "Sort" && "hidden"}`}
+										onChange={(e) => handleCheckboxChange(e, item)}
+										checked={uniqueItems.includes(item)}
+									/>
+									<span className="w-full">{item}</span>
+								</label>
+							</li>
+						))}
+					</>
+				)}
 			</ul>
 		</div>
 	);

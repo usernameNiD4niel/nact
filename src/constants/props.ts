@@ -213,7 +213,11 @@ export type SuplierFormInventoryProps = {
 
 export type DynamicDropdownProps = {
 	dropdownText: string;
-	dropDownItems: string[];
+	dropDownItems: string[] | null;
 	uniqueItems: string[];
 	setUniqueItems: React.Dispatch<React.SetStateAction<string[]>>;
+};
+
+export type TableMutatorProps = {
+	setIsShowingFilter: React.Dispatch<React.SetStateAction<boolean>>;
 };

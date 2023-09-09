@@ -2,6 +2,7 @@ import DynamicDropdown from "@/components/reuseable/DynamicDropdown";
 import Filter from "@/components/reuseable/Filter";
 import SearchWithFilter from "@/components/reuseable/SearchWithFilter";
 import TableSixCol from "@/components/reuseable/TableSixCol";
+import { TableMutatorProps } from "@/constants/props";
 import { useInventoryState } from "@/utils/InventoryState";
 import { FC, useEffect, useState } from "react";
 import { HiOutlinePlus, HiXMark } from "react-icons/hi2";
@@ -24,10 +25,6 @@ const Available = (): JSX.Element => {
 			{isShowingFilter && <Filter setIsShowingFilter={setIsShowingFilter} />}
 		</>
 	);
-};
-
-type TableMutatorProps = {
-	setIsShowingFilter: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const TableMutator: FC<TableMutatorProps> = ({ setIsShowingFilter }) => {
