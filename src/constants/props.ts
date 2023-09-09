@@ -221,3 +221,9 @@ export type DynamicDropdownProps = {
 export type TableMutatorProps = {
 	setIsShowingFilter: React.Dispatch<React.SetStateAction<boolean>>;
 };
+
+export type TableDataProps = {
+	id: number;
+	columnTitle: string;
+	tableData: string[] | null;
+};

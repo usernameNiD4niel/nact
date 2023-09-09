@@ -7,6 +7,7 @@ import { HiOutlinePlus, HiXMark } from "react-icons/hi2";
 import DynamicDropdown from "@/components/reuseable/DynamicDropdown";
 import { TableMutatorProps } from "@/constants/props";
 import Filter from "@/components/reuseable/Filter";
+import { SupplierTableData } from "@/constants/objects";
 
 const List = () => {
 	const [setTab] = useInventoryState((state) => [state.setActiveTab]);
@@ -22,7 +23,12 @@ const List = () => {
 				<Table />
 			</div>
 			<AddButton />
-			{isShowingFilter && <Filter setIsShowingFilter={setIsShowingFilter} />}
+			{isShowingFilter && (
+				<Filter
+					data={SupplierTableData}
+					setIsShowingFilter={setIsShowingFilter}
+				/>
+			)}
 		</div>
 	);
 };

@@ -2,6 +2,7 @@ import DynamicDropdown from "@/components/reuseable/DynamicDropdown";
 import Filter from "@/components/reuseable/Filter";
 import SearchWithFilter from "@/components/reuseable/SearchWithFilter";
 import TableSixCol from "@/components/reuseable/TableSixCol";
+import { InventoryTableData } from "@/constants/objects";
 import { TableMutatorProps } from "@/constants/props";
 import { useInventoryState } from "@/utils/InventoryState";
 import { FC, useEffect, useState } from "react";
@@ -22,7 +23,12 @@ const Available = (): JSX.Element => {
 				<TableMutator setIsShowingFilter={setIsShowingFilter} />
 				<DisplayInventoryData />
 			</div>
-			{isShowingFilter && <Filter setIsShowingFilter={setIsShowingFilter} />}
+			{isShowingFilter && (
+				<Filter
+					setIsShowingFilter={setIsShowingFilter}
+					data={InventoryTableData}
+				/>
+			)}
 		</>
 	);
 };

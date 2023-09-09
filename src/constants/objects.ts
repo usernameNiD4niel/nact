@@ -1,3 +1,5 @@
+import { TableDataProps } from "./props";
+
 export type PinObjectProps = {
 	name: string;
 	pin: string;
@@ -86,6 +88,66 @@ export const SupplierManagementData: SupplierManagementTypes[] = [
 		subtitle: "025145 | Chicago, USA | Depot",
 		price: "$ 1,250",
 		quantity: "12 PCS",
+	},
+];
+
+export const InventoryTableData: TableDataProps[] = [
+	{
+		id: 1,
+		columnTitle: "Product Name",
+		tableData: ["20 STD - CW", "40 HC - CW", "20 STD - OT"],
+	},
+	{
+		id: 2,
+		columnTitle: "City",
+		tableData: ["Chicago", "Chicago", "Chicago"],
+	},
+	{
+		id: 3,
+		columnTitle: "State",
+		tableData: ["USA", "USA", "USA"],
+	},
+	{
+		id: 4,
+		columnTitle: "Quantity",
+		tableData: ["12 PCS", "12 PCS", "12 PCS"],
+	},
+	{
+		id: 5,
+		columnTitle: "Depot",
+		tableData: ["Depot", "Depot", "Depot"],
+	},
+	{
+		id: 6,
+		columnTitle: "Price",
+		tableData: ["$ 1,250", "$ 1,250", "$ 1,250"],
+	},
+];
+
+export const SupplierTableData: TableDataProps[] = [
+	{
+		id: 1,
+		columnTitle: "Supplier",
+		tableData: [
+			"East Pacific Container",
+			"North Pacific Container",
+			"North Atlantic",
+		],
+	},
+	{
+		id: 2,
+		columnTitle: "Location",
+		tableData: ["Chicago, USA", "New York, USA", "California, USA"],
+	},
+	{
+		id: 3,
+		columnTitle: "Abcde",
+		tableData: null,
+	},
+	{
+		id: 4,
+		columnTitle: "Contact",
+		tableData: ["09154814993", "09154814993", "09154814993"],
 	},
 ];
 
