@@ -10,7 +10,7 @@ const DynamicDropdown: React.FC<DynamicDropdownProps> = ({
 }) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const dropdownRef = useRef<HTMLDivElement | null>(null);
-	const [counter, setCounter] = useState(0);
+	const [signal, setSignal] = useState(false);
 
 	useEffect(() => {
 		const handleOutsideClick = (event: MouseEvent) => {
@@ -29,6 +29,17 @@ const DynamicDropdown: React.FC<DynamicDropdownProps> = ({
 		};
 	}, []);
 
+	useEffect(() => {
+		const array2Set = new Set(uniqueItems);
+
+		// Check if any element in array1 exists in array2Set
+		const hasCommonElement = dropDownItems.some((element) =>
+			array2Set.has(element),
+		);
+
+		setSignal(hasCommonElement);
+	}, [uniqueItems, dropDownItems]);
+
 	const handleCheckboxChange = (
 		event: React.ChangeEvent<HTMLInputElement>,
 		i: string,
@@ -43,7 +54,6 @@ const DynamicDropdown: React.FC<DynamicDropdownProps> = ({
 		const isChecked = target.checked;
 
 		if (isChecked) {
-			setCounter((prevCount) => prevCount + 1); // Increment the counter
 			uniqueItems.forEach((item) => {
 				if (item === i) {
 					return;
@@ -51,7 +61,6 @@ const DynamicDropdown: React.FC<DynamicDropdownProps> = ({
 			});
 			setUniqueItems((prevItem) => [...prevItem, i]);
 		} else {
-			setCounter((prevCount) => prevCount - 1); // Decrement the counter
 			const uItem = uniqueItems.filter((item) => item !== i);
 			setUniqueItems(uItem);
 		}
@@ -70,11 +79,7 @@ const DynamicDropdown: React.FC<DynamicDropdownProps> = ({
 						}`}>
 						{dropdownText}
 					</span>{" "}
-					{counter !== 0 && (
-						<span className="text-xs bg-gray-300 px-1 font-medium">
-							{counter}
-						</span>
-					)}
+					{signal && <div className="bg-primary rounded-full w-2 h-2"></div>}
 				</p>
 				<span className="text-gray-500 text-xs">
 					<HiChevronDown />
