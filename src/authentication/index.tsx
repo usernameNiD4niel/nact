@@ -53,7 +53,7 @@ const Index = () => {
 				setServerError("");
 				navigate("/");
 			} else {
-				setServerError("Please enter a valid phone number or pincode");
+				setServerError("Incorrect phone number or pincode");
 			}
 			console.log("success");
 		},
@@ -83,27 +83,6 @@ const Index = () => {
 	}) => {
 		setIsLoading(true);
 		mutation.mutate({ phoneNumber, pin, setIsLoading });
-
-		// const response = await POST({ phoneNumber, pin, setIsLoading });
-		// if (response) {
-		// 	if (response.success) {
-		// 		alert(
-		// 			"Welcome, " +
-		// 				response.user.firstName +
-		// 				" " +
-		// 				response.user.lastName +
-		// 				" " +
-		// 				response.user.id +
-		// 				" " +
-		// 				response.token,
-		// 		);
-
-		// 	} else {
-		// 		alert("Error is in the house");
-		// 	}
-		// } else {
-		// 	console.log("Response doesn't exist", response);
-		// }
 	};
 
 	const handleSubmitForm = async ({ phoneNumber }: LoginProps) => {
@@ -127,13 +106,6 @@ const Index = () => {
 			setOtpError("Invalid pin, pincode must be a number");
 			throw Error("Error brother" + err);
 		}
-		// const req = await POST({ phoneNumber, extractedPin });
-		// if (req) {
-		// 	alert("success");
-		// } else {
-		// 	alert("error");
-		// 	console.log(data);
-		// }
 	};
 
 	return (
@@ -214,9 +186,11 @@ const Index = () => {
 							<p className="text-red-500 text-sm font-bold">{serverError}</p>
 						)}
 						{isLoading ? (
-							<button type="button">
+							<button
+								type="button"
+								className="flex items-center justify-center gap-x-2">
 								<span className="loading loading-spinner text-primary"></span>
-								Submitting
+								<span>Submitting</span>
 							</button>
 						) : (
 							<button
