@@ -28,13 +28,13 @@ function Filter({ data, setIsShowingFilter }: FilterProps) {
 					<div className="flex justify-between items-center mx-4 mt-3">
 						<button
 							type="button"
-							className="flex gap-x-2 text-xl w-fit"
+							className="flex gap-x-2 md:text-lg w-fit"
 							onClick={() => setIsShowingFilter(false)}>
 							Filters
 						</button>
 						<button
 							type="button"
-							className="text-2xl"
+							className="md:text-lg"
 							onClick={() => setIsShowingFilter(false)}>
 							<HiXMark />
 						</button>
@@ -50,29 +50,6 @@ function Filter({ data, setIsShowingFilter }: FilterProps) {
 							<hr />
 						</>
 					))}
-					{/* <FilterAccordion
-						accordionItems={["20 STD - CW", "40 HC - CW", "20 STD - OT"]}
-						accordionText="Product Name"
-					/>
-					<hr />
-					<FilterAccordion
-						accordionItems={["New York", "California", "Boston"]}
-						accordionText="City"
-					/>
-					<hr />
-					<FilterAccordion accordionItems={["USA"]} accordionText="State" />
-					<hr />
-					<FilterAccordion
-						accordionItems={[
-							"less than $ 1,250",
-							"$1,251 - $ 1,260",
-							"$1,261 - $ 1,270",
-							"$ 1,271 - $ 1,280",
-							"$ 1,281 - up",
-						]}
-						accordionText="Price"
-					/>
-					<hr /> */}
 				</form>
 			</aside>
 		</main>

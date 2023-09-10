@@ -91,7 +91,8 @@ const InventoryTableItem = () => {
 							key="InventoryTableItemFormKey"
 						/>
 					</div>
-					<h3 className="text-sm font-bold my-3">Supplier</h3>
+					<hr className="mb-3 mt-5" />
+					<h3 className="text-sm font-bold mb-3">Supplier</h3>
 					<div className="flex flex-col w-full gap-y-4">
 						<SupplierFormInventory props={supplierStateFieldObject} />
 					</div>

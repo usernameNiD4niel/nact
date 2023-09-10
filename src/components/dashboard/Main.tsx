@@ -1,13 +1,22 @@
 import DrawerRight from "@/daisyui/DrawerRight";
-import React, { useState } from "react";
-import { Link, Outlet } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import logo from "@/assets/logo.svg";
 import { ButtonList } from "@/constants/enums";
 import { useSelectedStore } from "@/utils/HomePageState";
 import { buttons } from "@/constants/arrays";
+import Cookies from "js-cookie";
 const Main = () => {
 	const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false);
 	const [selected] = useSelectedStore((state) => [state.selected]);
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		const token = Cookies.get("token");
+		if (!token) {
+			navigate("/login");
+		}
+	}, []);
 
 	return (
 		<React.Fragment>

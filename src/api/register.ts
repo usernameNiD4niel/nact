@@ -1,18 +1,30 @@
-import { FormDataProps } from "@/constants/props";
+import { FormDataProps, RegisterResponse } from "@/constants/props";
 
-export const POST = async ({birthDate, firstName, gender, lastName, middleName, mobileNumber, pin, recoveryAnswer, recoveryQuestion}:FormDataProps): Promise<FormDataProps | boolean> => {
-	const apiEndpoint: string = "https://backend-api87.000webhostapp.com/api/register";
+export const POST = async ({
+	birthDate,
+	firstName,
+	gender,
+	lastName,
+	middleName,
+	mobileNumber,
+	pin,
+	recoveryAnswer,
+	recoveryQuestion,
+	setError,
+}: FormDataProps) => {
+	const apiEndpoint: string =
+		"https://flask-service.gi2fod26lfct0.ap-southeast-1.cs.amazonlightsail.com/register";
 
 	const formData: FormDataProps = {
-			lastName,
-			firstName,
-			middleName,
-			gender,
-			birthDate,
-			mobileNumber,
-			pin,
-			recoveryQuestion,
-			recoveryAnswer
+		lastName,
+		firstName,
+		middleName,
+		gender,
+		birthDate,
+		mobileNumber,
+		pin,
+		recoveryQuestion,
+		recoveryAnswer,
 	};
 
 	try {
@@ -24,21 +36,26 @@ export const POST = async ({birthDate, firstName, gender, lastName, middleName, 
 			body: JSON.stringify(formData),
 		});
 
-		const data:FormDataProps = await response.json();
+		const data: RegisterResponse = await response.json();
 
-		return data;
-		
-	} catch (e: unknown) {
-		if (typeof e === "string") {
-			console.log(e);
-			return false;
-		} else if (e instanceof Error) {
-			console.log("Error: " + e.message);
-			return false;
+		if (data.message === "User already registered") {
+			if (setError) {
+				console.log("error set", data);
+				setError("Mobile number already registered");
+			} else {
+				console.log("error not set");
+			}
 		} else {
-			return false;
-
+			console.log(data.message, "message printed");
+			return data;
 		}
+	} catch (e: unknown) {
+		if (e instanceof Error) {
+			console.log(e.message);
+			setError!(e.message);
+		} else {
+			setError!("Please enter a valid input");
+		}
+		console.log(e);
 	}
-
 };

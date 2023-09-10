@@ -12,6 +12,11 @@ import DisplayErrorMessage from "./DisplayErrorMessage";
 import { POST } from "@/api/register";
 import { usePersonalDetailStore } from "@/utils/personal-detail";
 import { HiOutlineArrowLeft, HiOutlineArrowRight } from "react-icons/hi2";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
+
+import { useMutation } from "@tanstack/react-query";
 
 type AccountDetailProps = {
 	setIsOneCurrentSlide: React.Dispatch<React.SetStateAction<boolean>>;
@@ -44,6 +49,8 @@ const AccountDetail = ({
 		state.setConfirmPin,
 	]);
 
+	const [error, setError] = useState("");
+
 	const [firstName, lastName, middleInitial, birthDate, gender] =
 		usePersonalDetailStore((state) => [
 			state.firstName,
@@ -61,8 +68,38 @@ const AccountDetail = ({
 		resolver: zodResolver(AccountDetailSchema),
 	});
 
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		const token = Cookies.get("token");
+		if (token) {
+			navigate("/");
+		}
+	}, []);
+
+	const mutation = useMutation({
+		mutationFn: POST,
+		onSuccess: (data) => {
+			if (data?.message === "Registration successful") {
+				setError("");
+				window.location.reload();
+				console.log("navigate to login page");
+			} else {
+				if (!error && data) {
+					setError(data?.message);
+					console.log("On Success callback", data?.message);
+				}
+			}
+		},
+		onError: (err) => {
+			console.log("On error callback", err);
+		},
+	});
+
 	const handleFormSubmit = async (data: AccountDetailDatatypes) => {
 		// Get global state of all the fields
+
+		mutation.reset();
 
 		const { mobileNumber, pin, recoveryAnswer, recoveryQuestion } = data;
 
@@ -76,19 +113,19 @@ const AccountDetail = ({
 			pin,
 			recoveryAnswer,
 			recoveryQuestion,
+			setError,
 		};
 
-		const response = await POST(formData);
+		mutation.mutate(formData);
 
-		if (typeof response === "boolean") {
-			alert("error occured");
-		} else {
-			alert("successfully created post request!");
-			if (typeof response === "object") {
-				console.log("Hello pare: " + response.firstName);
-			}
-		}
-		console.log(response);
+		// Display error
+		// Do not redirect if error is not empty
+
+		// await POST(formData);
+
+		// if (!error) {
+		// 	navigate("/");
+		// }
 	};
 
 	return (
@@ -201,6 +238,7 @@ const AccountDetail = ({
 					/>
 				)}
 			</label>
+			{error && <p className="text-sm text-red-500 font-bold">{error}</p>}
 			<div className="flex w-full justify-between py-2 items-center">
 				<button
 					type="button"

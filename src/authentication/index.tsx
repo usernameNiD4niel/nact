@@ -1,6 +1,6 @@
 import "../../styles/unstyle-input.css";
 import "../../styles/auth.css";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SignupForm from "../components/SignupForm";
 import { POST } from "../api/login";
 import logo from "../assets/logo.svg";
@@ -14,19 +14,59 @@ import { usePersonalDetailStore } from "../utils/personal-detail";
 import { useAccountDetailStore } from "../utils/account-detail";
 import { useForm } from "react-hook-form";
 
-import { LoginProps, LoginSchema } from "@/models/Login";
+import { LoginSchema } from "@/models/Login";
 import { zodResolver } from "@hookform/resolvers/zod";
 import DisplayErrorMessage from "@/components/DisplayErrorMessage";
+
+import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
+
+import Cookies from "js-cookie";
+
+type LoginProps = {
+	phoneNumber: string;
+	pin: string;
+	setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+};
 
 const Index = () => {
 	const [phoneNumber, setPhoneNumber] = useState("");
 	const [isSignUpClick, setIsSignUpClick] = useState(false);
 	const [pin, setPin] = useState<string[]>(new Array(4).fill(""));
 
+	const [serverError, setServerError] = useState("");
+
+	const navigate = useNavigate();
+
+	useEffect(() => {
+		const token = Cookies.get("token");
+		if (token) {
+			navigate("/");
+		}
+	}, []);
+
+	const mutation = useMutation({
+		mutationFn: POST,
+		onSuccess: (data) => {
+			if (data?.success) {
+				Cookies.set("token", data.token);
+				setServerError("");
+				navigate("/");
+			} else {
+				setServerError("Please enter a valid phone number or pincode");
+			}
+			console.log("success");
+		},
+	});
+
+	const [otpError, setOtpError] = useState("");
+
+	const [isLoading, setIsLoading] = useState(false);
+
 	const {
 		register,
 		handleSubmit,
-		formState: { errors },
+		formState: { errors, isSubmitting },
 	} = useForm<LoginProps>({
 		resolver: zodResolver(LoginSchema),
 	});
@@ -34,15 +74,66 @@ const Index = () => {
 	const reset = usePersonalDetailStore((state) => state.reset);
 	const resetAccount = useAccountDetailStore((state) => state.reset);
 
-	const handleSubmitForm = async (data: LoginProps) => {
+	const loginSuccess = async ({
+		phoneNumber,
+		pin,
+	}: {
+		phoneNumber: string;
+		pin: string;
+	}) => {
+		setIsLoading(true);
+		mutation.mutate({ phoneNumber, pin, setIsLoading });
+
+		// const response = await POST({ phoneNumber, pin, setIsLoading });
+		// if (response) {
+		// 	if (response.success) {
+		// 		alert(
+		// 			"Welcome, " +
+		// 				response.user.firstName +
+		// 				" " +
+		// 				response.user.lastName +
+		// 				" " +
+		// 				response.user.id +
+		// 				" " +
+		// 				response.token,
+		// 		);
+
+		// 	} else {
+		// 		alert("Error is in the house");
+		// 	}
+		// } else {
+		// 	console.log("Response doesn't exist", response);
+		// }
+	};
+
+	const handleSubmitForm = async ({ phoneNumber }: LoginProps) => {
 		const extractedPin: string = pin.join("");
-		const req = await POST({ phoneNumber, extractedPin });
-		if (req) {
-			alert("success");
-		} else {
-			alert("error");
-			console.log(data);
+
+		mutation.reset();
+
+		try {
+			if (parseInt(extractedPin) > 999) {
+				console.log("success");
+				setOtpError("");
+				loginSuccess({ phoneNumber, pin: extractedPin });
+			} else {
+				console.log("hahhaha gagi error");
+				setOtpError("Invalid pin, pincode must be a number");
+			}
+		} catch (err: unknown) {
+			if (err instanceof Error) {
+				console.log(err.message);
+			}
+			setOtpError("Invalid pin, pincode must be a number");
+			throw Error("Error brother" + err);
 		}
+		// const req = await POST({ phoneNumber, extractedPin });
+		// if (req) {
+		// 	alert("success");
+		// } else {
+		// 	alert("error");
+		// 	console.log(data);
+		// }
 	};
 
 	return (
@@ -109,13 +200,8 @@ const Index = () => {
 						</label>
 						<label>
 							<span className="text-black opacity-80 ml-3">Pin code</span>
-							<OTPField otp={pin} setOtp={setPin} register={register} />
-							{errors.pin && (
-								<DisplayErrorMessage
-									errorMessage={`${errors.pin.message}`}
-									key="error message otp"
-								/>
-							)}
+							<OTPField otp={pin} setOtp={setPin} />
+							{otpError && <DisplayErrorMessage errorMessage={otpError} />}
 						</label>
 						<div className="w-full flex justify-end">
 							<a
@@ -124,11 +210,22 @@ const Index = () => {
 								Forgot Password?
 							</a>
 						</div>
-						<button
-							type="submit"
-							className="text-center w-full justify-center rounded-md transition-colors duration-300 bg-[#017DC3] px-3 py-2.5 text-[17px] font-semibold text-white shadow-sm hover:bg-[#44C6F3] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-							Submit
-						</button>
+						{serverError && (
+							<p className="text-red-500 text-sm font-bold">{serverError}</p>
+						)}
+						{isLoading ? (
+							<button type="button">
+								<span className="loading loading-spinner text-primary"></span>
+								Submitting
+							</button>
+						) : (
+							<button
+								disabled={isSubmitting}
+								type="submit"
+								className="text-center w-full justify-center rounded-md transition-colors duration-300 bg-[#017DC3] px-3 py-2.5 text-[17px] font-semibold text-white shadow-sm hover:bg-[#44C6F3] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+								Submit
+							</button>
+						)}
 					</form>
 					{isSignUpClick ? (
 						<>

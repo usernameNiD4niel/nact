@@ -1,40 +1,59 @@
-import { LoginFormProps } from "../constants/props";
+import { LoginSuccessResponse } from "@/constants/props";
 
 export const POST = async ({
 	phoneNumber,
-	extractedPin,
-}: LoginFormProps): Promise<boolean> => {
-	const formData = new FormData();
-	formData.append("phoneNumber", phoneNumber.toString());
-	formData.append("pin", extractedPin.toString());
+	pin,
+	setIsLoading,
+}: {
+	phoneNumber: string;
+	pin: string;
+	setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
+	const data = {
+		mobileNumber: phoneNumber,
+		pin,
+	};
 
 	try {
 		// TODO: add a valid url to the fetch request
-		const response = await fetch("https://backend-api87.000webhostapp.com/api/login", {
-			method: "POST",
-			body: formData,
-		});
+
+		const response = await fetch(
+			"https://flask-service.gi2fod26lfct0.ap-southeast-1.cs.amazonlightsail.com/login",
+			{
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(data),
+			},
+		);
+
+		console.log(data);
 
 		if (response.ok) {
 			console.log("Sucessfully created a POST request");
-			const data = await response.json();
+			const data: LoginSuccessResponse = await response.json();
 
 			// TODO: change this if there's no status from the response
-			if (data.status === "success") {
+			if (data.success) {
 				console.log("Redirecting to the dashboard...");
-				return true;
+				setIsLoading(false);
+				return data;
 			} else {
-				console.error("Error: " + data.status);
+				console.error("Error: " + data.message);
+				setIsLoading(false);
+				return data;
 			}
 		} else {
-			console.log("Successfully failed!");
+			console.log("Successfully failed!", response);
+			setIsLoading(false);
 		}
 	} catch (e: unknown) {
+		setIsLoading(false);
 		if (typeof e === "string") {
 			console.log(e);
 		} else if (e instanceof Error) {
 			console.log("Error: " + e.message);
 		}
 	}
-	return false;
 };

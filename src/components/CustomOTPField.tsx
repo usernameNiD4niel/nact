@@ -1,22 +1,15 @@
 import React, { FC, useEffect, useRef, useState } from "react";
 import "../../styles/remove-scroll-bar.css";
-import { UseFormRegister } from "react-hook-form";
-import { LoginProps } from "@/models/Login";
 import { HiOutlineArrowRight } from "react-icons/hi2";
 
 export type OTPFieldProps = {
 	otp: string[];
 	setOtp: React.Dispatch<React.SetStateAction<string[]>>;
-	register: UseFormRegister<LoginProps>;
 };
 
 let currentOtpIndex: number = 0;
 
-const OTPField: FC<OTPFieldProps> = ({
-	otp,
-	setOtp,
-	register,
-}): JSX.Element => {
+const OTPField: FC<OTPFieldProps> = ({ otp, setOtp }): JSX.Element => {
 	const inputRef = useRef<HTMLInputElement>(null);
 
 	const [activeOTPIndex, setActiveOTPIndex] = useState<number>(0);
@@ -57,12 +50,6 @@ const OTPField: FC<OTPFieldProps> = ({
 				return (
 					<React.Fragment key={index}>
 						<input
-							{...register("pin", {
-								pattern: {
-									value: /^\d+$/,
-									message: "Only numbers are allowed",
-								},
-							})}
 							ref={index === activeOTPIndex ? inputRef : null}
 							onChange={handleOnChange}
 							key={index}
@@ -71,6 +58,7 @@ const OTPField: FC<OTPFieldProps> = ({
 							type="password"
 							value={otp[index]}
 							placeholder={placeHolder[index]}
+							required
 							className="w-12 h-12 border-[1px] rounded bg-transparent outline-none text-center text-2xl placeholder:text-[16px] spin-button-none border-black border-opacity-30 focus:border-[#017DC3] focus:text-[#017DC3] text-gray-600 transition"
 						/>
 						{index === otp.length - 1 ? null : (

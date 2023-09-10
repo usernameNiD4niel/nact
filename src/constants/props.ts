@@ -29,6 +29,7 @@ export type FormDataProps = {
 	pin: string;
 	recoveryQuestion: string;
 	recoveryAnswer: string;
+	setError?: React.Dispatch<React.SetStateAction<string>>;
 };
 
 export type LoginFormProps = {
@@ -226,4 +227,21 @@ export type TableDataProps = {
 	id: number;
 	columnTitle: string;
 	tableData: string[] | null;
+};
+
+export type LoginSuccessResponse = {
+	success: boolean;
+	message: string;
+	user: UserResponseProps;
+	token: string;
+};
+
+type UserResponseProps = {
+	id: number;
+	firstName: string;
+	lastName: string;
+};
+
+export type RegisterResponse = {
+	message: string;
 };

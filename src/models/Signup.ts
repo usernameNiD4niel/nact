@@ -76,8 +76,8 @@ export const AccountDetailSchema: ZodType<AccountDetailDatatypes> = z
 				required_error: requiredErrorMessage("Recovery Answer"),
 				invalid_type_error: invalidTypeErrorMessage("Recovery Answer"),
 			})
-			.min(5, { message: "Enter an answer to your recovery question" })
-			.max(50, { message: "50 long characters long is too much" }),
+			.min(5, "Enter an answer to your recovery question")
+			.max(50, "50 long characters long is too much"),
 	})
 	.refine((data) => data.pin === data.confirmPin, {
 		message: "Confirm pin does not match to pin",

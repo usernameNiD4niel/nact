@@ -17,10 +17,6 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 		event.preventDefault();
 	};
 
-	// const handleShowingFilter = () => {
-	// 	setIsShowingFilter(true);
-	// };
-
 	return (
 		<>
 			<form
@@ -31,13 +27,6 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 					placeholder={placeHolder}
 					className="border-[1px] rounded-lg border-black border-opacity-10 w-full p-3 focus:outline-primary focus:outline-1"
 				/>
-				{/* <button
-					type="button"
-					onClick={handleShowingFilter}
-					className="border-l-[1px] text-primary text-xl border-black border-opacity-10 rounded-sm p-3 absolute right-0 top-0 bottom-0"
-					id="filter-btn">
-					<HiOutlineAdjustmentsHorizontal />
-				</button> */}
 			</form>
 
 			{isShowingFilter && (

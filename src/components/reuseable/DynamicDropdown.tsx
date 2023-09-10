@@ -80,7 +80,7 @@ const DynamicDropdown: React.FC<DynamicDropdownProps> = ({
 			<button
 				type="button"
 				onClick={() => setIsOpen((prev) => !prev)}
-				className="flex items-center gap-x-3 px-3 py-2 text-sm w-full text-black">
+				className="flex items-center gap-x-3 px-3 py-2 text-xs w-full text-black">
 				<p className="flex items-center gap-x-1">
 					<span
 						className={`inline-block ${
@@ -120,7 +120,7 @@ const DynamicDropdown: React.FC<DynamicDropdownProps> = ({
 							<li
 								className="flex w-full items-center justify-center"
 								key={index}>
-								<label className="w-full flex justify-center items-center gap-x-2 hover:cursor-pointer py-2 text-sm pl-4 text-gray-900 hover:bg-slate-100">
+								<label className="w-full flex justify-center items-center gap-x-2 hover:cursor-pointer py-2 text-xs pl-4 text-gray-900 hover:bg-slate-100">
 									<input
 										type="checkbox"
 										className={`${dropdownText === "Sort" && "hidden"}`}
