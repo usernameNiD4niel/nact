@@ -46,112 +46,114 @@ const DrawerRight: FC<DrawerRightProps> = ({
 			</div>
 			<div className="drawer-side">
 				<label htmlFor={drawerId} className="drawer-overlay"></label>
-				<ul className="menu w-80 h-full text-base-content bg-primary">
+				<ul className="menu w-80 h-full text-base-content bg-primary flex flex-col justify-between">
 					{/* Sidebar content here */}
-					<li className="my-5">
-						<label
-							className="drawer-overlay text-white text-lg font-semibold hover:text-primary hover:bg-white"
-							htmlFor={drawerId}>
-							<IoChevronBackOutline />
-							<span className="text-sm">Menu</span>
-						</label>
-					</li>
-					<li>
-						<Link
-							to="/"
-							className={`${buttonClass} ${
-								selected === ButtonList.Home
-									? "text-primary font-semibold bg-slate-50"
-									: "text-white"
-							} ${hoverButtonClass}`}
-							onClick={toggleDrawer}>
-							Home
-						</Link>
-					</li>
-					<li>
-						<Link
-							to="/module"
-							className={`${buttonClass} ${
-								selected === ButtonList.Module
-									? "text-primary font-semibold bg-slate-50"
-									: "text-white"
-							} ${hoverButtonClass}`}
-							onClick={toggleDrawer}>
-							Module
-						</Link>
-					</li>
-					<li>
-						<Link
-							to="/costumer"
-							className={`${buttonClass} ${
-								selected === ButtonList.Costumer
-									? "text-primary font-semibold bg-slate-50"
-									: "text-white"
-							} ${hoverButtonClass}`}
-							onClick={toggleDrawer}>
-							Customer
-						</Link>
-					</li>
-					<li>
-						<Link
-							to="/supplier"
-							className={`${buttonClass} ${
-								selected === ButtonList.Supplier
-									? "text-primary font-semibold bg-slate-50"
-									: "text-white"
-							} ${hoverButtonClass}`}
-							onClick={toggleDrawer}>
-							Supplier Management
-						</Link>
-					</li>
-					<li>
-						<Link
-							to="/sales-agent"
-							className={`${buttonClass} ${
-								selected === ButtonList.SalesAgent
-									? "text-primary font-semibold bg-slate-50"
-									: "text-white"
-							} ${hoverButtonClass}`}
-							onClick={toggleDrawer}>
-							Sales Agent
-						</Link>
-					</li>
-					<li>
-						<Link
-							to="/inventory-officer"
-							className={`${buttonClass} ${
-								selected === ButtonList.InventoryOfficer
-									? "text-primary font-semibold bg-slate-50"
-									: "text-white"
-							} ${hoverButtonClass}`}
-							onClick={toggleDrawer}>
-							Inventory Officer
-						</Link>
-					</li>
-					<li>
-						<Link
-							to="/inventory"
-							className={`${buttonClass} ${
-								selected === ButtonList.Inventory
-									? "text-primary font-semibold bg-slate-50"
-									: "text-white"
-							} ${hoverButtonClass}`}
-							onClick={toggleDrawer}>
-							Inventory
-						</Link>
-					</li>
-					<li>
-						<Link
-							to="/order-generator"
-							className={`${buttonClass} ${
-								selected === ButtonList.OrderGenerator
-									? "text-primary font-semibold bg-slate-50"
-									: "text-white"
-							} ${hoverButtonClass}`}
-							onClick={toggleDrawer}>
-							Order Generator
-						</Link>
-					</li>
+					<div>
+						<li className="my-5">
+							<label
+								className="drawer-overlay text-white text-lg font-semibold hover:text-primary hover:bg-white"
+								htmlFor={drawerId}>
+								<IoChevronBackOutline />
+								<span className="text-sm">Menu</span>
+							</label>
+						</li>
+						<li>
+							<Link
+								to="/"
+								className={`${buttonClass} ${
+									selected === ButtonList.Home
+										? "text-primary font-semibold bg-slate-50"
+										: "text-white"
+								} ${hoverButtonClass}`}
+								onClick={toggleDrawer}>
+								Home
+							</Link>
+						</li>
+						<li>
+							<Link
+								to="/module"
+								className={`${buttonClass} ${
+									selected === ButtonList.Module
+										? "text-primary font-semibold bg-slate-50"
+										: "text-white"
+								} ${hoverButtonClass}`}
+								onClick={toggleDrawer}>
+								Module
+							</Link>
+						</li>
+						<li>
+							<Link
+								to="/costumer"
+								className={`${buttonClass} ${
+									selected === ButtonList.Costumer
+										? "text-primary font-semibold bg-slate-50"
+										: "text-white"
+								} ${hoverButtonClass}`}
+								onClick={toggleDrawer}>
+								Customer
+							</Link>
+						</li>
+						<li>
+							<Link
+								to="/supplier"
+								className={`${buttonClass} ${
+									selected === ButtonList.Supplier
+										? "text-primary font-semibold bg-slate-50"
+										: "text-white"
+								} ${hoverButtonClass}`}
+								onClick={toggleDrawer}>
+								Supplier Management
+							</Link>
+						</li>
+						<li>
+							<Link
+								to="/sales-agent"
+								className={`${buttonClass} ${
+									selected === ButtonList.SalesAgent
+										? "text-primary font-semibold bg-slate-50"
+										: "text-white"
+								} ${hoverButtonClass}`}
+								onClick={toggleDrawer}>
+								Sales Agent
+							</Link>
+						</li>
+						<li>
+							<Link
+								to="/inventory-officer"
+								className={`${buttonClass} ${
+									selected === ButtonList.InventoryOfficer
+										? "text-primary font-semibold bg-slate-50"
+										: "text-white"
+								} ${hoverButtonClass}`}
+								onClick={toggleDrawer}>
+								Inventory Officer
+							</Link>
+						</li>
+						<li>
+							<Link
+								to="/inventory"
+								className={`${buttonClass} ${
+									selected === ButtonList.Inventory
+										? "text-primary font-semibold bg-slate-50"
+										: "text-white"
+								} ${hoverButtonClass}`}
+								onClick={toggleDrawer}>
+								Inventory
+							</Link>
+						</li>
+						<li>
+							<Link
+								to="/order-generator"
+								className={`${buttonClass} ${
+									selected === ButtonList.OrderGenerator
+										? "text-primary font-semibold bg-slate-50"
+										: "text-white"
+								} ${hoverButtonClass}`}
+								onClick={toggleDrawer}>
+								Order Generator
+							</Link>
+						</li>
+					</div>
 					<li>
 						<Link
 							to="/account"

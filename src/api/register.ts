@@ -8,14 +8,22 @@ export const POST = async ({
 	middleName,
 	mobileNumber,
 	pin,
-	recoveryAnswer,
-	recoveryQuestion,
 	setError,
 }: FormDataProps) => {
 	const apiEndpoint: string =
 		"https://flask-service.gi2fod26lfct0.ap-southeast-1.cs.amazonlightsail.com/register";
 
-	const formData: FormDataProps = {
+	// const formData: FormDataProps = {
+	// 	lastName,
+	// 	firstName,
+	// 	middleName,
+	// 	gender,
+	// 	birthDate,
+	// 	mobileNumber,
+	// 	pin,
+	// };
+
+	const deleteThisSoon = {
 		lastName,
 		firstName,
 		middleName,
@@ -23,8 +31,8 @@ export const POST = async ({
 		birthDate,
 		mobileNumber,
 		pin,
-		recoveryQuestion,
-		recoveryAnswer,
+		recoveryQuestion: "alisin mo na to pre hahahaha",
+		recoveryAnswer: "ito din pre hahaha",
 	};
 
 	try {
@@ -33,7 +41,7 @@ export const POST = async ({
 			headers: {
 				"Content-Type": "application/json",
 			},
-			body: JSON.stringify(formData),
+			body: JSON.stringify(deleteThisSoon),
 		});
 
 		const data: RegisterResponse = await response.json();

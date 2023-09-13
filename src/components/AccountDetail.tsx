@@ -7,58 +7,60 @@ import { useForm } from "react-hook-form";
 import { AccountDetailSchema } from "../models/Signup";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AccountDetailDatatypes, FormDataProps } from "../constants/props";
-import { useAccountDetailStore } from "../utils/account-detail";
 import DisplayErrorMessage from "./DisplayErrorMessage";
 import { POST } from "@/api/register";
 import { usePersonalDetailStore } from "@/utils/personal-detail";
 import { HiOutlineArrowLeft, HiOutlineArrowRight } from "react-icons/hi2";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import Cookies from "js-cookie";
-
+import { useState } from "react";
 import { useMutation } from "@tanstack/react-query";
+import CustomDropdown from "./CustomDropdown";
+import { useAccountDetailStore } from "@/utils/account-detail";
+import LoadingButton from "./reuseable/LoadingButton";
 
 type AccountDetailProps = {
 	setIsOneCurrentSlide: React.Dispatch<React.SetStateAction<boolean>>;
+	setIsSignUpClick: React.Dispatch<React.SetStateAction<boolean>>;
+	setShouldShowAlert: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const AccountDetail = ({
 	setIsOneCurrentSlide,
+	setIsSignUpClick,
+	setShouldShowAlert,
 }: AccountDetailProps): JSX.Element => {
-	const [
-		mobileNumber,
-		pin,
-		recoveryQuestion,
-		recoveryAnswer,
-		confirmPin,
-		setMobileNumber,
-		setPin,
-		setRecoveryQuestion,
-		setRecoveryAnswer,
-		setConfirmPin,
-	] = useAccountDetailStore((state) => [
-		state.mobileNumber,
-		state.pin,
-		state.recoveryQuestion,
-		state.recoveryAnswer,
-		state.confirmPin,
-		state.setMobileNumber,
-		state.setPin,
-		state.setRecoveryQuestion,
-		state.setRecoveryAnswer,
-		state.setConfirmPin,
-	]);
-
 	const [error, setError] = useState("");
+	const [hasGenderError, setHasGenderError] = useState(false);
 
-	const [firstName, lastName, middleInitial, birthDate, gender] =
+	const [firstName, lastName, middleInitial, birthDate, personalReset] =
 		usePersonalDetailStore((state) => [
 			state.firstName,
 			state.lastName,
 			state.middleInitial,
 			state.birthDate,
-			state.gender,
+			state.reset,
 		]);
+
+	const [
+		confirmPin_,
+		gender_,
+		mobileNumber_,
+		pin_,
+		setConfirmPin_,
+		setGender_,
+		setMobileNumber_,
+		setPin_,
+		accountReset,
+	] = useAccountDetailStore((state) => [
+		state.confirmPin,
+		state.gender,
+		state.mobileNumber,
+		state.pin,
+		state.setConfirmPin,
+		state.setGender,
+		state.setMobileNumber,
+		state.setPin,
+		state.reset,
+	]);
 
 	const {
 		register,
@@ -68,53 +70,64 @@ const AccountDetail = ({
 		resolver: zodResolver(AccountDetailSchema),
 	});
 
-	const navigate = useNavigate();
-
-	useEffect(() => {
-		const token = Cookies.get("token");
-		if (token) {
-			navigate("/");
-		}
-	}, []);
+	const [isLoadingButton, setIsLoadingButton] = useState(false);
 
 	const mutation = useMutation({
 		mutationFn: POST,
 		onSuccess: (data) => {
+			// Fix here
 			if (data?.message === "Registration successful") {
 				setError("");
-				window.location.reload();
-				console.log("navigate to login page");
+				setShouldShowAlert(true);
+				personalReset();
+				accountReset();
+				setIsSignUpClick(false);
 			} else {
 				if (!error && data) {
-					setError(data?.message);
+					setError("Backend Error: recovery question and answer required");
+					console.log(data);
+
 					console.log("On Success callback", data?.message);
 				}
 			}
+			setIsLoadingButton(false);
 		},
 		onError: (err) => {
 			console.log("On error callback", err);
 		},
 	});
 
-	const handleFormSubmit = async (data: AccountDetailDatatypes) => {
+	const handleFormSubmit = (data: AccountDetailDatatypes) => {
 		// Get global state of all the fields
 
+		console.log("test 1");
+
+		if (!gender_) {
+			setHasGenderError(true);
+			console.log("test 2");
+			return;
+		} else {
+			console.log("test 3");
+			setHasGenderError(false);
+		}
+
+		console.log("test 4");
 		mutation.reset();
 
-		const { mobileNumber, pin, recoveryAnswer, recoveryQuestion } = data;
+		const { mobileNumber, pin } = data;
 
 		const formData: FormDataProps = {
 			firstName,
 			lastName,
 			middleName: middleInitial,
 			birthDate,
-			gender,
+			gender: gender_,
 			mobileNumber,
 			pin,
-			recoveryAnswer,
-			recoveryQuestion,
 			setError,
 		};
+
+		setIsLoadingButton(true);
 
 		mutation.mutate(formData);
 
@@ -132,20 +145,22 @@ const AccountDetail = ({
 		<form
 			onSubmit={handleSubmit(handleFormSubmit)}
 			className="w-full flex flex-col gap-4 px-4">
-			<label className="relative" htmlFor="mobileNumber">
+			<CustomDropdown
+				gender={gender_}
+				setGender={setGender_}
+				hasGenderError={hasGenderError}
+			/>
+			<label className="relative">
 				<input
-					{...register("mobileNumber")}
 					type="number"
 					className={animatedInputClass}
-					id="mobileNumber"
-					name="mobileNumber"
-					value={mobileNumber}
-					onChange={(e) => setMobileNumber(e.target.value)}
-					required
+					{...register("mobileNumber")}
+					value={mobileNumber_}
+					onChange={(e) => setMobileNumber_(e.target.value)}
 				/>
 				<span
 					className={`${animatedSpanClass} ${
-						mobileNumber && "input-contains"
+						mobileNumber_ && "input-contains"
 					}`}>
 					Mobile Number
 				</span>
@@ -157,16 +172,13 @@ const AccountDetail = ({
 			</label>
 			<label className="relative" htmlFor="pin">
 				<input
-					{...register("pin")}
 					type="password"
 					className={animatedInputClass}
-					id="pin"
-					name="pin"
-					value={pin}
-					onChange={(e) => setPin(e.target.value)}
-					required
+					{...register("pin")}
+					value={pin_}
+					onChange={(e) => setPin_(e.target.value)}
 				/>
-				<span className={`${animatedSpanClass} ${pin && "input-contains"}`}>
+				<span className={`${animatedSpanClass} ${pin_ && "input-contains"}`}>
 					4 Digit Pin Number
 				</span>
 				{errors.pin && (
@@ -175,69 +187,21 @@ const AccountDetail = ({
 			</label>
 			<label className="relative" htmlFor="confirmPin">
 				<input
-					{...register("confirmPin")}
 					type="password"
 					className={animatedInputClass}
-					id="confirmPin"
-					value={confirmPin}
-					onChange={(e) => setConfirmPin(e.target.value)}
-					name="confirmPin"
-					required
+					{...register("confirmPin")}
+					value={confirmPin_}
+					onChange={(e) => setConfirmPin_(e.target.value)}
 				/>
 				<span
-					className={`${animatedSpanClass} ${confirmPin && "input-contains"}`}>
+					className={`${animatedSpanClass} ${confirmPin_ && "input-contains"}`}>
 					Confirm Pin Number
 				</span>
 				{errors.confirmPin && (
 					<DisplayErrorMessage errorMessage={`${errors.confirmPin?.message}`} />
 				)}
 			</label>
-			<label className="relative" htmlFor="recoveryQuestion">
-				<input
-					{...register("recoveryQuestion")}
-					type="text"
-					className={animatedInputClass}
-					id="recoveryQuestion"
-					value={recoveryQuestion}
-					onChange={(e) => setRecoveryQuestion(e.target.value)}
-					name="recoveryQuestion"
-					required
-				/>
-				<span
-					className={`${animatedSpanClass} ${
-						recoveryQuestion && "input-contains"
-					}`}>
-					Recovery Question
-				</span>
-				{errors.recoveryQuestion && (
-					<DisplayErrorMessage
-						errorMessage={`${errors.recoveryQuestion?.message}`}
-					/>
-				)}
-			</label>
-			<label className="relative" htmlFor="recoveryAnswer">
-				<input
-					{...register("recoveryAnswer")}
-					type="text"
-					className={animatedInputClass}
-					id="recoveryAnswer"
-					value={recoveryAnswer}
-					onChange={(e) => setRecoveryAnswer(e.target.value)}
-					name="recoveryAnswer"
-					required
-				/>
-				<span
-					className={`${animatedSpanClass} ${
-						recoveryAnswer && "input-contains"
-					}`}>
-					Recovery Answer
-				</span>
-				{errors.recoveryAnswer && (
-					<DisplayErrorMessage
-						errorMessage={`${errors.recoveryAnswer?.message}`}
-					/>
-				)}
-			</label>
+
 			{error && <p className="text-sm text-red-500 font-bold">{error}</p>}
 			<div className="flex w-full justify-between py-2 items-center">
 				<button
@@ -248,11 +212,15 @@ const AccountDetail = ({
 					Previous
 				</button>
 
-				<button
-					type="submit"
-					className="flex items-center justify-center gap-4 px-4 ring-1 ring-[#017DC3] py-2 bg-[#017DC3] text-white text-center rounded-lg font-bold">
-					Submit <HiOutlineArrowRight />
-				</button>
+				{isLoadingButton ? (
+					<LoadingButton />
+				) : (
+					<button
+						type="submit"
+						className="flex items-center justify-center gap-4 px-4 ring-1 ring-[#017DC3] py-2 bg-[#017DC3] text-white text-center rounded-lg font-bold">
+						Submit <HiOutlineArrowRight />
+					</button>
+				)}
 			</div>
 		</form>
 	);

@@ -4,7 +4,6 @@ type State = {
 	firstName: string;
 	middleInitial: string;
 	lastName: string;
-	gender: string;
 	birthDate: string;
 };
 
@@ -12,7 +11,6 @@ type Actions = {
 	setFirstName: (firstName: string) => void;
 	setMiddleInitial: (middleInitial: string) => void;
 	setLastName: (lastName: string) => void;
-	setGender: (gender: string) => void;
 	setBirthDate: (birthDate: string) => void;
 	reset: () => void;
 };
@@ -20,7 +18,6 @@ type Actions = {
 const initialState: State = {
 	firstName: "",
 	birthDate: "",
-	gender: "",
 	lastName: "",
 	middleInitial: "",
 };
@@ -38,10 +35,6 @@ export const usePersonalDetailStore = create<State & Actions>()((set) => ({
 
 	setBirthDate: (birthDate: string) => {
 		set({ birthDate: birthDate });
-	},
-
-	setGender: (gender: string) => {
-		set({ gender: gender });
 	},
 
 	setLastName: (lastName: string) => {

@@ -65,19 +65,6 @@ export const AccountDetailSchema: ZodType<AccountDetailDatatypes> = z
 			required_error: requiredErrorMessage("Confirm Pin Code"),
 			invalid_type_error: invalidTypeErrorMessage("Confirm Pin Code"),
 		}),
-		recoveryQuestion: z
-			.string({
-				required_error: requiredErrorMessage("Recovery Question"),
-				invalid_type_error: invalidTypeErrorMessage("Recovery Question"),
-			})
-			.min(5, { message: "Enter a valid question to recover" }),
-		recoveryAnswer: z
-			.string({
-				required_error: requiredErrorMessage("Recovery Answer"),
-				invalid_type_error: invalidTypeErrorMessage("Recovery Answer"),
-			})
-			.min(5, "Enter an answer to your recovery question")
-			.max(50, "50 long characters long is too much"),
 	})
 	.refine((data) => data.pin === data.confirmPin, {
 		message: "Confirm pin does not match to pin",
@@ -140,19 +127,6 @@ export const SignupValidationSchema: ZodType<User> = z
 			required_error: requiredErrorMessage("Confirm Pin Code"),
 			invalid_type_error: invalidTypeErrorMessage("Confirm Pin Code"),
 		}),
-		recoveryQuestion: z
-			.string({
-				required_error: requiredErrorMessage("Recovery Question"),
-				invalid_type_error: invalidTypeErrorMessage("Recovery Question"),
-			})
-			.min(5, { message: "Enter a question to recover" }),
-		recoveryAnswer: z
-			.string({
-				required_error: requiredErrorMessage("Recovery Answer"),
-				invalid_type_error: invalidTypeErrorMessage("Recovery Answer"),
-			})
-			.min(5, { message: "Enter an answer to your recovery question" })
-			.max(50, { message: "50 long characters long is too much" }),
 	})
 	.refine((data) => data.pin !== data.confirmPin, {
 		message: "Pin code is not equal to confirm pin",

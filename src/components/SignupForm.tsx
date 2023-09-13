@@ -4,7 +4,13 @@ import PersonalDetail from "./PersonalDetail";
 import SlidingForm from "./SlidingForm";
 import AccountDetail from "./AccountDetail";
 
-const SignupForm = () => {
+const SignupForm = ({
+	setIsSignUpClick,
+	setShouldShowAlert,
+}: {
+	setIsSignUpClick: React.Dispatch<React.SetStateAction<boolean>>;
+	setShouldShowAlert: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
 	const [isOneCurrentSlide, setIsOneCurrentSlide] = useState<boolean>(true);
 
 	return (
@@ -19,6 +25,8 @@ const SignupForm = () => {
 					key="signUpFormAccountDetail">
 					<AccountDetail
 						setIsOneCurrentSlide={setIsOneCurrentSlide}
+						setIsSignUpClick={setIsSignUpClick}
+						setShouldShowAlert={setShouldShowAlert}
 						key="AccountDetail"
 					/>
 				</div>

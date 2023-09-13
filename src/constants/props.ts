@@ -27,8 +27,6 @@ export type FormDataProps = {
 	birthDate: string;
 	mobileNumber: string;
 	pin: string;
-	recoveryQuestion: string;
-	recoveryAnswer: string;
 	setError?: React.Dispatch<React.SetStateAction<string>>;
 };
 
@@ -55,8 +53,6 @@ export type User = {
 	gender: string;
 	mobileNumber: string;
 	pin: string;
-	recoveryQuestion: string;
-	recoveryAnswer: string;
 	confirmPin?: string;
 	setResponse?: React.Dispatch<React.SetStateAction<User | null>>;
 };
@@ -71,21 +67,17 @@ export type AccountDetailDatatypes = {
 	mobileNumber: string;
 	pin: string;
 	confirmPin: string;
-	recoveryQuestion: string;
-	recoveryAnswer: string;
 };
 
 export type AccountDetailProps = {
 	mobileNumber: string;
 	pin: string;
 	confirmPin: string;
-	recoveryQuestion: string;
-	recoveryAnswer: string;
+	gender: string;
+	setGender: React.Dispatch<React.SetStateAction<string>>;
 	setMobileNumber: React.Dispatch<React.SetStateAction<string>>;
 	setPin: React.Dispatch<React.SetStateAction<string>>;
 	setConfirmPin: React.Dispatch<React.SetStateAction<string>>;
-	setRecoveryQuestion: React.Dispatch<React.SetStateAction<string>>;
-	setRecoveryAnswer: React.Dispatch<React.SetStateAction<string>>;
 	register: UseFormRegister<User>;
 	errors?: FieldErrors<User>;
 };

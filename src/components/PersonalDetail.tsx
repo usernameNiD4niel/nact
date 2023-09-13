@@ -10,7 +10,6 @@ import "../../styles/remove-calendar-icon.css";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { PersonalDetailSchema } from "../models/Signup";
 import { useForm } from "react-hook-form";
-import CustomDropdown from "./CustomDropdown";
 import { usePersonalDetailStore } from "../utils/personal-detail";
 import DisplayErrorMessage from "./DisplayErrorMessage";
 import { HiOutlineArrowRight, HiOutlineCalendarDays } from "react-icons/hi2";
@@ -25,23 +24,19 @@ const PersonalDetail = ({ setIsOneCurrentSlide }: PersonalDetailProps) => {
 		lastName,
 		middleInitial,
 		birthDate,
-		gender,
 		setFirstName,
 		setLastName,
 		setMiddleInitial,
 		setBirthDate,
-		setGender,
 	] = usePersonalDetailStore((state) => [
 		state.firstName,
 		state.lastName,
 		state.middleInitial,
 		state.birthDate,
-		state.gender,
 		state.setFirstName,
 		state.setLastName,
 		state.setMiddleInitial,
 		state.setBirthDate,
-		state.setGender,
 	]);
 
 	const {
@@ -53,7 +48,6 @@ const PersonalDetail = ({ setIsOneCurrentSlide }: PersonalDetailProps) => {
 	});
 
 	const [hasBirthDateError, setHasBirthDateError] = useState(false);
-	const [hasGenderError, setHasGenderError] = useState(false);
 
 	const birthdateRef = useRef<HTMLInputElement | null>(null);
 
@@ -72,13 +66,6 @@ const PersonalDetail = ({ setIsOneCurrentSlide }: PersonalDetailProps) => {
 			return;
 		} else {
 			setHasBirthDateError(false);
-		}
-
-		if (!gender) {
-			setHasGenderError(true);
-			return;
-		} else {
-			setHasGenderError(false);
 		}
 
 		setIsOneCurrentSlide(false);
@@ -186,12 +173,6 @@ const PersonalDetail = ({ setIsOneCurrentSlide }: PersonalDetailProps) => {
 					<DisplayErrorMessage errorMessage="Please enter your birth date first" />
 				)}
 			</label>
-
-			<CustomDropdown
-				gender={gender}
-				setGender={setGender}
-				hasGenderError={hasGenderError}
-			/>
 
 			<button
 				type="submit"

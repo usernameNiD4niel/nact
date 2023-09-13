@@ -3,26 +3,23 @@ import { create } from "zustand";
 type State = {
 	mobileNumber: string;
 	pin: string;
-	recoveryQuestion: string;
-	recoveryAnswer: string;
 	confirmPin: string;
+	gender: string;
 };
 
 type Actions = {
 	setMobileNumber: (mobileNumber: string) => void;
 	setPin: (pin: string) => void;
-	setRecoveryQuestion: (question: string) => void;
-	setRecoveryAnswer: (answer: string) => void;
 	setConfirmPin: (confirmPin: string) => void;
+	setGender: (gender: string) => void;
 	reset: () => void;
 };
 
 const initialState: State = {
 	mobileNumber: "",
 	pin: "",
-	recoveryQuestion: "",
-	recoveryAnswer: "",
 	confirmPin: "",
+	gender: "",
 };
 
 export const useAccountDetailStore = create<State & Actions>()((set) => ({
@@ -34,14 +31,11 @@ export const useAccountDetailStore = create<State & Actions>()((set) => ({
 	setPin: (pin) => {
 		set({ pin: pin });
 	},
-	setRecoveryQuestion: (question) => {
-		set({ recoveryQuestion: question });
+	setGender: (gender) => {
+		set({ gender: gender });
 	},
 	setConfirmPin: (confirmPin) => {
 		set({ confirmPin: confirmPin });
-	},
-	setRecoveryAnswer: (answer) => {
-		set({ recoveryAnswer: answer });
 	},
 	reset: () => {
 		set(initialState);

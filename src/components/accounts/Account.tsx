@@ -35,11 +35,11 @@ const Account = () => {
 		}
 	}, []);
 	return (
-		<section className="flex px-4 py-5 pb-20 w-full">
+		<section className="flex px-4 py-5 pb-20 w-full items-center justify-center">
 			<section className="w-[95%] lg:w-4/5 flex flex-col gap-y-5">
 				<div>
-					<h2 className="font-bold text-xl">My Profile</h2>
-					<p>Update your account information</p>
+					<h2 className="font-bold">My Profile</h2>
+					<p className="text-sm">Update your account information</p>
 				</div>
 				<div className="flex w-full justify-end items-center">
 					{!isEditing && (
@@ -66,7 +66,7 @@ const Account = () => {
 				{isEditing && <ChangePassword isSaved={false} />}
 				{isEditing && (
 					<button
-						className="bg-[#209254] text-white text-sm font-medium rounded-md p-3 w-fit hover:opacity-90 transition-opacity duration-150"
+						className="bg-primary text-white text-sm font-medium rounded-md p-3 w-fit hover:opacity-90 transition-opacity duration-150"
 						onClick={() => setIsEditing(false)}>
 						Update Changes
 					</button>
@@ -95,7 +95,7 @@ const ProfileComponent: FC<UserInformation> = ({
 					<h3 className="font-bold">
 						{firstName} {lastName}
 					</h3>
-					<p className="text-[13px] text-slate-400">Account Manager</p>
+					<p className="text-sm">Account Manager</p>
 				</div>
 			</div>
 			{isSaved && (
@@ -123,12 +123,12 @@ const PersonalInformation: FC<UserInformation> = ({
 		<div className={`${cardClass} flex-col gap-y-4`}>
 			<div>
 				<h2 className="font-bold">Personal Information</h2>
-				<p className="">Update your personal information</p>
+				<p className="text-sm">Update your personal information</p>
 			</div>
 			<div className="grid sm:grid-cols-2 gap-3 max-w-xl">
 				{!isSaved ? (
 					<div>
-						<h3 className="font-medium">First Name</h3>
+						<h3 className="font-bold text-sm">First Name</h3>
 						<p className="font-thin text-sm">{firstName}</p>
 					</div>
 				) : (
@@ -144,7 +144,7 @@ const PersonalInformation: FC<UserInformation> = ({
 				)}
 				{!isSaved ? (
 					<div>
-						<h3 className="font-medium">Last Name</h3>
+						<h3 className="font-bold text-sm">Last Name</h3>
 						<p className="font-thin text-sm">{lastName}</p>
 					</div>
 				) : (
@@ -162,7 +162,7 @@ const PersonalInformation: FC<UserInformation> = ({
 			<div className="grid sm:grid-cols-2 gap-3 max-w-xl">
 				{!isSaved ? (
 					<div>
-						<h3 className="font-medium">Email Address</h3>
+						<h3 className="font-bold text-sm">Email Address</h3>
 						<p className="font-thin text-sm">danielrey@gmail.com</p>
 					</div>
 				) : (
@@ -178,7 +178,7 @@ const PersonalInformation: FC<UserInformation> = ({
 				)}
 				{!isSaved ? (
 					<div>
-						<h3 className="font-medium">Phone Number</h3>
+						<h3 className="font-bold text-sm">Phone Number</h3>
 						<p className="font-thin text-sm">09876543212</p>
 					</div>
 				) : (
@@ -203,7 +203,7 @@ const ChangePassword = ({ isSaved }: { isSaved: boolean }) => {
 		<div className={`${cardClass} flex-col gap-y-4`}>
 			<div>
 				<h2 className="font-bold">Change Password</h2>
-				<p className="">
+				<p className="text-sm">
 					Your new password must be different from previous used passwords
 				</p>
 			</div>
@@ -212,7 +212,7 @@ const ChangePassword = ({ isSaved }: { isSaved: boolean }) => {
 					<label className="relative" htmlFor="currentPassword">
 						<input
 							type="password"
-							className={animatedInputClass}
+							className={`${animatedInputClass}`}
 							id="currentPassword"
 							name="currentPassword"
 							disabled={isSaved}

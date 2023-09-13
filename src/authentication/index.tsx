@@ -22,6 +22,7 @@ import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
 
 import Cookies from "js-cookie";
+import Alert from "@/components/reuseable/Alert";
 
 type LoginProps = {
 	phoneNumber: string;
@@ -37,6 +38,8 @@ const Index = () => {
 	const [serverError, setServerError] = useState("");
 
 	const navigate = useNavigate();
+
+	const [shouldShowAlert, setShouldShowAlert] = useState(false);
 
 	useEffect(() => {
 		const token = Cookies.get("token");
@@ -115,21 +118,19 @@ const Index = () => {
 			<section className="w-full md:grid grid-cols-2 rounded-xl md:min-h-[500px] md:mx-5 md:max-w-4xl md:shadow-2xl">
 				<section
 					className={`items-center justify-center h-full bg-[#017DC3] hidden md:flex flex-col ${
-						isSignUpClick ? "rounded-r-xl order-2" : "rounded-l-xl"
+						isSignUpClick ? "rounded-r-xl order-2 gap-y-4" : "rounded-l-xl"
 					}`}>
-					<h1 className={`text-6xl font-bold text-white text-center`}>
+					<h1 className={`text-6xl font-bold text-white text-center mx-2`}>
 						{!isSignUpClick ? (
 							<>
 								Adventure <br /> start here
 							</>
 						) : (
-							<>
-								Start your dream with <br /> us
-							</>
+							<>North Atlantic Container Trading</>
 						)}
 					</h1>
 					<p className={`text-white font-medium text-lg mr-5 text-center`}>
-						Create an account to Join Our <br /> Community
+						Company Business Application
 					</p>
 				</section>
 				<section
@@ -142,6 +143,8 @@ const Index = () => {
 					<h2 className="text-2xl font-bold text-center">
 						{isSignUpClick ? "Create your account" : "Sign in to your account"}
 					</h2>
+					{/* USE GLOBAL STATE TO WATCH THE CHANGES OF THE REGISTER PAGE */}
+					{shouldShowAlert && <Alert />}
 					<form
 						className={`w-full px-5 space-y-6 ${
 							isSignUpClick ? "hidden" : "flex flex-col"
@@ -203,7 +206,10 @@ const Index = () => {
 					</form>
 					{isSignUpClick ? (
 						<>
-							<SignupForm />
+							<SignupForm
+								setIsSignUpClick={setIsSignUpClick}
+								setShouldShowAlert={setShouldShowAlert}
+							/>
 							<Footer
 								buttonText="Sign in"
 								setIsSignUpClick={setIsSignUpClick}
@@ -218,6 +224,7 @@ const Index = () => {
 							buttonText="Sign up"
 							setIsSignUpClick={setIsSignUpClick}
 							text="Don't have an account yet?"
+							setShouldShowAlert={setShouldShowAlert}
 						/>
 					)}
 				</section>
@@ -232,6 +239,7 @@ type FooterProps = {
 	resetPersonalDetail?: () => void;
 	resetAccountDetail?: () => void;
 	setIsSignUpClick: React.Dispatch<React.SetStateAction<boolean>>;
+	setShouldShowAlert?: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const Footer = ({
@@ -240,6 +248,7 @@ const Footer = ({
 	text,
 	resetAccountDetail,
 	resetPersonalDetail,
+	setShouldShowAlert,
 }: FooterProps): JSX.Element => {
 	return (
 		<p className="text-gray-900 text-[14px] mt-6 text-center">
@@ -253,6 +262,9 @@ const Footer = ({
 					}
 					if (resetPersonalDetail) {
 						resetPersonalDetail();
+					}
+					if (setShouldShowAlert) {
+						setShouldShowAlert(false);
 					}
 					setIsSignUpClick((prev) => !prev);
 				}}>
