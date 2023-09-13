@@ -79,7 +79,10 @@ const AddInventory = () => {
 					</div>
 					<h3 className="text-sm font-bold my-3">Supplier</h3>
 					<div className="flex flex-col w-full gap-y-4">
-						<SupplierFormInventory props={supplierStateFieldObject} />
+						<SupplierFormInventory
+							isDisabled={false}
+							props={supplierStateFieldObject}
+						/>
 					</div>
 					<div className="w-full flex flex-col md:flex-row-reverse items-center gap-3 mt-5">
 						<button

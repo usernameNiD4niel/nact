@@ -1,17 +1,21 @@
 import { SuplierFormInventoryProps } from "@/constants/props";
 import React, { FC } from "react";
 import AnimatedInputs from "./AnimatedInputs";
-import { HiOutlinePlus } from "react-icons/hi2";
+import { IoIosAddCircle } from "react-icons/io";
 
 type SupplierFormProps = {
 	props: SuplierFormInventoryProps;
+	isDisabled: boolean;
 };
 
-const SupplierFormInventory: FC<SupplierFormProps> = ({ props }) => {
+const SupplierFormInventory: FC<SupplierFormProps> = ({
+	props,
+	isDisabled,
+}) => {
 	return (
 		<React.Fragment>
 			<AnimatedInputs
-				isDisabled={false}
+				isDisabled={isDisabled}
 				type="text"
 				inputType="supplierName"
 				value={props.supplierName}
@@ -19,11 +23,13 @@ const SupplierFormInventory: FC<SupplierFormProps> = ({ props }) => {
 				label="Supplier Name"
 				key="SupplierNameKey"
 			/>
-			<button className="flex w-full justify-end items-center text-primary gap-x-2">
-				<HiOutlinePlus /> ADD
-			</button>
+			<div className="flex w-full justify-end items-center">
+				<button className="text-primary flex items-center text-lg gap-x-2">
+					<IoIosAddCircle /> <span className="text-sm">ADD</span>
+				</button>
+			</div>
 			<AnimatedInputs
-				isDisabled={true}
+				isDisabled={isDisabled}
 				type="text"
 				inputType="businessName"
 				value={props.businessName}
@@ -32,7 +38,7 @@ const SupplierFormInventory: FC<SupplierFormProps> = ({ props }) => {
 				key="BusinessNameKey"
 			/>
 			<AnimatedInputs
-				isDisabled={true}
+				isDisabled={isDisabled}
 				type="text"
 				inputType="completeAddress"
 				value={props.completeAddress}
@@ -41,7 +47,7 @@ const SupplierFormInventory: FC<SupplierFormProps> = ({ props }) => {
 				key="CompleteAddressKey"
 			/>
 			<AnimatedInputs
-				isDisabled={true}
+				isDisabled={isDisabled}
 				type="text"
 				inputType="contactNumber"
 				value={props.contactNumber}

@@ -86,7 +86,7 @@ const ContainerInformationForm: FC<ContainerInformationFormProps> = ({
 				key="ValidUntilKey"
 			/>
 			<AnimatedInputs
-				isDisabled={false}
+				isDisabled={isDisabled}
 				type="text"
 				inputType="quantity"
 				value={props.quantity}
@@ -95,7 +95,7 @@ const ContainerInformationForm: FC<ContainerInformationFormProps> = ({
 				key="QuantityKey"
 			/>
 			<AnimatedInputs
-				isDisabled={false}
+				isDisabled={isDisabled}
 				type="text"
 				inputType="buyingRates"
 				value={props.buyingRate}
@@ -104,7 +104,7 @@ const ContainerInformationForm: FC<ContainerInformationFormProps> = ({
 				key="BuyingRateKey"
 			/>
 			<AnimatedInputs
-				isDisabled={false}
+				isDisabled={isDisabled}
 				type="text"
 				inputType="sellingRate"
 				value={props.sellingRate}
