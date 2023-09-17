@@ -1,5 +1,8 @@
 import AnimatedInputs from "@/components/reuseable/AnimatedInputs";
+import CustomSelect from "@/components/reuseable/CustomSelect";
 import HeaderWithBack from "@/components/reuseable/HeaderWithBack";
+import { countries } from "@/constants/arrays";
+import { cities, states } from "@/constants/objects";
 import React, { FC, useState } from "react";
 import { IoIosAddCircle, IoMdRemoveCircle } from "react-icons/io";
 
@@ -41,33 +44,32 @@ const BusinessInformationForm = () => {
 						label="Business Name"
 						key="Business Name Key"
 					/>
-					<AnimatedInputs
-						isDisabled={false}
-						type="text"
-						inputType="city"
-						value={city}
-						setValue={setCity}
-						label="City"
-						key="City Key"
-					/>
-					<AnimatedInputs
-						isDisabled={false}
-						type="text"
-						inputType="state"
-						value={state}
-						setValue={setState}
-						label="State"
-						key="State Key"
-					/>
-					<AnimatedInputs
-						isDisabled={false}
-						type="text"
-						inputType="country"
-						value={country}
-						setValue={setCountry}
+					<CustomSelect
 						label="Country"
-						key="Country Key"
+						options={countries}
+						setState={setCountry}
+						state={country}
 					/>
+					<CustomSelect
+						label="State"
+						options={
+							country === "Canada"
+								? states["canada"]
+								: country === "USA"
+								? states["usa"]
+								: []
+						}
+						setState={setState}
+						state={state}
+					/>
+					<CustomSelect
+						label="City"
+						// @ts-expect-error - This is correct, but ts showing me an error message
+						options={state ? cities[`${state}`] : []}
+						setState={setCity}
+						state={city}
+					/>
+
 					<AnimatedInputs
 						isDisabled={false}
 						type="text"

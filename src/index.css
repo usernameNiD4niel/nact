@@ -13,6 +13,16 @@ input[type="password"]:focus ~ span.input-text {
 	@apply text-[#017DC3] bg-white transform -translate-y-5 -translate-x-4 scale-75 mx-5;
 }
 
+.te-select {
+	background-color: red;
+	display: none; /* Change to your desired background color */
+}
+
+/* Change the color of the select options */
+.te-select__option {
+	color: #333; /* Change to your desired text color */
+}
+
 .input-contains {
 	@apply bg-white transform -translate-y-6 mt-[2px] -translate-x-4 scale-75 mx-5;
 }

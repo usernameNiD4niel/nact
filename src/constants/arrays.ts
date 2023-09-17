@@ -9,3 +9,5 @@ export const buttons: string[] = [
 	"Inventory",
 	"Order Generator",
 ];
+
+export const countries: string[] = ["USA", "Canada"];

@@ -52,7 +52,7 @@ const Index = () => {
 		mutationFn: POST,
 		onSuccess: (data) => {
 			if (data?.success) {
-				Cookies.set("token", data.token);
+				Cookies.set("token", data.token, { expires: 7 });
 				setServerError("");
 				navigate("/");
 			} else {

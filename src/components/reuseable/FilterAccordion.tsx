@@ -1,5 +1,6 @@
 import { FC, useState } from "react";
 import { HiOutlineChevronDown, HiOutlineChevronUp } from "react-icons/hi2";
+import { AnimatePresence, motion } from "framer-motion";
 
 type FilterAccordionType = {
 	accordionText: string;
@@ -27,7 +28,41 @@ const FilterAccordion: FC<FilterAccordionType> = ({
 					{!isAccordionOpen ? <HiOutlineChevronDown /> : <HiOutlineChevronUp />}
 				</span>
 			</button>
-			<ul
+			<AnimatePresence>
+				{isAccordionOpen && (
+					<motion.ul
+						initial={{ opacity: 0, height: 0 }}
+						animate={{ opacity: 1, height: "auto" }}
+						className={`flex flex-col gap-y-1 mt-2`}
+						exit={{ opacity: 0, height: 0 }}>
+						{accordionItems ? (
+							<>
+								{accordionItems.map((item, index) => (
+									<motion.li
+										key={index}
+										initial={{ opacity: 0, y: -10 }}
+										animate={{ opacity: 1, y: 0 }}
+										exit={{ opacity: 0, y: -10 }}>
+										<label className="flex items-center text-xs gap-x-2 opacity-75 hover:cursor-pointer mx-1 my-2">
+											<input type="checkbox" name={item} />
+											{item}
+										</label>
+									</motion.li>
+								))}
+							</>
+						) : (
+							<motion.li
+								key="no-data"
+								initial={{ opacity: 0, y: -10 }}
+								animate={{ opacity: 1, y: 0 }}
+								exit={{ opacity: 0, y: -10 }}>
+								<p>No data found for {accordionText}</p>
+							</motion.li>
+						)}
+					</motion.ul>
+				)}
+			</AnimatePresence>
+			{/* <ul
 				className={`${
 					isAccordionOpen ? "flex" : "hidden"
 				} flex-col gap-y-1 mt-2`}>
@@ -47,7 +82,7 @@ const FilterAccordion: FC<FilterAccordionType> = ({
 						<p>No data found for {accordionText}</p>
 					</li>
 				)}
-			</ul>
+			</ul> */}
 		</div>
 	);
 };

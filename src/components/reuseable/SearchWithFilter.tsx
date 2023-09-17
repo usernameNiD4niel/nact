@@ -1,6 +1,7 @@
 import { FC, useState } from "react";
 import Filter from "./Filter";
 import { InventoryTableData, SupplierTableData } from "@/constants/objects";
+import { AnimatePresence } from "framer-motion";
 
 type SearchWithFilterProps = {
 	placeHolder: string;
@@ -28,22 +29,23 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 					className="border-[1px] rounded-lg border-black border-opacity-10 w-full p-3 focus:outline-primary focus:outline-1"
 				/>
 			</form>
-
-			{isShowingFilter && (
-				<>
-					{isList ? (
-						<Filter
-							setIsShowingFilter={setIsShowingFilter}
-							data={SupplierTableData}
-						/>
-					) : (
-						<Filter
-							setIsShowingFilter={setIsShowingFilter}
-							data={InventoryTableData}
-						/>
-					)}
-				</>
-			)}
+			<AnimatePresence>
+				{isShowingFilter && (
+					<>
+						{isList ? (
+							<Filter
+								setIsShowingFilter={setIsShowingFilter}
+								data={SupplierTableData}
+							/>
+						) : (
+							<Filter
+								setIsShowingFilter={setIsShowingFilter}
+								data={InventoryTableData}
+							/>
+						)}
+					</>
+				)}
+			</AnimatePresence>
 		</>
 	);
 };

@@ -237,3 +237,8 @@ type UserResponseProps = {
 export type RegisterResponse = {
 	message: string;
 };
+
+export type StatesType = {
+	usa: string[];
+	canada: string[];
+};
