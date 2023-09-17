@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 import daisyui from "daisyui";
-import theme from "daisyui/themes";
+import theme from "daisyui/src/theming/themes";
 export default {
 	content: ["src/**/*.{js,ts,jsx,tsx}"],
 	theme: {
