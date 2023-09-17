@@ -37,6 +37,7 @@ const BusinessInformationForm = () => {
 				<div className="flex flex-col w-full gap-y-4">
 					<AnimatedInputs
 						isDisabled={false}
+						isRequired={true}
 						type="text"
 						inputType="businessName"
 						value={businessName}
@@ -72,6 +73,7 @@ const BusinessInformationForm = () => {
 
 					<AnimatedInputs
 						isDisabled={false}
+						isRequired={true}
 						type="text"
 						inputType="companyPhoneNumber"
 						value={companyPhoneNumber}
@@ -81,6 +83,7 @@ const BusinessInformationForm = () => {
 					/>
 					<AnimatedInputs
 						isDisabled={false}
+						isRequired={true}
 						type="text"
 						inputType="companyEmailWebsite"
 						value={companyEmailWebsite}
@@ -151,6 +154,7 @@ const ContactInformation: FC<ContactInformationAdds> = ({
 			</div>
 			<AnimatedInputs
 				isDisabled={false}
+				isRequired={false}
 				type="text"
 				inputType="personalFirstName"
 				value={contactPersonFirstName_}
@@ -160,6 +164,7 @@ const ContactInformation: FC<ContactInformationAdds> = ({
 			/>
 			<AnimatedInputs
 				isDisabled={false}
+				isRequired={false}
 				type="text"
 				inputType="personalLastName"
 				value={contactPersonLastName_}
@@ -169,6 +174,7 @@ const ContactInformation: FC<ContactInformationAdds> = ({
 			/>
 			<AnimatedInputs
 				isDisabled={false}
+				isRequired={false}
 				type="text"
 				inputType="contactPersonMI"
 				value={contactPersonMI_}
@@ -178,6 +184,7 @@ const ContactInformation: FC<ContactInformationAdds> = ({
 			/>
 			<AnimatedInputs
 				isDisabled={false}
+				isRequired={false}
 				type="text"
 				inputType="jobTitle"
 				value={jobTitle_}
@@ -187,6 +194,7 @@ const ContactInformation: FC<ContactInformationAdds> = ({
 			/>
 			<AnimatedInputs
 				isDisabled={false}
+				isRequired={false}
 				type="tel"
 				inputType="contactNumber"
 				value={contactNumber_}
@@ -196,6 +204,7 @@ const ContactInformation: FC<ContactInformationAdds> = ({
 			/>
 			<AnimatedInputs
 				isDisabled={false}
+				isRequired={false}
 				type="email"
 				inputType="email"
 				value={email_}

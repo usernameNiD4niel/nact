@@ -15,6 +15,7 @@ const ContainerInformationForm: FC<ContainerInformationFormProps> = ({
 		<React.Fragment>
 			<AnimatedInputs
 				isDisabled={isDisabled}
+				isRequired={true}
 				type="text"
 				inputType="containerType"
 				value={props.containerType}
@@ -24,6 +25,7 @@ const ContainerInformationForm: FC<ContainerInformationFormProps> = ({
 			/>
 			<AnimatedInputs
 				isDisabled={isDisabled}
+				isRequired={true}
 				type="text"
 				inputType="condition"
 				value={props.condition}
@@ -33,6 +35,7 @@ const ContainerInformationForm: FC<ContainerInformationFormProps> = ({
 			/>
 			<AnimatedInputs
 				isDisabled={isDisabled}
+				isRequired={true}
 				type="text"
 				inputType="city"
 				value={props.city}
@@ -42,6 +45,7 @@ const ContainerInformationForm: FC<ContainerInformationFormProps> = ({
 			/>
 			<AnimatedInputs
 				isDisabled={isDisabled}
+				isRequired={true}
 				type="text"
 				inputType="city"
 				value={props.state}
@@ -51,6 +55,7 @@ const ContainerInformationForm: FC<ContainerInformationFormProps> = ({
 			/>
 			<AnimatedInputs
 				isDisabled={isDisabled}
+				isRequired={true}
 				type="text"
 				inputType="region"
 				value={props.region}
@@ -60,6 +65,7 @@ const ContainerInformationForm: FC<ContainerInformationFormProps> = ({
 			/>
 			<AnimatedInputs
 				isDisabled={isDisabled}
+				isRequired={true}
 				type="text"
 				inputType="country"
 				value={props.country}
@@ -69,6 +75,7 @@ const ContainerInformationForm: FC<ContainerInformationFormProps> = ({
 			/>
 			<AnimatedInputs
 				isDisabled={isDisabled}
+				isRequired={true}
 				type="text"
 				inputType="depot"
 				value={props.depot}
@@ -78,6 +85,7 @@ const ContainerInformationForm: FC<ContainerInformationFormProps> = ({
 			/>
 			<AnimatedInputs
 				isDisabled={isDisabled}
+				isRequired={true}
 				type="text"
 				inputType="validUntil"
 				value={props.validUntil}
@@ -87,6 +95,7 @@ const ContainerInformationForm: FC<ContainerInformationFormProps> = ({
 			/>
 			<AnimatedInputs
 				isDisabled={isDisabled}
+				isRequired={true}
 				type="text"
 				inputType="quantity"
 				value={props.quantity}
@@ -96,6 +105,7 @@ const ContainerInformationForm: FC<ContainerInformationFormProps> = ({
 			/>
 			<AnimatedInputs
 				isDisabled={isDisabled}
+				isRequired={true}
 				type="text"
 				inputType="buyingRates"
 				value={props.buyingRate}
@@ -105,6 +115,7 @@ const ContainerInformationForm: FC<ContainerInformationFormProps> = ({
 			/>
 			<AnimatedInputs
 				isDisabled={isDisabled}
+				isRequired={true}
 				type="text"
 				inputType="sellingRate"
 				value={props.sellingRate}

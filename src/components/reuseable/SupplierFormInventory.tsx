@@ -16,6 +16,7 @@ const SupplierFormInventory: FC<SupplierFormProps> = ({
 		<React.Fragment>
 			<AnimatedInputs
 				isDisabled={isDisabled}
+				isRequired={true}
 				type="text"
 				inputType="supplierName"
 				value={props.supplierName}
@@ -30,6 +31,7 @@ const SupplierFormInventory: FC<SupplierFormProps> = ({
 			</div>
 			<AnimatedInputs
 				isDisabled={isDisabled}
+				isRequired={true}
 				type="text"
 				inputType="businessName"
 				value={props.businessName}
@@ -39,6 +41,7 @@ const SupplierFormInventory: FC<SupplierFormProps> = ({
 			/>
 			<AnimatedInputs
 				isDisabled={isDisabled}
+				isRequired={true}
 				type="text"
 				inputType="completeAddress"
 				value={props.completeAddress}
@@ -48,6 +51,7 @@ const SupplierFormInventory: FC<SupplierFormProps> = ({
 			/>
 			<AnimatedInputs
 				isDisabled={isDisabled}
+				isRequired={true}
 				type="text"
 				inputType="contactNumber"
 				value={props.contactNumber}

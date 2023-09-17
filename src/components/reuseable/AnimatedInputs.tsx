@@ -11,6 +11,7 @@ type AnimatedInputProps = {
 	type: string;
 	label: string;
 	isDisabled: boolean;
+	isRequired: boolean;
 };
 
 const AnimatedInputs: FC<AnimatedInputProps> = ({
@@ -18,6 +19,7 @@ const AnimatedInputs: FC<AnimatedInputProps> = ({
 	setValue,
 	value,
 	type,
+	isRequired,
 	isDisabled,
 	label,
 }) => {
@@ -34,7 +36,7 @@ const AnimatedInputs: FC<AnimatedInputProps> = ({
 				onChange={(e) => {
 					if (setValue != null) setValue(e.target.value);
 				}}
-				required
+				required={isRequired}
 			/>
 			<span
 				className={`${`${animatedSpanClass} whitespace-nowrap ${

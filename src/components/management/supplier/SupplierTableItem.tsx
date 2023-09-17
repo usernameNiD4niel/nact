@@ -128,6 +128,7 @@ const DisplayBusinessInformation: FC<DisplayProps> = (props) => {
 			<div className="flex flex-col w-full gap-y-4">
 				<AnimatedInputs
 					isDisabled={true}
+					isRequired={true}
 					type="text"
 					inputType="businessName"
 					value={props.businessName}
@@ -137,6 +138,7 @@ const DisplayBusinessInformation: FC<DisplayProps> = (props) => {
 				/>
 				<AnimatedInputs
 					isDisabled={true}
+					isRequired={true}
 					type="text"
 					inputType="city"
 					value={props.city}
@@ -146,6 +148,7 @@ const DisplayBusinessInformation: FC<DisplayProps> = (props) => {
 				/>
 				<AnimatedInputs
 					isDisabled={true}
+					isRequired={true}
 					type="text"
 					inputType="state"
 					value={props.state}
@@ -155,6 +158,7 @@ const DisplayBusinessInformation: FC<DisplayProps> = (props) => {
 				/>
 				<AnimatedInputs
 					isDisabled={true}
+					isRequired={true}
 					type="text"
 					inputType="country"
 					value={props.country}
@@ -164,6 +168,7 @@ const DisplayBusinessInformation: FC<DisplayProps> = (props) => {
 				/>
 				<AnimatedInputs
 					isDisabled={true}
+					isRequired={true}
 					type="text"
 					inputType="companyPhoneNumber"
 					value={props.companyPhoneNumber}
@@ -173,6 +178,7 @@ const DisplayBusinessInformation: FC<DisplayProps> = (props) => {
 				/>
 				<AnimatedInputs
 					isDisabled={true}
+					isRequired={true}
 					type="text"
 					inputType="companyEmailWebsite"
 					value={props.companyEmailWebsite}
@@ -194,6 +200,7 @@ const DisplayContactInformation: FC<ContactInformationProps> = (props) => {
 			</div>
 			<AnimatedInputs
 				isDisabled={true}
+				isRequired={true}
 				type="text"
 				inputType="contactPersonFirstName"
 				value={props.contactPersonFirstName}
@@ -203,6 +210,7 @@ const DisplayContactInformation: FC<ContactInformationProps> = (props) => {
 			/>
 			<AnimatedInputs
 				isDisabled={true}
+				isRequired={true}
 				type="text"
 				inputType="contactPersonLastName"
 				value={props.contactPersonFirstName}
@@ -212,6 +220,7 @@ const DisplayContactInformation: FC<ContactInformationProps> = (props) => {
 			/>
 			<AnimatedInputs
 				isDisabled={true}
+				isRequired={true}
 				type="text"
 				inputType="contactPersonMI"
 				value={props.contactPersonMI}
@@ -221,6 +230,7 @@ const DisplayContactInformation: FC<ContactInformationProps> = (props) => {
 			/>
 			<AnimatedInputs
 				isDisabled={true}
+				isRequired={true}
 				type="text"
 				inputType="jobTitle"
 				value={props.jobTitle}
@@ -230,6 +240,7 @@ const DisplayContactInformation: FC<ContactInformationProps> = (props) => {
 			/>
 			<AnimatedInputs
 				isDisabled={true}
+				isRequired={true}
 				type="tel"
 				inputType="contactNumber"
 				value={props.contactNumber}
@@ -239,6 +250,7 @@ const DisplayContactInformation: FC<ContactInformationProps> = (props) => {
 			/>
 			<AnimatedInputs
 				isDisabled={true}
+				isRequired={true}
 				type="email"
 				inputType="email"
 				value={props.email}
