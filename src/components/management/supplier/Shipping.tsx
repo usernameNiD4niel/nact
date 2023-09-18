@@ -1,9 +1,8 @@
 import AnimatedInputs from "@/components/reuseable/AnimatedInputs";
 import CustomSelect from "@/components/reuseable/CustomSelect";
 import HeaderWithBack from "@/components/reuseable/HeaderWithBack";
-import { countries } from "@/constants/arrays";
-import { cities, states } from "@/constants/objects";
-import React, { FC, useState } from "react";
+import { cities, states, uniqueCities } from "@/constants/objects";
+import React, { FC, useEffect, useState } from "react";
 import { IoIosAddCircle, IoMdRemoveCircle } from "react-icons/io";
 
 const Shipping = () => {
@@ -30,6 +29,32 @@ const BusinessInformationForm = () => {
 		setContactInformation(newContact);
 	};
 
+	useEffect(() => {
+		for (const state_ in cities) {
+			// @ts-expect-error - This should not happen
+			// eslint-disable-next-line no-prototype-builtins
+			if (cities.hasOwnProperty(state_) && cities[state_].includes(city)) {
+				setState(state_);
+				console.log(state_);
+
+				return;
+			}
+		}
+	}, [city]);
+
+	useEffect(() => {
+		for (const country_ in states) {
+			// @ts-expect-error - This should not happen
+			// eslint-disable-next-line no-prototype-builtins
+			if (states.hasOwnProperty(country_) && states[country_].includes(state)) {
+				setCountry(country_);
+				console.log(country_);
+
+				return;
+			}
+		}
+	}, [state]);
+
 	return (
 		<div className="flex flex-col items-center justify-center mt-10">
 			<form className="p-2 flex flex-col gap-y-2 w-full lg:w-[60%] py-10 bg-white px-6">
@@ -46,12 +71,30 @@ const BusinessInformationForm = () => {
 						key="Business Name Key"
 					/>
 					<CustomSelect
-						label="Country"
-						options={countries}
-						setState={setCountry}
-						state={country}
+						label="City"
+						options={uniqueCities}
+						setState={setCity}
+						state={city}
 					/>
-					<CustomSelect
+					<AnimatedInputs
+						inputType="state"
+						isDisabled={true}
+						isRequired={true}
+						label="State"
+						setValue={setState}
+						type="text"
+						value={state}
+					/>
+					<AnimatedInputs
+						inputType="country"
+						isDisabled={true}
+						isRequired={true}
+						label="Country"
+						setValue={setCountry}
+						type="text"
+						value={country}
+					/>
+					{/* <CustomSelect
 						label="State"
 						options={
 							country === "Canada"
@@ -62,6 +105,12 @@ const BusinessInformationForm = () => {
 						}
 						setState={setState}
 						state={state}
+					/> */}
+					{/* <CustomSelect
+						label="Country"
+						options={countries}
+						setState={setCountry}
+						state={country}
 					/>
 					<CustomSelect
 						label="City"
@@ -69,8 +118,7 @@ const BusinessInformationForm = () => {
 						options={state ? cities[`${state}`] : []}
 						setState={setCity}
 						state={city}
-					/>
-
+					/> */}
 					<AnimatedInputs
 						isDisabled={false}
 						isRequired={true}
