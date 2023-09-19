@@ -6,7 +6,7 @@ import {
 } from "@/constants/reusable-class";
 import Avatar from "@/daisyui/Avatar";
 import { useSelectedStore } from "@/utils/HomePageState";
-import { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import AnimatedInputs from "../reuseable/AnimatedInputs";
 import { AiFillEdit } from "react-icons/ai";
 import { FiLogOut } from "react-icons/fi";
@@ -45,49 +45,51 @@ const Account = () => {
 		}
 	}, []);
 	return (
-		<section className="flex px-4 py-5 pb-20 w-full items-center justify-center">
-			<section className="w-[95%] lg:w-4/5 flex flex-col gap-y-5">
-				<div>
-					<h2 className="font-bold">My Profile</h2>
-					<p className="text-sm">Update your account information</p>
-				</div>
-				<div className="flex w-full justify-end items-center">
-					{!isEditing && (
+		<React.Fragment>
+			<section className="flex px-4 py-5 pb-20 w-full items-center justify-center">
+				<section className="w-[95%] lg:w-4/5 flex flex-col gap-y-5">
+					<div>
+						<h2 className="font-bold">My Profile</h2>
+						<p className="text-sm">Update your account information</p>
+					</div>
+					<div className="flex w-full justify-end items-center">
+						{!isEditing && (
+							<button
+								className="bg-primary text-white rounded-lg gap-x-1 py-2 px-3 text-sm font-thin text-center flex items-center justify-center"
+								onClick={() => setIsEditing(true)}>
+								Edit Profile <AiFillEdit />
+							</button>
+						)}
+					</div>
+					<ProfileComponent
+						firstName={firstName}
+						lastName={lastName}
+						isSaved={isEditing}
+					/>
+					<PersonalInformation
+						firstName={firstName}
+						isSaved={isEditing}
+						lastName={lastName}
+						setFirstName={setFirstName}
+						setLastName={setLastName}
+						key="PersonalInformationKey"
+					/>
+					{isEditing && <ChangePassword isSaved={false} />}
+					{isEditing && (
 						<button
-							className="bg-primary text-white rounded-lg gap-x-1 py-2 px-3 text-sm font-thin text-center flex items-center justify-center"
-							onClick={() => setIsEditing(true)}>
-							Edit Profile <AiFillEdit />
+							className="bg-primary text-white text-sm font-medium rounded-md p-3 w-fit hover:opacity-90 transition-opacity duration-150"
+							onClick={() => setIsEditing(false)}>
+							Update Changes
 						</button>
 					)}
-				</div>
-				<ProfileComponent
-					firstName={firstName}
-					lastName={lastName}
-					isSaved={isEditing}
-				/>
-				<PersonalInformation
-					firstName={firstName}
-					isSaved={isEditing}
-					lastName={lastName}
-					setFirstName={setFirstName}
-					setLastName={setLastName}
-					key="PersonalInformationKey"
-				/>
-				{isEditing && <ChangePassword isSaved={false} />}
-				{isEditing && (
-					<button
-						className="bg-primary text-white text-sm font-medium rounded-md p-3 w-fit hover:opacity-90 transition-opacity duration-150"
-						onClick={() => setIsEditing(false)}>
-						Update Changes
-					</button>
-				)}
+				</section>
 			</section>
 			<div
 				className="fixed bottom-4 right-4 text-lg flex hover:cursor-pointer items-center justify-center w-14 h-14 rounded-full bg-red-500 text-white md:right-6 md:bottom-4"
 				onClick={handleLogout}>
 				<FiLogOut />
 			</div>
-		</section>
+		</React.Fragment>
 	);
 };
 
