@@ -13,7 +13,17 @@ export const POST = async ({
 	const apiEndpoint: string =
 		"https://flask-service.gi2fod26lfct0.ap-southeast-1.cs.amazonlightsail.com/register";
 
-	// const formData: FormDataProps = {
+	const formData: FormDataProps = {
+		lastName,
+		firstName,
+		middleName,
+		gender,
+		birthDate,
+		mobileNumber,
+		pin,
+	};
+
+	// const deleteThisSoon = {
 	// 	lastName,
 	// 	firstName,
 	// 	middleName,
@@ -23,25 +33,13 @@ export const POST = async ({
 	// 	pin,
 	// };
 
-	const deleteThisSoon = {
-		lastName,
-		firstName,
-		middleName,
-		gender,
-		birthDate,
-		mobileNumber,
-		pin,
-		recoveryQuestion: "alisin mo na to pre hahahaha",
-		recoveryAnswer: "ito din pre hahaha",
-	};
-
 	try {
 		const response = await fetch(apiEndpoint, {
 			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
 			},
-			body: JSON.stringify(deleteThisSoon),
+			body: JSON.stringify(formData),
 		});
 
 		const data: RegisterResponse = await response.json();
