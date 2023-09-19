@@ -9,6 +9,9 @@ import { useSelectedStore } from "@/utils/HomePageState";
 import { FC, useEffect, useState } from "react";
 import AnimatedInputs from "../reuseable/AnimatedInputs";
 import { AiFillEdit } from "react-icons/ai";
+import { FiLogOut } from "react-icons/fi";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 type UserInformation = {
 	firstName: string;
@@ -28,6 +31,13 @@ const Account = () => {
 	const [lastName, setLastName] = useState<string>("Rey");
 
 	const [isEditing, setIsEditing] = useState<boolean>(false);
+
+	const navigate = useNavigate();
+
+	const handleLogout = () => {
+		Cookies.remove("token");
+		navigate("/login");
+	};
 
 	useEffect(() => {
 		if (selected !== ButtonList.Account) {
@@ -72,6 +82,11 @@ const Account = () => {
 					</button>
 				)}
 			</section>
+			<div
+				className="fixed bottom-4 right-4 text-lg flex hover:cursor-pointer items-center justify-center w-14 h-14 rounded-full bg-red-500 text-white md:right-6 md:bottom-4"
+				onClick={handleLogout}>
+				<FiLogOut />
+			</div>
 		</section>
 	);
 };
