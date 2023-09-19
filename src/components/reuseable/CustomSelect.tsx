@@ -1,4 +1,5 @@
 import React from "react";
+import { BsChevronDown } from "react-icons/bs";
 
 type CustomSelectProps = {
 	options: string[];
@@ -43,6 +44,9 @@ const CustomSelect: React.FC<CustomSelectProps> = ({
 					</option>
 				))}
 			</select>
+			<div className="w-10 absolute right-0 top-0 bottom-0 m-1 bg-white pointer-events-none text-gray-400 group-focus-within:text-primary flex items-center justify-center">
+				<BsChevronDown />
+			</div>
 		</label>
 	);
 };
