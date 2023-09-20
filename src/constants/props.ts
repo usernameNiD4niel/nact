@@ -177,9 +177,9 @@ export type ContainerInformationProps = {
 	country: string;
 	depot: string;
 	validUntil: string;
-	quantity: string;
-	buyingRate: string;
-	sellingRate: string;
+	quantity: number;
+	buyingRate: number;
+	sellingRate: number;
 	setContainerType: React.Dispatch<React.SetStateAction<string>>;
 	setCondition: React.Dispatch<React.SetStateAction<string>>;
 	setCity: React.Dispatch<React.SetStateAction<string>>;
@@ -188,9 +188,9 @@ export type ContainerInformationProps = {
 	setCountry: React.Dispatch<React.SetStateAction<string>>;
 	setDepot: React.Dispatch<React.SetStateAction<string>>;
 	setValidUntil: React.Dispatch<React.SetStateAction<string>>;
-	setQuantity: React.Dispatch<React.SetStateAction<string>>;
-	setBuyingRate: React.Dispatch<React.SetStateAction<string>>;
-	setSellingRate: React.Dispatch<React.SetStateAction<string>>;
+	setQuantity: React.Dispatch<React.SetStateAction<number>>;
+	setBuyingRate: React.Dispatch<React.SetStateAction<number>>;
+	setSellingRate: React.Dispatch<React.SetStateAction<number>>;
 };
 
 export type SuplierFormInventoryProps = {
@@ -241,4 +241,38 @@ export type RegisterResponse = {
 export type StatesType = {
 	usa: string[];
 	canada: string[];
+};
+
+/**
+ * "containerType": "sample container type",
+    "condition": "nice",
+    "city": "hatdog street",
+    "state": "halimaw",
+    "region": "catholic",
+    "county": "aso",
+    "depot": "itlog",
+    "validUntil": "10-02-2023",
+    "businessName": "sadkasd",
+    "completeAddress": "dsdsdsdsds",
+    "contactNumber": "09876543212",
+    "quantity": 100,
+    "buyingRate": 10.5,
+    "sellingRate": 11
+ */
+
+export type InventoryProps = {
+	containerType: string;
+	condition: string;
+	city: string;
+	state: string;
+	region: string;
+	country: string;
+	depot: string;
+	validUntil: string;
+	businessName: string;
+	completeAddress: string;
+	contactNumber: string;
+	quantity: number;
+	buyingRate: number;
+	sellingRate: number;
 };
