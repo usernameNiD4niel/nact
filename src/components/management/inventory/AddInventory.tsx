@@ -21,9 +21,9 @@ const AddInventory = () => {
 	const [country, setCountry] = useState<string>("");
 	const [depot, setDepot] = useState<string>("");
 	const [validUntil, setValidUntil] = useState<string>("");
-	const [quantity, setQuantity] = useState<number>(0);
-	const [buyingRate, setBuyingRate] = useState<number>(0);
-	const [sellingRate, setSellingRate] = useState<number>(0);
+	const [quantity, setQuantity] = useState<string>("");
+	const [buyingRate, setBuyingRate] = useState<string>("");
+	const [sellingRate, setSellingRate] = useState<string>("");
 
 	// Supplier state fields
 	const [supplierName, setSupplierName] = useState<string>("");
@@ -73,7 +73,7 @@ const AddInventory = () => {
 
 	const clearUserInput = () => {
 		setBusinessName("");
-		setBuyingRate(0);
+		setBuyingRate("");
 		setCity("");
 		setCompleteAddress("");
 		setCondition("");
@@ -81,11 +81,12 @@ const AddInventory = () => {
 		setContainerType("");
 		setCountry("");
 		setDepot("");
-		setQuantity(0);
+		setQuantity("");
 		setRegion("");
-		setSellingRate(0);
+		setSellingRate("");
 		setState("");
 		setValidUntil("");
+		setSupplierName("");
 	};
 
 	useEffect(() => {

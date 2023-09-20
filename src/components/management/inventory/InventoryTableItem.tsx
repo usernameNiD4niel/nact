@@ -24,7 +24,7 @@ const InventoryTableItem = () => {
 	const [validUntil, setValidUntil] = useState<string>("Valid until");
 	const [quantity, setQuantity] = useState<string>("Quantity");
 	const [buyingRate, setBuyingRate] = useState<string>("Buying rate");
-	const [sellingRate, setSellingRate] = useState<string>("Selling Rate");
+	const [sellingRate, setSellingRate] = useState<string>("Selling rate");
 
 	// Supplier state fields
 	const [supplierName, setSupplierName] = useState<string>("Supplier Name");

@@ -177,9 +177,9 @@ export type ContainerInformationProps = {
 	country: string;
 	depot: string;
 	validUntil: string;
-	quantity: number;
-	buyingRate: number;
-	sellingRate: number;
+	quantity: string;
+	buyingRate: string;
+	sellingRate: string;
 	setContainerType: React.Dispatch<React.SetStateAction<string>>;
 	setCondition: React.Dispatch<React.SetStateAction<string>>;
 	setCity: React.Dispatch<React.SetStateAction<string>>;
@@ -188,9 +188,9 @@ export type ContainerInformationProps = {
 	setCountry: React.Dispatch<React.SetStateAction<string>>;
 	setDepot: React.Dispatch<React.SetStateAction<string>>;
 	setValidUntil: React.Dispatch<React.SetStateAction<string>>;
-	setQuantity: React.Dispatch<React.SetStateAction<number>>;
-	setBuyingRate: React.Dispatch<React.SetStateAction<number>>;
-	setSellingRate: React.Dispatch<React.SetStateAction<number>>;
+	setQuantity: React.Dispatch<React.SetStateAction<string>>;
+	setBuyingRate: React.Dispatch<React.SetStateAction<string>>;
+	setSellingRate: React.Dispatch<React.SetStateAction<string>>;
 };
 
 export type SuplierFormInventoryProps = {
@@ -272,7 +272,7 @@ export type InventoryProps = {
 	businessName: string;
 	completeAddress: string;
 	contactNumber: string;
-	quantity: number;
-	buyingRate: number;
-	sellingRate: number;
+	quantity: string;
+	buyingRate: string;
+	sellingRate: string;
 };
