@@ -12,6 +12,7 @@ const ComboBox: React.FC<ComboBoxProps> = ({ inputValue, setInputValue }) => {
 	const [showDropdown, setShowDropdown] = useState<boolean>(false);
 	const [notFound, setNotFound] = useState<boolean>(false);
 	const inputRef = useRef<HTMLInputElement | null>(null);
+	const dropdownRef = useRef<HTMLDivElement | null>(null);
 
 	const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		const input = e.target.value;
@@ -37,11 +38,31 @@ const ComboBox: React.FC<ComboBoxProps> = ({ inputValue, setInputValue }) => {
 		setShowDropdown(false);
 	};
 
+	const handleWindowClick = (e: MouseEvent) => {
+		// Check if the click event occurred outside the input and the dropdown
+		if (
+			inputRef.current &&
+			!inputRef.current.contains(e.target as Node) &&
+			dropdownRef.current &&
+			!dropdownRef.current.contains(e.target as Node)
+		) {
+			setShowDropdown(false);
+		}
+	};
+
 	useEffect(() => {
 		// Focus the input when the dropdown is shown
 		if (showDropdown && inputRef.current) {
 			inputRef.current.focus();
 		}
+
+		// Add a click event listener to the window to handle clicks outside the input and dropdown
+		window.addEventListener("click", handleWindowClick);
+
+		// Remove the event listener when the component unmounts
+		return () => {
+			window.removeEventListener("click", handleWindowClick);
+		};
 	}, [showDropdown]);
 
 	return (
@@ -51,12 +72,13 @@ const ComboBox: React.FC<ComboBoxProps> = ({ inputValue, setInputValue }) => {
 				placeholder="City"
 				value={inputValue}
 				onChange={handleInputChange}
-				// onBlur={handleInputBlur}
 				className="w-full text-gray-600 h-12 px-3 text-sm bg-white border-[1px] rounded-[4px] border-black border-opacity-20 outline-none focus:border-[#017DC3] focus:text-black transition duration-200"
 				ref={inputRef}
 			/>
 			{showDropdown && (
-				<div className="absolute z-10 bg-white border border-gray-300 rounded w-full">
+				<div
+					ref={dropdownRef}
+					className="absolute z-10 bg-white border border-gray-300 rounded w-full">
 					{notFound ? (
 						<div className="px-4 py-2 text-red-500">City not found</div>
 					) : (
