@@ -1,5 +1,6 @@
 // CityDropdown.tsx
 import { uniqueCities } from "@/constants/objects";
+import "@/index.css";
 import React, { useState, useRef, useEffect } from "react";
 
 type ComboBoxProps = {
@@ -67,14 +68,32 @@ const ComboBox: React.FC<ComboBoxProps> = ({ inputValue, setInputValue }) => {
 
 	return (
 		<div className="relative">
-			<input
+			{/* <input
 				type="text"
 				placeholder="City"
 				value={inputValue}
 				onChange={handleInputChange}
 				className="w-full text-gray-600 h-12 px-3 text-sm bg-white border-[1px] rounded-[4px] border-black border-opacity-20 outline-none focus:border-[#017DC3] focus:text-black transition duration-200"
 				ref={inputRef}
-			/>
+			/> */}
+			<label className="relative" htmlFor="city">
+				<input
+					type="text"
+					className={`w-full text-gray-600 h-12 px-3 text-sm bg-white border-[1px] rounded-[4px] border-black border-opacity-20 outline-none focus:border-[#017DC3] focus:text-black transition duration-200`}
+					value={inputValue}
+					name="city"
+					id="city"
+					autoComplete="no"
+					onChange={handleInputChange}
+					required
+				/>
+				<span
+					className={`${`text-[14px] text-black hover:cursor-text text-opacity-30 absolute left-0 top-[2px] mx-2 px-2 transition duration-200 bg-white input-text whitespace-nowrap`} ${
+						inputValue && "input-contains"
+					}`}>
+					City
+				</span>
+			</label>
 			{showDropdown && (
 				<div
 					ref={dropdownRef}
