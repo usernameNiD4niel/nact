@@ -1,7 +1,7 @@
 import AnimatedInputs from "@/components/reuseable/AnimatedInputs";
-import CustomSelect from "@/components/reuseable/CustomSelect";
+import ComboBox from "@/components/reuseable/ComboBox";
 import HeaderWithBack from "@/components/reuseable/HeaderWithBack";
-import { cities, states, uniqueCities } from "@/constants/objects";
+import { cities, states } from "@/constants/objects";
 import React, { FC, useEffect, useState } from "react";
 import { IoIosAddCircle, IoMdRemoveCircle } from "react-icons/io";
 
@@ -70,12 +70,13 @@ const BusinessInformationForm = () => {
 						label="Business Name"
 						key="Business Name Key"
 					/>
-					<CustomSelect
+					<ComboBox setInputValue={setCity} inputValue={city} />
+					{/* <CustomSelect
 						label="City"
 						options={uniqueCities}
 						setState={setCity}
 						state={city}
-					/>
+					/> */}
 					<AnimatedInputs
 						inputType="state"
 						isDisabled={true}

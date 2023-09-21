@@ -31,7 +31,7 @@ const AddInventory = () => {
 	const [completeAddress, setCompleteAddress] = useState<string>("");
 	const [contactNumber, setContactNumber] = useState<string>("");
 
-	const [counter, setCounter] = useState(16);
+	const [counter, setCounter] = useState(11);
 
 	const [isLoadingButton, setIsLoadingButton] = useState(false);
 
@@ -89,11 +89,13 @@ const AddInventory = () => {
 		setSupplierName("");
 	};
 
+	const [error, setError] = useState("");
+
 	useEffect(() => {
 		let interval: NodeJS.Timer;
 		console.log("count");
 
-		if (counter < 16 && counter > 0) {
+		if (counter < 11 && counter > 0) {
 			console.log("count 1");
 			interval = setInterval(() => {
 				setCounter((prevCount) => prevCount - 1);
@@ -103,19 +105,23 @@ const AddInventory = () => {
 	}, [counter]);
 
 	const isAlreadyAdded = async (inventoryData: InventoryProps) => {
-		await isInventoryAdded(inventoryData).then((data) => {
-			if (
-				data.message &&
-				data.message === "Inventory item added successfully"
-			) {
-				setCounter(14);
-				clearUserInput();
-			} else {
-				setCounter(0);
-			}
-			setIsLoadingButton(false);
-			console.log(data);
-		});
+		await isInventoryAdded(inventoryData)
+			.then((data) => {
+				if (
+					data.message &&
+					data.message === "Inventory item added successfully"
+				) {
+					setCounter(14);
+					setError("");
+					clearUserInput();
+				} else {
+					setCounter(14);
+					setError(data.message);
+				}
+				setIsLoadingButton(false);
+				console.log(data);
+			})
+			.catch((err) => setError(err));
 	};
 
 	const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -184,14 +190,28 @@ const AddInventory = () => {
 					</div>
 				</form>
 			</div>
-			{counter <= 15 && counter >= 1 && (
+			{counter <= 10 && counter >= 1 && <ShowAlert error={error} />}
+		</div>
+	);
+};
+
+const ShowAlert = ({ error }: { error: string }) => {
+	return (
+		<>
+			{error ? (
+				<div className="toast toast-end">
+					<div className="alert alert-error">
+						<span>{error}</span>
+					</div>
+				</div>
+			) : (
 				<div className="toast toast-end">
 					<div className="alert alert-success">
 						<span>New data successfully added to the inventory.</span>
 					</div>
 				</div>
 			)}
-		</div>
+		</>
 	);
 };
 
