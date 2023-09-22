@@ -2,20 +2,20 @@ import {
   SupplierManagementCard,
   SupplierManagementProps,
 } from "@/constants/props";
-import { useState } from "react";
+// import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const LoadTableData = () => {
   const navigate = useNavigate();
-  const [supplierData, setSupplierData] = useState<SupplierManagementCard[]>(
-    SupplierManagementProps
-  );
+  //   const [supplierData, setSupplierData] = useState<SupplierManagementCard[]>(
+  //     SupplierManagementProps
+  //   );
   const handleAddingNewForm = (data: SupplierManagementCard) => {
     navigate(`${data.route}`, { state: data });
   };
   return (
     <>
-      {supplierData.map((value) => (
+      {SupplierManagementProps.map((value) => (
         <tr
           key={`SupplierManagementKey${value.route}`}
           className="hover:cursor-pointer hover:text-primary"
