@@ -278,7 +278,7 @@ export type InventoryProps = {
 };
 
 export type SupplierDataProps = {
-	suppliers: SupplierTableProps[]; // change this to the correct array type
+	suppliers: SupplierTableProps[];
 };
 
 export type SupplierTableProps = {
@@ -286,4 +286,27 @@ export type SupplierTableProps = {
 	location: string;
 	abcde: string;
 	contact: string;
+};
+
+export type ShippingFormProps = {
+	bussinessInformation: BusinessInformation;
+	contactInformation: ContactInformation[];
+};
+
+type BusinessInformation = {
+	bussinessName: string;
+	city: string;
+	state: string;
+	country: string;
+	companyPhoneNumber: string;
+	companyEmailWebsite: string;
+};
+
+type ContactInformation = {
+	contactPersonFirstName: string;
+	contactPersonLastName: string;
+	contactPersonMI: string;
+	jobTitle: string;
+	contactNumber: string;
+	email: string;
 };
