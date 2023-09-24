@@ -41,6 +41,8 @@ export const POST = async ({
 			if (data.success) {
 				console.log("Redirecting to the dashboard...");
 				setIsLoading(false);
+				console.log("token", data.access_token);
+
 				return data;
 			} else {
 				console.error("Error: " + data.message);
