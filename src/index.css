@@ -30,3 +30,7 @@ input[type="password"]:focus ~ span.input-text {
 .disabled-label {
 	@apply bg-opacity-20 text-black text-opacity-75;
 }
+
+.inputs input[type="text"]:not(:placeholder-shown) {
+	@apply bg-white transform -translate-y-6 mt-[2px] -translate-x-4 scale-75 mx-5;
+}

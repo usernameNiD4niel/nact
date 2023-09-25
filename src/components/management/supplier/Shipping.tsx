@@ -1,10 +1,20 @@
+import DisplayErrorMessage from "@/components/DisplayErrorMessage";
 import AnimatedInputs from "@/components/reuseable/AnimatedInputs";
 import ComboBox from "@/components/reuseable/ComboBox";
 import HeaderWithBack from "@/components/reuseable/HeaderWithBack";
 import SuccessModal from "@/components/reuseable/SuccessModal";
 import { cities, states } from "@/constants/objects";
+import { SupplierFormValidation } from "@/constants/props";
+import {
+  animatedInputClass,
+  animatedSpanClass,
+} from "@/constants/reusable-class";
+import { supplierValidationSchema } from "@/models/supplier";
+import { zodResolver } from "@hookform/resolvers/zod";
 import React, { FC, useEffect, useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { IoIosAddCircle, IoMdRemoveCircle } from "react-icons/io";
+import { z } from "zod";
 
 const Shipping = () => {
   const [validation, setValidation] = useState("");
@@ -44,6 +54,13 @@ const BusinessInformationForm: FC<ShippingProps> = ({
   setValidation,
   validation,
 }) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<SupplierFormValidation>({
+    resolver: zodResolver(supplierValidationSchema),
+  });
   const [businessName, setBusinessName] = useState<string>("");
   const [city, setCity] = useState<string>("");
   const [state, setState] = useState<string>("");
@@ -52,6 +69,11 @@ const BusinessInformationForm: FC<ShippingProps> = ({
   const [companyEmailWebsite, setCompanyEmailWebsite] = useState<string>("");
 
   const [contactInformation, setContactInformation] = useState<number[]>([0]);
+
+  const businessNameValidation = z
+    .string({ required_error: "Business name is required" })
+    .min(1, "Business name is required");
+  const [businessNameError, setBusinessNameError] = useState("");
 
   const handleRemoveContactInformation = (index: number) => {
     const newContact = contactInformation.filter((_, i) => i !== index);
@@ -84,9 +106,18 @@ const BusinessInformationForm: FC<ShippingProps> = ({
     }
   }, [state]);
 
-  const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    setValidation("error");
+  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      businessNameValidation.parse(businessName);
+      setBusinessNameError("");
+    } catch (error) {
+      setBusinessNameError(error.message.message);
+      console.log(error);
+    }
+    // setValidation("error");
+    //! create a request to the backend
+    // pass the setValidation to the useAuth hook to change the value of it if there's an error or show a success modal instead
   };
 
   return (
@@ -103,7 +134,7 @@ const BusinessInformationForm: FC<ShippingProps> = ({
         <div className="flex flex-col w-full gap-y-4">
           <AnimatedInputs
             isDisabled={false}
-            isRequired={true}
+            isRequired={false}
             type="text"
             inputType="businessName"
             value={businessName}
@@ -111,44 +142,58 @@ const BusinessInformationForm: FC<ShippingProps> = ({
             label="Business Name"
             key="Business Name Key"
           />
-          <ComboBox setInputValue={setCity} inputValue={city} />
+          {businessNameError && (
+            <DisplayErrorMessage errorMessage={`${businessNameError}`} />
+          )}
+          <ComboBox
+            setInputValue={setCity}
+            inputValue={city}
+            register={register}
+          />
+          {errors.city && (
+            <DisplayErrorMessage errorMessage={`${errors.city.message}`} />
+          )}
           <AnimatedInputs
             inputType="state"
             isDisabled={true}
-            isRequired={true}
+            isRequired={false}
             label="State"
             setValue={setState}
             type="text"
             value={state}
+            {...register("state")}
           />
           <AnimatedInputs
             inputType="country"
             isDisabled={true}
-            isRequired={true}
+            isRequired={false}
             label="Country"
             setValue={setCountry}
             type="text"
             value={country}
+            {...register("country")}
           />
           <AnimatedInputs
             isDisabled={false}
-            isRequired={true}
+            isRequired={false}
             type="text"
             inputType="companyPhoneNumber"
             value={companyPhoneNumber}
             setValue={setCompanyPhoneNumber}
             label="Company Phone Number"
             key="Company Phone Number Key"
+            {...register("comapnyPhoneNumber")}
           />
           <AnimatedInputs
             isDisabled={false}
-            isRequired={true}
+            isRequired={false}
             type="text"
             inputType="companyEmailWebsite"
             value={companyEmailWebsite}
             setValue={setCompanyEmailWebsite}
             label="Company Email Website"
             key="Company Email Website Key"
+            {...register("comapnyEmailWebsite")}
           />
           {contactInformation.map((value, index) => (
             <ContactInformation
