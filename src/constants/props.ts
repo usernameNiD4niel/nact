@@ -301,14 +301,14 @@ export type ShippingFormProps = {
 	contactInformation: ContactInformation[];
 };
 
-type BusinessInformation = {
-	bussinessName: string;
-	city: string;
-	state: string;
-	country: string;
-	companyPhoneNumber: string;
-	companyEmailWebsite: string;
-};
+// type BusinessInformation = {
+// 	bussinessName: string;
+// 	city: string;
+// 	state: string;
+// 	country: string;
+// 	companyPhoneNumber: string;
+// 	companyEmailWebsite: string;
+// };
 
 type ContactInformation = {
 	contactPersonFirstName: string;
