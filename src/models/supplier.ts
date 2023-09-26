@@ -6,8 +6,8 @@ export const supplierValidationSchema = z.object({
 		.string({ required_error: "Business name is required" })
 		.min(1, "Business name is required"),
 	city: z.string().min(1, "A valid city should have atleast 3 characters long"),
-	state: z.string().min(3, "Enter a valid state"),
-	country: z.string().min(3, "Enter a valid country"),
+	// state: z.string().min(3, "Enter a valid state"),
+	// country: z.string().min(3, "Enter a valid country"),
 	companyPhoneNumber: z
 		.string()
 		.min(11, "Please enter a valid phone number")

@@ -1,18 +1,17 @@
+import { addShippingSupplier } from "@/api/supplier";
 import DisplayErrorMessage from "@/components/DisplayErrorMessage";
 import AnimatedInputs from "@/components/reuseable/AnimatedInputs";
 import ComboBox from "@/components/reuseable/ComboBox";
 import HeaderWithBack from "@/components/reuseable/HeaderWithBack";
+import LoadingButton from "@/components/reuseable/LoadingButton";
 import SuccessModal from "@/components/reuseable/SuccessModal";
 import { cities, states } from "@/constants/objects";
-import { SupplierFormValidation } from "@/constants/props";
+import { ShippingFormProps } from "@/constants/props";
 import {
 	animatedInputClass,
 	animatedSpanClass,
 } from "@/constants/reusable-class";
-import { supplierValidationSchema } from "@/models/supplier";
-import { zodResolver } from "@hookform/resolvers/zod";
 import React, { FC, useEffect, useState } from "react";
-import { SubmitHandler, useForm } from "react-hook-form";
 import { IoIosAddCircle, IoMdRemoveCircle } from "react-icons/io";
 
 const Shipping = () => {
@@ -44,14 +43,16 @@ type ShippingProps = {
 	validation: string;
 };
 
+type ContactInfoFields = {
+	contactPersonFirstName: string;
+	contactPersonLastName: string;
+	contactPersonMI: string;
+	jobTitle: string;
+	contactNumber: string;
+	email: string;
+};
+
 const BusinessInformationForm: FC<ShippingProps> = ({ validation }) => {
-	const {
-		register,
-		handleSubmit,
-		formState: { errors },
-	} = useForm<SupplierFormValidation>({
-		resolver: zodResolver(supplierValidationSchema),
-	});
 	const [businessName, setBusinessName] = useState<string>("");
 	const [city, setCity] = useState<string>("");
 	const [state, setState] = useState<string>("");
@@ -60,6 +61,19 @@ const BusinessInformationForm: FC<ShippingProps> = ({ validation }) => {
 	const [companyEmailWebsite, setCompanyEmailWebsite] = useState<string>("");
 
 	const [contactInformation, setContactInformation] = useState<number[]>([0]);
+
+	const [cityError, setCityError] = useState<string>("");
+	const [businessNameError, setBusinessNameError] = useState<string>("");
+	const [companyEmailWebsiteError, setCompanyEmailWebsiteError] =
+		useState<string>("");
+	const [companyPhoneNumberError, setCompanyPhoneNumberError] =
+		useState<string>("");
+
+	const [isLoading, setIsLoading] = useState<boolean>(false);
+
+	const [contactInformationObject, setContactInformatiionObject] = useState<
+		ContactInfoFields[]
+	>([]);
 
 	const handleRemoveContactInformation = (index: number) => {
 		const newContact = contactInformation.filter((_, i) => i !== index);
@@ -92,12 +106,64 @@ const BusinessInformationForm: FC<ShippingProps> = ({ validation }) => {
 		}
 	}, [state]);
 
-	const handleFormSubmit: SubmitHandler<SupplierFormValidation> = (data) => {
-		console.log(data);
+	const handleOnClick = () => {
+		if (!businessName) {
+			setBusinessNameError("Business name is required");
+		} else {
+			setBusinessNameError("");
+		}
+		if (!city) {
+			setCityError("City is required");
+		} else if (!country || !state) {
+			setCityError("Set enter a valid city");
+		} else {
+			setCityError("");
+		}
 
-		// setValidation("error");
-		//! create a request to the backend
-		// pass the setValidation to the useAuth hook to change the value of it if there's an error or show a success modal instead
+		if (!companyEmailWebsite) {
+			setCompanyEmailWebsiteError("Please enter company email");
+		} else {
+			setCompanyEmailWebsiteError("");
+		}
+
+		if (!companyPhoneNumber) {
+			setCompanyPhoneNumberError("Please enter company phone number");
+		} else {
+			setCompanyPhoneNumberError("");
+		}
+
+		if (
+			!businessName ||
+			!city ||
+			!companyEmailWebsite ||
+			!companyPhoneNumber ||
+			!country
+		) {
+			return;
+		}
+
+		setIsLoading(true);
+
+		const shipping: ShippingFormProps = {
+			businessName,
+			city,
+			companyEmailWebsite,
+			companyPhoneNumber,
+			contactInformation: contactInformationObject,
+			country,
+			state,
+		};
+		createNewShipping(shipping);
+	};
+
+	const createNewShipping = async (shipping: ShippingFormProps) => {
+		const data = await addShippingSupplier(shipping);
+		setIsLoading(false);
+		if (data) {
+			console.log("success", data);
+		} else {
+			console.log("failed", data);
+		}
 	};
 
 	return (
@@ -105,9 +171,7 @@ const BusinessInformationForm: FC<ShippingProps> = ({ validation }) => {
 			className={`flex flex-col items-center justify-center mt-10 ${
 				validation ? "overflow-y-hidden" : "overflow-y-auto"
 			}`}>
-			<form
-				className="p-2 flex flex-col gap-y-2 w-full lg:w-[60%] py-10 bg-white px-6"
-				onSubmit={handleSubmit(handleFormSubmit)}>
+			<div className="p-2 flex flex-col gap-y-2 w-full lg:w-[60%] py-10 bg-white px-6">
 				<h3 className="text-sm font-bold my-3">Business Information</h3>
 				<div className="flex flex-col w-full gap-y-4">
 					<label className="relative" htmlFor="businessName">
@@ -115,9 +179,9 @@ const BusinessInformationForm: FC<ShippingProps> = ({ validation }) => {
 							type="text"
 							className={`${animatedInputClass} disabled:bg-gray-100`}
 							value={businessName}
-							{...register("businessName")}
 							name="businessName"
 							id="businessName"
+							autoComplete="no"
 							onChange={(e) => setBusinessName(e.target.value)}
 						/>
 						<span
@@ -126,10 +190,8 @@ const BusinessInformationForm: FC<ShippingProps> = ({ validation }) => {
 							}`}>
 							Business Name
 						</span>
-						{errors.businessName && (
-							<DisplayErrorMessage
-								errorMessage={`${errors.businessName.message}`}
-							/>
+						{businessNameError && (
+							<DisplayErrorMessage errorMessage={`${businessNameError}`} />
 						)}
 					</label>
 
@@ -144,82 +206,50 @@ const BusinessInformationForm: FC<ShippingProps> = ({ validation }) => {
 						key="Business Name Key"
 						{...register("businessName")}
 					/> */}
-					<ComboBox
-						setInputValue={setCity}
-						inputValue={city}
-						register={register}
-						errors={errors}
-					/>
+					<ComboBox setInputValue={setCity} inputValue={city} />
+					{cityError && <DisplayErrorMessage errorMessage={cityError} />}
 					<label className="relative" htmlFor="state">
 						<input
 							type="text"
 							className={`${animatedInputClass} disabled:bg-gray-100`}
 							value={state}
-							{...register("state")}
 							name="state"
 							disabled
 							id="state"
 							onChange={(e) => setState(e.target.value)}
 						/>
 						<span
-							className={`${`${animatedSpanClass} bg-[#F3F4F6] whitespace-nowrap`} ${
+							className={`${`${animatedSpanClass} bg-[#F3F4F6] whitespace-nowrap`} disabled-label ${
 								state && "input-contains"
 							}`}>
 							State
 						</span>
-						{errors.state && (
-							<DisplayErrorMessage errorMessage={`${errors.state.message}`} />
-						)}
 					</label>
-					{/* <AnimatedInputs
-						inputType="state"
-						isDisabled={true}
-						isRequired={false}
-						label="State"
-						setValue={setState}
-						type="text"
-						value={state}
-						{...register("state")}
-					/> */}
 					<label className="relative" htmlFor="country">
 						<input
 							type="text"
 							className={`${animatedInputClass} disabled:bg-gray-100`}
 							value={country}
-							{...register("country")}
 							name="country"
 							disabled
 							id="country"
 							onChange={(e) => setCountry(e.target.value)}
 						/>
 						<span
-							className={`${`${animatedSpanClass} bg-[#F3F4F6] whitespace-nowrap`} ${
+							className={`${`${animatedSpanClass} whitespace-nowrap`} disabled-label ${
 								country && "input-contains"
 							}`}>
 							Country
 						</span>
-						{errors.country && (
-							<DisplayErrorMessage errorMessage={`${errors.country.message}`} />
-						)}
 					</label>
-					{/* <AnimatedInputs
-						inputType="country"
-						isDisabled={true}
-						isRequired={false}
-						label="Country"
-						setValue={setCountry}
-						type="text"
-						value={country}
-						{...register("country")}
-					/> */}
 					<label className="relative" htmlFor="companyPhoneNumber">
 						<input
 							type="text"
 							className={`${animatedInputClass} disabled:bg-gray-100`}
 							value={companyPhoneNumber}
-							{...register("companyPhoneNumber")}
 							name="companyPhoneNumber"
 							id="companyPhoneNumber"
+							autoComplete="no"
 							onChange={(e) => setCompanyPhoneNumber(e.target.value)}
 						/>
 						<span
@@ -228,32 +258,21 @@ const BusinessInformationForm: FC<ShippingProps> = ({ validation }) => {
 							}`}>
 							Company Phone Number
 						</span>
-						{errors.companyPhoneNumber && (
+						{companyPhoneNumberError && (
 							<DisplayErrorMessage
-								errorMessage={`${errors.companyPhoneNumber.message}`}
+								errorMessage={`${companyPhoneNumberError}`}
 							/>
 						)}
 					</label>
-					{/* <AnimatedInputs
-						isDisabled={false}
-						isRequired={false}
-						type="text"
-						inputType="companyPhoneNumber"
-						value={companyPhoneNumber}
-						setValue={setCompanyPhoneNumber}
-						label="Company Phone Number"
-						key="Company Phone Number Key"
-						{...register("companyPhoneNumber")}
-					/> */}
 					<label className="relative" htmlFor="companyEmailWebsite">
 						<input
 							type="text"
 							className={`${animatedInputClass} disabled:bg-gray-100`}
 							value={companyEmailWebsite}
-							{...register("companyEmailWebsite")}
 							name="companyEmailWebsite"
 							id="companyEmailWebsite"
 							onChange={(e) => setCompanyEmailWebsite(e.target.value)}
+							autoComplete="no"
 						/>
 						<span
 							className={`${`${animatedSpanClass} whitespace-nowrap`} ${
@@ -261,46 +280,38 @@ const BusinessInformationForm: FC<ShippingProps> = ({ validation }) => {
 							}`}>
 							Company Email Website
 						</span>
-						{errors.companyEmailWebsite && (
+						{companyEmailWebsiteError && (
 							<DisplayErrorMessage
-								errorMessage={`${errors.companyEmailWebsite.message}`}
+								errorMessage={`${companyEmailWebsiteError}`}
 							/>
 						)}
 					</label>
-					{/* <AnimatedInputs
-						isDisabled={false}
-						isRequired={false}
-						type="text"
-						inputType="companyEmailWebsite"
-						value={companyEmailWebsite}
-						setValue={setCompanyEmailWebsite}
-						label="Company Email Website"
-						key="Company Email Website Key"
-						{...register("comapnyEmailWebsite")}
-					/> */}
 					{contactInformation.map((value, index) => (
 						<ContactInformation
 							handleRemoveContact={handleRemoveContactInformation}
 							index={index}
 							setContactInformation={setContactInformation}
+							setContactInformatiionObject={setContactInformatiionObject}
 							key={value}
 						/>
 					))}
 				</div>
 
 				<div className="w-full flex items-center gap-3 mt-5 flex-col md:flex-row-reverse">
-					<button
-						type="submit"
-						className="w-full text-center p-3 md:w-fit md:px-9 text-white rounded-md bg-primary">
-						Submit
-					</button>
-					<button
-						type="reset"
-						className="w-full text-center p-3 md:w-fit md:px-9 text-primary">
+					{isLoading ? (
+						<LoadingButton />
+					) : (
+						<button
+							className="w-full text-center p-3 md:w-fit md:px-9 text-white rounded-md bg-primary"
+							onClick={handleOnClick}>
+							Submit
+						</button>
+					)}
+					<button className="w-full text-center p-3 md:w-fit md:px-9 text-primary">
 						Reset
 					</button>
 				</div>
-			</form>
+			</div>
 		</div>
 	);
 };
@@ -309,10 +320,14 @@ type ContactInformationAdds = {
 	handleRemoveContact: (index: number) => void;
 	setContactInformation: React.Dispatch<React.SetStateAction<number[]>>;
 	index: number;
+	setContactInformatiionObject: React.Dispatch<
+		React.SetStateAction<ContactInfoFields[]>
+	>;
 };
 
 const ContactInformation: FC<ContactInformationAdds> = ({
 	handleRemoveContact,
+	setContactInformatiionObject,
 	setContactInformation,
 	index,
 }) => {
@@ -402,9 +417,18 @@ const ContactInformation: FC<ContactInformationAdds> = ({
 			<div className="flex w-full justify-end items-center">
 				<button
 					type="button"
-					onClick={() =>
-						setContactInformation((prev) => [...prev, prev.length])
-					}
+					onClick={() => {
+						const newObject: ContactInfoFields = {
+							contactPersonFirstName: contactPersonFirstName_,
+							contactPersonLastName: contactPersonLastName_,
+							contactPersonMI: contactPersonMI_,
+							email: email_,
+							jobTitle: jobTitle_,
+							contactNumber: contactNumber_,
+						};
+						setContactInformatiionObject((prev) => [...prev, newObject]);
+						setContactInformation((prev) => [...prev, prev.length]);
+					}}
 					className="text-primary pb-2 flex gap-x-2 items-center text-sm">
 					<IoIosAddCircle />
 					ADD OTHER CONTACT PERSON

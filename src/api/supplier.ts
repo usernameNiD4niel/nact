@@ -38,6 +38,8 @@ const addShippingSupplier = async (shipping: ShippingFormProps) => {
 
 	if (response.ok) {
 		const data: Promise<ShippingFormProps> = await response.json();
+		console.log("data hehhe", data);
+
 		return data;
 	} else {
 		throw new Error(response.arrayBuffer.toString());

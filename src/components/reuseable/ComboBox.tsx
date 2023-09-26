@@ -1,24 +1,13 @@
 // CityDropdown.tsx
 import { uniqueCities } from "@/constants/objects";
-import { SupplierFormValidation } from "@/constants/props";
 import "@/index.css";
 import React, { useState, useRef, useEffect } from "react";
-import { FieldErrors, UseFormRegister } from "react-hook-form";
-import DisplayErrorMessage from "../DisplayErrorMessage";
-
 type ComboBoxProps = {
 	inputValue: string;
 	setInputValue: React.Dispatch<React.SetStateAction<string>>;
-	register: UseFormRegister<SupplierFormValidation>;
-	errors: FieldErrors<SupplierFormValidation>;
 };
 
-const ComboBox: React.FC<ComboBoxProps> = ({
-	inputValue,
-	setInputValue,
-	register,
-	errors,
-}) => {
+const ComboBox: React.FC<ComboBoxProps> = ({ inputValue, setInputValue }) => {
 	const [suggestions, setSuggestions] = useState<string[]>([]);
 	const [showDropdown, setShowDropdown] = useState<boolean>(false);
 	const [notFound, setNotFound] = useState<boolean>(false);
@@ -83,10 +72,10 @@ const ComboBox: React.FC<ComboBoxProps> = ({
 					type="text"
 					className={`w-full text-gray-600 h-12 px-3 text-sm bg-white border-[1px] rounded-[4px] border-black border-opacity-20 outline-none focus:border-[#017DC3] focus:text-black transition duration-200`}
 					value={inputValue}
-					{...register("city")}
 					name="city"
 					id="city"
 					onChange={handleInputChange}
+					autoComplete="no"
 				/>
 				<span
 					className={`${`text-[14px] text-black hover:cursor-text text-opacity-30 absolute left-0 top-[2px] mx-2 px-2 transition duration-200 bg-white input-text whitespace-nowrap`} ${
@@ -94,9 +83,6 @@ const ComboBox: React.FC<ComboBoxProps> = ({
 					}`}>
 					City
 				</span>
-				{errors.city && (
-					<DisplayErrorMessage errorMessage={`${errors.city.message}`} />
-				)}
 			</label>
 			{showDropdown && (
 				<div
