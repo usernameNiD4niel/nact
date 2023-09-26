@@ -241,26 +241,9 @@ export type RegisterResponse = {
 };
 
 export type StatesType = {
-	usa: string[];
-	canada: string[];
+	USA: string[];
+	Canada: string[];
 };
-
-/**
- * "containerType": "sample container type",
-    "condition": "nice",
-    "city": "hatdog street",
-    "state": "halimaw",
-    "region": "catholic",
-    "county": "aso",
-    "depot": "itlog",
-    "validUntil": "10-02-2023",
-    "businessName": "sadkasd",
-    "completeAddress": "dsdsdsdsds",
-    "contactNumber": "09876543212",
-    "quantity": 100,
-    "buyingRate": 10.5,
-    "sellingRate": 11
- */
 
 export type InventoryProps = {
 	containerType: string;

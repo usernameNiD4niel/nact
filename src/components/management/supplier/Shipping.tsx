@@ -160,13 +160,16 @@ const BusinessInformationForm: FC<ShippingProps> = ({
 			country,
 			state,
 		};
+		console.log("top shipping: " + shipping);
+		console.log("contact information object: " + contactInformationObject);
+
 		createNewShipping(shipping);
 	};
 
 	const createNewShipping = async (shipping: ShippingFormProps) => {
 		const data = await addShippingSupplier(shipping);
 		setIsLoading(false);
-		if (data) {
+		if (data.message === "Supplier and contact persons added successfully") {
 			console.log("success", data);
 			setValidation("success");
 		} else {
@@ -203,18 +206,6 @@ const BusinessInformationForm: FC<ShippingProps> = ({
 							<DisplayErrorMessage errorMessage={`${businessNameError}`} />
 						)}
 					</label>
-
-					{/* <AnimatedInputs
-						isDisabled={false}
-						isRequired={false}
-						type="text"
-						inputType="businessName"
-						value={businessName}
-						setValue={setBusinessName}
-						label="Business Name"
-						key="Business Name Key"
-						{...register("businessName")}
-					/> */}
 					<ComboBox setInputValue={setCity} inputValue={city} />
 					{cityError && <DisplayErrorMessage errorMessage={cityError} />}
 					<label className="relative" htmlFor="state">
@@ -435,6 +426,8 @@ const ContactInformation: FC<ContactInformationAdds> = ({
 							jobTitle: jobTitle_,
 							contactNumber: contactNumber_,
 						};
+						console.log("new object: ", newObject);
+
 						setContactInformatiionObject((prev) => [...prev, newObject]);
 						setContactInformation((prev) => [...prev, prev.length]);
 					}}

@@ -157,7 +157,7 @@ export type TableTypes<Header, Body> = {
 };
 
 export const states: StatesType = {
-	usa: [
+	USA: [
 		"Ohio",
 		"New Mexico",
 		"Virginia",
@@ -202,7 +202,7 @@ export const states: StatesType = {
 		"District of Columbia",
 		"South Dakota",
 	],
-	canada: [
+	Canada: [
 		"British Columbia",
 		"Newfoundland",
 		"Ontario",

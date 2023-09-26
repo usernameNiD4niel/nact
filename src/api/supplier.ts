@@ -23,7 +23,13 @@ const getSupplierTableData = async () => {
 	}
 };
 
+type ResponseAddShipping = {
+	message: string;
+};
+
 const addShippingSupplier = async (shipping: ShippingFormProps) => {
+	console.log("Shipping ", shipping);
+
 	const response = await fetch(
 		`https://flask-service.gi2fod26lfct0.ap-southeast-1.cs.amazonlightsail.com/api/supplier/add/shipping`,
 		{
@@ -37,7 +43,7 @@ const addShippingSupplier = async (shipping: ShippingFormProps) => {
 	);
 
 	if (response.ok) {
-		const data: Promise<ShippingFormProps> = await response.json();
+		const data: Promise<ResponseAddShipping> = await response.json();
 		console.log("data hehhe", data);
 
 		return data;
