@@ -23,7 +23,10 @@ const Shipping = () => {
 					validation ? "overflow-hidden" : "overflow-auto"
 				}`}>
 				<HeaderWithBack text="Shipping" route="/supplier/add" />
-				<BusinessInformationForm validation={validation} />
+				<BusinessInformationForm
+					validation={validation}
+					setValidation={setValidation}
+				/>
 			</div>
 			{validation && (
 				<SuccessModal
@@ -41,6 +44,7 @@ const Shipping = () => {
 
 type ShippingProps = {
 	validation: string;
+	setValidation: React.Dispatch<React.SetStateAction<string>>;
 };
 
 type ContactInfoFields = {
@@ -52,7 +56,10 @@ type ContactInfoFields = {
 	email: string;
 };
 
-const BusinessInformationForm: FC<ShippingProps> = ({ validation }) => {
+const BusinessInformationForm: FC<ShippingProps> = ({
+	validation,
+	setValidation,
+}) => {
 	const [businessName, setBusinessName] = useState<string>("");
 	const [city, setCity] = useState<string>("");
 	const [state, setState] = useState<string>("");
@@ -161,8 +168,10 @@ const BusinessInformationForm: FC<ShippingProps> = ({ validation }) => {
 		setIsLoading(false);
 		if (data) {
 			console.log("success", data);
+			setValidation("success");
 		} else {
 			console.log("failed", data);
+			setValidation("error");
 		}
 	};
 
