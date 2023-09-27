@@ -29,6 +29,7 @@ type ResponseAddShipping = {
 
 const addShippingSupplier = async (shipping: ShippingFormProps) => {
 	console.log("Shipping ", shipping);
+	console.log("token supp: ", token);
 
 	const response = await fetch(
 		`https://flask-service.gi2fod26lfct0.ap-southeast-1.cs.amazonlightsail.com/api/supplier/add/shipping`,
@@ -45,10 +46,11 @@ const addShippingSupplier = async (shipping: ShippingFormProps) => {
 	if (response.ok) {
 		const data: Promise<ResponseAddShipping> = await response.json();
 		console.log("data hehhe", data);
-
-		return data;
+		return JSON.stringify(data, null, 2);
 	} else {
-		throw new Error(response.arrayBuffer.toString());
+		const data: Promise<ResponseAddShipping> = await response.json();
+		console.log("error hehhe", data);
+		return JSON.stringify(data, null, 2);
 	}
 };
 

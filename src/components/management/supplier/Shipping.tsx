@@ -169,7 +169,7 @@ const BusinessInformationForm: FC<ShippingProps> = ({
 	const createNewShipping = async (shipping: ShippingFormProps) => {
 		const data = await addShippingSupplier(shipping);
 		setIsLoading(false);
-		if (data.message === "Supplier and contact persons added successfully") {
+		if (data) {
 			console.log("success", data);
 			setValidation("success");
 		} else {
@@ -218,12 +218,6 @@ const BusinessInformationForm: FC<ShippingProps> = ({
 							id="state"
 							onChange={(e) => setState(e.target.value)}
 						/>
-						<span
-							className={`${`${animatedSpanClass} bg-[#F3F4F6] whitespace-nowrap`} disabled-label ${
-								state && "input-contains"
-							}`}>
-							State
-						</span>
 					</label>
 					<label className="relative" htmlFor="country">
 						<input
@@ -235,12 +229,6 @@ const BusinessInformationForm: FC<ShippingProps> = ({
 							id="country"
 							onChange={(e) => setCountry(e.target.value)}
 						/>
-						<span
-							className={`${`${animatedSpanClass} whitespace-nowrap`} disabled-label ${
-								country && "input-contains"
-							}`}>
-							Country
-						</span>
 					</label>
 					<label className="relative" htmlFor="companyPhoneNumber">
 						<input
