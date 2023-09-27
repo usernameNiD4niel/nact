@@ -46,7 +46,7 @@ const addShippingSupplier = async (shipping: ShippingFormProps) => {
 	if (response.ok) {
 		const data: Promise<ResponseAddShipping> = await response.json();
 		console.log("data hehhe", data);
-		return JSON.stringify(data, null, 2);
+		return (await data).message;
 	} else {
 		const data: Promise<ResponseAddShipping> = await response.json();
 		console.log("error hehhe", data);

@@ -33,7 +33,11 @@ const Shipping = () => {
 					message="Lorem ipsum dolor sit amet consectetur adipisicing elit. Atque facilis fuga laudantium odio, blanditiis deleniti sed repellendus sunt nostrum neque."
 					redirectText="Go back to dashboard"
 					redirectTo="/supplier/add/shipping"
-					title="Payment Successful"
+					title={`${
+						validation === "error"
+							? "Internal Server Error"
+							: "Data Successfully Added"
+					}`}
 					validation={validation}
 					setValidation={setValidation}
 				/>
@@ -169,12 +173,12 @@ const BusinessInformationForm: FC<ShippingProps> = ({
 	const createNewShipping = async (shipping: ShippingFormProps) => {
 		const data = await addShippingSupplier(shipping);
 		setIsLoading(false);
-		if (data) {
+		if (data !== "Internal Server Error") {
 			console.log("success", data);
-			setValidation("success");
+			setValidation("error");
 		} else {
 			console.log("failed", data);
-			setValidation("error");
+			setValidation("success");
 		}
 	};
 
