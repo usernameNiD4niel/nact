@@ -94,10 +94,7 @@ const InventoryTableItem = () => {
 					<hr className="mb-3 mt-5" />
 					<h3 className="text-sm font-bold mb-3">Supplier</h3>
 					<div className="flex flex-col w-full gap-y-4">
-						<SupplierFormInventory
-							isDisabled={true}
-							props={supplierStateFieldObject}
-						/>
+						<SupplierFormInventory props={supplierStateFieldObject} />
 					</div>
 				</form>
 			</div>
