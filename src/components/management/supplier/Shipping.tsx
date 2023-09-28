@@ -329,6 +329,7 @@ type ContactInformationAdds = {
     React.SetStateAction<ContactInfoFields[]>
   >;
 };
+//when the users
 
 const ContactInformation: FC<ContactInformationAdds> = ({
   handleRemoveContact,
@@ -425,6 +426,7 @@ const ContactInformation: FC<ContactInformationAdds> = ({
           type="button"
           onClick={() => {
             setContactInformation((prev) => [...prev, prev.length]);
+            console.log();
           }}
           className="text-primary pb-2 flex gap-x-2 items-center text-sm"
         >
