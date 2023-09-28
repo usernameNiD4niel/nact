@@ -10,7 +10,7 @@ import {
   animatedInputClass,
   animatedSpanClass,
 } from "@/constants/reusable-class";
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 import { IoIosAddCircle, IoMdRemoveCircle } from "react-icons/io";
 
 const Shipping = () => {
@@ -94,6 +94,8 @@ const BusinessInformationForm: FC<ShippingProps> = ({
     const newContact = contactInformation.filter((_, i) => i !== index);
     setContactInformation(newContact);
   };
+
+  const businessNameRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     for (const state_ in cities) {
@@ -187,7 +189,29 @@ const BusinessInformationForm: FC<ShippingProps> = ({
     setIsLoading(false);
     if (isAddedSuccessfully) {
       //! Clear the forms and focus the input at the top
+      handleClearFields();
     }
+  };
+
+  const handleClearFields = () => {
+    const contactInfo: ContactInfoFields = {
+      contactNumber: "",
+      contactPersonFirstName: "",
+      contactPersonLastName: "",
+      contactPersonMI: "",
+      email: "",
+      jobTitle: "",
+    };
+    setContactInformatiionObject([contactInfo]);
+
+    setBusinessName("");
+    setCity("");
+    setCountry("");
+    setState("");
+    setCompanyPhoneNumber("");
+    setCompanyEmailWebsite("");
+
+    businessNameRef.current?.focus();
   };
 
   return (
@@ -206,6 +230,7 @@ const BusinessInformationForm: FC<ShippingProps> = ({
               value={businessName}
               name="businessName"
               id="businessName"
+              ref={businessNameRef}
               autoComplete="no"
               onChange={(e) => setBusinessName(e.target.value)}
             />
