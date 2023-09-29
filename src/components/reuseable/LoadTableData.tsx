@@ -44,28 +44,31 @@ const LoadTableData = () => {
 		<>
 			{/* Change this after the type of response is changed */}
 			{tableData && tableData.length > 0 ? (
-				tableData.map((value) => (
-					<tr
-						key={`SupplierManagementKey${value.businessName}`}
-						className="hover:cursor-pointer hover:text-primary"
-						onClick={() => handleAddingNewForm(value)}>
-						<td className="flex flex-col gap-y-2">
-							{value.businessName}{" "}
-							<span className="sm:hidden">
-								{value.state}, {value.country}
-							</span>
-						</td>
-						<td>
-							<span className="hidden sm:block">
-								{value.state}, {value.country}
-							</span>
-						</td>
-						<td>
-							<span className="hidden lg:block"></span>
-						</td>
-						<td>{value.companyPhoneNumber}</td>
-					</tr>
-				))
+				tableData
+					.slice(0)
+					.reverse()
+					.map((value) => (
+						<tr
+							key={`SupplierManagementKey${value.businessName}`}
+							className="hover:cursor-pointer hover:text-primary"
+							onClick={() => handleAddingNewForm(value)}>
+							<td className="flex flex-col gap-y-2">
+								{value.businessName}{" "}
+								<span className="sm:hidden">
+									{value.state}, {value.country}
+								</span>
+							</td>
+							<td>
+								<span className="hidden sm:block">
+									{value.state}, {value.country}
+								</span>
+							</td>
+							<td>
+								<span className="hidden lg:block"></span>
+							</td>
+							<td>{value.companyPhoneNumber}</td>
+						</tr>
+					))
 			) : (
 				<div className="h-[40vh] ml-10 flex items-center justify-end">
 					<p className="md:text-sm text-xs">

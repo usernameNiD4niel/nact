@@ -11,7 +11,6 @@ import {
 	animatedSpanClass,
 } from "@/constants/reusable-class";
 import React, { FC, useEffect, useRef, useState } from "react";
-import { IoIosAddCircle, IoMdRemoveCircle } from "react-icons/io";
 
 const Shipping = () => {
 	const [validation, setValidation] = useState("");
@@ -53,16 +52,6 @@ type ShippingProps = {
 	setMessage: React.Dispatch<React.SetStateAction<string>>;
 };
 
-type ContactInfoFields = {
-	id: number;
-	contactPersonFirstName: string;
-	contactPersonLastName: string;
-	contactPersonMI: string;
-	jobTitle: string;
-	contactNumber: string;
-	email: string;
-};
-
 const BusinessInformationForm: FC<ShippingProps> = ({
 	validation,
 	setValidation,
@@ -75,8 +64,6 @@ const BusinessInformationForm: FC<ShippingProps> = ({
 	const [companyPhoneNumber, setCompanyPhoneNumber] = useState<string>("");
 	const [companyEmailWebsite, setCompanyEmailWebsite] = useState<string>("");
 
-	const [contactInformation, setContactInformation] = useState<number[]>([0]);
-
 	const [cityError, setCityError] = useState<string>("");
 	const [businessNameError, setBusinessNameError] = useState<string>("");
 	const [companyEmailWebsiteError, setCompanyEmailWebsiteError] =
@@ -86,14 +73,13 @@ const BusinessInformationForm: FC<ShippingProps> = ({
 
 	const [isLoading, setIsLoading] = useState<boolean>(false);
 
-	const [contactInformationObject, setContactInformatiionObject] = useState<
-		ContactInfoFields[]
-	>([]);
-
-	const handleRemoveContactInformation = (index: number) => {
-		const newContact = contactInformation.filter((_, i) => i !== index);
-		setContactInformation(newContact);
-	};
+	// Contact Info Fields
+	const contactFirstNameRef = useRef<HTMLInputElement>(null);
+	const contactLastNameRef = useRef<HTMLInputElement>(null);
+	const contactMIRef = useRef<HTMLInputElement>(null);
+	const jobTitleRef = useRef<HTMLInputElement>(null);
+	const contactNumberRef = useRef<HTMLInputElement>(null);
+	const emailRef = useRef<HTMLInputElement>(null);
 
 	const businessNameRef = useRef<HTMLInputElement>(null);
 
@@ -161,6 +147,17 @@ const BusinessInformationForm: FC<ShippingProps> = ({
 
 		setIsLoading(true);
 
+		const contactInfos = [
+			{
+				contactPersonFirstName: contactFirstNameRef.current!.value,
+				contactPersonLastName: contactLastNameRef.current!.value,
+				contactPersonMI: contactMIRef.current!.value,
+				jobTitle: jobTitleRef.current!.value,
+				contactNumber: contactNumberRef.current!.value,
+				email: emailRef.current!.value,
+			},
+		];
+
 		const shipping: ShippingFormProps = {
 			businessInformation: {
 				businessName,
@@ -170,12 +167,8 @@ const BusinessInformationForm: FC<ShippingProps> = ({
 				country,
 				state,
 			},
-			contactInformation: contactInformationObject,
+			contactInformation: contactInfos,
 		};
-		console.log("top shipping: " + JSON.stringify(shipping));
-		console.log(
-			"contact information object: " + JSON.stringify(contactInformationObject),
-		);
 
 		createNewShipping(shipping);
 	};
@@ -194,16 +187,12 @@ const BusinessInformationForm: FC<ShippingProps> = ({
 	};
 
 	const handleClearFields = () => {
-		const contactInfo: ContactInfoFields = {
-			contactNumber: "",
-			id: 0,
-			contactPersonFirstName: "",
-			contactPersonLastName: "",
-			contactPersonMI: "",
-			email: "",
-			jobTitle: "",
-		};
-		setContactInformatiionObject([contactInfo]);
+		contactFirstNameRef.current!.value = "";
+		contactLastNameRef.current!.value = "";
+		contactMIRef.current!.value = "";
+		jobTitleRef.current!.value = "";
+		contactNumberRef.current!.value = "";
+		emailRef.current!.value = "";
 
 		setBusinessName("");
 		setCity("");
@@ -231,6 +220,7 @@ const BusinessInformationForm: FC<ShippingProps> = ({
 							name="businessName"
 							id="businessName"
 							ref={businessNameRef}
+							autoFocus={true}
 							autoComplete="no"
 							onChange={(e) => setBusinessName(e.target.value)}
 						/>
@@ -312,15 +302,14 @@ const BusinessInformationForm: FC<ShippingProps> = ({
 							/>
 						)}
 					</label>
-					{contactInformation.map((value, index) => (
-						<ContactInformation
-							handleRemoveContact={handleRemoveContactInformation}
-							index={index}
-							setContactInformation={setContactInformation}
-							setContactInformatiionObject={setContactInformatiionObject}
-							key={value}
-						/>
-					))}
+					<ContactInformation
+						contactFirstNameRef={contactFirstNameRef}
+						contactLastNameRef={contactLastNameRef}
+						contactMIRef={contactMIRef}
+						contactNumberRef={contactNumberRef}
+						emailRef={emailRef}
+						jobTitleRef={jobTitleRef}
+					/>
 				</div>
 
 				<div className="w-full flex items-center gap-3 mt-5 flex-col md:flex-row-reverse">
@@ -343,146 +332,72 @@ const BusinessInformationForm: FC<ShippingProps> = ({
 };
 
 type ContactInformationAdds = {
-	handleRemoveContact: (index: number) => void;
-	setContactInformation: React.Dispatch<React.SetStateAction<number[]>>;
-	index: number;
-	setContactInformatiionObject: React.Dispatch<
-		React.SetStateAction<ContactInfoFields[]>
-	>;
+	contactFirstNameRef: React.RefObject<HTMLInputElement>;
+	contactLastNameRef: React.RefObject<HTMLInputElement>;
+	contactMIRef: React.RefObject<HTMLInputElement>;
+	jobTitleRef: React.RefObject<HTMLInputElement>;
+	contactNumberRef: React.RefObject<HTMLInputElement>;
+	emailRef: React.RefObject<HTMLInputElement>;
 };
 //when the users
 
 const ContactInformation: FC<ContactInformationAdds> = ({
-	handleRemoveContact,
-	setContactInformatiionObject,
-	setContactInformation,
-	index,
+	contactFirstNameRef,
+	contactLastNameRef,
+	contactMIRef,
+	contactNumberRef,
+	emailRef,
+	jobTitleRef,
 }) => {
-	const [contactPersonFirstName, setContactPersonFirstName] =
-		useState<string>("");
-	const [contactPersonLastName, setContactPersonLastName] =
-		useState<string>("");
-	const [contactPersonMI, setContactPersonMI] = useState<string>("");
-	const [jobTitle, setJobTitle] = useState<string>("");
-	const [contactNumber, setContactNumber] = useState<string>("");
-	const [email, setEmail] = useState<string>("");
-
-	const handleOnChangeEvent = (
-		event: React.ChangeEvent<HTMLInputElement>,
-		setState: React.Dispatch<React.SetStateAction<string>>,
-	) => {
-		setState(event.target.value);
-		const newObject: ContactInfoFields = {
-			contactPersonFirstName,
-			contactPersonLastName,
-			contactPersonMI,
-			id: index,
-			email,
-			jobTitle,
-			contactNumber,
-		};
-		setContactInformatiionObject([newObject]);
-	};
-
 	return (
 		<React.Fragment>
 			<hr className="mt-10" />
 			<div className="flex justify-between items-center">
 				<h3 className="text-sm font-bold mt-5">Contact Information</h3>
-				{index !== 0 && (
-					<button
-						type="button"
-						onClick={() => handleRemoveContact(index)}
-						className="flex items-center text-red-600 uppercase gap-x-2 text-sm">
-						<IoMdRemoveCircle /> Remove
-					</button>
-				)}
 			</div>
 			<DisplayInput
 				label="Contact Person First Name"
 				type="text"
-				value={contactPersonFirstName}
-				setValue={setContactPersonFirstName}
-				onChangeTrigger={handleOnChangeEvent}
+				inputRef={contactFirstNameRef}
 			/>
 			<DisplayInput
 				label="Contact Person Last Name"
 				type="text"
-				value={contactPersonLastName}
-				setValue={setContactPersonLastName}
-				onChangeTrigger={handleOnChangeEvent}
+				inputRef={contactLastNameRef}
 			/>
 
 			<DisplayInput
 				type="text"
-				onChangeTrigger={handleOnChangeEvent}
-				value={contactPersonMI}
-				setValue={setContactPersonMI}
+				inputRef={contactMIRef}
 				label="Contact Person MI Name"
 			/>
+			<DisplayInput type="text" inputRef={jobTitleRef} label="Job Title" />
 			<DisplayInput
 				type="text"
-				onChangeTrigger={handleOnChangeEvent}
-				value={jobTitle}
-				label="Job Title"
-				setValue={setJobTitle}
-			/>
-			<DisplayInput
-				type="text"
-				onChangeTrigger={handleOnChangeEvent}
-				value={contactNumber}
-				setValue={setContactNumber}
+				inputRef={contactNumberRef}
 				label="Contact Number"
 			/>
-			<DisplayInput
-				type="text"
-				onChangeTrigger={handleOnChangeEvent}
-				value={email}
-				setValue={setEmail}
-				label="Email"
-			/>
-
-			<div className="flex w-full justify-end items-center">
-				<button
-					type="button"
-					onClick={() => {
-						setContactInformation((prev) => [...prev, prev.length]);
-						console.log();
-					}}
-					className="text-primary pb-2 flex gap-x-2 items-center text-sm">
-					<IoIosAddCircle />
-					ADD OTHER CONTACT PERSON
-				</button>
-			</div>
+			<DisplayInput type="text" label="Email" inputRef={emailRef} />
 		</React.Fragment>
 	);
 };
 
 type DisplayInputProps = {
 	type: string;
-	value: string;
 	label: string;
-	setValue: React.Dispatch<React.SetStateAction<string>>;
-	onChangeTrigger: (
-		event: React.ChangeEvent<HTMLInputElement>,
-		setValue: React.Dispatch<React.SetStateAction<string>>,
-	) => void;
+	inputRef: React.RefObject<HTMLInputElement>;
 };
 
-const DisplayInput: FC<DisplayInputProps> = ({
-	type,
-	value,
-	setValue,
-	label,
-	onChangeTrigger,
-}) => {
+const DisplayInput: FC<DisplayInputProps> = ({ type, label, inputRef }) => {
+	const [value, setValue] = useState<string>("");
 	return (
 		<label className="relative">
 			<input
 				type={type}
 				className={`${animatedInputClass} disabled:bg-gray-100`}
 				autoComplete="no"
-				onChange={(event) => onChangeTrigger(event, setValue)}
+				ref={inputRef}
+				onChange={(e) => setValue(e.target.value)}
 				required
 			/>
 			<span
