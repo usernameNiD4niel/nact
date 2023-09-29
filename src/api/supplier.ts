@@ -6,7 +6,7 @@ const getSupplierTableData = async () => {
   console.log("token, ", token);
 
   const response = await fetch(
-    `https://flask-service.gi2fod26lfct0.ap-southeast-1.cs.amazonlightsail.com/supplier`,
+    `https://flask-service.gi2fod26lfct0.ap-southeast-1.cs.amazonlightsail.com/api/supplier`,
     {
       headers: {
         "Content-Type": "application/json",
