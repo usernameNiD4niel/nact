@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import AnimatedInputs from "@/components/reuseable/AnimatedInputs";
 import React, { FC, useState } from "react";
 import Dropdown from "@/components/reuseable/Dropdown";
+import { SupplierTableProps } from "@/constants/props";
 
 type DisplayProps = {
 	businessName: string;
@@ -41,13 +42,17 @@ type FormProps = {
 };
 
 export const SupplierTableItem = () => {
+	const location = useLocation();
+
+	const data: SupplierTableProps = location.state;
+
 	// Business Information
-	const [businessName, setBusinessName] = useState<string>("Business Name");
-	const [city, setCity] = useState<string>("City");
-	const [state, setState] = useState<string>("State");
-	const [country, setCountry] = useState<string>("Country");
+	const [businessName, setBusinessName] = useState<string>(data.businessName);
+	const [city, setCity] = useState<string>(data.city);
+	const [state, setState] = useState<string>(data.state);
+	const [country, setCountry] = useState<string>(data.country);
 	const [companyPhoneNumber, setCompanyPhoneNumber] = useState<string>(
-		"Company Phone Number",
+		data.companyPhoneNumber,
 	);
 	const [companyEmailWebsite, setCompanyEmailWebsite] = useState<string>(
 		"Company Email Website",
@@ -65,10 +70,6 @@ export const SupplierTableItem = () => {
 	const [jobTitle, setJobTitle] = useState<string>("Job Title");
 	const [contactNumber, setContactNumber] = useState<string>("Contact Number");
 	const [email, setEmail] = useState<string>("Email Address");
-
-	const location = useLocation();
-
-	const data = location.state;
 
 	const businessInformation: DisplayProps = {
 		businessName,
@@ -112,7 +113,6 @@ export const SupplierTableItem = () => {
 	return (
 		<div className={headerBackClass}>
 			<HeaderWithBack text="Inventory Details" route="/supplier" />
-
 			<DisplayForm {...fields} />
 		</div>
 	);
