@@ -220,7 +220,7 @@ const DisplayBusinessInformation: FC<ComponentFormProps> = ({
 		<React.Fragment>
 			<div className="flex items-center justify-between">
 				<h3 className="text-sm font-bold my-3">Business Information</h3>
-				<Dropdown setIsDisabled={setIsDisabled} />
+				<Dropdown setIsDisabled={setIsDisabled} key="SupplierTableItem" />
 			</div>
 			<div className="flex flex-col w-full gap-y-4">
 				<AnimatedInputs
