@@ -5,7 +5,11 @@ import {
 	HiOutlineTrash,
 } from "react-icons/hi2";
 
-const Dropdown: React.FC = () => {
+type DropdownProps = {
+	setIsDisabled: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const Dropdown: React.FC<DropdownProps> = ({ setIsDisabled }) => {
 	const [isDropdownOpen, setDropdownOpen] = useState(false);
 	const dropdownRef = useRef<HTMLDivElement | null>(null);
 
@@ -34,6 +38,13 @@ const Dropdown: React.FC = () => {
 		setDropdownOpen(false);
 	};
 
+	const handleEditAction = () => {
+		console.log("handleEditAction");
+
+		setIsDisabled(false);
+		closeDropdown();
+	};
+
 	return (
 		<div className="dropdown dropdown-end" ref={dropdownRef}>
 			<label
@@ -46,12 +57,12 @@ const Dropdown: React.FC = () => {
 			{isDropdownOpen && (
 				<ul className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded w-48">
 					<li>
-						<a
-							onClick={closeDropdown}
+						<button
+							onClick={handleEditAction}
 							className="flex items-center p-2 gap-x-2 text-xs md:text-sm">
 							<HiOutlinePencilSquare />
 							Edit
-						</a>
+						</button>
 					</li>
 					<li>
 						<a

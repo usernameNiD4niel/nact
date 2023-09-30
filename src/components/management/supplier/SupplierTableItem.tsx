@@ -2,9 +2,11 @@ import HeaderWithBack from "@/components/reuseable/HeaderWithBack";
 import { headerBackClass } from "@/constants/reusable-class";
 import { useLocation } from "react-router-dom";
 import AnimatedInputs from "@/components/reuseable/AnimatedInputs";
-import React, { FC, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import Dropdown from "@/components/reuseable/Dropdown";
-import { SupplierTableProps } from "@/constants/props";
+import { getSpecificSupplier } from "@/api/supplier";
+import SuccessModal from "@/components/reuseable/SuccessModal";
+import LoadingButton from "@/components/reuseable/LoadingButton";
 
 type DisplayProps = {
 	businessName: string;
@@ -19,6 +21,17 @@ type DisplayProps = {
 	setCompanyPhoneNumber: React.Dispatch<React.SetStateAction<string>>;
 	companyEmailWebsite: string;
 	setCompanyEmailWebsite: React.Dispatch<React.SetStateAction<string>>;
+};
+
+type ComponentFormProps = {
+	businessInfo: DisplayProps;
+	setIsDisabled: React.Dispatch<React.SetStateAction<boolean>>;
+	isDisabled: boolean;
+};
+
+type ContactFormInfoProps = {
+	contactInfo: ContactInformationProps;
+	isDisabled: boolean;
 };
 
 type ContactInformationProps = {
@@ -37,39 +50,78 @@ type ContactInformationProps = {
 };
 
 type FormProps = {
+	isDisabled: boolean;
+	setIsDisabled: React.Dispatch<React.SetStateAction<boolean>>;
 	businessInformation: DisplayProps;
 	contactInformation: ContactInformationProps;
+	handleOnClick: () => void;
+	isLoading: boolean;
+	handleCleanInputs: () => void;
 };
 
 export const SupplierTableItem = () => {
 	const location = useLocation();
 
-	const data: SupplierTableProps = location.state;
+	const id: string = location.state;
+
+	let message = "";
+	let title = "";
 
 	// Business Information
-	const [businessName, setBusinessName] = useState<string>(data.businessName);
-	const [city, setCity] = useState<string>(data.city);
-	const [state, setState] = useState<string>(data.state);
-	const [country, setCountry] = useState<string>(data.country);
-	const [companyPhoneNumber, setCompanyPhoneNumber] = useState<string>(
-		data.companyPhoneNumber,
-	);
-	const [companyEmailWebsite, setCompanyEmailWebsite] = useState<string>(
-		"Company Email Website",
-	);
+	const [businessName, setBusinessName] = useState<string>("");
+	const [city, setCity] = useState<string>("");
+	const [state, setState] = useState<string>("");
+	const [country, setCountry] = useState<string>("");
+	const [companyPhoneNumber, setCompanyPhoneNumber] = useState<string>("");
+	const [companyEmailWebsite, setCompanyEmailWebsite] = useState<string>("");
 
-	// Contact Information
-	const [contactPersonFirstName, setContactPersonFirstName] = useState<string>(
-		"Contact Person First Name",
-	);
-	const [contactPersonLastName, setContactPersonLastName] = useState<string>(
-		"Contact Person Last Name",
-	);
-	const [contactPersonMI, setContactPersonMI] =
-		useState<string>("Contact Person MI");
-	const [jobTitle, setJobTitle] = useState<string>("Job Title");
-	const [contactNumber, setContactNumber] = useState<string>("Contact Number");
-	const [email, setEmail] = useState<string>("Email Address");
+	// Contact information
+	const [contactPersonFirstName, setContactPersonFirstName] =
+		useState<string>("");
+	const [contactPersonLastName, setContactPersonLastName] =
+		useState<string>("");
+	const [contactPersonMI, setContactPersonMI] = useState<string>("");
+	const [jobTitle, setJobTitle] = useState<string>("");
+	const [contactNumber, setContactNumber] = useState<string>("");
+	const [email, setEmail] = useState<string>("");
+
+	const [validation, setValidation] = useState<string>("");
+
+	const [isDisabled, setIsDisabled] = useState(true);
+	const [isLoading, setIsLoading] = useState(false);
+
+	const getSupplier = async () => {
+		const data = await getSpecificSupplier(id);
+
+		if (data.message) {
+			message = data.message;
+			title =
+				"Cannot retirieve the data of the selected table supplier item. Please refresh your browser";
+			setValidation("error");
+			return;
+		}
+		setValidation("");
+		setBusinessName(data.supplier.businessInformation.businessName);
+		setCity(data.supplier.businessInformation.city);
+		setState(data.supplier.businessInformation.state);
+		setCountry(data.supplier.businessInformation.country);
+		setCompanyPhoneNumber(data.supplier.businessInformation.companyPhoneNumber);
+		setCompanyEmailWebsite(
+			data.supplier.businessInformation.companyEmailWebsite,
+		);
+
+		setContactPersonFirstName(
+			data.contactInformation[0].contactPersonFirstName,
+		);
+		setContactPersonLastName(data.contactInformation[0].contactPersonLastName);
+		setContactPersonMI(data.contactInformation[0].contactPersonMI);
+		setJobTitle(data.contactInformation[0].jobTitle);
+		setContactNumber(data.contactInformation[0].contactNumber);
+		setEmail(data.contactInformation[0].email);
+	};
+	useEffect(() => {
+		getSupplier();
+	}, []);
 
 	const businessInformation: DisplayProps = {
 		businessName,
@@ -101,88 +153,133 @@ export const SupplierTableItem = () => {
 		setEmail,
 	};
 
+	const handleOnClick = () => {
+		setIsLoading(true);
+		// Create an update request
+
+		// Show modal if success or failure
+	};
+
+	const handleCleanInputs = () => {
+		setBusinessName("");
+		setCity("");
+		setState("");
+		setCountry("");
+		setCompanyPhoneNumber("");
+		setCompanyEmailWebsite("");
+		setContactPersonFirstName("");
+		setContactPersonLastName("");
+		setContactPersonMI("");
+		setJobTitle("");
+		setContactNumber("");
+		setEmail("");
+	};
+
 	const fields: FormProps = {
 		businessInformation,
 		contactInformation,
+		handleOnClick,
+		isDisabled,
+		isLoading,
+		setIsDisabled,
+		handleCleanInputs,
 	};
-
-	if (!data) {
-		return <h1>No Data found!</h1>;
-	}
 
 	return (
 		<div className={headerBackClass}>
 			<HeaderWithBack text="Inventory Details" route="/supplier" />
-			<DisplayForm {...fields} />
+			<DisplayForm
+				businessInformation={fields.businessInformation}
+				contactInformation={fields.contactInformation}
+				setIsDisabled={setIsDisabled}
+				isDisabled={isDisabled}
+				handleOnClick={handleOnClick}
+				isLoading={isLoading}
+				handleCleanInputs={handleCleanInputs}
+			/>
+			{validation && (
+				<SuccessModal
+					message={message}
+					redirectText="Go back to Supplier Table"
+					redirectTo="/supplier"
+					setValidation={setValidation}
+					title={title}
+					validation={validation}
+				/>
+			)}
 		</div>
 	);
 };
 
-const DisplayBusinessInformation: FC<DisplayProps> = (props) => {
+const DisplayBusinessInformation: FC<ComponentFormProps> = ({
+	businessInfo,
+	isDisabled,
+	setIsDisabled,
+}) => {
 	return (
 		<React.Fragment>
 			<div className="flex items-center justify-between">
 				<h3 className="text-sm font-bold my-3">Business Information</h3>
-				<Dropdown />
+				<Dropdown setIsDisabled={setIsDisabled} />
 			</div>
 			<div className="flex flex-col w-full gap-y-4">
 				<AnimatedInputs
-					isDisabled={true}
+					isDisabled={isDisabled}
 					isRequired={true}
 					type="text"
 					inputType="businessName"
-					value={props.businessName}
-					setValue={props.setBusinessName}
+					value={businessInfo.businessName}
+					setValue={businessInfo.setBusinessName}
 					label="Business Name"
 					key="Business Name Key"
 				/>
 				<AnimatedInputs
-					isDisabled={true}
+					isDisabled={isDisabled}
 					isRequired={true}
 					type="text"
 					inputType="city"
-					value={props.city}
-					setValue={props.setCity}
+					value={businessInfo.city}
+					setValue={businessInfo.setCity}
 					label="City"
 					key="City Key"
 				/>
 				<AnimatedInputs
-					isDisabled={true}
+					isDisabled={isDisabled}
 					isRequired={true}
 					type="text"
 					inputType="state"
-					value={props.state}
-					setValue={props.setState}
+					value={businessInfo.state}
+					setValue={businessInfo.setState}
 					label="State"
 					key="State Key"
 				/>
 				<AnimatedInputs
-					isDisabled={true}
+					isDisabled={isDisabled}
 					isRequired={true}
 					type="text"
 					inputType="country"
-					value={props.country}
-					setValue={props.setCountry}
+					value={businessInfo.country}
+					setValue={businessInfo.setCountry}
 					label="Country"
 					key="Country Key"
 				/>
 				<AnimatedInputs
-					isDisabled={true}
+					isDisabled={isDisabled}
 					isRequired={true}
 					type="text"
 					inputType="companyPhoneNumber"
-					value={props.companyPhoneNumber}
-					setValue={props.setCompanyPhoneNumber}
+					value={businessInfo.companyPhoneNumber}
+					setValue={businessInfo.setCompanyPhoneNumber}
 					label="Company Phone Number"
 					key="Company Phone Number Key"
 				/>
 				<AnimatedInputs
-					isDisabled={true}
+					isDisabled={isDisabled}
 					isRequired={true}
 					type="text"
 					inputType="companyEmailWebsite"
-					value={props.companyEmailWebsite}
-					setValue={props.setCompanyEmailWebsite}
+					value={businessInfo.companyEmailWebsite}
+					setValue={businessInfo.setCompanyEmailWebsite}
 					label="Company Email Website"
 					key="Company Email Website Key"
 				/>
@@ -191,7 +288,10 @@ const DisplayBusinessInformation: FC<DisplayProps> = (props) => {
 	);
 };
 
-const DisplayContactInformation: FC<ContactInformationProps> = (props) => {
+const DisplayContactInformation: FC<ContactFormInfoProps> = ({
+	contactInfo,
+	isDisabled,
+}) => {
 	return (
 		<React.Fragment>
 			<hr className="mt-10" />
@@ -199,62 +299,62 @@ const DisplayContactInformation: FC<ContactInformationProps> = (props) => {
 				<h3 className="text-sm font-bold mt-5">Contact Information</h3>
 			</div>
 			<AnimatedInputs
-				isDisabled={true}
+				isDisabled={isDisabled}
 				isRequired={true}
 				type="text"
 				inputType="contactPersonFirstName"
-				value={props.contactPersonFirstName}
-				setValue={props.setContactPersonFirstName}
+				value={contactInfo.contactPersonFirstName}
+				setValue={contactInfo.setContactPersonFirstName}
 				label="Contact Person First Name"
 				key="ContactPersonFirstKey"
 			/>
 			<AnimatedInputs
-				isDisabled={true}
+				isDisabled={isDisabled}
 				isRequired={true}
 				type="text"
 				inputType="contactPersonLastName"
-				value={props.contactPersonFirstName}
-				setValue={props.setContactPersonLastName}
+				value={contactInfo.contactPersonFirstName}
+				setValue={contactInfo.setContactPersonLastName}
 				label="Contact Person Last Name"
 				key="ContactPersonLastKey"
 			/>
 			<AnimatedInputs
-				isDisabled={true}
+				isDisabled={isDisabled}
 				isRequired={true}
 				type="text"
 				inputType="contactPersonMI"
-				value={props.contactPersonMI}
-				setValue={props.setContactPersonMI}
+				value={contactInfo.contactPersonMI}
+				setValue={contactInfo.setContactPersonMI}
 				label="Contact Person MI Name"
 				key="ContactPersonMIKey"
 			/>
 			<AnimatedInputs
-				isDisabled={true}
+				isDisabled={isDisabled}
 				isRequired={true}
 				type="text"
 				inputType="jobTitle"
-				value={props.jobTitle}
-				setValue={props.setJobTitle}
+				value={contactInfo.jobTitle}
+				setValue={contactInfo.setJobTitle}
 				label="Job Title"
 				key="JobTitleKey"
 			/>
 			<AnimatedInputs
-				isDisabled={true}
+				isDisabled={isDisabled}
 				isRequired={true}
 				type="tel"
 				inputType="contactNumber"
-				value={props.contactNumber}
-				setValue={props.setContactNumber}
+				value={contactInfo.contactNumber}
+				setValue={contactInfo.setContactNumber}
 				label="Contact Number"
 				key="ContactNumberKey"
 			/>
 			<AnimatedInputs
-				isDisabled={true}
+				isDisabled={isDisabled}
 				isRequired={true}
 				type="email"
 				inputType="email"
-				value={props.email}
-				setValue={props.setEmail}
+				value={contactInfo.email}
+				setValue={contactInfo.setEmail}
 				label="Email"
 				key="EmailKey"
 			/>
@@ -262,12 +362,46 @@ const DisplayContactInformation: FC<ContactInformationProps> = (props) => {
 	);
 };
 
-const DisplayForm: FC<FormProps> = (props) => {
+const DisplayForm: FC<FormProps> = ({
+	businessInformation,
+	contactInformation,
+	isDisabled,
+	setIsDisabled,
+	handleOnClick,
+	isLoading,
+	handleCleanInputs,
+}) => {
 	return (
 		<div className="flex flex-col items-center justify-center mt-10">
 			<form className="p-2 flex flex-col gap-y-4 w-full lg:w-[60%] py-10 bg-white px-6">
-				<DisplayBusinessInformation {...props.businessInformation} />
-				<DisplayContactInformation {...props.contactInformation} />
+				<DisplayBusinessInformation
+					businessInfo={businessInformation}
+					isDisabled={isDisabled}
+					setIsDisabled={setIsDisabled}
+				/>
+				<DisplayContactInformation
+					contactInfo={contactInformation}
+					isDisabled={isDisabled}
+				/>
+				{!isDisabled && (
+					<div className="w-full flex items-center gap-3 mt-5 flex-col md:flex-row-reverse">
+						{isLoading ? (
+							<LoadingButton />
+						) : (
+							<button
+								className="w-full text-center p-3 md:w-fit md:px-9 text-white rounded-md bg-primary"
+								onClick={handleOnClick}>
+								Submit
+							</button>
+						)}
+						<button
+							type="button"
+							className="w-full text-center p-3 md:w-fit md:px-9 text-primary"
+							onClick={handleCleanInputs}>
+							Reset
+						</button>
+					</div>
+				)}
 			</form>
 		</div>
 	);

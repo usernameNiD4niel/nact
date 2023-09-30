@@ -299,3 +299,14 @@ type ContactInformation = {
 };
 
 export type SupplierFormValidation = z.infer<typeof supplierValidationSchema>;
+
+export type SupplierItem = {
+	supplier: Supplier;
+	contactInformation: ContactInformation[];
+	message?: string;
+};
+
+type Supplier = {
+	id: number;
+	businessInformation: BusinessInformation;
+};

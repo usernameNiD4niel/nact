@@ -34,7 +34,7 @@ const LoadTableData = () => {
 		mutation.mutate();
 	}, []);
 	const handleAddingNewForm = (data: SupplierTableProps) => {
-		navigate(`${data.businessName}`, { state: data });
+		navigate(`${data.id}`, { state: data.id });
 	};
 
 	if (error) {
