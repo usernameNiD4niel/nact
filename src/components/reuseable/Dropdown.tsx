@@ -4,6 +4,7 @@ import {
 	HiOutlinePencilSquare,
 	HiOutlineTrash,
 } from "react-icons/hi2";
+import SuccessModal from "./SuccessModal";
 
 type DropdownProps = {
 	setIsDisabled: React.Dispatch<React.SetStateAction<boolean>>;
@@ -11,6 +12,9 @@ type DropdownProps = {
 
 const Dropdown: React.FC<DropdownProps> = ({ setIsDisabled }) => {
 	const [isDropdownOpen, setDropdownOpen] = useState(false);
+	const [isModalWarning, setIsModalWarning] = useState(false);
+	const [validation, setValidation] = useState("");
+
 	const dropdownRef = useRef<HTMLDivElement | null>(null);
 
 	useEffect(() => {
@@ -45,6 +49,11 @@ const Dropdown: React.FC<DropdownProps> = ({ setIsDisabled }) => {
 		closeDropdown();
 	};
 
+	const handleDeleteAction = () => {
+		setIsModalWarning(true);
+		closeDropdown();
+	};
+
 	return (
 		<div className="dropdown dropdown-end" ref={dropdownRef}>
 			<label
@@ -65,14 +74,24 @@ const Dropdown: React.FC<DropdownProps> = ({ setIsDisabled }) => {
 						</button>
 					</li>
 					<li>
-						<a
-							onClick={closeDropdown}
+						<button
+							onClick={handleDeleteAction}
 							className="flex items-center p-2 gap-x-2 text-xs md:text-sm">
 							<HiOutlineTrash />
 							Delete
-						</a>
+						</button>
 					</li>
 				</ul>
+			)}
+			{isModalWarning && (
+				<SuccessModal
+					message="Are you sure you want to delete this supplier item? You cannot undo this action"
+					redirectText="Go to Supplier Table"
+					redirectTo="/supplier"
+					setValidation={setValidation}
+					title="Are you sure?"
+					validation={validation}
+				/>
 			)}
 		</div>
 	);

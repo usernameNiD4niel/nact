@@ -36,9 +36,6 @@ const addShippingSupplier = async (
 	setValidation: React.Dispatch<React.SetStateAction<string>>,
 	setMessage: React.Dispatch<React.SetStateAction<string>>,
 ) => {
-	console.log("Shipping ", JSON.stringify(shipping));
-	console.log("token supp: ", token);
-
 	const response = await fetch(
 		`https://flask-service.gi2fod26lfct0.ap-southeast-1.cs.amazonlightsail.com/api/supplier/add/shipping`,
 		{
@@ -53,7 +50,6 @@ const addShippingSupplier = async (
 
 	if (response.ok) {
 		const data: Promise<ResponseAddShipping> = await response.json();
-		console.log("may supplier ba", data);
 
 		const { message } = await data;
 		setMessage(message);
@@ -62,7 +58,6 @@ const addShippingSupplier = async (
 	} else {
 		const data: Promise<ResponseAddShipping> = await response.json();
 		setValidation("error");
-		console.log("error hehhe", data);
 		const { message } = await data;
 		setMessage(message);
 		return false;
@@ -88,4 +83,78 @@ const getSpecificSupplier = async (id: string) => {
 	}
 };
 
-export { getSupplierTableData, addShippingSupplier, getSpecificSupplier };
+// No Token for this request
+const updateSpecificSupplier = async (
+	id: string,
+	shipping: ShippingFormProps,
+	setValidation: React.Dispatch<React.SetStateAction<string>>,
+	message_: string,
+) => {
+	const response = await fetch(
+		`https://flask-service.gi2fod26lfct0.ap-southeast-1.cs.amazonlightsail.com/api/supplier/update/${id}`,
+		{
+			method: "patch",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(shipping),
+		},
+	);
+
+	if (response.ok) {
+		const data: Promise<ResponseAddShipping> = await response.json();
+
+		const { message } = await data;
+		message_ = message;
+		setValidation("success");
+		return true;
+	} else {
+		const data: Promise<ResponseAddShipping> = await response.json();
+		setValidation("error");
+		const { message } = await data;
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		message_ = message;
+		return false;
+	}
+};
+
+// No Token for this request
+const deleteSupplier = async (
+	id: string,
+	setValidation: React.Dispatch<React.SetStateAction<string>>,
+	message_: string,
+) => {
+	const response = await fetch(
+		`https://flask-service.gi2fod26lfct0.ap-southeast-1.cs.amazonlightsail.com/api/supplier/delete/${id}`,
+		{
+			method: "delete",
+			headers: {
+				"Content-Type": "application/json",
+			},
+		},
+	);
+
+	if (response.ok) {
+		const data = (Promise<ResponseAddShipping> = await response.json());
+
+		const { message } = await data;
+		message_ = message;
+		setValidation("success");
+		return true;
+	} else {
+		const data: Promise<ResponseAddShipping> = await response.json();
+		setValidation("error");
+		const { message } = await data;
+		// eslint-disable-next-line @typescript-eslint/no-unused-vars
+		message_ = message;
+		return false;
+	}
+};
+
+export {
+	getSupplierTableData,
+	addShippingSupplier,
+	getSpecificSupplier,
+	updateSpecificSupplier,
+	deleteSupplier,
+};

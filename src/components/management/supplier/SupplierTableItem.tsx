@@ -4,9 +4,10 @@ import { useLocation } from "react-router-dom";
 import AnimatedInputs from "@/components/reuseable/AnimatedInputs";
 import React, { FC, useEffect, useState } from "react";
 import Dropdown from "@/components/reuseable/Dropdown";
-import { getSpecificSupplier } from "@/api/supplier";
+import { getSpecificSupplier, updateSpecificSupplier } from "@/api/supplier";
 import SuccessModal from "@/components/reuseable/SuccessModal";
 import LoadingButton from "@/components/reuseable/LoadingButton";
+import { ShippingFormProps } from "@/constants/props";
 
 type DisplayProps = {
 	businessName: string;
@@ -153,10 +154,35 @@ export const SupplierTableItem = () => {
 		setEmail,
 	};
 
+	const isUpdated = async () => {
+		const shipping: ShippingFormProps = {
+			businessInformation: {
+				businessName,
+				city,
+				companyEmailWebsite,
+				companyPhoneNumber,
+				country,
+				state,
+			},
+			contactInformation: [
+				{
+					contactNumber,
+					contactPersonFirstName,
+					contactPersonLastName,
+					contactPersonMI,
+					email,
+					jobTitle,
+				},
+			],
+		};
+
+		await updateSpecificSupplier(id, shipping, setValidation, message);
+	};
+
 	const handleOnClick = () => {
 		setIsLoading(true);
 		// Create an update request
-
+		isUpdated();
 		// Show modal if success or failure
 	};
 
