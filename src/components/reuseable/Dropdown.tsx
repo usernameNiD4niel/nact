@@ -56,34 +56,36 @@ const Dropdown: React.FC<DropdownProps> = ({ setIsDisabled }) => {
 	};
 
 	return (
-		<div className="dropdown dropdown-end" ref={dropdownRef}>
-			<label
-				tabIndex={0}
-				className="flex gap-x-2 items-center justify-center p-2 rounded border border-1 m-1 text-sm hover:cursor-pointer"
-				onClick={toggleDropdown}>
-				<span className="text-xs md:text-sm font-semibold">Options</span>
-				<HiChevronDown />
-			</label>
-			{isDropdownOpen && (
-				<ul className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded w-48">
-					<li>
-						<button
-							onClick={handleEditAction}
-							className="flex items-center p-2 gap-x-2 text-xs md:text-sm">
-							<HiOutlinePencilSquare />
-							Edit
-						</button>
-					</li>
-					<li>
-						<button
-							onClick={handleDeleteAction}
-							className="flex items-center p-2 gap-x-2 text-xs md:text-sm">
-							<HiOutlineTrash />
-							Delete
-						</button>
-					</li>
-				</ul>
-			)}
+		<>
+			<div className="dropdown dropdown-end" ref={dropdownRef}>
+				<label
+					tabIndex={0}
+					className="flex gap-x-2 items-center justify-center p-2 rounded border border-1 m-1 text-sm hover:cursor-pointer"
+					onClick={toggleDropdown}>
+					<span className="text-xs md:text-sm font-semibold">Options</span>
+					<HiChevronDown />
+				</label>
+				{isDropdownOpen && (
+					<ul className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded w-48">
+						<li>
+							<button
+								onClick={handleEditAction}
+								className="flex items-center p-2 gap-x-2 text-xs md:text-sm">
+								<HiOutlinePencilSquare />
+								Edit
+							</button>
+						</li>
+						<li>
+							<button
+								onClick={handleDeleteAction}
+								className="flex items-center p-2 gap-x-2 text-xs md:text-sm">
+								<HiOutlineTrash />
+								Delete
+							</button>
+						</li>
+					</ul>
+				)}
+			</div>
 			{isModalWarning && (
 				<SuccessModal
 					message="Are you sure you want to delete this supplier item? You cannot undo this action"
@@ -94,7 +96,7 @@ const Dropdown: React.FC<DropdownProps> = ({ setIsDisabled }) => {
 					validation={validation}
 				/>
 			)}
-		</div>
+		</>
 	);
 };
 

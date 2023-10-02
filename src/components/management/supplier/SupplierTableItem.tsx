@@ -55,7 +55,7 @@ type FormProps = {
 	setIsDisabled: React.Dispatch<React.SetStateAction<boolean>>;
 	businessInformation: DisplayProps;
 	contactInformation: ContactInformationProps;
-	handleOnClick: () => void;
+	handleOnClick: (event: React.FormEvent<HTMLFormElement>) => void;
 	isLoading: boolean;
 	handleCleanInputs: () => void;
 };
@@ -65,9 +65,8 @@ export const SupplierTableItem = () => {
 
 	const id: string = location.state;
 
-	let title = "";
-
 	const [message, setMessage] = useState("");
+	const [title, setTitle] = useState("");
 
 	// Business Information
 	const [businessName, setBusinessName] = useState<string>("");
@@ -97,8 +96,9 @@ export const SupplierTableItem = () => {
 
 		if (data.message) {
 			setMessage(data.message);
-			title =
-				"Cannot retirieve the data of the selected table supplier item. Please refresh your browser";
+			setTitle(
+				"Cannot retrieve the data of the selected table supplier item. Please refresh your browser",
+			);
 			setValidation("error");
 			return;
 		}
@@ -177,13 +177,27 @@ export const SupplierTableItem = () => {
 			],
 		};
 
-		await updateSpecificSupplier(id, shipping, setValidation, setMessage);
+		const update = await updateSpecificSupplier(
+			id,
+			shipping,
+			setValidation,
+			setMessage,
+		);
+
+		if (update) {
+			setValidation("success");
+		} else {
+			setValidation("error");
+		}
 	};
 
-	const handleOnClick = () => {
+	const handleOnClick = (e: React.FormEvent<HTMLFormElement>) => {
+		e.preventDefault();
 		setIsLoading(true);
 		// Create an update request
 		isUpdated();
+
+		setIsLoading(false);
 		// Show modal if success or failure
 	};
 
@@ -232,6 +246,7 @@ export const SupplierTableItem = () => {
 					setValidation={setValidation}
 					title={title}
 					validation={validation}
+					key="SupplierFormDaniel"
 				/>
 			)}
 		</div>
@@ -243,6 +258,7 @@ const DisplayBusinessInformation: FC<ComponentFormProps> = ({
 	isDisabled,
 	setIsDisabled,
 }) => {
+	const [validation, setValidation] = useState("");
 	return (
 		<React.Fragment>
 			<div className="flex items-center justify-between">
@@ -311,6 +327,15 @@ const DisplayBusinessInformation: FC<ComponentFormProps> = ({
 					key="Company Email Website Key"
 				/>
 			</div>
+			<SuccessModal
+				message="Are you sure you want to delete this supplier item? You cannot undo this action"
+				redirectText="Go to Supplier Table"
+				redirectTo="/supplier"
+				setValidation={setValidation}
+				title="Are you sure?"
+				validation={validation}
+				key="SupplierFormRey"
+			/>
 		</React.Fragment>
 	);
 };
@@ -400,7 +425,9 @@ const DisplayForm: FC<FormProps> = ({
 }) => {
 	return (
 		<div className="flex flex-col items-center justify-center mt-10">
-			<form className="p-2 flex flex-col gap-y-4 w-full lg:w-[60%] py-10 bg-white px-6">
+			<form
+				className="p-2 flex flex-col gap-y-4 w-full lg:w-[60%] py-10 bg-white px-6"
+				onSubmit={handleOnClick}>
 				<DisplayBusinessInformation
 					businessInfo={businessInformation}
 					isDisabled={isDisabled}
@@ -417,7 +444,8 @@ const DisplayForm: FC<FormProps> = ({
 						) : (
 							<button
 								className="w-full text-center p-3 md:w-fit md:px-9 text-white rounded-md bg-primary"
-								onClick={handleOnClick}>
+								// onClick={handleOnClick}
+							>
 								Submit
 							</button>
 						)}
