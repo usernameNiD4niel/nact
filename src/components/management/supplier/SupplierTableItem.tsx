@@ -65,8 +65,9 @@ export const SupplierTableItem = () => {
 
 	const id: string = location.state;
 
-	let message = "";
 	let title = "";
+
+	const [message, setMessage] = useState("");
 
 	// Business Information
 	const [businessName, setBusinessName] = useState<string>("");
@@ -95,7 +96,7 @@ export const SupplierTableItem = () => {
 		const data = await getSpecificSupplier(id);
 
 		if (data.message) {
-			message = data.message;
+			setMessage(data.message);
 			title =
 				"Cannot retirieve the data of the selected table supplier item. Please refresh your browser";
 			setValidation("error");
@@ -176,7 +177,7 @@ export const SupplierTableItem = () => {
 			],
 		};
 
-		await updateSpecificSupplier(id, shipping, setValidation, message);
+		await updateSpecificSupplier(id, shipping, setValidation, setMessage);
 	};
 
 	const handleOnClick = () => {
