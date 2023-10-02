@@ -122,7 +122,7 @@ const updateSpecificSupplier = async (
 const deleteSupplier = async (
 	id: string,
 	setValidation: React.Dispatch<React.SetStateAction<string>>,
-	message_: string,
+	setMessage: React.Dispatch<React.SetStateAction<string>>,
 ) => {
 	const response = await fetch(
 		`https://flask-service.gi2fod26lfct0.ap-southeast-1.cs.amazonlightsail.com/api/supplier/delete/${id}`,
@@ -139,15 +139,14 @@ const deleteSupplier = async (
 		const data = (Promise<ResponseAddShipping> = await response.json());
 
 		const { message } = await data;
-		message_ = message;
+		setMessage(message);
 		setValidation("success");
 		return true;
 	} else {
 		const data: Promise<ResponseAddShipping> = await response.json();
 		setValidation("error");
 		const { message } = await data;
-		// eslint-disable-next-line @typescript-eslint/no-unused-vars
-		message_ = message;
+		setMessage(message);
 		return false;
 	}
 };

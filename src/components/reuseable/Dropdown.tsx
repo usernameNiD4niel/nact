@@ -52,6 +52,7 @@ const Dropdown: React.FC<DropdownProps> = ({ setIsDisabled }) => {
 	const handleDeleteAction = () => {
 		setIsModalWarning(true);
 		closeDropdown();
+		console.log("delete invoked!");
 	};
 
 	return (
