@@ -89,8 +89,9 @@ const updateSpecificSupplier = async (
 	shipping: ShippingFormProps,
 	setValidation: React.Dispatch<React.SetStateAction<string>>,
 	setMessage: React.Dispatch<React.SetStateAction<string>>,
+	setTitle: React.Dispatch<React.SetStateAction<string>>,
 ) => {
-	const response = await fetch(
+	const response: Promise<ResponseAddShipping> = await fetch(
 		`https://flask-service.gi2fod26lfct0.ap-southeast-1.cs.amazonlightsail.com/api/supplier/update/${id}`,
 		{
 			method: "patch",
@@ -100,22 +101,23 @@ const updateSpecificSupplier = async (
 			},
 			body: JSON.stringify(shipping),
 		},
-	);
+	)
+		.then((data) => data.json())
+		.then((data) => {
+			setMessage("Successfully updated the inventory details");
+			setValidation("success");
+			setTitle("Update Success");
+			console.log(`Success: ${data}`);
+			return data;
+		})
+		.catch((error) => {
+			setTitle("Failed to update");
+			setValidation("error");
+			setMessage(`Error: ${error}`);
+			console.log(`error: ${error}`);
+		});
 
-	if (response.ok) {
-		const data: Promise<ResponseAddShipping> = await response.json();
-
-		const { message } = await data;
-		setMessage(message);
-		setValidation("success");
-		return true;
-	} else {
-		const data: Promise<ResponseAddShipping> = await response.json();
-		setValidation("error");
-		const { message } = await data;
-		setMessage(message);
-		return false;
-	}
+	return response;
 };
 
 // No Token for this request

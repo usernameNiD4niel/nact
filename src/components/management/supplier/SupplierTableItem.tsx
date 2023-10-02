@@ -103,6 +103,7 @@ export const SupplierTableItem = () => {
 			return;
 		}
 		setValidation("");
+		setTitle("");
 		setBusinessName(data.supplier.businessInformation.businessName);
 		setCity(data.supplier.businessInformation.city);
 		setState(data.supplier.businessInformation.state);
@@ -177,18 +178,14 @@ export const SupplierTableItem = () => {
 			],
 		};
 
-		const update = await updateSpecificSupplier(
+		await updateSpecificSupplier(
 			id,
 			shipping,
 			setValidation,
 			setMessage,
+			setTitle,
 		);
-
-		if (update) {
-			setValidation("success");
-		} else {
-			setValidation("error");
-		}
+		setIsLoading(false);
 	};
 
 	const handleOnClick = (e: React.FormEvent<HTMLFormElement>) => {
@@ -197,7 +194,6 @@ export const SupplierTableItem = () => {
 		// Create an update request
 		isUpdated();
 
-		setIsLoading(false);
 		// Show modal if success or failure
 	};
 
@@ -249,6 +245,7 @@ export const SupplierTableItem = () => {
 					key="SupplierFormDaniel"
 				/>
 			)}
+			validation value: {validation}
 		</div>
 	);
 };

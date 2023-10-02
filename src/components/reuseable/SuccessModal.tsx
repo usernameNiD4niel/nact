@@ -26,7 +26,7 @@ const SuccessModal: React.FC<SuccessModalProps> = ({
 	};
 	return (
 		<div
-			className={`bg-black bg-opacity-40 absolute inset-0 items-center justify-center z-10 hover:cursor-pointer ${
+			className={`bg-black bg-opacity-40 fixed inset-0 items-center justify-center z-10 hover:cursor-pointer ${
 				validation ? "flex" : "hidden"
 			}`}
 			onClick={handleCloseModal}>
