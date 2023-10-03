@@ -245,7 +245,6 @@ export const SupplierTableItem = () => {
 					key="SupplierFormDaniel"
 				/>
 			)}
-			validation value: {validation}
 		</div>
 	);
 };
