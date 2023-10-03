@@ -20,7 +20,7 @@ const Main = () => {
 
 	return (
 		<React.Fragment>
-			<header className="w-full flex p-4 bg-primary md:hidden text-white">
+			<header className="w-full flex p-4 bg-primary md:hidden text-white fixed z-10 top-0">
 				<div className="flex items-center justify-center flex-1">
 					<Link to="/" className="font-bold">
 						{selected ? buttons[parseInt(selected?.toString())] : "NACT"}

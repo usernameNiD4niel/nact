@@ -17,11 +17,15 @@ const Available = (): JSX.Element => {
 	useEffect(() => setActiveTab(0), []);
 	return (
 		<>
-			<div className="md:px-10 w-full space-y-5 px-5 py-6">
-				<SearchWithFilter placeHolder="Search Inventory" isList={false} />
+			<div className="md:px-10 px-5 w-full">
+				<div className="space-y-5 z-[5] fixed top-[7.85rem] md:top-[4.10rem] py-6 bg-white w-[90%] md:w-[65%] xl:w-[70%]">
+					<SearchWithFilter placeHolder="Search Inventory" isList={false} />
+					<TableMutator setIsShowingFilter={setIsShowingFilter} />
+				</div>
 				<AddButton />
-				<TableMutator setIsShowingFilter={setIsShowingFilter} />
-				<DisplayInventoryData />
+				<div className="mt-72 md:mt-52">
+					<DisplayInventoryData />
+				</div>
 			</div>
 			{isShowingFilter && (
 				<Filter
