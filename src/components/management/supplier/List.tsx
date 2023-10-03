@@ -22,7 +22,7 @@ const List = () => {
 					<SearchWithFilter placeHolder="Search Supplier" isList={true} />
 					<TableMutator setIsShowingFilter={setIsShowingFilter} />
 				</div>
-				<div className="mt-80 md:mt-64">
+				<div className="mt-64 md:mt-52">
 					<Table />
 				</div>
 			</div>
