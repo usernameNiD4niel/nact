@@ -17,13 +17,13 @@ const Tabs: FC<TabsProps> = ({
 			{arrayOfText.map((item, index) => (
 				<>
 					<Link
+						key={item}
 						to={arrayOfRoutes[index]}
 						className={`flex-1 text-center text-xs sm:text-sm md:text-base px-5 md:flex-none pb-3 ${
 							index === activeTabIndex
 								? "text-primary border-b-4 border-b-primary font-bold"
 								: "text-slate-300 border-0 font-normal"
-						}`}
-						key={index}>
+						}`}>
 						{item}
 					</Link>
 				</>

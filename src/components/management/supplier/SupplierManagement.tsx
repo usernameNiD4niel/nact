@@ -26,6 +26,7 @@ const SupplierManagement = () => {
 					activeTabIndex={tab}
 					arrayOfText={["List", "Analytics"]}
 					arrayOfRoutes={["/supplier/", "/supplier/analytics"]}
+					key={"SupplierTab"}
 				/>
 			</div>
 			<Outlet />

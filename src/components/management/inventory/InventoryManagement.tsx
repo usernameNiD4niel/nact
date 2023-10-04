@@ -25,7 +25,7 @@ const InventoryManagement = () => {
 				<Tabs
 					activeTabIndex={tab}
 					arrayOfText={["Available", "Full List", "Abcd", "New Feature"]}
-					// key="TabsInventoryManagementkey"
+					key="TabsInventoryManagementkey"
 					arrayOfRoutes={[
 						"/inventory/",
 						"/inventory/full-list",
