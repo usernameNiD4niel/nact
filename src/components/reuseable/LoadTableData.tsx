@@ -114,7 +114,7 @@ const LoadTableData: FC<LoadTableDataProps> = ({
       if (data) {
         setError("");
         setTableData(data);
-        setShallowCopy(data.slice(0, 10));
+        setShallowCopy(data.slice(0, 15));
       }
     },
     onError: (error_) => {

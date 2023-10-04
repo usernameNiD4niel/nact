@@ -25,6 +25,16 @@ const Table = () => {
     }
   };
 
+  const handlePrevious = () => {
+    if (count > 15) {
+      const filtered = tableData.slice(0, count - 15);
+      setCount((prev) => prev - 15);
+      setShallowCopy(filtered);
+    } else {
+      console.log("cannot next page because all data has been displayed!");
+    }
+  };
+
   return (
     <div className=" pt-4">
       <table className="table">
@@ -55,7 +65,10 @@ const Table = () => {
         </tbody>
       </table>
       <div className="w-[90%] md:w-[65%] xl:w-[90%] flex justify-end gap-3 items-center">
-        <button className="border-black border-[1px] rounded-lg p-3">
+        <button
+          className="border-black border-[1px] rounded-lg p-3"
+          onClick={handlePrevious}
+        >
           <AiOutlineLeft />
         </button>
         <button
