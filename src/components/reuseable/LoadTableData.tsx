@@ -145,7 +145,7 @@ const LoadTableData: FC<LoadTableDataProps> = ({
 
 	if (isLoading) {
 		return (
-			<tr className="w-[100vw] lg:w-[1000px] lg:h-[500px] flex items-center justify-center">
+			<tr className="w-[100vw] lg:w-[70vw] lg:h-[500px] flex items-center justify-center">
 				<td colSpan={4}>
 					<span className="loading loading-dots loading-sm"></span>
 				</td>

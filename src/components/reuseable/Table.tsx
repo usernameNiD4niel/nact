@@ -37,7 +37,7 @@ const Table = () => {
 
 	return (
 		<div className=" pt-4 w-full">
-			<table className="table w-full">
+			<table className="table w-full overflow-x-hidden">
 				{/* head */}
 				<thead>
 					<tr className="font-bold text-sm text-black">
