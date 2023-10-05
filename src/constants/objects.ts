@@ -1,10 +1,4 @@
-import {
-  InventoryProps,
-  InventoryTypes,
-  Payment,
-  StatesType,
-  TableDataProps,
-} from "./props";
+import { InventoryTypes, Payment, StatesType, TableDataProps } from "./props";
 
 export type PinObjectProps = {
   name: string;
