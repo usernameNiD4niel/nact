@@ -20,7 +20,7 @@ export const columns: ColumnDef<Payment>[] = [
 			return (
 				<div className="ml-4 font-medium">
 					{row.getValue("supplier")} <br />
-					{row.getValue("location")}
+					<span className="md:hidden">{row.getValue("location")}</span>
 				</div>
 			);
 		},

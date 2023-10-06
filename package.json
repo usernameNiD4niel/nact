@@ -16,7 +16,7 @@
     "@radix-ui/react-label": "^2.0.2",
     "@radix-ui/react-select": "^2.0.0",
     "@radix-ui/react-slot": "^1.0.2",
-    "@tanstack/react-query": "^4.35.3",
+    "@tanstack/react-query": "^4.35.7",
     "@tanstack/react-table": "^8.10.3",
     "@types/js-cookie": "^3.0.3",
     "@types/react-router-dom": "^5.3.3",
@@ -41,7 +41,7 @@
     "zustand": "^4.4.1"
   },
   "devDependencies": {
-    "@types/node": "^20.4.9",
+    "@types/node": "^20.8.2",
     "@types/react": "^18.2.15",
     "@types/react-datepicker": "^4.15.0",
     "@types/react-dom": "^18.2.7",

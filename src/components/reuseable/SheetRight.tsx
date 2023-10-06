@@ -1,5 +1,4 @@
 import { Link } from "react-router-dom";
-import { Button } from "../ui/button";
 
 import {
 	Sheet,
@@ -15,6 +14,7 @@ import { FC } from "react";
 import { useSelectedStore } from "@/utils/HomePageState";
 import { ButtonList } from "@/constants/enums";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
+import { Button } from "../ui/button";
 
 type SheetRightProps = {};
 
@@ -57,7 +57,7 @@ const SheetRight: FC<SheetRightProps> = () => {
 				<SheetTrigger asChild>
 					<Button
 						className="md:hidden text-white text-2xl w-fit"
-						variant="link">
+						variant={"ghost"}>
 						<HiOutlineMenuAlt3 />
 					</Button>
 				</SheetTrigger>
