@@ -102,7 +102,7 @@ export function DataTable<TData, TValue>({
 								<TableRow
 									key={row.id}
 									data-state={row.getIsSelected() && "selected"}
-									className="hover:cursor-pointer bg-zinc-50 hover:bg-zinc-50/10">
+									className="hover:cursor-pointer bg-white hover:bg-zinc-50/10">
 									{row.getVisibleCells().map((cell) => (
 										<TableCell key={cell.id}>
 											{flexRender(
@@ -128,8 +128,8 @@ export function DataTable<TData, TValue>({
 			<div className="my-3">
 				<DataTablePagination table={table} />
 			</div>
-			<div className="w-full flex items-center justify-center">
-				<div className="flex items-center justify-end space-x-2 py-4">
+			<div className="w-full flex items-center justify-center my-4">
+				{/* <div className="flex items-center justify-end space-x-2 py-4">
 					<Button
 						variant="outline"
 						size="sm"
@@ -144,7 +144,10 @@ export function DataTable<TData, TValue>({
 						disabled={!table.getCanNextPage()}>
 						Next
 					</Button>
-				</div>
+				</div> */}
+				<Button variant={"custom"} className="px-8 font-bold py-6">
+					Load More
+				</Button>
 			</div>
 			<div className="fixed bottom-2 right-4">
 				<Link

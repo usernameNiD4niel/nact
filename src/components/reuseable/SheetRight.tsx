@@ -68,7 +68,7 @@ const SheetRight: FC<SheetRightProps> = () => {
 						<SheetTitle className="flex items-center justify-center relative">
 							<SheetClose
 								asChild
-								className="w-full bg-[#017DC3] flex hover:bg-white hover:text-[#017DC3] rounded-md hover:cursor-pointer">
+								className="w-full bg-[#017DC3] flex hover:bg-white hover:text-[#017DC3] z-20 rounded-md hover:cursor-pointer">
 								<p className={publiClassDrawer}>
 									<span className="text-xl">
 										<IoChevronBackOutline />
