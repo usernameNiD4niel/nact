@@ -6,6 +6,7 @@ import {
 import Cookies from "js-cookie";
 
 const token = Cookies.get("token");
+const csrf_token = Cookies.get("csrf_token");
 const getSupplierTableData = async () => {
 	console.log("token, ", token);
 
@@ -15,8 +16,8 @@ const getSupplierTableData = async () => {
 			headers: {
 				"Content-Type": "application/json",
 				Authorization: "Bearer " + token,
-				// "X-Csrf-Token": csrfToken!,
-				// "X-CSRF-TOKEN": csrfToken!,
+				// token: csrf_token!,
+				"X-CSRF-TOKEN": csrf_token!,
 			},
 		},
 	);

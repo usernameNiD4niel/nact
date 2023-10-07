@@ -1,4 +1,5 @@
 import { LoginSuccessResponse } from "@/constants/props";
+import Cookies from "js-cookie";
 // import Cookies from "js-cookie";
 
 export const POST = async ({
@@ -42,7 +43,8 @@ export const POST = async ({
 				console.log("Redirecting to the dashboard...");
 				setIsLoading(false);
 				console.log("token", data.access_token);
-
+				console.log("csrf token", data.csrf_access_token);
+				Cookies.set("csrf_token", data.csrf_access_token);
 				return data;
 			} else {
 				console.error("Error: " + data.message);
