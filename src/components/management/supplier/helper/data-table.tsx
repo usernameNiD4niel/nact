@@ -40,6 +40,7 @@ export function DataTable<TData, TValue>({
 }: DataTableProps<TData, TValue>) {
 	const [sorting, setSorting] = React.useState<SortingState>([]);
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+	const [counter, setCounter] = useState(20);
 
 	const table = useReactTable({
 		data,
@@ -63,7 +64,7 @@ export function DataTable<TData, TValue>({
 		table.getColumn("supplier")?.setFilterValue(event.target.value);
 
 	return (
-		<div>
+		<div className="px-6">
 			<div className="">
 				<SearchWithFilter
 					placeHolder="Search Supplier"
@@ -145,9 +146,24 @@ export function DataTable<TData, TValue>({
 						Next
 					</Button>
 				</div> */}
-				<Button variant={"custom"} className="px-8 font-bold py-6">
-					Load More
-				</Button>
+				{Math.floor(table.getFilteredRowModel().flatRows.length / 10) ===
+				Math.floor((counter - 20) / 10) ? (
+					<Button
+						className="bg-transparent text-[#017DC3] px-8 font-bold py-6"
+						disabled>
+						No Item Found
+					</Button>
+				) : (
+					<Button
+						variant={"noVariant"}
+						className="px-8 font-bold py-6 text-[#017DC3] bg-transparent"
+						onClick={() => {
+							table.setPageSize(counter);
+							setCounter((prevCount) => prevCount + 10);
+						}}>
+						Load More
+					</Button>
+				)}
 			</div>
 			<div className="fixed bottom-2 right-4">
 				<Link

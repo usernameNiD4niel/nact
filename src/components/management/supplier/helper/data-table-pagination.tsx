@@ -1,12 +1,4 @@
-import { Button } from "@/components/ui/button";
 import { Table } from "@tanstack/react-table";
-
-import {
-	AiOutlineDoubleLeft,
-	AiOutlineDoubleRight,
-	AiOutlineLeft,
-	AiOutlineRight,
-} from "react-icons/ai";
 
 interface DataTablePaginationProps<TData> {
 	table: Table<TData>;
@@ -45,7 +37,8 @@ export function DataTablePagination<TData>({
             </SelectContent>
           </Select>
         </div> */}
-				<div className="flex w-[100px] items-center justify-center text-sm font-medium">
+				{/* This is next and previous arrow */}
+				{/* <div className="flex w-[100px] items-center justify-center text-sm font-medium">
 					Page {table.getState().pagination.pageIndex + 1} of{" "}
 					{table.getPageCount()}
 				</div>
@@ -56,7 +49,6 @@ export function DataTablePagination<TData>({
 						onClick={() => table.setPageIndex(0)}
 						disabled={!table.getCanPreviousPage()}>
 						<span className="sr-only">Go to first page</span>
-						{/* <DoubleArrowLeftIcon className="h-4 w-4" /> */}
 						<AiOutlineDoubleLeft />
 					</Button>
 					<Button
@@ -65,7 +57,6 @@ export function DataTablePagination<TData>({
 						onClick={() => table.previousPage()}
 						disabled={!table.getCanPreviousPage()}>
 						<span className="sr-only">Go to previous page</span>
-						{/* <ChevronLeftIcon className="h-4 w-4" /> */}
 						<AiOutlineLeft />
 					</Button>
 					<Button
@@ -74,7 +65,6 @@ export function DataTablePagination<TData>({
 						onClick={() => table.nextPage()}
 						disabled={!table.getCanNextPage()}>
 						<span className="sr-only">Go to next page</span>
-						{/* <ChevronRightIcon className="h-4 w-4" /> */}
 						<AiOutlineRight />
 					</Button>
 					<Button
@@ -83,10 +73,9 @@ export function DataTablePagination<TData>({
 						onClick={() => table.setPageIndex(table.getPageCount() - 1)}
 						disabled={!table.getCanNextPage()}>
 						<span className="sr-only">Go to last page</span>
-						{/* <DoubleArrowRightIcon className="h-4 w-4" /> */}
 						<AiOutlineDoubleRight />
 					</Button>
-				</div>
+				</div> */}
 			</div>
 		</div>
 	);

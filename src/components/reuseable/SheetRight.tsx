@@ -10,15 +10,12 @@ import {
 	SheetTrigger,
 } from "../ui/sheet";
 import { IoChevronBackOutline } from "react-icons/io5";
-import { FC } from "react";
 import { useSelectedStore } from "@/utils/HomePageState";
 import { ButtonList } from "@/constants/enums";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { Button } from "../ui/button";
 
-type SheetRightProps = {};
-
-const SheetRight: FC<SheetRightProps> = () => {
+const SheetRight = () => {
 	const [selected] = useSelectedStore((state) => [state.selected]);
 	const publiClassDrawer = "text-white p-2 text-base flex items-center gap-2";
 

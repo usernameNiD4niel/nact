@@ -10,7 +10,8 @@ export const columns: ColumnDef<Payment>[] = [
 			return (
 				<Button
 					variant="ghost"
-					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+					className="font-bold text-gray-700 text-sm">
 					Supplier
 					<ArrowUpDown className="ml-2 h-4 w-4" />
 				</Button>
@@ -18,9 +19,13 @@ export const columns: ColumnDef<Payment>[] = [
 		},
 		cell: ({ row }) => {
 			return (
-				<div className="ml-4 font-medium">
-					{row.getValue("supplier")} <br />
-					<span className="md:hidden">{row.getValue("location")}</span>
+				<div className="ml-4 text-gray-700 text-sm">
+					{row.getValue("supplier")}
+					<span className="md:hidden">
+						{" "}
+						<br />
+						{row.getValue("location")}
+					</span>
 				</div>
 			);
 		},
@@ -32,7 +37,7 @@ export const columns: ColumnDef<Payment>[] = [
 				<Button
 					variant="ghost"
 					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-					className="hidden md:flex">
+					className="hidden md:flex font-bold text-gray-700 text-sm">
 					Location
 					<ArrowUpDown className="ml-2 h-4 w-4" />
 				</Button>
@@ -40,7 +45,7 @@ export const columns: ColumnDef<Payment>[] = [
 		},
 		cell: ({ row }) => {
 			return (
-				<div className="ml-4 font-medium hidden md:flex">
+				<div className="ml-4 hidden md:flex text-gray-700 text-sm">
 					{row.getValue("location")}
 				</div>
 			);
@@ -53,7 +58,7 @@ export const columns: ColumnDef<Payment>[] = [
 				<Button
 					variant="ghost"
 					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-					className="hidden md:flex">
+					className="hidden md:flex font-bold text-gray-700 text-sm">
 					Abcde
 					<ArrowUpDown className="ml-2 h-4 w-4" />
 				</Button>
@@ -61,7 +66,7 @@ export const columns: ColumnDef<Payment>[] = [
 		},
 		cell: ({ row }) => {
 			return (
-				<div className="ml-4 font-medium hidden md:flex">
+				<div className="ml-4 text-sm hidden md:flex text-gray-700">
 					{row.getValue("abcde")}
 				</div>
 			);
@@ -73,14 +78,15 @@ export const columns: ColumnDef<Payment>[] = [
 			return (
 				<Button
 					variant="ghost"
-					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
+					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
+					className="font-bold text-gray-700 text-sm">
 					Contact
 					<ArrowUpDown className="ml-2 h-4 w-4" />
 				</Button>
 			);
 		},
 		cell: ({ row }) => {
-			return <div className="ml-4 font-medium">{row.getValue("contact")}</div>;
+			return <div className="ml-4 text-sm">{row.getValue("contact")}</div>;
 		},
 	},
 ];

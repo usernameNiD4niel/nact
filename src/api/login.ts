@@ -20,6 +20,7 @@ export const POST = async ({
 		// TODO: add a valid url to the fetch request
 
 		// Cookies.set("token", "hahaha", { expires: 7 / 24 });
+		Cookies.set("token", "NO TOKEN");
 
 		const response = await fetch(
 			"https://flask-service.gi2fod26lfct0.ap-southeast-1.cs.amazonlightsail.com/login",
