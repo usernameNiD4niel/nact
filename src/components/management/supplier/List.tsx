@@ -1,10 +1,11 @@
 import { useInventoryState } from "@/utils/InventoryState";
 import { useEffect, useState } from "react";
-import { Payment } from "@/constants/props";
+import { Payment, SupplierTableProps } from "@/constants/props";
 import Filter from "@/components/reuseable/Filter";
 import { SupplierTableData, payments } from "@/constants/objects";
 import { DataTable } from "./helper/data-table";
 import { columns } from "./helper/columns";
+import { getSupplierTableData } from "@/api/supplier";
 
 function getData(): Payment[] {
 	return payments;
@@ -15,8 +16,23 @@ const List = () => {
 	const [isShowingFilter, setIsShowingFilter] = useState(false);
 
 	const data = getData();
+	const [supplier, setSupplier] = useState<SupplierTableProps[]>();
 
-	useEffect(() => setTab(0), []);
+	const datas = async () => {
+		const d = await getSupplierTableData();
+		console.log("the data: ", d);
+
+		if (d) {
+			console.log("supplier: ", supplier);
+
+			setSupplier(d);
+		}
+	};
+
+	useEffect(() => {
+		datas();
+		setTab(0);
+	}, []);
 
 	return (
 		<div className="w-full">
