@@ -6,10 +6,8 @@ import {
 import Cookies from "js-cookie";
 
 const token = Cookies.get("token");
-const csrfToken = Cookies.get("__clerk_db_jwt");
 const getSupplierTableData = async () => {
 	console.log("token, ", token);
-	console.log("csrf, ", csrfToken);
 
 	const response = await fetch(
 		`https://flask-service.gi2fod26lfct0.ap-southeast-1.cs.amazonlightsail.com/api/supplier`,
@@ -17,7 +15,7 @@ const getSupplierTableData = async () => {
 			headers: {
 				"Content-Type": "application/json",
 				Authorization: "Bearer " + token,
-				"X-Csrf-Token": csrfToken!,
+				// "X-Csrf-Token": csrfToken!,
 				// "X-CSRF-TOKEN": csrfToken!,
 			},
 		},
