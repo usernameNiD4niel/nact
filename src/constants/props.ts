@@ -229,6 +229,7 @@ export type LoginSuccessResponse = {
 	user: UserResponseProps;
 	csrf_access_token: string;
 	access_token: string;
+	access_token_cookie: string;
 };
 
 type UserResponseProps = {
