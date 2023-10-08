@@ -1,9 +1,15 @@
 import DynamicDropdown from "@/components/reuseable/DynamicDropdown";
 import { Button } from "@/components/ui/button";
-import { TableMutatorProps } from "@/constants/props";
+import { InventoryTypes } from "@/constants/props";
 import { FC, useState } from "react";
 import { HiOutlinePlus, HiXMark } from "react-icons/hi2";
 import { Link } from "react-router-dom";
+
+type TableMutatorProps = {
+	setIsShowingFilter: React.Dispatch<React.SetStateAction<boolean>>;
+	data: InventoryTypes[];
+	// table: Table<Payment>;
+};
 
 const TableMutator: FC<TableMutatorProps> = ({ setIsShowingFilter }) => {
 	const [uniqueItems, setUniqueItems] = useState<string[]>([]);

@@ -23,11 +23,11 @@ import React, { useState } from "react";
 import SearchWithFilter from "@/components/reuseable/SearchWithFilter";
 import { DataTablePagination } from "./data-table-pagination";
 import TableMutator from "./TableMutator";
-import { Payment } from "@/constants/props";
+import { InventoryTypes } from "@/constants/props";
 
 interface DataTableProps<TValue> {
-	columns: ColumnDef<Payment, TValue>[];
-	data: Payment[];
+	columns: ColumnDef<InventoryTypes, TValue>[];
+	data: InventoryTypes[];
 	setIsShowingFilter: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
