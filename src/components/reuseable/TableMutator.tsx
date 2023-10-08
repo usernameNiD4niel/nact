@@ -3,11 +3,7 @@ import { FC, useState } from "react";
 import DynamicDropdown from "./DynamicDropdown";
 import { HiXMark } from "react-icons/hi2";
 
-const TableMutator: FC<TableMutatorProps> = ({
-	setIsShowingFilter,
-	data,
-	table,
-}) => {
+const TableMutator: FC<TableMutatorProps> = ({ setIsShowingFilter, data }) => {
 	const [uniqueItems, setUniqueItems] = useState<string[]>([]);
 
 	const handleRemoveSelected = (selectedItem: string) => {
@@ -30,14 +26,14 @@ const TableMutator: FC<TableMutatorProps> = ({
 		return contact;
 	};
 
-	const handleFiltering = (column: string) => {
-		console.log("column: ", column);
-		console.log("unique: ", uniqueItems);
+	// const handleFiltering = (column: string) => {
+	// 	console.log("column: ", column);
+	// 	console.log("unique: ", uniqueItems);
 
-		table
-			.getColumn(column.toLowerCase())
-			?.setFilterValue(uniqueItems[uniqueItems.length - 1].toLowerCase());
-	};
+	// 	table
+	// 		.getColumn(column.toLowerCase())
+	// 		?.setFilterValue(uniqueItems[uniqueItems.length - 1].toLowerCase());
+	// };
 
 	return (
 		<div>
@@ -48,28 +44,28 @@ const TableMutator: FC<TableMutatorProps> = ({
 						dropDownItems={getSupplier()}
 						uniqueItems={uniqueItems}
 						setUniqueItems={setUniqueItems}
-						handleFiltering={handleFiltering}
+						// handleFiltering={handleFiltering}
 					/>
 					<DynamicDropdown
 						dropdownText="Location"
 						dropDownItems={getLocation()}
 						setUniqueItems={setUniqueItems}
 						uniqueItems={uniqueItems}
-						handleFiltering={handleFiltering}
+						// handleFiltering={handleFiltering}
 					/>
 					<DynamicDropdown
 						dropdownText="Abcde"
 						dropDownItems={null}
 						setUniqueItems={setUniqueItems}
 						uniqueItems={uniqueItems}
-						handleFiltering={handleFiltering}
+						// handleFiltering={handleFiltering}
 					/>
 					<DynamicDropdown
 						dropdownText="Contact"
 						dropDownItems={getContact()}
 						setUniqueItems={setUniqueItems}
 						uniqueItems={uniqueItems}
-						handleFiltering={handleFiltering}
+						// handleFiltering={handleFiltering}
 					/>
 				</div>
 				<button

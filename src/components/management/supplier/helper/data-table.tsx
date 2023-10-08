@@ -85,7 +85,7 @@ export function DataTable<TValue>({
 					<TableMutator
 						setIsShowingFilter={setIsShowingFilter}
 						data={data}
-						table={table}
+						// table={table}
 					/>
 				</div>
 			</div>
