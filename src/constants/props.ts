@@ -1,6 +1,7 @@
 import { FieldErrors, UseFormRegister } from "react-hook-form";
 import { supplierValidationSchema } from "@/models/supplier";
 import { z } from "zod";
+import { Table } from "@tanstack/react-table";
 
 export type PersonalDetailProps = {
 	firstName: string;
@@ -211,11 +212,13 @@ export type DynamicDropdownProps = {
 	dropDownItems: string[] | null;
 	uniqueItems: string[];
 	setUniqueItems: React.Dispatch<React.SetStateAction<string[]>>;
+	handleFiltering: (column: string) => void;
 };
 
 export type TableMutatorProps = {
 	setIsShowingFilter: React.Dispatch<React.SetStateAction<boolean>>;
 	data: Payment[];
+	table: Table<Payment>;
 };
 
 export type TableDataProps = {

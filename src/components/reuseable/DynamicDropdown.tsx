@@ -7,6 +7,7 @@ const DynamicDropdown: React.FC<DynamicDropdownProps> = ({
 	dropdownText,
 	setUniqueItems,
 	uniqueItems,
+	handleFiltering,
 }) => {
 	const [isOpen, setIsOpen] = useState(false);
 	const dropdownRef = useRef<HTMLDivElement | null>(null);
@@ -75,14 +76,15 @@ const DynamicDropdown: React.FC<DynamicDropdownProps> = ({
 		}
 	};
 
-	const handleSortingTable = (item: string) => {
-		console.log("You are sorting,", item);
-		switch (item) {
-			case "Supplier":
-				// setDropDownItems(["Supplier"]);
-				break;
-		}
-	};
+	// const handleSortingTable = (item: string) => {
+
+	// 	console.log("You are sorting,", item);
+	// 	switch (item) {
+	// 		case "Supplier":
+	// 			// setDropDownItems(["Supplier"]);
+	// 			break;
+	// 	}
+	// };
 
 	return (
 		<div className="relative w-full" ref={dropdownRef}>
@@ -128,7 +130,7 @@ const DynamicDropdown: React.FC<DynamicDropdownProps> = ({
 						{dropDownItems.map((item, index) => (
 							<li
 								className="flex w-full items-center justify-center"
-								onClick={() => handleSortingTable(item)}
+								onClick={() => handleFiltering(dropdownText)}
 								key={index}>
 								<label className="w-full flex justify-center items-center gap-x-2 hover:cursor-pointer py-2 text-xs pl-4 text-gray-900 hover:bg-slate-100">
 									<input
