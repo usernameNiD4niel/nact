@@ -215,6 +215,7 @@ export type DynamicDropdownProps = {
 
 export type TableMutatorProps = {
 	setIsShowingFilter: React.Dispatch<React.SetStateAction<boolean>>;
+	data: Payment[];
 };
 
 export type TableDataProps = {

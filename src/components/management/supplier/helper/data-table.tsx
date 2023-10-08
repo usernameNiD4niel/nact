@@ -82,7 +82,7 @@ export function DataTable<TValue>({
 					onChange={handleOnChange}
 				/>
 				<div className="my-3">
-					<TableMutator setIsShowingFilter={setIsShowingFilter} />
+					<TableMutator setIsShowingFilter={setIsShowingFilter} data={data} />
 				</div>
 			</div>
 			<div className="rounded-md border">

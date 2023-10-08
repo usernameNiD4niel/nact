@@ -3,12 +3,27 @@ import { FC, useState } from "react";
 import DynamicDropdown from "./DynamicDropdown";
 import { HiXMark } from "react-icons/hi2";
 
-const TableMutator: FC<TableMutatorProps> = ({ setIsShowingFilter }) => {
+const TableMutator: FC<TableMutatorProps> = ({ setIsShowingFilter, data }) => {
 	const [uniqueItems, setUniqueItems] = useState<string[]>([]);
 
 	const handleRemoveSelected = (selectedItem: string) => {
 		const removeItem = uniqueItems.filter((item) => item !== selectedItem);
 		setUniqueItems(removeItem);
+	};
+
+	const getSupplier = () => {
+		const supplier = data.map((item) => item.supplier);
+		return supplier;
+	};
+
+	const getLocation = () => {
+		const location = data.map((item) => item.location);
+		return location;
+	};
+
+	const getContact = () => {
+		const contact = data.map((item) => item.contact);
+		return contact;
 	};
 
 	return (
@@ -17,17 +32,13 @@ const TableMutator: FC<TableMutatorProps> = ({ setIsShowingFilter }) => {
 				<div className="items-center hidden lg:flex">
 					<DynamicDropdown
 						dropdownText="Supplier"
-						dropDownItems={[
-							"East Pacific Container",
-							"North Pacific",
-							"South Pacific",
-						]}
+						dropDownItems={getSupplier()}
 						uniqueItems={uniqueItems}
 						setUniqueItems={setUniqueItems}
 					/>
 					<DynamicDropdown
 						dropdownText="Location"
-						dropDownItems={["Chicago, USA", "New York", "California"]}
+						dropDownItems={getLocation()}
 						setUniqueItems={setUniqueItems}
 						uniqueItems={uniqueItems}
 					/>
@@ -39,7 +50,7 @@ const TableMutator: FC<TableMutatorProps> = ({ setIsShowingFilter }) => {
 					/>
 					<DynamicDropdown
 						dropdownText="Contact"
-						dropDownItems={["09154814993", "09154814993", "09154814993"]}
+						dropDownItems={getContact()}
 						setUniqueItems={setUniqueItems}
 						uniqueItems={uniqueItems}
 					/>
