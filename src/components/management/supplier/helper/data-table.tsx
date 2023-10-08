@@ -24,23 +24,26 @@ import SearchWithFilter from "@/components/reuseable/SearchWithFilter";
 import TableMutator from "@/components/reuseable/TableMutator";
 import { DataTablePagination } from "./data-table-pagination";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { HiOutlinePlus } from "react-icons/hi2";
+import { Payment } from "@/constants/props";
 
-interface DataTableProps<TData, TValue> {
-	columns: ColumnDef<TData, TValue>[];
-	data: TData[];
+interface DataTableProps<TValue> {
+	columns: ColumnDef<Payment, TValue>[];
+	data: Payment[];
 	setIsShowingFilter: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export function DataTable<TData, TValue>({
+export function DataTable<TValue>({
 	columns,
 	data,
 	setIsShowingFilter,
-}: DataTableProps<TData, TValue>) {
+}: DataTableProps<TValue>) {
 	const [sorting, setSorting] = React.useState<SortingState>([]);
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 	const [counter, setCounter] = useState(20);
+
+	const navigate = useNavigate();
 
 	const table = useReactTable({
 		data,
@@ -62,6 +65,12 @@ export function DataTable<TData, TValue>({
 
 	const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) =>
 		table.getColumn("supplier")?.setFilterValue(event.target.value);
+
+	const handleTableItem = (rowIndex: number) => {
+		console.log("redirect");
+
+		navigate(`/supplier/${data[rowIndex].id}`);
+	};
 
 	return (
 		<div className="px-6">
@@ -99,11 +108,12 @@ export function DataTable<TData, TValue>({
 					</TableHeader>
 					<TableBody>
 						{table.getRowModel().rows?.length ? (
-							table.getRowModel().rows.map((row) => (
+							table.getRowModel().rows.map((row, rowIndex) => (
 								<TableRow
 									key={row.id}
 									data-state={row.getIsSelected() && "selected"}
-									className="hover:cursor-pointer bg-white hover:bg-zinc-50/10">
+									className="hover:cursor-pointer bg-white hover:bg-zinc-50/10"
+									onClick={() => handleTableItem(rowIndex)}>
 									{row.getVisibleCells().map((cell) => (
 										<TableCell key={cell.id}>
 											{flexRender(

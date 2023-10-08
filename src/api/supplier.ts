@@ -1,14 +1,17 @@
 import {
+	Payment,
 	ShippingFormProps,
 	SupplierDataProps,
 	SupplierItem,
 } from "@/constants/props";
 import Cookies from "js-cookie";
 
+// const csrf_token = Cookies.get("csrf_token");
 const token = Cookies.get("token");
-const csrf_token = Cookies.get("csrf_token");
-const getSupplierTableData = async () => {
-	console.log("token, ", token);
+const getSupplierTableData = async (
+	setIsFetching: React.Dispatch<React.SetStateAction<boolean>>,
+) => {
+	// console.log("token, ", token);
 
 	const response = await fetch(
 		`https://flask-service.gi2fod26lfct0.ap-southeast-1.cs.amazonlightsail.com/api/supplier`,
@@ -17,15 +20,31 @@ const getSupplierTableData = async () => {
 				"Content-Type": "application/json",
 				Authorization: "Bearer " + token,
 				// token: csrf_token!,
-				"X-CSRF-TOKEN": csrf_token!,
+				// "X-CSRF-TOKEN": csrf_token!,
 			},
 		},
 	);
 
 	if (response.ok) {
-		const data: Promise<SupplierDataProps> = response.json();
-		return (await data).suppliers;
+		const data: Promise<SupplierDataProps> = await response.json();
+		console.log("check nga:", (await data).suppliers);
+
+		const extractedData = (await data).suppliers;
+
+		const newData: Payment[] = extractedData.map((value) => {
+			const d_: Payment = {
+				abcde: "",
+				contact: value.companyPhoneNumber,
+				location: value.state + ", " + value.country,
+				supplier: value.businessName,
+				id: value.id,
+			};
+			return d_;
+		});
+		setIsFetching(false);
+		return newData;
 	} else {
+		setIsFetching(false);
 		throw new Error("error parin talaga");
 	}
 };

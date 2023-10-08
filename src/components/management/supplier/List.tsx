@@ -1,32 +1,24 @@
 import { useInventoryState } from "@/utils/InventoryState";
 import { useEffect, useState } from "react";
-import { Payment, SupplierTableProps } from "@/constants/props";
+import { Payment } from "@/constants/props";
 import Filter from "@/components/reuseable/Filter";
-import { SupplierTableData, payments } from "@/constants/objects";
+import { SupplierTableData } from "@/constants/objects";
 import { DataTable } from "./helper/data-table";
 import { columns } from "./helper/columns";
 import { getSupplierTableData } from "@/api/supplier";
-
-function getData(): Payment[] {
-	return payments;
-}
+import { Link } from "react-router-dom";
 
 const List = () => {
 	const [setTab] = useInventoryState((state) => [state.setActiveTab]);
 	const [isShowingFilter, setIsShowingFilter] = useState(false);
 
-	const data = getData();
-	const [supplier, setSupplier] = useState<SupplierTableProps[]>();
+	const [supplier, setSupplier] = useState<Payment[]>([]);
+	const [isFetching, setIsFetching] = useState(true);
 
 	const datas = async () => {
-		const d = await getSupplierTableData();
+		const d = await getSupplierTableData(setIsFetching);
 		console.log("the data: ", d);
-
-		if (d) {
-			console.log("supplier: ", supplier);
-
-			setSupplier(d);
-		}
+		setSupplier(d);
 	};
 
 	useEffect(() => {
@@ -34,15 +26,33 @@ const List = () => {
 		setTab(0);
 	}, []);
 
+	const ContentTable = () => {
+		if (isFetching) {
+			return <div>Fetching data please wait...</div>;
+		}
+
+		if (supplier && supplier.length > 0) {
+			return (
+				<DataTable
+					columns={columns}
+					data={supplier}
+					setIsShowingFilter={setIsShowingFilter}
+				/>
+			);
+		}
+
+		return (
+			<div>
+				No supplier data yet, <Link to="/supplier/add">create new entry</Link>
+			</div>
+		);
+	};
+
 	return (
 		<div className="w-full">
 			<div className="md:px-10 px-2">
 				<div className="mt-36 md:mt-24">
-					<DataTable
-						columns={columns}
-						data={data}
-						setIsShowingFilter={setIsShowingFilter}
-					/>
+					<ContentTable />
 				</div>
 			</div>
 			{/* <AddButton /> */}
