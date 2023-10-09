@@ -7,61 +7,61 @@ import FilterUI from "./FilterUI";
 import { FilterForm } from "@/constants/props";
 
 type SearchWithFilterProps = {
-  placeHolder: string;
-  isList: boolean;
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  value: string;
-  handleFilter: ({ contact, location, supplier }: FilterForm) => void;
+	placeHolder: string;
+	isList: boolean;
+	onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+	value: string;
+	handleFilter: ({ contact, location, supplier }: FilterForm) => void;
 };
 
 const SearchWithFilter: FC<SearchWithFilterProps> = ({
-  placeHolder,
-  isList,
-  onChange,
-  value,
-  handleFilter,
+	placeHolder,
+	isList,
+	onChange,
+	value,
+	handleFilter,
 }) => {
-  const [isShowingFilter, setIsShowingFilter] = useState<boolean>(false);
+	const [isShowingFilter, setIsShowingFilter] = useState<boolean>(false);
 
-  const handleOnSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-  };
+	const handleOnSubmit = (event: React.FormEvent) => {
+		event.preventDefault();
+	};
 
-  return (
-    <>
-      <form
-        className="w-full flex items-center gap-x-1 justify-center relative"
-        onSubmit={handleOnSubmit}
-      >
-        <Input
-          type="text"
-          placeholder={placeHolder}
-          className="py-6"
-          value={value}
-          onChange={onChange}
-          // className="border-[1px] rounded-lg border-black border-opacity-10 w-full p-3 focus:outline-primary focus:outline-1"
-        />
-        <FilterUI handleFilter={handleFilter} />
-      </form>
-      <AnimatePresence>
-        {isShowingFilter && (
-          <>
-            {isList ? (
-              <Filter
-                setIsShowingFilter={setIsShowingFilter}
-                data={SupplierTableData}
-              />
-            ) : (
-              <Filter
-                setIsShowingFilter={setIsShowingFilter}
-                data={InventoryTableData}
-              />
-            )}
-          </>
-        )}
-      </AnimatePresence>
-    </>
-  );
+	return (
+		<>
+			<form
+				className="w-full flex items-center gap-x-1 justify-center relative"
+				onSubmit={handleOnSubmit}>
+				<Input
+					type="text"
+					placeholder={placeHolder}
+					className="py-6"
+					value={value}
+					onChange={onChange}
+					// className="border-[1px] rounded-lg border-black border-opacity-10 w-full p-3 focus:outline-primary focus:outline-1"
+				/>
+				<FilterUI handleFilter={handleFilter} />
+				{/* <FilterModal /> */}
+			</form>
+			<AnimatePresence>
+				{isShowingFilter && (
+					<>
+						{isList ? (
+							<Filter
+								setIsShowingFilter={setIsShowingFilter}
+								data={SupplierTableData}
+							/>
+						) : (
+							<Filter
+								setIsShowingFilter={setIsShowingFilter}
+								data={InventoryTableData}
+							/>
+						)}
+					</>
+				)}
+			</AnimatePresence>
+		</>
+	);
 };
 
 export default SearchWithFilter;
