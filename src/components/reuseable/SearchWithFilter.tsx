@@ -3,6 +3,8 @@ import Filter from "./Filter";
 import { InventoryTableData, SupplierTableData } from "@/constants/objects";
 import { AnimatePresence } from "framer-motion";
 import { Input } from "../ui/input";
+import { Button } from "../ui/button";
+import { FilterIcon } from "lucide-react";
 
 type SearchWithFilterProps = {
   placeHolder: string;
@@ -26,7 +28,7 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
   return (
     <>
       <form
-        className="w-full flex items-center justify-center relative"
+        className="w-full flex items-center gap-x-1 justify-center relative"
         onSubmit={handleOnSubmit}
       >
         <Input
@@ -37,6 +39,9 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
           onChange={onChange}
           // className="border-[1px] rounded-lg border-black border-opacity-10 w-full p-3 focus:outline-primary focus:outline-1"
         />
+        <Button type="button" className="py-[1.55rem]" variant="secondary">
+          <FilterIcon className="text-xs" size={"22"} />
+        </Button>
       </form>
       <AnimatePresence>
         {isShowingFilter && (
