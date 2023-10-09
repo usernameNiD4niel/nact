@@ -3,14 +3,15 @@ import Filter from "./Filter";
 import { InventoryTableData, SupplierTableData } from "@/constants/objects";
 import { AnimatePresence } from "framer-motion";
 import { Input } from "../ui/input";
-import { Button } from "../ui/button";
-import { FilterIcon } from "lucide-react";
+import FilterUI from "./FilterUI";
+import { FilterForm } from "@/constants/props";
 
 type SearchWithFilterProps = {
   placeHolder: string;
   isList: boolean;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   value: string;
+  handleFilter: ({ contact, location, supplier }: FilterForm) => void;
 };
 
 const SearchWithFilter: FC<SearchWithFilterProps> = ({
@@ -18,6 +19,7 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
   isList,
   onChange,
   value,
+  handleFilter,
 }) => {
   const [isShowingFilter, setIsShowingFilter] = useState<boolean>(false);
 
@@ -39,9 +41,7 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
           onChange={onChange}
           // className="border-[1px] rounded-lg border-black border-opacity-10 w-full p-3 focus:outline-primary focus:outline-1"
         />
-        <Button type="button" className="py-[1.55rem]" variant="secondary">
-          <FilterIcon className="text-xs" size={"22"} />
-        </Button>
+        <FilterUI handleFilter={handleFilter} />
       </form>
       <AnimatePresence>
         {isShowingFilter && (

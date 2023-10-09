@@ -25,11 +25,12 @@ import TableMutator from "@/components/reuseable/TableMutator";
 
 import { Link, useNavigate } from "react-router-dom";
 import { HiOutlinePlus } from "react-icons/hi2";
-import { Payment } from "@/constants/props";
+import { FilterForm, Payment } from "@/constants/props";
 
 interface DataTableProps<TValue> {
   columns: ColumnDef<Payment, TValue>[];
   data: Payment[];
+  handleFilter: ({ contact, location, supplier }: FilterForm) => void;
   setIsShowingFilter: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
@@ -37,6 +38,7 @@ export function DataTable<TValue>({
   columns,
   data,
   setIsShowingFilter,
+  handleFilter,
 }: DataTableProps<TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -78,6 +80,7 @@ export function DataTable<TValue>({
           placeHolder="Search Supplier"
           isList={true}
           value={getValue()}
+          handleFilter={handleFilter}
           onChange={handleOnChange}
         />
         <div className="my-3">
