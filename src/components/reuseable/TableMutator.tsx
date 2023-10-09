@@ -59,13 +59,6 @@ const TableMutator: FC<TableMutatorProps> = ({ setIsShowingFilter, data }) => {
             // handleFiltering={handleFiltering}
           />
         </div>
-        <button
-          className="text-gray-700 lg:hidden text-sm"
-          type="button"
-          onClick={() => setIsShowingFilter((prev) => !prev)}
-        >
-          Filter
-        </button>
       </div>
       {uniqueItems.length !== 0 && (
         <ul className="flex w-full items-center gap-x-3 bg-[#f3f4f6] py-2 px-4 flex-wrap">
