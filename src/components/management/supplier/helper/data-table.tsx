@@ -31,13 +31,11 @@ interface DataTableProps<TValue> {
   columns: ColumnDef<Payment, TValue>[];
   data: Payment[];
   handleFilter: ({ contact, location, supplier }: FilterForm) => void;
-  setIsShowingFilter: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 export function DataTable<TValue>({
   columns,
   data,
-  setIsShowingFilter,
   handleFilter,
 }: DataTableProps<TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -84,7 +82,7 @@ export function DataTable<TValue>({
           onChange={handleOnChange}
         />
         <div className="my-3">
-          <TableMutator setIsShowingFilter={setIsShowingFilter} data={data} />
+          <TableMutator data={data} />
         </div>
       </div>
       <div className="rounded-md border">

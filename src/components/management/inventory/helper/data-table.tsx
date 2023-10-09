@@ -28,14 +28,12 @@ import { FilterForm, InventoryTypes } from "@/constants/props";
 interface DataTableProps<TValue> {
   columns: ColumnDef<InventoryTypes, TValue>[];
   data: InventoryTypes[];
-  handleFilter: ({}: FilterForm) => void;
-  setIsShowingFilter: React.Dispatch<React.SetStateAction<boolean>>;
+  handleFilter: ({ contact, location, supplier }: FilterForm) => void;
 }
 
 export function DataTable<TValue>({
   columns,
   data,
-  setIsShowingFilter,
   handleFilter,
 }: DataTableProps<TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
@@ -73,7 +71,7 @@ export function DataTable<TValue>({
           handleFilter={handleFilter}
         />
         <div className="my-3">
-          <TableMutator setIsShowingFilter={setIsShowingFilter} data={data} />
+          <TableMutator />
         </div>
       </div>
       <div className="rounded-md border">

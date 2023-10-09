@@ -44,7 +44,6 @@ const List = () => {
         <DataTable
           columns={columns}
           data={supplier}
-          setIsShowingFilter={setIsShowingFilter}
           handleFilter={handleFilter}
         />
       );

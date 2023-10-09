@@ -3,7 +3,7 @@ import { FC, useState } from "react";
 import DynamicDropdown from "./DynamicDropdown";
 import { HiXMark } from "react-icons/hi2";
 
-const TableMutator: FC<TableMutatorProps> = ({ setIsShowingFilter, data }) => {
+const TableMutator: FC<TableMutatorProps> = ({ data }) => {
   const [uniqueItems, setUniqueItems] = useState<string[]>([]);
 
   const handleRemoveSelected = (selectedItem: string) => {

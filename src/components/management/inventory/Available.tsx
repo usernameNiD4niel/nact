@@ -32,7 +32,6 @@ const Available = (): JSX.Element => {
               data={inventoryData}
               columns={columns}
               handleFilter={handleFilter}
-              setIsShowingFilter={setIsShowingFilter}
             />
           </div>
         </div>
