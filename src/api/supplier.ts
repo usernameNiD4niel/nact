@@ -10,17 +10,14 @@ const getSupplierTableData = async (
 ) => {
   // console.log("token, ", token);
 
-  const response = await fetch(
-    `https://flask-service.gi2fod26lfct0.ap-southeast-1.cs.amazonlightsail.com/supplier`,
-    {
-      headers: {
-        "Content-Type": "application/json",
-        // Authorization: "Bearer " + token,
-        // token: csrf_token!,
-        // "X-CSRF-TOKEN": csrf_token!,
-      },
-    }
-  );
+  const response = await fetch(`${import.meta.env.VITE_BASE_URL}/supplier`, {
+    headers: {
+      "Content-Type": "application/json",
+      // Authorization: "Bearer " + token,
+      // token: csrf_token!,
+      // "X-CSRF-TOKEN": csrf_token!,
+    },
+  });
 
   if (response.ok) {
     const data: Promise<SupplierDataProps> = await response.json();
@@ -56,7 +53,7 @@ const addShippingSupplier = async (
   setMessage: React.Dispatch<React.SetStateAction<string>>
 ) => {
   const response = await fetch(
-    `https://flask-service.gi2fod26lfct0.ap-southeast-1.cs.amazonlightsail.com/supplier/add/shipping`,
+    `${import.meta.env.VITE_BASE_URL}/supplier/add/shipping`,
     {
       method: "POST",
       headers: {
@@ -86,7 +83,7 @@ const addShippingSupplier = async (
 // No Token for this request
 const getSpecificSupplier = async (id: string) => {
   const supplier = await fetch(
-    `https://flask-service.gi2fod26lfct0.ap-southeast-1.cs.amazonlightsail.com/supplier/${id}`,
+    `${import.meta.env.VITE_BASE_URL}/supplier/${id}`,
     {
       headers: {
         "Content-Type": "application/json",
@@ -112,7 +109,7 @@ const updateSpecificSupplier = async (
   setTitle: React.Dispatch<React.SetStateAction<string>>
 ) => {
   const response: Promise<ResponseAddShipping> = await fetch(
-    `https://flask-service.gi2fod26lfct0.ap-southeast-1.cs.amazonlightsail.com/supplier/${id}`,
+    `${import.meta.env.VITE_BASE_URL}/supplier/${id}`,
     {
       method: "PATCH",
       headers: {
@@ -147,7 +144,7 @@ const deleteSupplier = async (
   setMessage: React.Dispatch<React.SetStateAction<string>>
 ) => {
   const response = await fetch(
-    `https://flask-service.gi2fod26lfct0.ap-southeast-1.cs.amazonlightsail.com/supplier/${id}`,
+    `${import.meta.env.VITE_BASE_URL}/supplier/${id}`,
     {
       method: "DELETE",
       headers: {
