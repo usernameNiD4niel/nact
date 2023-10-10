@@ -64,10 +64,11 @@ export function DataTable<TValue>({
   const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) =>
     table.getColumn("supplier")?.setFilterValue(event.target.value);
 
-  const handleTableItem = (rowIndex: number) => {
+  const handleTableItem = (supplier: string) => {
     console.log("redirect");
+    const foundObject = data.find((item) => item.supplier === supplier);
 
-    navigate(`/supplier/${data[rowIndex].id}`);
+    navigate(`/supplier/${foundObject?.id}`);
   };
 
   return (
@@ -107,12 +108,12 @@ export function DataTable<TValue>({
           </TableHeader>
           <TableBody>
             {table.getRowModel().rows?.length ? (
-              table.getRowModel().rows.map((row, rowIndex) => (
+              table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && "selected"}
                   className="hover:cursor-pointer bg-white hover:bg-zinc-50/10"
-                  onClick={() => handleTableItem(Number(data[rowIndex].id))}
+                  onClick={() => handleTableItem(row.getValue("supplier"))}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>
