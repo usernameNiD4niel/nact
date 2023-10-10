@@ -86,7 +86,7 @@ const addShippingSupplier = async (
 // No Token for this request
 const getSpecificSupplier = async (id: string) => {
   const supplier = await fetch(
-    `https://flask-service.gi2fod26lfct0.ap-southeast-1.cs.amazonlightsail.com/api/supplier/${id}`,
+    `https://flask-service.gi2fod26lfct0.ap-southeast-1.cs.amazonlightsail.com/supplier/${id}`,
     {
       headers: {
         "Content-Type": "application/json",
@@ -112,7 +112,7 @@ const updateSpecificSupplier = async (
   setTitle: React.Dispatch<React.SetStateAction<string>>
 ) => {
   const response: Promise<ResponseAddShipping> = await fetch(
-    `https://flask-service.gi2fod26lfct0.ap-southeast-1.cs.amazonlightsail.com/api/supplier/${id}`,
+    `https://flask-service.gi2fod26lfct0.ap-southeast-1.cs.amazonlightsail.com/supplier/${id}`,
     {
       method: "PATCH",
       headers: {
