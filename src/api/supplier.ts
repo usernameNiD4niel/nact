@@ -4,10 +4,7 @@ import {
   SupplierDataProps,
   SupplierItem,
 } from "@/constants/props";
-import Cookies from "js-cookie";
 
-// const csrf_token = Cookies.get("csrf_token");
-const token = Cookies.get("token");
 const getSupplierTableData = async (
   setIsFetching: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
