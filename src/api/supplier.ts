@@ -8,9 +8,9 @@ import {
 const getSupplierTableData = async (
   setIsFetching: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
-  console.log("endpoint sa get, ", process.env.VITE_BASE_URL);
+  console.log("endpoint, get ", import.meta.env.VITE_BASE_URL);
 
-  const response = await fetch(`${process.env.VITE_BASE_URL}/supplier`, {
+  const response = await fetch(`${import.meta.env.VITE_BASE_URL}/supplier`, {
     headers: {
       "Content-Type": "application/json",
       // Authorization: "Bearer " + token,
@@ -53,7 +53,7 @@ const addShippingSupplier = async (
   setMessage: React.Dispatch<React.SetStateAction<string>>
 ) => {
   const response = await fetch(
-    `${process.env.VITE_BASE_URL}/supplier/add/shipping`,
+    `${import.meta.env.VITE_BASE_URL}/supplier/add/shipping`,
     {
       method: "POST",
       headers: {
@@ -82,12 +82,15 @@ const addShippingSupplier = async (
 
 // No Token for this request
 const getSpecificSupplier = async (id: string) => {
-  const supplier = await fetch(`${process.env.VITE_BASE_URL}/supplier/${id}`, {
-    headers: {
-      "Content-Type": "application/json",
-      // Authorization: `Bearer ${token}`,
-    },
-  });
+  const supplier = await fetch(
+    `${import.meta.env.VITE_BASE_URL}/supplier/${id}`,
+    {
+      headers: {
+        "Content-Type": "application/json",
+        // Authorization: `Bearer ${token}`,
+      },
+    }
+  );
 
   if (supplier.ok) {
     const response: SupplierItem = await supplier.json();
@@ -106,7 +109,7 @@ const updateSpecificSupplier = async (
   setTitle: React.Dispatch<React.SetStateAction<string>>
 ) => {
   const response: Promise<ResponseAddShipping> = await fetch(
-    `${process.env.VITE_BASE_URL}/supplier/${id}`,
+    `${import.meta.env.VITE_BASE_URL}/supplier/${id}`,
     {
       method: "PATCH",
       headers: {
@@ -140,13 +143,16 @@ const deleteSupplier = async (
   setValidation: React.Dispatch<React.SetStateAction<string>>,
   setMessage: React.Dispatch<React.SetStateAction<string>>
 ) => {
-  const response = await fetch(`${process.env.VITE_BASE_URL}/supplier/${id}`, {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-      // Authorization: `Bearer ${token}`,
-    },
-  });
+  const response = await fetch(
+    `${import.meta.env.VITE_BASE_URL}/supplier/${id}`,
+    {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        // Authorization: `Bearer ${token}`,
+      },
+    }
+  );
 
   if (response.ok) {
     const data = (Promise<ResponseAddShipping> = await response.json());

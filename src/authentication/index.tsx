@@ -41,7 +41,7 @@ const Index = () => {
 
   const [shouldShowAlert, setShouldShowAlert] = useState(false);
 
-  console.log("endpoint login, ", process.env.VITE_BASE_URL);
+  console.log("endpoint login, ", import.meta.env.VITE_BASE_URL);
 
   useEffect(() => {
     const token = Cookies.get("token");
