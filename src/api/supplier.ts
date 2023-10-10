@@ -10,7 +10,7 @@ const getSupplierTableData = async (
 ) => {
   console.log("endpoint, ", import.meta.env.VITE_BASE_URL);
 
-  const response = await fetch(`${import.meta.env.VITE_BASE_URL}/supplier`, {
+  const response = await fetch(`${process.env.VITE_BASE_URL}/supplier`, {
     headers: {
       "Content-Type": "application/json",
       // Authorization: "Bearer " + token,

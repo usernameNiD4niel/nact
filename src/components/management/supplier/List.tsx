@@ -16,6 +16,7 @@ const List = () => {
   const [isFetching, setIsFetching] = useState(true);
 
   const datas = async () => {
+    console.log("endpoint, ", process.env.VITE_BASE_URL);
     const d = await getSupplierTableData(setIsFetching);
     console.log("the data: ", d);
     setSupplier(d);
