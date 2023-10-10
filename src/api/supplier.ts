@@ -8,7 +8,7 @@ import {
 const getSupplierTableData = async (
   setIsFetching: React.Dispatch<React.SetStateAction<boolean>>
 ) => {
-  // console.log("token, ", token);
+  console.log("endpoint, ", import.meta.env.VITE_BASE_URL);
 
   const response = await fetch(`${import.meta.env.VITE_BASE_URL}/supplier`, {
     headers: {
