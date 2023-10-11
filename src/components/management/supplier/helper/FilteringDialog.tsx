@@ -6,29 +6,33 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { FilterForm } from "@/constants/props";
+import { Payment } from "@/constants/props";
 import { FilterIcon } from "lucide-react";
 import { FC, useRef } from "react";
 
-type FilterIUProps = {
-  handleFilter: ({ contact, location, supplier }: FilterForm) => void;
+type FilteringDialogProps = {
+  setData: React.Dispatch<React.SetStateAction<Payment[]>>;
 };
 
-const FilterUI: FC<FilterIUProps> = ({ handleFilter }) => {
+const FilteringDialog: FC<FilteringDialogProps> = ({ setData }) => {
   const supplierRef = useRef<HTMLInputElement>(null);
   const locationRef = useRef<HTMLInputElement>(null);
   const contactRef = useRef<HTMLInputElement>(null);
 
   const handleSubmitFilter = () => {
-    const request: FilterForm = {
-      contact: contactRef.current?.value || "",
-      location: locationRef.current?.value || "",
-      supplier: supplierRef.current?.value || "",
-    };
-
-    console.log("filter ui component: ", request);
-
-    handleFilter(request);
+    // Fetch new data based on the filter data
+    // Update the table data using setData
+    // ! Delete this
+    const data: Payment[] = [
+      {
+        id: "100",
+        supplier: "No",
+        abcde: "code",
+        contact: "yet",
+        location: "backend",
+      },
+    ];
+    setData(data);
   };
 
   return (
@@ -77,4 +81,4 @@ const FilterUI: FC<FilterIUProps> = ({ handleFilter }) => {
   );
 };
 
-export default FilterUI;
+export default FilteringDialog;

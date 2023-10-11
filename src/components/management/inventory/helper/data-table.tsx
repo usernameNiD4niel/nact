@@ -20,21 +20,21 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import React, { useState } from "react";
-import SearchWithFilter from "@/components/reuseable/SearchWithFilter";
 import { DataTablePagination } from "./data-table-pagination";
 import TableMutator from "./TableMutator";
-import { FilterForm, InventoryTypes } from "@/constants/props";
+import { InventoryTypes } from "@/constants/props";
+import SearchWithFilter from "./SearchWithFilter";
 
 interface DataTableProps<TValue> {
   columns: ColumnDef<InventoryTypes, TValue>[];
   data: InventoryTypes[];
-  handleFilter: ({ contact, location, supplier }: FilterForm) => void;
+  setData: React.Dispatch<React.SetStateAction<InventoryTypes[]>>;
 }
 
 export function DataTable<TValue>({
   columns,
   data,
-  handleFilter,
+  setData,
 }: DataTableProps<TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -68,7 +68,7 @@ export function DataTable<TValue>({
           isList={true}
           value={getValue()}
           onChange={handleOnChange}
-          handleFilter={handleFilter}
+          setData={setData}
         />
         <div className="my-3">
           <TableMutator />

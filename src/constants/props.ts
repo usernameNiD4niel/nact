@@ -334,3 +334,11 @@ export type FilterForm = {
   location: string;
   contact: string;
 };
+export type InventoryFilterForm = {
+  productName: string;
+  city: string;
+  state: string;
+  quantity: string;
+  depot: string;
+  price: string;
+};

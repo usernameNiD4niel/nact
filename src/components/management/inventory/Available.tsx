@@ -4,35 +4,22 @@ import { useInventoryState } from "@/utils/InventoryState";
 import { useEffect, useState } from "react";
 import { DataTable } from "./helper/data-table";
 import { columns } from "./helper/columns";
-import { FilterForm } from "@/constants/props";
 
 const Available = (): JSX.Element => {
   const [setActiveTab] = useInventoryState((state) => [state.setActiveTab]);
 
   const [isShowingFilter, setIsShowingFilter] = useState<boolean>(false);
 
-  // const [data, setData] = useState(inventoryData);
+  const [data, setData] = useState(inventoryData);
 
   useEffect(() => setActiveTab(0), []);
-
-  const handleFilter = ({ contact, location, supplier }: FilterForm) => {
-    // Fetch the filtered data from the backend
-    // Update the data using setData
-    console.log("contact: ", contact);
-    console.log("location: ", location);
-    console.log("supplier: ", supplier);
-  };
 
   return (
     <>
       <div className="w-full">
         <div className="md:px-10 px-5">
           <div className="mt-36 md:mt-24">
-            <DataTable
-              data={inventoryData}
-              columns={columns}
-              handleFilter={handleFilter}
-            />
+            <DataTable data={data} setData={setData} columns={columns} />
           </div>
         </div>
         {/* <AddButton /> */}

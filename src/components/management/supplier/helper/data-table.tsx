@@ -20,22 +20,22 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import React, { useState } from "react";
-import SearchWithFilter from "@/components/reuseable/SearchWithFilter";
 
 import { Link, useNavigate } from "react-router-dom";
 import { HiOutlinePlus } from "react-icons/hi2";
-import { FilterForm, Payment } from "@/constants/props";
+import { Payment } from "@/constants/props";
+import SearchWithFilter from "./SearchWithFilter";
 
 interface DataTableProps<TValue> {
   columns: ColumnDef<Payment, TValue>[];
   data: Payment[];
-  handleFilter: ({ contact, location, supplier }: FilterForm) => void;
+  setData: React.Dispatch<React.SetStateAction<Payment[]>>;
 }
 
 export function DataTable<TValue>({
   columns,
   data,
-  handleFilter,
+  setData,
 }: DataTableProps<TValue>) {
   const [sorting, setSorting] = React.useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -78,7 +78,7 @@ export function DataTable<TValue>({
           placeHolder="Search Supplier"
           isList={true}
           value={getValue()}
-          handleFilter={handleFilter}
+          setData={setData}
           onChange={handleOnChange}
         />
         {/* <div className="my-3">

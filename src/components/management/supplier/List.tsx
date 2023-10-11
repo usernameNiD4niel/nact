@@ -1,6 +1,6 @@
 import { useInventoryState } from "@/utils/InventoryState";
 import { useEffect, useState } from "react";
-import { FilterForm, Payment } from "@/constants/props";
+import { Payment } from "@/constants/props";
 import Filter from "@/components/reuseable/Filter";
 import { SupplierTableData } from "@/constants/objects";
 import { DataTable } from "./helper/data-table";
@@ -16,9 +16,7 @@ const List = () => {
   const [isFetching, setIsFetching] = useState(true);
 
   const datas = async () => {
-    console.log("endpoint test list, ", process.env.VITE_BASE_URL);
     const d = await getSupplierTableData(setIsFetching);
-    console.log("the data: ", d);
     setSupplier(d);
   };
 
@@ -27,14 +25,6 @@ const List = () => {
     setTab(0);
   }, []);
 
-  const handleFilter = ({ contact, location, supplier }: FilterForm) => {
-    // Fetch the filtered data from the backend
-    // Update the data using setData
-    console.log("contact: ", contact);
-    console.log("location: ", location);
-    console.log("supplier: ", supplier);
-  };
-
   const ContentTable = () => {
     if (isFetching) {
       return <div>Fetching data please wait...</div>;
@@ -42,11 +32,7 @@ const List = () => {
 
     if (supplier && supplier.length > 0) {
       return (
-        <DataTable
-          columns={columns}
-          data={supplier}
-          handleFilter={handleFilter}
-        />
+        <DataTable columns={columns} data={supplier} setData={setSupplier} />
       );
     }
 
