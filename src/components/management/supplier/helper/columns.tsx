@@ -77,8 +77,7 @@ export const columns: ColumnDef<Payment>[] = [
 			return (
 				<Button
 					variant="ghost"
-					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-					className="hidden md:flex">
+					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
 					Contact
 					<ArrowUpDown className="ml-2 h-4 w-4" />
 				</Button>
