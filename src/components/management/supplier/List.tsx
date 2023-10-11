@@ -1,16 +1,14 @@
 import { useInventoryState } from "@/utils/InventoryState";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Payment } from "@/constants/props";
-import Filter from "@/components/reuseable/Filter";
-import { SupplierTableData } from "@/constants/objects";
 import { DataTable } from "./helper/data-table";
 import { columns } from "./helper/columns";
 import { getSupplierTableData } from "@/api/supplier";
 import { Link } from "react-router-dom";
+import { mobileColumn } from "./helper/mobile-column";
 
 const List = () => {
   const [setTab] = useInventoryState((state) => [state.setActiveTab]);
-  const [isShowingFilter, setIsShowingFilter] = useState(false);
 
   const [supplier, setSupplier] = useState<Payment[]>([]);
   const [isFetching, setIsFetching] = useState(true);
@@ -32,7 +30,22 @@ const List = () => {
 
     if (supplier && supplier.length > 0) {
       return (
-        <DataTable columns={columns} data={supplier} setData={setSupplier} />
+        <React.Fragment>
+          <div className="hidden md:flex">
+            <DataTable
+              columns={columns}
+              data={supplier}
+              setData={setSupplier}
+            />
+          </div>
+          <div className="md:hidden">
+            <DataTable
+              columns={mobileColumn}
+              data={supplier}
+              setData={setSupplier}
+            />
+          </div>
+        </React.Fragment>
       );
     }
 
@@ -45,18 +58,18 @@ const List = () => {
 
   return (
     <div className="w-full">
-      <div className="md:px-10 px-5">
+      <div className="md:px-10 px-2">
         <div className="mt-36 md:mt-24">
           <ContentTable />
         </div>
       </div>
       {/* <AddButton /> */}
-      {isShowingFilter && (
+      {/* {isShowingFilter && (
         <Filter
           data={SupplierTableData}
           setIsShowingFilter={setIsShowingFilter}
         />
-      )}
+      )} */}
     </div>
   );
 };
