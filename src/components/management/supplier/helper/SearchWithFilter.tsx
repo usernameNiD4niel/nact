@@ -24,12 +24,12 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 	return (
 		<>
 			<form
-				className="w-full flex items-center justify-center relative border-[1px] border-black border-opacity-20"
+				className="w-full flex items-center rounded-md justify-center relative border-[1px] border-black border-opacity-20"
 				onSubmit={handleOnSubmit}>
 				<Input
 					type="text"
 					placeholder={placeHolder}
-					className="py-6 outline-none border-0 pr-14"
+					className="py-6 rounded-md outline-none border-0 pr-16"
 					value={value}
 					onChange={onChange}
 					// className="border-[1px] rounded-lg border-black border-opacity-10 w-full p-3 focus:outline-primary focus:outline-1"

@@ -36,9 +36,9 @@ const FilteringDialog: FC<FilteringDialogProps> = ({ setData }) => {
 			<DialogTrigger asChild>
 				<Button
 					type="button"
-					className="absolute right-0 top-0 h-full rounded-none"
-					variant="secondary">
-					<FilterIcon className="text-xs" />
+					className="absolute right-0 top-0 h-full rounded-none border-s-[1px] border-s-black border-opacity-20"
+					variant="noVariant">
+					<FilterIcon className="text-xs text-[#017DC3]" size={15} />
 				</Button>
 			</DialogTrigger>
 			<DialogContent className="px-10 py-6 w-screen md:p-6 md:w-auto">

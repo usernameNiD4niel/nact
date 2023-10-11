@@ -5,6 +5,7 @@ import { DataTable } from "./helper/data-table";
 import { columns } from "./helper/columns";
 import { getSupplierTableData } from "@/api/supplier";
 import { Link } from "react-router-dom";
+import { mobileColumn } from "./helper/mobile-column";
 // import { mobileColumn } from "./helper/mobile-column";
 
 const List = () => {
@@ -31,16 +32,20 @@ const List = () => {
 		if (supplier && supplier.length > 0) {
 			return (
 				<React.Fragment>
-					{/* <div className="hidden md:flex w-full"> */}
-					<DataTable columns={columns} data={supplier} setData={setSupplier} />
-					{/* </div> */}
-					{/* <div className="md:hidden w-full">
+					<div className="hidden md:flex w-full">
+						<DataTable
+							columns={columns}
+							data={supplier}
+							setData={setSupplier}
+						/>
+					</div>
+					<div className="md:hidden w-full">
 						<DataTable
 							columns={mobileColumn}
 							data={supplier}
 							setData={setSupplier}
 						/>
-					</div> */}
+					</div>
 				</React.Fragment>
 			);
 		}
@@ -53,9 +58,9 @@ const List = () => {
 	};
 
 	return (
-		<div className="w-full">
-			<div className="md:px-10 px-5">
-				<div className="mt-36 md:mt-24">
+		<div className="w-full flex items-center justify-center">
+			<div className="md:px-10 px-5 w-full">
+				<div className="mt-36 md:mt-24 w-full">
 					<ContentTable />
 				</div>
 			</div>
