@@ -2,6 +2,7 @@ import { FC } from "react";
 import { Payment } from "@/constants/props";
 import { Input } from "@/components/ui/input";
 import FilteringDialog from "./FilteringDialog";
+import FilteringDropdown from "./FilteringDropdown";
 
 type SearchWithFilterProps = {
 	placeHolder: string;
@@ -32,21 +33,35 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 					className="py-6 rounded-md outline-none border-0 pr-16"
 					value={value}
 					onChange={onChange}
-					// className="border-[1px] rounded-lg border-black border-opacity-10 w-full p-3 focus:outline-primary focus:outline-1"
 				/>
-				{/* <FilterUI handleFilter={handleFilter} /> */}
 				<FilteringDialog setData={setData} />
-				{/* <FilteringModal /> */}
-				{/* <FilterModal
-          contact={contact}
-          location={location}
-          setContact={setContact}
-          setLocation={setLocation}
-          handleFilter={handleFilter}
-          setSupplier={setSupplier}
-          supplier={supplier}
-        /> */}
 			</form>
+			<div className="w-full flex gap-6 justify-end">
+				<FilteringDropdown
+					items={["Item 1", "Item 2", "Item 3", "Item 4", "Item 5"]}
+					label="Supplier"
+				/>
+				<FilteringDropdown
+					items={[
+						"Location 1",
+						"Location 2",
+						"Location 3",
+						"Location 4",
+						"Location 5",
+					]}
+					label="Location"
+				/>
+				<FilteringDropdown
+					items={[
+						"Contact 1",
+						"Contact 2",
+						"Contact 3",
+						"Contact 4",
+						"Contact 5",
+					]}
+					label="Contact"
+				/>
+			</div>
 		</>
 	);
 };

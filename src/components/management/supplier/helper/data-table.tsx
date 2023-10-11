@@ -87,7 +87,7 @@ export function DataTable<TValue>({
 
 	return (
 		<div className="w-full">
-			<div className="my-4 w-full">
+			<div className="my-4 w-full space-y-2">
 				<SearchWithFilter
 					placeHolder="Search Supplier"
 					isList={true}
