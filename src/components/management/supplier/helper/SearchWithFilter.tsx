@@ -10,6 +10,7 @@ type SearchWithFilterProps = {
 	onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 	value: string;
 	setData: React.Dispatch<React.SetStateAction<Payment[]>>;
+	data: Payment[];
 };
 
 const SearchWithFilter: FC<SearchWithFilterProps> = ({
@@ -17,9 +18,24 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 	onChange,
 	value,
 	setData,
+	data,
 }) => {
 	const handleOnSubmit = (event: React.FormEvent) => {
 		event.preventDefault();
+	};
+
+	const getSupplier = () => {
+		const suppliers = data.map((supplier) => supplier.supplier);
+		return suppliers;
+	};
+
+	const getLocation = () => {
+		const locations = data.map((location) => location.location);
+		return locations;
+	};
+	const getContact = () => {
+		const contacts = data.map((contact) => contact.contact);
+		return contacts;
 	};
 
 	return (
@@ -37,30 +53,9 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 				<FilteringDialog setData={setData} />
 			</form>
 			<div className="w-full flex gap-6 justify-end">
-				<FilteringDropdown
-					items={["Item 1", "Item 2", "Item 3", "Item 4", "Item 5"]}
-					label="Supplier"
-				/>
-				<FilteringDropdown
-					items={[
-						"Location 1",
-						"Location 2",
-						"Location 3",
-						"Location 4",
-						"Location 5",
-					]}
-					label="Location"
-				/>
-				<FilteringDropdown
-					items={[
-						"Contact 1",
-						"Contact 2",
-						"Contact 3",
-						"Contact 4",
-						"Contact 5",
-					]}
-					label="Contact"
-				/>
+				<FilteringDropdown items={getSupplier()} label="Supplier" />
+				<FilteringDropdown items={getLocation()} label="Location" />
+				<FilteringDropdown items={getContact()} label="Contact" />
 			</div>
 		</>
 	);

@@ -94,6 +94,7 @@ export function DataTable<TValue>({
 					value={getValue()}
 					setData={setData}
 					onChange={handleOnChange}
+					data={data}
 				/>
 				{/* <div className="my-3">
           <TableMutator data={data} />
