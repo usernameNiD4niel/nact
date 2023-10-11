@@ -1,11 +1,7 @@
 import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover";
 import { Payment } from "@/constants/props";
 import { FilterIcon } from "lucide-react";
 import { FC, useRef } from "react";
@@ -36,13 +32,13 @@ const FilteringDialog: FC<FilteringDialogProps> = ({ setData }) => {
   };
 
   return (
-    <Popover modal={true}>
-      <PopoverTrigger asChild>
+    <Dialog>
+      <DialogTrigger asChild>
         <Button type="button" className="py-[1.55rem]" variant="secondary">
           <FilterIcon className="text-xs" size={"22"} />
         </Button>
-      </PopoverTrigger>
-      <PopoverContent className="px-10 py-6 w-screen md:p-6 md:w-auto">
+      </DialogTrigger>
+      <DialogContent className="px-10 py-6 w-screen md:p-6 md:w-auto">
         <div className="grid gap-4">
           <div className="space-y-2">
             <h4 className="font-medium leading-none">Search by column</h4>
@@ -76,8 +72,8 @@ const FilteringDialog: FC<FilteringDialogProps> = ({ setData }) => {
             </Button>
           </div>
         </div>
-      </PopoverContent>
-    </Popover>
+      </DialogContent>
+    </Dialog>
   );
 };
 
