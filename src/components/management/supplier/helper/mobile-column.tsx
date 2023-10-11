@@ -20,7 +20,7 @@ export const mobileColumn: ColumnDef<Payment>[] = [
     },
     cell: ({ row }) => {
       return (
-        <div className="md:ml-4 text-gray-700 text-xs md:text-sm">
+        <div className="ml-4 text-gray-700 text-sm">
           {row.getValue("supplier")}
           <span className="md:hidden">
             {" "}
@@ -47,11 +47,7 @@ export const mobileColumn: ColumnDef<Payment>[] = [
       );
     },
     cell: ({ row }) => {
-      return (
-        <div className="md:ml-4 text-xs md:text-sm">
-          {row.getValue("contact")}
-        </div>
-      );
+      return <div className="ml-4 text-sm">{row.getValue("contact")}</div>;
     },
   },
 ];
