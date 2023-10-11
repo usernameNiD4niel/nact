@@ -10,8 +10,7 @@ export const columns: ColumnDef<Payment>[] = [
 			return (
 				<Button
 					variant="ghost"
-					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-					className="font-bold text-gray-700 text-sm">
+					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
 					Supplier
 					<ArrowUpDown className="ml-2 h-4 w-4" />
 				</Button>
@@ -19,7 +18,7 @@ export const columns: ColumnDef<Payment>[] = [
 		},
 		cell: ({ row }) => {
 			return (
-				<div className="ml-4 text-gray-700 text-sm">
+				<div className="ml-4 font-medium">
 					{row.getValue("supplier")}
 					<span className="md:hidden">
 						{" "}
@@ -36,8 +35,7 @@ export const columns: ColumnDef<Payment>[] = [
 			return (
 				<Button
 					variant="ghost"
-					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-					className="hidden md:flex font-bold text-gray-700 text-sm">
+					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
 					Location
 					<ArrowUpDown className="ml-2 h-4 w-4" />
 				</Button>
@@ -45,7 +43,7 @@ export const columns: ColumnDef<Payment>[] = [
 		},
 		cell: ({ row }) => {
 			return (
-				<div className="ml-4 hidden md:flex text-gray-700 text-sm">
+				<div className="ml-4 hidden md:flex font-medium">
 					{row.getValue("location")}
 				</div>
 			);
@@ -57,8 +55,7 @@ export const columns: ColumnDef<Payment>[] = [
 			return (
 				<Button
 					variant="ghost"
-					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-					className="hidden md:flex font-bold text-gray-700 text-sm">
+					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
 					Abcde
 					<ArrowUpDown className="ml-2 h-4 w-4" />
 				</Button>
@@ -66,7 +63,7 @@ export const columns: ColumnDef<Payment>[] = [
 		},
 		cell: ({ row }) => {
 			return (
-				<div className="ml-4 text-sm hidden md:flex text-gray-700">
+				<div className="ml-4 font-medium hidden md:flex">
 					{row.getValue("abcde")}
 				</div>
 			);
@@ -78,15 +75,14 @@ export const columns: ColumnDef<Payment>[] = [
 			return (
 				<Button
 					variant="ghost"
-					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
-					className="font-bold text-gray-700 text-sm">
+					onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
 					Contact
 					<ArrowUpDown className="ml-2 h-4 w-4" />
 				</Button>
 			);
 		},
 		cell: ({ row }) => {
-			return <div className="ml-4 text-sm">{row.getValue("contact")}</div>;
+			return <div className="ml-4 font-medium">{row.getValue("contact")}</div>;
 		},
 	},
 ];
