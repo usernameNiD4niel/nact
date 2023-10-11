@@ -59,7 +59,7 @@ const List = () => {
 
   return (
     <div className="w-full">
-      <div className="md:px-10 px-2">
+      <div className="md:px-10 px-5">
         <div className="mt-36 md:mt-24">
           <ContentTable />
         </div>
