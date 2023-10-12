@@ -1,64 +1,114 @@
-import { FC } from "react";
-import { Payment } from "@/constants/props";
+import { FC, useState } from "react";
+import { CheckboxShape, Payment } from "@/constants/props";
 import { Input } from "@/components/ui/input";
 import FilteringDialog from "./FilteringDialog";
 import FilteringDropdown from "./FilteringDropdown";
 
 type SearchWithFilterProps = {
-	placeHolder: string;
-	isList: boolean;
-	onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-	value: string;
-	setData: React.Dispatch<React.SetStateAction<Payment[]>>;
-	data: Payment[];
+  placeHolder: string;
+  isList: boolean;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  value: string;
+  setData: React.Dispatch<React.SetStateAction<Payment[]>>;
+  data: Payment[];
 };
 
 const SearchWithFilter: FC<SearchWithFilterProps> = ({
-	placeHolder,
-	onChange,
-	value,
-	setData,
-	data,
+  placeHolder,
+  onChange,
+  value,
+  setData,
+  data,
 }) => {
-	const handleOnSubmit = (event: React.FormEvent) => {
-		event.preventDefault();
-	};
+  const [check, setCheck] = useState<CheckboxShape[]>([]);
 
-	const getSupplier = () => {
-		const suppliers = data.map((supplier) => supplier.supplier);
-		return suppliers;
-	};
+  const getSupplier = () => {
+    const checkboxArray: CheckboxShape[] = [];
+    data.forEach((supplier) => {
+      const object: CheckboxShape = {
+        id: supplier.id! + "supplier",
+        label: supplier.supplier,
+      };
+      checkboxArray.push(object);
+    });
 
-	const getLocation = () => {
-		const locations = data.map((location) => location.location);
-		return locations;
-	};
-	const getContact = () => {
-		const contacts = data.map((contact) => contact.contact);
-		return contacts;
-	};
+    return checkboxArray;
+  };
 
-	return (
-		<>
-			<form
-				className="w-full flex items-center rounded-md justify-center relative border-[1px] border-black border-opacity-20"
-				onSubmit={handleOnSubmit}>
-				<Input
-					type="text"
-					placeholder={placeHolder}
-					className="py-6 rounded-md outline-none border-0 pr-16"
-					value={value}
-					onChange={onChange}
-				/>
-				<FilteringDialog setData={setData} />
-			</form>
-			<div className="w-full flex gap-6 justify-end">
-				<FilteringDropdown items={getSupplier()} label="Supplier" />
-				<FilteringDropdown items={getLocation()} label="Location" />
-				<FilteringDropdown items={getContact()} label="Contact" />
-			</div>
-		</>
-	);
+  const getLocation = () => {
+    const checkboxArray: CheckboxShape[] = [];
+    data.forEach((location) => {
+      const object: CheckboxShape = {
+        id: location.id! + "location",
+        label: location.location,
+      };
+      checkboxArray.push(object);
+    });
+    return checkboxArray;
+  };
+
+  const getContact = () => {
+    const checkboxArray: CheckboxShape[] = [];
+    data.forEach((contact) => {
+      const object: CheckboxShape = {
+        id: contact.id! + "contact",
+        // id: crypto.randomUUID(),
+        label: contact.contact,
+      };
+      checkboxArray.push(object);
+    });
+    return checkboxArray;
+  };
+
+  // const [suppliers_, setSuppliers_] = useState(getSupplier());
+  //   const [locations_, setLocations_] = useState(getLocation());
+  //   const [contacts_, setContacts_] = useState(getContact());
+
+  const handleOnSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+  };
+
+  return (
+    <>
+      <form
+        className="w-full flex items-center rounded-md justify-center relative border-[1px] border-black border-opacity-20"
+        onSubmit={handleOnSubmit}
+      >
+        <Input
+          type="text"
+          placeholder={placeHolder}
+          className="py-6 rounded-md outline-none border-0 pr-16"
+          value={value}
+          onChange={onChange}
+        />
+        <FilteringDialog setData={setData} />
+      </form>
+      <div className="w-full flex gap-6 justify-end">
+        <FilteringDropdown
+          items={getSupplier()}
+          label="Supplier"
+          check={check}
+          setCheck={setCheck}
+          key={"SupplierKeyFilterDropdown"}
+        />
+        <FilteringDropdown
+          items={getLocation()}
+          label="Location"
+          check={check}
+          setCheck={setCheck}
+          key={"LocationKeyFilterDropdown"}
+        />
+        <FilteringDropdown
+          items={getContact()}
+          check={check}
+          setCheck={setCheck}
+          label="Contact"
+          key={"ContactKeyFilterDropdown"}
+        />
+      </div>
+      <div className="w-full"></div>
+    </>
+  );
 };
 
 export default SearchWithFilter;

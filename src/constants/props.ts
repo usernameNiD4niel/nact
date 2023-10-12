@@ -342,3 +342,8 @@ export type InventoryFilterForm = {
   depot: string;
   price: string;
 };
+
+export type CheckboxShape = {
+  id: string;
+  label: string;
+};
