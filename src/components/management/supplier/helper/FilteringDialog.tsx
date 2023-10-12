@@ -1,7 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Payment } from "@/constants/props";
 import { FilterIcon } from "lucide-react";
 import { FC, useRef } from "react";
@@ -41,7 +40,7 @@ const FilteringDialog: FC<FilteringDialogProps> = ({ setData }) => {
 					<FilterIcon className="text-xs text-[#017DC3]" size={15} />
 				</Button>
 			</DialogTrigger>
-			<DialogContent className="px-10 py-6 w-screen md:p-6 md:w-auto">
+			<DialogContent className="px-10 py-6 md:p-6 w-full max-w-sm md:w-auto">
 				<div className="grid gap-4">
 					<div className="space-y-2">
 						<h4 className="font-medium leading-none">Search by column</h4>
@@ -49,27 +48,25 @@ const FilteringDialog: FC<FilteringDialogProps> = ({ setData }) => {
 							You can enter 1 field and submit and it will filter that data.
 						</p>
 					</div>
-					<div className="grid gap-2">
-						<div className="grid grid-cols-3 items-center gap-4">
-							<Label htmlFor="supplier">Supplier</Label>
-							<Input
-								id="supplier"
-								className="col-span-2 h-8"
-								ref={supplierRef}
-							/>
-						</div>
-						<div className="grid grid-cols-3 items-center gap-4">
-							<Label htmlFor="location">Location</Label>
-							<Input
-								id="location"
-								className="col-span-2 h-8"
-								ref={locationRef}
-							/>
-						</div>
-						<div className="grid grid-cols-3 items-center gap-4">
-							<Label htmlFor="contact">Contact</Label>
-							<Input id="contact" className="col-span-2 h-8" ref={contactRef} />
-						</div>
+					<div className="flex flex-col gap-2">
+						<Input
+							id="supplier"
+							className="w-full"
+							ref={supplierRef}
+							placeholder="Supplier"
+						/>
+						<Input
+							id="location"
+							className="w-full"
+							ref={locationRef}
+							placeholder="Location"
+						/>
+						<Input
+							id="contact"
+							className="w-full "
+							ref={contactRef}
+							placeholder="Contact"
+						/>
 						<Button className="my-2" onClick={handleSubmitFilter}>
 							Submit
 						</Button>
