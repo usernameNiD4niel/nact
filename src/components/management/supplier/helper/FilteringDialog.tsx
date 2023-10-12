@@ -2,8 +2,8 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Payment } from "@/constants/props";
-import { FilterIcon } from "lucide-react";
 import { FC, useRef } from "react";
+import { CiCircleList } from "react-icons/ci";
 
 type FilteringDialogProps = {
 	setData: React.Dispatch<React.SetStateAction<Payment[]>>;
@@ -35,9 +35,12 @@ const FilteringDialog: FC<FilteringDialogProps> = ({ setData }) => {
 			<DialogTrigger asChild>
 				<Button
 					type="button"
-					className="absolute right-0 top-0 h-full rounded-none border-s-[1px] border-s-black border-opacity-20"
+					className="absolute right-0 top-0 h-full rounded-none border-s-[1px] border-s-black group border-opacity-20"
 					variant="noVariant">
-					<FilterIcon className="text-xs text-[#017DC3]" size={15} />
+					{/* <FilterIcon className="text-xs text-[#017DC3]" size={15} /> */}
+					<span className="text-xl group-hover:text-[#017DC3]">
+						<CiCircleList />
+					</span>
 				</Button>
 			</DialogTrigger>
 			<DialogContent className="px-10 py-6 md:p-6 w-full max-w-sm md:w-auto">

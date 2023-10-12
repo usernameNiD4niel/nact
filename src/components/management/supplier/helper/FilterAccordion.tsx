@@ -1,56 +1,46 @@
 import {
-	DropdownMenu,
-	DropdownMenuContent,
-	DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { BsChevronDown } from "react-icons/bs";
+	Accordion,
+	AccordionContent,
+	AccordionItem,
+	AccordionTrigger,
+} from "@/components/ui/accordion";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { FC } from "react";
 import { CheckboxShape } from "@/constants/props";
+import { FC } from "react";
 
-type FilteringDropdownProps = {
+type FilterAccordionProps = {
 	label: string;
 	items: CheckboxShape[];
 	check: CheckboxShape[];
 	setCheck: React.Dispatch<React.SetStateAction<CheckboxShape[]>>;
 };
 
-const FilteringDropdown: FC<FilteringDropdownProps> = ({
-	items,
+const FilterAccordion: FC<FilterAccordionProps> = ({
 	check,
-	setCheck,
+	items,
 	label,
+	setCheck,
 }) => {
 	const handleCheckbox = (
 		checked: boolean | "indeterminate",
 		item: CheckboxShape,
 	) => {
 		if (checked) {
-			//   const freshCheck: CheckboxShape = {
-			//     id: item.id,
-			//     label: item.label,
-			//   };
-
 			setCheck((prevChecked) => [...prevChecked, item]);
 		} else {
 			const filteredChecked = check.filter((i) => i.id !== item.id);
 			setCheck(filteredChecked);
 		}
-
 		return checked;
 	};
 
 	return (
-		<DropdownMenu modal={false}>
-			<DropdownMenuTrigger asChild>
-				<button className="flex items-center justify-center gap-2 text-xs py-3">
-					{label} <BsChevronDown />
-				</button>
-			</DropdownMenuTrigger>
-			<DropdownMenuContent className="px-4 py-5 flex flex-col gap-4 justify-center">
+		<Accordion type="single" collapsible className="w-full">
+			<AccordionItem value="item-1">
+				<AccordionTrigger>{label}</AccordionTrigger>
 				{items.map((item) => (
-					<>
+					<AccordionContent>
 						<Label className="flex gap-2 items-center text-xs" key={item.id}>
 							<Checkbox
 								checked={check.find((i) => i.id === item.id)?.id === item.id}
@@ -58,11 +48,11 @@ const FilteringDropdown: FC<FilteringDropdownProps> = ({
 							/>{" "}
 							<span>{item.label}</span>
 						</Label>
-					</>
+					</AccordionContent>
 				))}
-			</DropdownMenuContent>
-		</DropdownMenu>
+			</AccordionItem>
+		</Accordion>
 	);
 };
 
-export default FilteringDropdown;
+export default FilterAccordion;
