@@ -3,6 +3,7 @@ import { CheckboxShape, Payment } from "@/constants/props";
 import { Input } from "@/components/ui/input";
 import FilteringDialog from "./FilteringDialog";
 import FilteringDropdown from "./FilteringDropdown";
+import Badge from "@/components/reuseable/Badge";
 
 type SearchWithFilterProps = {
   placeHolder: string;
@@ -106,7 +107,18 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
           key={"ContactKeyFilterDropdown"}
         />
       </div>
-      <div className="w-full"></div>
+      {check && check.length > 0 && (
+        <div className="w-full flex flex-wrap p-2 gap-2 bg-zinc-100">
+          {check.map((checkItem) => (
+            <Badge
+              key={checkItem.id}
+              text={checkItem.label}
+              id={checkItem.id}
+              setCheck={setCheck}
+            />
+          ))}
+        </div>
+      )}
     </>
   );
 };
