@@ -5,6 +5,7 @@ import {
 	AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { CheckboxShape } from "@/constants/props";
 import { FC } from "react";
@@ -39,17 +40,20 @@ const FilterAccordion: FC<FilterAccordionProps> = ({
 		<Accordion type="single" collapsible className="w-full">
 			<AccordionItem value="item-1">
 				<AccordionTrigger>{label}</AccordionTrigger>
-				{items.map((item) => (
-					<AccordionContent>
-						<Label className="flex gap-2 items-center text-xs" key={item.id}>
+				<AccordionContent className="w-full">
+					<div className="w-full px-1 pb-3 pt-1">
+						<Input placeholder="Search" className="w-full" />
+					</div>
+					{items.map((item) => (
+						<Label className="flex gap-2 px-1 items-center pb-2" key={item.id}>
 							<Checkbox
 								checked={check.find((i) => i.id === item.id)?.id === item.id}
 								onCheckedChange={(checked) => handleCheckbox(checked, item)}
 							/>{" "}
 							<span>{item.label}</span>
 						</Label>
-					</AccordionContent>
-				))}
+					))}
+				</AccordionContent>
 			</AccordionItem>
 		</Accordion>
 	);
