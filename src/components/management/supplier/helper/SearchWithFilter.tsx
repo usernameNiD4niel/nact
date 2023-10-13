@@ -38,27 +38,46 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 	};
 
 	const getLocation = () => {
-		const checkboxArray: CheckboxShape[] = [];
+		const uniqueLocations = new Set<string>(); // Create a Set to store unique locations
+
 		data.forEach((location) => {
-			const object: CheckboxShape = {
-				id: location.id! + "location",
-				label: location.location,
-			};
-			checkboxArray.push(object);
+			uniqueLocations.add(location.location); // Add each location to the Set
 		});
+
+		// Convert the Set back to an array of objects
+		const checkboxArray: CheckboxShape[] = Array.from(uniqueLocations).map(
+			(uniqueLocation, index) => ({
+				id: `${index}location`,
+				label: uniqueLocation,
+			}),
+		);
 		return checkboxArray;
 	};
 
 	const getContact = () => {
-		const checkboxArray: CheckboxShape[] = [];
+		// const checkboxArray: CheckboxShape[] = [];
+		// data.forEach((contact) => {
+		// 	const object: CheckboxShape = {
+		// 		id: contact.id! + "contact",
+		// 		// id: crypto.randomUUID(),
+		// 		label: contact.contact,
+		// 	};
+		// 	checkboxArray.push(object);
+		// });
+
+		const uniqueContacts = new Set<string>(); // Create a Set to store unique locations
+
 		data.forEach((contact) => {
-			const object: CheckboxShape = {
-				id: contact.id! + "contact",
-				// id: crypto.randomUUID(),
-				label: contact.contact,
-			};
-			checkboxArray.push(object);
+			uniqueContacts.add(contact.contact); // Add each contact to the Set
 		});
+
+		// Convert the Set back to an array of objects
+		const checkboxArray: CheckboxShape[] = Array.from(uniqueContacts).map(
+			(uniqueContact, index) => ({
+				id: `${index}contact`,
+				label: uniqueContact,
+			}),
+		);
 		return checkboxArray;
 	};
 

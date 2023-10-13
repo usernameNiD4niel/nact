@@ -37,7 +37,6 @@ const FilteringDialog: FC<FilteringDialogProps> = ({ setData }) => {
 					type="button"
 					className="absolute right-0 top-0 h-full rounded-none border-s-[1px] border-s-black group border-opacity-20"
 					variant="noVariant">
-					{/* <FilterIcon className="text-xs text-[#017DC3]" size={15} /> */}
 					<span className="text-xl group-hover:text-[#017DC3]">
 						<CiCircleList />
 					</span>
