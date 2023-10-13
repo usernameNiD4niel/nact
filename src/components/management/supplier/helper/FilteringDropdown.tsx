@@ -8,6 +8,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { FC } from "react";
 import { CheckboxShape } from "@/constants/props";
+import { Input } from "@/components/ui/input";
 
 type FilteringDropdownProps = {
 	label: string;
@@ -27,11 +28,6 @@ const FilteringDropdown: FC<FilteringDropdownProps> = ({
 		item: CheckboxShape,
 	) => {
 		if (checked) {
-			//   const freshCheck: CheckboxShape = {
-			//     id: item.id,
-			//     label: item.label,
-			//   };
-
 			setCheck((prevChecked) => [...prevChecked, item]);
 		} else {
 			const filteredChecked = check.filter((i) => i.id !== item.id);
@@ -49,6 +45,7 @@ const FilteringDropdown: FC<FilteringDropdownProps> = ({
 				</button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent className="px-4 py-5 flex flex-col gap-4 justify-center">
+				<Input placeholder="Search" className="w-full" />
 				{items.map((item) => (
 					<>
 						<Label className="flex gap-2 items-center text-xs" key={item.id}>

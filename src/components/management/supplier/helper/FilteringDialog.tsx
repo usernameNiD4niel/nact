@@ -10,7 +10,7 @@ type FilteringDialogProps = {
 };
 
 const FilteringDialog: FC<FilteringDialogProps> = ({ setData }) => {
-	const supplierRef = useRef<HTMLInputElement>(null);
+	// const supplierRef = useRef<HTMLInputElement>(null);
 	const locationRef = useRef<HTMLInputElement>(null);
 	const contactRef = useRef<HTMLInputElement>(null);
 
@@ -52,12 +52,12 @@ const FilteringDialog: FC<FilteringDialogProps> = ({ setData }) => {
 						</p>
 					</div>
 					<div className="flex flex-col gap-2">
-						<Input
+						{/* <Input
 							id="supplier"
 							className="w-full"
 							ref={supplierRef}
 							placeholder="Supplier"
-						/>
+						/> */}
 						<Input
 							id="location"
 							className="w-full"
@@ -68,7 +68,7 @@ const FilteringDialog: FC<FilteringDialogProps> = ({ setData }) => {
 							id="contact"
 							className="w-full "
 							ref={contactRef}
-							placeholder="Contact"
+							placeholder="Contact Person"
 						/>
 						<Button className="my-2" onClick={handleSubmitFilter}>
 							Submit
