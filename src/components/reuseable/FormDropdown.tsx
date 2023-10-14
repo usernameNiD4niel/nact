@@ -18,9 +18,10 @@ import {
 
 type FormDropdownProps = {
 	setIsDisabled: React.Dispatch<React.SetStateAction<boolean>>;
+	id: string;
 };
 
-const FormDropdown: React.FC<FormDropdownProps> = ({ setIsDisabled }) => {
+const FormDropdown: React.FC<FormDropdownProps> = ({ setIsDisabled, id }) => {
 	const [isModalWarning, setIsModalWarning] = React.useState(false);
 
 	const handleEditAction = () => {
@@ -53,7 +54,9 @@ const FormDropdown: React.FC<FormDropdownProps> = ({ setIsDisabled }) => {
 					<span>Delete</span>
 				</DropdownMenuItem>
 			</DropdownMenuContent>
-			{isModalWarning && <DeleteModal setIsModalWarning={setIsModalWarning} />}
+			{isModalWarning && (
+				<DeleteModal setIsModalWarning={setIsModalWarning} id={id} />
+			)}
 		</DropdownMenu>
 	);
 };

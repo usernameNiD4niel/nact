@@ -139,11 +139,7 @@ const updateSpecificSupplier = async (
 };
 
 // No Token for this request
-const deleteSupplier = async (
-	id: string,
-	setValidation: React.Dispatch<React.SetStateAction<string>>,
-	setMessage: React.Dispatch<React.SetStateAction<string>>,
-) => {
+const deleteSupplier = async (id: string) => {
 	const response = await fetch(
 		`${import.meta.env.VITE_BASE_URL}/supplier/${id}`,
 		{
@@ -156,18 +152,14 @@ const deleteSupplier = async (
 	);
 
 	if (response.ok) {
-		const data = (Promise<ResponseAddShipping> = await response.json());
+		const data = await response.json();
 
 		const { message } = await data;
-		setMessage(message);
-		setValidation("success");
-		return true;
+		return message;
 	} else {
-		const data: Promise<ResponseAddShipping> = await response.json();
-		setValidation("error");
+		const data = await response.json();
 		const { message } = await data;
-		setMessage(message);
-		return false;
+		return message;
 	}
 };
 

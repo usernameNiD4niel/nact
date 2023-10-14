@@ -46,16 +46,16 @@ const FilteringDropdown: FC<FilteringDropdownProps> = ({
 			</DropdownMenuTrigger>
 			<DropdownMenuContent className="px-4 py-5 flex flex-col gap-4 justify-center">
 				<Input placeholder="Search" className="w-full" />
-				{items.map((item) => (
-					<>
-						<Label className="flex gap-2 items-center text-xs" key={item.id}>
-							<Checkbox
-								checked={check.find((i) => i.id === item.id)?.id === item.id}
-								onCheckedChange={(checked) => handleCheckbox(checked, item)}
-							/>{" "}
-							<span>{item.label}</span>
-						</Label>
-					</>
+				{items.map((item, index) => (
+					<Label
+						className="flex gap-2 items-center text-xs"
+						key={item.id + index * Math.random()}>
+						<Checkbox
+							checked={check.find((i) => i.id === item.id)?.id === item.id}
+							onCheckedChange={(checked) => handleCheckbox(checked, item)}
+						/>{" "}
+						<span>{item.label}</span>
+					</Label>
 				))}
 			</DropdownMenuContent>
 		</DropdownMenu>
