@@ -88,6 +88,7 @@ const InventoryTableItem = () => {
 						<FormDropdown
 							setIsDisabled={setIsDisabled}
 							key="InventoryFormDropdown"
+							id="1"
 						/>
 					</div>
 					<div className="flex flex-col w-full gap-y-4">
