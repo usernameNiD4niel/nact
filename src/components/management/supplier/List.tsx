@@ -6,7 +6,6 @@ import { columns } from "./helper/columns";
 import { getSupplierTableData } from "@/api/supplier";
 import { Link } from "react-router-dom";
 import { mobileColumn } from "./helper/mobile-column";
-// import { mobileColumn } from "./helper/mobile-column";
 
 const List = () => {
 	const [setTab] = useInventoryState((state) => [state.setActiveTab]);
@@ -33,18 +32,10 @@ const List = () => {
 			return (
 				<React.Fragment>
 					<div className="hidden md:flex w-full">
-						<DataTable
-							columns={columns}
-							data={supplier}
-							setData={setSupplier}
-						/>
+						<DataTable columns={columns} data={supplier} />
 					</div>
 					<div className="md:hidden w-full">
-						<DataTable
-							columns={mobileColumn}
-							data={supplier}
-							setData={setSupplier}
-						/>
+						<DataTable columns={mobileColumn} data={supplier} />
 					</div>
 				</React.Fragment>
 			);

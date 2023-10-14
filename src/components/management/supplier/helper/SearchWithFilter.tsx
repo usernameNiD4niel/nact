@@ -11,7 +11,6 @@ type SearchWithFilterProps = {
 	isList: boolean;
 	onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 	value: string;
-	setData: React.Dispatch<React.SetStateAction<Payment[]>>;
 	data: Payment[];
 };
 
@@ -19,7 +18,6 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 	placeHolder,
 	onChange,
 	value,
-	setData,
 	data,
 }) => {
 	const [check, setCheck] = useState<CheckboxShape[]>([]);
@@ -55,16 +53,6 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 	};
 
 	const getContact = () => {
-		// const checkboxArray: CheckboxShape[] = [];
-		// data.forEach((contact) => {
-		// 	const object: CheckboxShape = {
-		// 		id: contact.id! + "contact",
-		// 		// id: crypto.randomUUID(),
-		// 		label: contact.contact,
-		// 	};
-		// 	checkboxArray.push(object);
-		// });
-
 		const uniqueContacts = new Set<string>(); // Create a Set to store unique locations
 
 		data.forEach((contact) => {
@@ -80,10 +68,6 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 		);
 		return checkboxArray;
 	};
-
-	// const [suppliers_, setSuppliers_] = useState(getSupplier());
-	//   const [locations_, setLocations_] = useState(getLocation());
-	//   const [contacts_, setContacts_] = useState(getContact());
 
 	const handleOnSubmit = (event: React.FormEvent) => {
 		event.preventDefault();
@@ -101,7 +85,7 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 					value={value}
 					onChange={onChange}
 				/>
-				<FilteringDialog setData={setData} />
+				<FilteringDialog data={data} />
 			</form>
 			<div className="w-full gap-6 justify-end hidden md:flex">
 				<FilteringDropdown

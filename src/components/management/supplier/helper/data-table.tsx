@@ -29,14 +29,9 @@ import SearchWithFilter from "./SearchWithFilter";
 interface DataTableProps<TValue> {
 	columns: ColumnDef<Payment, TValue>[];
 	data: Payment[];
-	setData: React.Dispatch<React.SetStateAction<Payment[]>>;
 }
 
-export function DataTable<TValue>({
-	columns,
-	data,
-	setData,
-}: DataTableProps<TValue>) {
+export function DataTable<TValue>({ columns, data }: DataTableProps<TValue>) {
 	const [sorting, setSorting] = React.useState<SortingState>([]);
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 	const [counter, setCounter] = useState(20);
@@ -65,7 +60,6 @@ export function DataTable<TValue>({
 		table.getColumn("supplier")?.setFilterValue(event.target.value);
 
 	const handleTableItem = (supplier: string) => {
-		console.log("redirect");
 		const foundObject = data.find((item) => item.supplier === supplier);
 
 		navigate(`/supplier/${foundObject?.id}`);
@@ -92,7 +86,6 @@ export function DataTable<TValue>({
 					placeHolder="Search Supplier"
 					isList={true}
 					value={getValue()}
-					setData={setData}
 					onChange={handleOnChange}
 					data={data}
 				/>
