@@ -53,7 +53,8 @@ const FilteringDropdown: FC<FilteringDropdownProps> = ({
 						<Checkbox
 							checked={check.find((i) => i.id === item.id)?.id === item.id}
 							onCheckedChange={(checked) => handleCheckbox(checked, item)}
-						/>{" "}
+							className="border-gray-400"
+						/>
 						<span>{item.label}</span>
 					</Label>
 				))}

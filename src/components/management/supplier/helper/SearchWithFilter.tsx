@@ -118,7 +118,7 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 				setCheck={setCheck}
 			/>
 			{check && check.length > 0 && (
-				<div className="w-full flex flex-wrap p-2 gap-2 bg-zinc-100">
+				<div className="w-full flex flex-wrap p-2 gap-2 bg-zinc-100 rounded-lg">
 					{check.map((checkItem) => (
 						<Badge
 							key={checkItem.id}

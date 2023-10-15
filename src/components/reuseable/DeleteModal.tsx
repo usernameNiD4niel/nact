@@ -46,7 +46,7 @@ const DeleteModal: FC<DeleteModalProps> = ({ setIsModalWarning, id }) => {
 	};
 	return (
 		<div className="inset-0 z-20 flex items-center justify-center fixed bg-black bg-opacity-70">
-			<div className="w-full md:w-[500px] p-6 rounded-md border-[1px] border-black bg-white border-opacity-20 space-y-2">
+			<div className="w-full md:w-[500px] p-6 mx-6 rounded-md border-[1px] border-black bg-white border-opacity-20 space-y-2">
 				<h2 className="font-bold">Are you absolutely sure?</h2>
 				<p className="text-sm">
 					This action cannot be undone. This will permanently delete this
