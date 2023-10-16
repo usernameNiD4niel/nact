@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Payment } from "@/constants/props";
+import { SupplierTableProps } from "@/constants/props";
 import { FC, useState } from "react";
 import { RiFileDownloadFill } from "react-icons/ri";
 import { CSVLink } from "react-csv";
@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { AiOutlineClose } from "react-icons/ai";
 
 type FilteringDialogProps = {
-	data: Payment[];
+	data: SupplierTableProps[];
 };
 
 function getFormattedDate(): string {

@@ -1,27 +1,29 @@
 import { useInventoryState } from "@/utils/InventoryState";
 import React, { useEffect, useState } from "react";
-import { Payment } from "@/constants/props";
+import { SupplierTableProps } from "@/constants/props";
 import { DataTable } from "./helper/data-table";
 import { columns } from "./helper/columns";
-import { getSupplierTableData } from "@/api/supplier";
+import { getPaginatedSupplier } from "@/api/supplier";
 import { Link } from "react-router-dom";
 import { mobileColumn } from "./helper/mobile-column";
 
 const List = () => {
 	const [setTab] = useInventoryState((state) => [state.setActiveTab]);
 
-	const [supplier, setSupplier] = useState<Payment[]>([]);
+	const [supplier, setSupplier] = useState<SupplierTableProps[]>([]);
 	const [isFetching, setIsFetching] = useState(true);
+	const [currentPage, setCurrentPage] = useState(2);
 
 	const datas = async () => {
-		const d = await getSupplierTableData(setIsFetching);
+		const d = await getPaginatedSupplier(currentPage, setIsFetching);
 		setSupplier(d);
+		console.log("todays data: ", d);
 	};
 
 	useEffect(() => {
 		datas();
 		setTab(0);
-	}, []);
+	}, [currentPage]);
 
 	const ContentTable = () => {
 		if (isFetching) {
@@ -32,10 +34,26 @@ const List = () => {
 			return (
 				<React.Fragment>
 					<div className="hidden md:flex w-full">
-						<DataTable columns={columns} data={supplier} />
+						<DataTable
+							columns={columns}
+							data={supplier}
+							handleRefetch={datas}
+							currentPage={currentPage}
+							setCurrentPage={setCurrentPage}
+							setIsFetching={setIsFetching}
+							setData={setSupplier}
+						/>
 					</div>
 					<div className="md:hidden w-full">
-						<DataTable columns={mobileColumn} data={supplier} />
+						<DataTable
+							columns={mobileColumn}
+							data={supplier}
+							handleRefetch={datas}
+							setIsFetching={setIsFetching}
+							currentPage={currentPage}
+							setData={setSupplier}
+							setCurrentPage={setCurrentPage}
+						/>
 					</div>
 				</React.Fragment>
 			);

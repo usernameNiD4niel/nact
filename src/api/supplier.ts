@@ -44,6 +44,29 @@ const getSupplierTableData = async (
 	}
 };
 
+const getPaginatedSupplier = async (
+	page: number,
+	setIsFetching: React.Dispatch<React.SetStateAction<boolean>>,
+) => {
+	const response = await fetch(
+		`${import.meta.env.VITE_BASE_URL}/api/supplier?page=1&per_page=${page}0`,
+		{
+			headers: {
+				"Content-Type": "application/json",
+			},
+		},
+	);
+
+	if (response.ok) {
+		const data: SupplierDataProps = await response.json();
+		setIsFetching(false);
+
+		return data.suppliers;
+	}
+	setIsFetching(false);
+	throw new Error("Cannot get suppliers data from server");
+};
+
 type ResponseAddShipping = {
 	message: string;
 };
@@ -169,4 +192,5 @@ export {
 	getSpecificSupplier,
 	updateSpecificSupplier,
 	deleteSupplier,
+	getPaginatedSupplier,
 };

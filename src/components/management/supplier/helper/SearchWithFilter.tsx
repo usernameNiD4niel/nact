@@ -1,5 +1,5 @@
 import { FC, useState } from "react";
-import { CheckboxShape, Payment } from "@/constants/props";
+import { CheckboxShape, SupplierTableProps } from "@/constants/props";
 import { Input } from "@/components/ui/input";
 import FilteringDialog from "./FilteringDialog";
 import FilteringDropdown from "./FilteringDropdown";
@@ -11,7 +11,7 @@ type SearchWithFilterProps = {
 	isList: boolean;
 	onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 	value: string;
-	data: Payment[];
+	data: SupplierTableProps[];
 };
 
 const SearchWithFilter: FC<SearchWithFilterProps> = ({
@@ -27,7 +27,7 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 		data.forEach((supplier) => {
 			const object: CheckboxShape = {
 				id: supplier.id! + "supplier",
-				label: supplier.supplier,
+				label: supplier.businessName,
 			};
 			checkboxArray.push(object);
 		});
@@ -56,7 +56,7 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 		const uniqueContacts = new Set<string>(); // Create a Set to store unique locations
 
 		data.forEach((contact) => {
-			uniqueContacts.add(contact.contact); // Add each contact to the Set
+			uniqueContacts.add(contact.companyPhoneNumber); // Add each contact to the Set
 		});
 
 		// Convert the Set back to an array of objects

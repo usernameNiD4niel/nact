@@ -1,11 +1,11 @@
 import { Button } from "@/components/ui/button";
-import { Payment } from "@/constants/props";
+import { SupplierTableProps } from "@/constants/props";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 
-export const columns: ColumnDef<Payment>[] = [
+export const columns: ColumnDef<SupplierTableProps>[] = [
 	{
-		accessorKey: "supplier",
+		accessorKey: "businessName",
 		header: ({ column }) => {
 			return (
 				<Button
@@ -19,7 +19,7 @@ export const columns: ColumnDef<Payment>[] = [
 		cell: ({ row }) => {
 			return (
 				<div className="ml-4 font-medium">
-					{row.getValue("supplier")}
+					{row.getValue("businessName")}
 					<span className="md:hidden">
 						{" "}
 						<br />
@@ -72,7 +72,7 @@ export const columns: ColumnDef<Payment>[] = [
 		},
 	},
 	{
-		accessorKey: "contact",
+		accessorKey: "companyPhoneNumber",
 		header: ({ column }) => {
 			return (
 				<Button
@@ -84,7 +84,11 @@ export const columns: ColumnDef<Payment>[] = [
 			);
 		},
 		cell: ({ row }) => {
-			return <div className="ml-4 font-medium">{row.getValue("contact")}</div>;
+			return (
+				<div className="ml-4 font-medium">
+					{row.getValue("companyPhoneNumber")}
+				</div>
+			);
 		},
 	},
 ];

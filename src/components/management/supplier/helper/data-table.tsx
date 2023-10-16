@@ -23,15 +23,28 @@ import React, { useState } from "react";
 
 import { Link, useNavigate } from "react-router-dom";
 import { HiOutlinePlus } from "react-icons/hi2";
-import { Payment } from "@/constants/props";
+import { Payment, SupplierTableProps } from "@/constants/props";
 import SearchWithFilter from "./SearchWithFilter";
 
 interface DataTableProps<TValue> {
-	columns: ColumnDef<Payment, TValue>[];
-	data: Payment[];
+	columns: ColumnDef<SupplierTableProps, TValue>[];
+	data: SupplierTableProps[];
+	setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+	handleRefetch: () => void;
+	currentPage: number;
+	setIsFetching: React.Dispatch<React.SetStateAction<boolean>>;
+	setData: React.Dispatch<React.SetStateAction<SupplierTableProps[]>>;
 }
 
-export function DataTable<TValue>({ columns, data }: DataTableProps<TValue>) {
+export function DataTable<TValue>({
+	columns,
+	data,
+	setData,
+	handleRefetch,
+	setIsFetching,
+	currentPage,
+	setCurrentPage,
+}: DataTableProps<TValue>) {
 	const [sorting, setSorting] = React.useState<SortingState>([]);
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 	const [counter, setCounter] = useState(20);
@@ -54,29 +67,26 @@ export function DataTable<TValue>({ columns, data }: DataTableProps<TValue>) {
 	});
 
 	const getValue = () =>
-		(table.getColumn("supplier")?.getFilterValue() as string) ?? "";
+		(table.getColumn("businessName")?.getFilterValue() as string) ?? "";
 
 	const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) =>
-		table.getColumn("supplier")?.setFilterValue(event.target.value);
+		table.getColumn("businessName")?.setFilterValue(event.target.value);
 
 	const handleTableItem = (supplier: string) => {
-		const foundObject = data.find((item) => item.supplier === supplier);
+		const foundObject = data.find((item) => item.businessName === supplier);
 
 		navigate(`/supplier/${foundObject?.id}`);
 	};
 
-	const getState = (supplier: string) => {
-		return data
-			.find((item) => item.supplier === supplier)
-			?.location.split(",")[0]
-			.trim();
-	};
+	// const getState = (supplier: string) => {
+	// 	return data
+	// 		.find((item) => item.businessName === supplier)
+	// 		?.location.split(",")[0]
+	// 		.trim();
+	// };
 
-	const getCountry = (supplier: string) => {
-		return data
-			.find((item) => item.supplier === supplier)
-			?.location.split(",")[1]
-			.trim();
+	const getLocation = (supplier: string) => {
+		return data.find((item) => item.businessName === supplier)?.location.trim();
 	};
 
 	return (
@@ -89,9 +99,6 @@ export function DataTable<TValue>({ columns, data }: DataTableProps<TValue>) {
 					onChange={handleOnChange}
 					data={data}
 				/>
-				{/* <div className="my-3">
-          <TableMutator data={data} />
-        </div> */}
 			</div>
 			<div className="rounded-md border">
 				<Table className="w-full">
@@ -121,7 +128,7 @@ export function DataTable<TValue>({ columns, data }: DataTableProps<TValue>) {
 									key={row.id}
 									data-state={row.getIsSelected() && "selected"}
 									className="hover:cursor-pointer bg-white hover:bg-zinc-50/10"
-									onClick={() => handleTableItem(row.getValue("supplier"))}>
+									onClick={() => handleTableItem(row.getValue("businessName"))}>
 									{row.getVisibleCells().map((cell) => (
 										<TableCell key={cell.id}>
 											{flexRender(
@@ -129,12 +136,8 @@ export function DataTable<TValue>({ columns, data }: DataTableProps<TValue>) {
 												cell.getContext(),
 											)}
 											<span className="md:hidden ml-4 flex flex-col">
-												{cell.id.endsWith("supplier") === true && (
-													<>
-														{getState(row.getValue("supplier"))}
-														{", "}
-														{getCountry(row.getValue("supplier"))}
-													</>
+												{cell.id.endsWith("businessName") === true && (
+													<>{getLocation(row.getValue("businessName"))}</>
 												)}
 											</span>
 										</TableCell>
@@ -169,12 +172,38 @@ export function DataTable<TValue>({ columns, data }: DataTableProps<TValue>) {
 						variant={"noVariant"}
 						className="px-8 font-bold py-6 text-[#017DC3] bg-transparent"
 						onClick={() => {
-							table.setPageSize(counter);
+							setCurrentPage((prevCount) => prevCount + 1);
+							console.log("dataaa: ", data);
+							// setData([]);
+
 							setCounter((prevCount) => prevCount + 10);
+							console.log("count: ", table.getPageCount());
+							table.setPageSize(50);
+							// table.setPageIndex(2);
 						}}>
 						Load More
 					</Button>
 				)}
+			</div>
+			<div className="flex w-full items-center justify-center space-x-2 py-4">
+				<Button
+					variant="outline"
+					size="sm"
+					onClick={() => table.previousPage()}
+					disabled={!table.getCanPreviousPage()}>
+					Previous
+				</Button>
+				<Button
+					variant="outline"
+					size="sm"
+					onClick={() => {
+						setCurrentPage((prevCount) => prevCount + 1);
+						setCounter((prevCount) => prevCount + 10);
+						table.nextPage();
+					}}
+					disabled={!table.getCanNextPage()}>
+					Next
+				</Button>
 			</div>
 			<div className="fixed bottom-2 right-4">
 				<Link
