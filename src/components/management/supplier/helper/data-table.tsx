@@ -69,6 +69,10 @@ export function DataTable<TValue>({
 		table.setPageSize(counter);
 	};
 
+	table.options.manualPagination = true;
+	// ! use this instead
+	// ! https://karthikraja555.medium.com/server-side-pagination-in-react-table-a4311b730d19
+
 	useEffect(() => {
 		if (!(data.length <= 10)) {
 			getData();
