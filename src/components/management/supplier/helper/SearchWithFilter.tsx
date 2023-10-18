@@ -87,7 +87,7 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 				/>
 				<FilteringDialog data={data} />
 			</form>
-			<div className="w-full gap-6 justify-end hidden md:flex">
+			<div className="w-full gap-6 justify-end hidden md:flex z-0">
 				<FilteringDropdown
 					items={getSupplier()}
 					label="Supplier"
