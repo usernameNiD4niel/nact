@@ -2,7 +2,6 @@ import { useInventoryState } from "@/utils/InventoryState";
 import React, { useEffect, useState } from "react";
 import { HelperType, SupplierTableProps } from "@/constants/props";
 import { columns } from "./helper/columns";
-import { Link } from "react-router-dom";
 import { NewDataTable } from "./helper/new-table-data";
 
 const getInitialData = async (
@@ -59,14 +58,58 @@ const List = () => {
     setTab(0);
   }, []);
 
-  const ContentTable = () => {
-    // if (isFetching) {
-    // 	return <div>Fetching data please wait...</div>;
-    // }
+  //   const ContentTable = () => {
+  //     // if (isFetching) {
+  //     // 	return <div>Fetching data please wait...</div>;
+  //     // }
 
-    if (supplier) {
-      if (supplier.length > 0) {
-        return (
+  //     if (supplier) {
+  //       if (supplier.length > 0) {
+  //         return (
+  //           <NewDataTable
+  //             columns={columns}
+  //             data={supplier}
+  //             next_page_url={nextPageUrl}
+  //             setData={setSupplier}
+  //             key={"NewDataTAble"}
+  //           />
+  //         );
+  //       }
+
+  //       //   return (
+  //       //     <React.Fragment>
+  //       //       <div className="hidden md:flex w-full">
+  //       //         <DataTable
+  //       //           columns={columns}
+  //       //           data={supplier}
+  //       //           setData={setSupplier}
+  //       //           nextPageUrl={nextPageUrl}
+  //       //         />
+  //       //       </div>
+  //       //       <div className="md:hidden w-full">
+  //       //         {/* <DataTable
+  //       //           columns={mobileColumn}
+  //       //           data={supplier}
+  //       //           setData={setSupplier}
+  //       //           nextPageUrl={nextPageUrl}
+  //       //         /> */}
+  //       //       </div>
+  //       //     </React.Fragment>
+  //       //   );
+  //     }
+
+  //     return (
+  //       <div>
+  //         No supplier data yet, <Link to="/supplier/add">create new entry</Link>
+  //       </div>
+  //     );
+  //   };
+
+  return (
+    <div className="w-full flex items-center justify-center">
+      <div className="md:px-10 px-5 w-full">
+        <div className="mt-36 md:mt-24 w-full">
+          {/* <ContentTable /> */}
           <NewDataTable
             columns={columns}
             data={supplier}
@@ -74,43 +117,6 @@ const List = () => {
             setData={setSupplier}
             key={"NewDataTAble"}
           />
-        );
-      }
-
-      //   return (
-      //     <React.Fragment>
-      //       <div className="hidden md:flex w-full">
-      //         <DataTable
-      //           columns={columns}
-      //           data={supplier}
-      //           setData={setSupplier}
-      //           nextPageUrl={nextPageUrl}
-      //         />
-      //       </div>
-      //       <div className="md:hidden w-full">
-      //         {/* <DataTable
-      //           columns={mobileColumn}
-      //           data={supplier}
-      //           setData={setSupplier}
-      //           nextPageUrl={nextPageUrl}
-      //         /> */}
-      //       </div>
-      //     </React.Fragment>
-      //   );
-    }
-
-    return (
-      <div>
-        No supplier data yet, <Link to="/supplier/add">create new entry</Link>
-      </div>
-    );
-  };
-
-  return (
-    <div className="w-full flex items-center justify-center">
-      <div className="md:px-10 px-5 w-full">
-        <div className="mt-36 md:mt-24 w-full">
-          <ContentTable />
         </div>
       </div>
       {/* <AddButton /> */}

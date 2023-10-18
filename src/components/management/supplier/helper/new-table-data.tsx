@@ -80,7 +80,7 @@ export function NewDataTable<TValue>({
     table.getColumn("businessName")?.setFilterValue(event.target.value);
 
   return (
-    <div className="w-full">
+    <div>
       <div className="my-4 w-full space-y-2">
         <SearchWithFilter
           placeHolder="Search Supplier"
@@ -90,7 +90,6 @@ export function NewDataTable<TValue>({
           data={data}
         />
       </div>
-
       <div className="rounded-md border">
         <Table>
           <TableHeader>
