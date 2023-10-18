@@ -1,5 +1,4 @@
 import {
-	CheckboxShape,
 	ShippingFormProps,
 	SupplierDataProps,
 	SupplierItem,
@@ -106,7 +105,7 @@ const getBusinessNameFilter = async (searchQuery: string) => {
 
 	if (response.ok) {
 		const businessName = await response.json();
-		const data: CheckboxShape[] = businessName.suppliers;
+		const data: SupplierTableProps[] = businessName.suppliers;
 		return data;
 	}
 	throw new Error("Could not find supplier");

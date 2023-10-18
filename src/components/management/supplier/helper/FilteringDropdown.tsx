@@ -55,8 +55,14 @@ const FilteringDropdown: FC<FilteringDropdownProps> = ({
 			setIsSearching(true);
 			if (debounceSearchTerms) {
 				const fetchedData = await getBusinessNameFilter(search);
-				setData(fetchedData);
-				console.log("Fetched data: ", fetchedData);
+
+				const dataFetched: CheckboxShape[] = fetchedData.map((_) => ({
+					id: _.id,
+					label: _.businessName,
+				}));
+
+				setData(dataFetched);
+				console.log("Fetched data: ", dataFetched);
 			}
 			setIsSearching(false);
 		};
