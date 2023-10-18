@@ -56,6 +56,7 @@ const FilteringDropdown: FC<FilteringDropdownProps> = ({
 			if (debounceSearchTerms) {
 				const fetchedData = await getBusinessNameFilter(search);
 				setData(fetchedData);
+				console.log("Fetched data: ", fetchedData);
 			}
 			setIsSearching(false);
 		};
