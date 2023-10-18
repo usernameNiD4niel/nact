@@ -349,3 +349,9 @@ export type CheckboxShape = {
   id: string;
   label: string;
 };
+
+export type HelperType = {
+  suppliers: SupplierTableProps[];
+  previous_page: number | null;
+  next_page: number | null;
+};
