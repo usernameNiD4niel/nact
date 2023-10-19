@@ -69,9 +69,15 @@ export function NewDataTable<TValue>({
 
   const router = useNavigate();
 
-  const handleNavigation = (destination: string) => {
-    router(destination);
+  const handleTableItem = (supplier: string) => {
+    const foundObject = data.find((item) => item.businessName === supplier);
+
+    router(`/supplier/${foundObject?.id}`);
   };
+
+  // const handleNavigation = (destination: string) => {
+  //   router(destination);
+  // };
 
   const getValue = () =>
     (table.getColumn("businessName")?.getFilterValue() as string) ?? "";
@@ -80,7 +86,7 @@ export function NewDataTable<TValue>({
     table.getColumn("businessName")?.setFilterValue(event.target.value);
 
   return (
-    <div>
+    <div className="w-full">
       <div className="my-4 w-full space-y-2">
         <SearchWithFilter
           placeHolder="Search Supplier"
@@ -116,13 +122,7 @@ export function NewDataTable<TValue>({
                 <TableRow
                   key={row.id}
                   className="hover:cursor-pointer"
-                  onClick={() =>
-                    handleNavigation(
-                      `/department/it/${row.getValue(
-                        "businessName"
-                      )}?tabName=Feed`
-                    )
-                  }
+                  onClick={() => handleTableItem(row.getValue("businessName"))}
                   // data-state={row.getIsSelected() && "selected"}
                 >
                   {row.getVisibleCells().map((cell) => (
