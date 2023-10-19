@@ -29,6 +29,9 @@ const FilteringDropdown: FC<FilteringDropdownProps> = ({
 		checked: boolean | "indeterminate",
 		item: CheckboxShape,
 	) => {
+		if (search) {
+			setSearch("");
+		}
 		if (checked) {
 			setCheck((prevChecked) => [...prevChecked, item]);
 		} else {
@@ -40,12 +43,13 @@ const FilteringDropdown: FC<FilteringDropdownProps> = ({
 	};
 
 	const [search, setSearch] = useState("");
-	const debounceSearchTerms = useDebounce<string>(search, 400);
+	const debounceSearchTerms = useDebounce<string>(search, 300);
 	const [data, setData] = useState<CheckboxShape[]>([]);
 	const [isSearching, setIsSearching] = useState(false);
 
 	const handleOnChange = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setSearch(e.target.value);
+		setIsSearching(true);
 	};
 
 	useEffect(() => setData(items), [items]);
@@ -56,18 +60,43 @@ const FilteringDropdown: FC<FilteringDropdownProps> = ({
 			if (debounceSearchTerms) {
 				const fetchedData = await getBusinessNameFilter(search);
 
-				const dataFetched: CheckboxShape[] = fetchedData.map((_) => ({
-					id: _.id,
-					label: _.businessName,
-				}));
+				if (fetchedData && fetchedData.length > 0) {
+					const dataFetched: CheckboxShape[] = fetchedData.map((_) => ({
+						id: _.id,
+						label: _.businessName,
+					}));
 
-				setData(dataFetched);
-				console.log("Fetched data: ", dataFetched);
+					setData(dataFetched);
+					console.log("Fetched data: ", dataFetched);
+				}
 			}
 			setIsSearching(false);
 		};
 		getData();
 	}, [debounceSearchTerms]);
+
+	const ComponentLoader = () => {
+		if (isSearching) {
+			return <div className="text-xs text-center">Searching...</div>;
+		}
+
+		if (!data || data.length === 0) {
+			return <div className="text-xs text-center">No data found</div>;
+		}
+
+		return data.map((item, index) => (
+			<Label
+				className="flex gap-2 items-center text-xs"
+				key={item.id + index * Math.random()}>
+				<Checkbox
+					checked={check.find((i) => i.id === item.id)?.id === item.id}
+					onCheckedChange={(checked) => handleCheckbox(checked, item)}
+					className="border-gray-400"
+				/>
+				<span>{item.label}</span>
+			</Label>
+		));
+	};
 
 	return (
 		<DropdownMenu modal={false}>
@@ -83,24 +112,7 @@ const FilteringDropdown: FC<FilteringDropdownProps> = ({
 					value={search}
 					onChange={handleOnChange}
 				/>
-				{isSearching ? (
-					<div>Searching...</div>
-				) : (
-					<>
-						{data.map((item, index) => (
-							<Label
-								className="flex gap-2 items-center text-xs"
-								key={item.id + index * Math.random()}>
-								<Checkbox
-									checked={check.find((i) => i.id === item.id)?.id === item.id}
-									onCheckedChange={(checked) => handleCheckbox(checked, item)}
-									className="border-gray-400"
-								/>
-								<span>{item.label}</span>
-							</Label>
-						))}
-					</>
-				)}
+				<ComponentLoader />
 			</DropdownMenuContent>
 		</DropdownMenu>
 	);
