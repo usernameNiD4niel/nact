@@ -4,6 +4,8 @@ import { HelperType, SupplierTableProps } from "@/constants/props";
 import { columns } from "./helper/columns";
 import { NewDataTable } from "./helper/new-table-data";
 import AddButton from "@/components/reuseable/AddButton";
+import { Link } from "react-router-dom";
+import { mobileColumn } from "./helper/mobile-column";
 
 const getInitialData = async (
 	setNextPageUrl: React.Dispatch<React.SetStateAction<number | null>>,
@@ -111,13 +113,33 @@ const List = () => {
 			<div className="md:px-10 px-5 w-full">
 				<div className="mt-36 md:mt-24 w-full">
 					{/* <ContentTable /> */}
-					<NewDataTable
-						columns={columns}
-						data={supplier}
-						next_page_url={nextPageUrl}
-						setData={setSupplier}
-						key={"NewDataTAble"}
-					/>
+					{!supplier || supplier.length === 0 ? (
+						<div>
+							No supplier data yet,{" "}
+							<Link to="/supplier/add">create new entry</Link>
+						</div>
+					) : (
+						<>
+							<div className="w-full md:flex hidden">
+								<NewDataTable
+									columns={columns}
+									data={supplier}
+									next_page_url={nextPageUrl}
+									setData={setSupplier}
+									key={"NewDataTAble"}
+								/>
+							</div>
+							<div className="md:hidden w-full">
+								<NewDataTable
+									columns={mobileColumn}
+									data={supplier}
+									next_page_url={nextPageUrl}
+									setData={setSupplier}
+									key={"NewDataTAble"}
+								/>
+							</div>
+						</>
+					)}
 				</div>
 			</div>
 			<AddButton

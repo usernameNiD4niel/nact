@@ -67,7 +67,6 @@ const FilteringDropdown: FC<FilteringDropdownProps> = ({
 					}));
 
 					setData(dataFetched);
-					console.log("Fetched data: ", dataFetched);
 				}
 			}
 			setIsSearching(false);
