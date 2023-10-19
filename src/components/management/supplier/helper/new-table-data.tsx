@@ -86,7 +86,7 @@ export function NewDataTable<TValue>({
     table.getColumn("businessName")?.setFilterValue(event.target.value);
 
   return (
-    <div>
+    <div className="w-full">
       <div className="my-4 w-full space-y-2">
         <SearchWithFilter
           placeHolder="Search Supplier"
