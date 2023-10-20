@@ -60,12 +60,20 @@ const FilteringDropdown: FC<FilteringDropdownProps> = ({
 			if (debounceSearchTerms) {
 				const fetchedData = await getBusinessNameFilter(search);
 
-				if (fetchedData && fetchedData.length > 0) {
-					const dataFetched: CheckboxShape[] = fetchedData.map((_) => ({
-						id: _.id,
-						label: _.businessName,
-					}));
+				if (fetchedData) {
+					if (fetchedData.length > 0) {
+						const dataFetched: CheckboxShape[] = fetchedData.map((_) => ({
+							id: _.id,
+							label: _.businessName,
+						}));
 
+						setData(dataFetched);
+					} else {
+						const dataFetched: CheckboxShape[] = [];
+						setData(dataFetched);
+					}
+				} else {
+					const dataFetched: CheckboxShape[] = [];
 					setData(dataFetched);
 				}
 			}
