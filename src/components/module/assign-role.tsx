@@ -1,40 +1,61 @@
+import { useState } from "react";
 import AssignRoleCard from "./helper/assign-role-card";
+import { Button } from "../ui/button";
+import { MdGroupAdd } from "react-icons/md";
 
 const AssignRole = () => {
+	const [selectedCards, setSelectedCards] = useState<string[]>([]);
+
 	return (
 		<div className="flex flex-wrap gap-2 mt-36 md:mt-20 px-5 w-full">
 			<AssignRoleCard
-				birthday="10 . 11 . 2023"
-				contact="09876543212"
-				dateCreated="10 . 11 . 2023"
+				birthday="October 25 2000"
+				contact="09876543211"
+				dateCreated="October 24, 2023"
 				fullName="Daniel V. Rey"
 				gender="Male"
+				selectedCards={selectedCards}
+				setSelectedCards={setSelectedCards}
 				key={1}
 			/>
 			<AssignRoleCard
-				birthday="10 . 11 . 2023"
+				birthday="October 25 2000"
 				contact="09876543212"
-				dateCreated="10 . 11 . 2023"
-				fullName="Daniel V. Rey"
-				gender="Female"
-				key={1}
-			/>
-			<AssignRoleCard
-				birthday="10 . 11 . 2023"
-				contact="09876543212"
-				dateCreated="10 . 11 . 2023"
-				fullName="Daniel V. Rey"
-				gender="Female"
-				key={1}
-			/>
-			<AssignRoleCard
-				birthday="10 . 11 . 2023"
-				contact="09876543212"
-				dateCreated="10 . 11 . 2023"
+				dateCreated="October 24, 2023"
 				fullName="Daniel V. Rey"
 				gender="Male"
-				key={1}
+				selectedCards={selectedCards}
+				setSelectedCards={setSelectedCards}
+				key={2}
 			/>
+			<AssignRoleCard
+				birthday="October 25 2000"
+				contact="09876543213"
+				dateCreated="October 24, 2023"
+				fullName="Daniel V. Rey"
+				gender="Male"
+				selectedCards={selectedCards}
+				setSelectedCards={setSelectedCards}
+				key={3}
+			/>
+			<AssignRoleCard
+				birthday="October 25 2000"
+				contact="09876543214"
+				dateCreated="October 24, 2023"
+				fullName="Daniel V. Rey"
+				gender="Male"
+				selectedCards={selectedCards}
+				setSelectedCards={setSelectedCards}
+				key={4}
+			/>
+			{selectedCards.length > 0 && (
+				<Button className="fixed bottom-3 right-3 flex gap-2 items-center justify-center">
+					<span>
+						<MdGroupAdd />
+					</span>
+					<span>Assign</span>
+				</Button>
+			)}
 		</div>
 	);
 };

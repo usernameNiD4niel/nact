@@ -10,6 +10,8 @@ interface AssignRoleProps {
 	contact: string;
 	gender: string;
 	dateCreated: string;
+	selectedCards: string[];
+	setSelectedCards: React.Dispatch<React.SetStateAction<string[]>>;
 }
 
 const AssignRoleCard: FC<AssignRoleProps> = ({
@@ -18,10 +20,19 @@ const AssignRoleCard: FC<AssignRoleProps> = ({
 	dateCreated,
 	fullName,
 	gender,
+	selectedCards,
+	setSelectedCards,
 }) => {
 	const [isSelected, setIsSelected] = useState<boolean>(false);
 
 	const handleOnClick = () => {
+		// Means user clicked the unselected card
+		if (!isSelected) {
+			setSelectedCards((prevSelected) => [...prevSelected, contact]);
+		} else {
+			const filteredSelected = selectedCards.filter((card) => card !== contact);
+			setSelectedCards(filteredSelected);
+		}
 		setIsSelected((prevSelected) => !prevSelected);
 	};
 	return (
