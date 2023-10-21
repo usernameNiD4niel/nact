@@ -154,17 +154,6 @@ const SideNavigation = ({ selected }: { selected: ButtonList | null }) => {
 							Order Generator
 						</Link>
 					</li>
-					<li>
-						<Link
-							to="/assign-role"
-							className={`${buttonClass} ${
-								selected === ButtonList.AssignRoles
-									? "text-[#017DC3] font-semibold bg-slate-50"
-									: "text-white font-thin"
-							} ${hoverButtonClass}`}>
-							Assign Roles
-						</Link>
-					</li>
 				</div>
 				<li>
 					<Link

@@ -8,5 +8,4 @@ export enum ButtonList {
 	Account,
 	Inventory,
 	OrderGenerator,
-	AssignRoles,
 }

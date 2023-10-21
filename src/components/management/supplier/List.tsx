@@ -15,8 +15,6 @@ const getInitialData = async (
 		{
 			headers: {
 				"Content-Type": "application/json",
-				// Authorization:
-				//   "Bearer 97|OovfkjlrbXxCLGrg0CrpXmLqjDMxzN5GhXMAsDbwa3b34a8e",
 			},
 		},
 	);
@@ -36,19 +34,6 @@ const List = () => {
 
 	const [supplier, setSupplier] = useState<SupplierTableProps[]>([]);
 	const [nextPageUrl, setNextPageUrl] = useState<number | null>(null);
-	// const [isFetching, setIsFetching] = useState(true);
-	// const [currentPage, setCurrentPage] = useState(1);
-	// const [nextPage, setNextPage] = useState<number | null>(2);
-	// const [previousPage, setPreviousPage] = useState<number | null>(null);
-
-	// const datas = async () => {
-	// 	const d = await getPaginatedSupplier(currentPage, setIsFetching);
-
-	// 	setNextPage(d.next_page);
-	// 	setPreviousPage(d.previous_page);
-
-	// 	setSupplier(d.suppliers);
-	// };
 
 	const fetchedData = async () => {
 		const data = await getInitialData(setNextPageUrl);
@@ -60,53 +45,6 @@ const List = () => {
 		fetchedData();
 		setTab(0);
 	}, []);
-
-	//   const ContentTable = () => {
-	//     // if (isFetching) {
-	//     // 	return <div>Fetching data please wait...</div>;
-	//     // }
-
-	//     if (supplier) {
-	//       if (supplier.length > 0) {
-	//         return (
-	//           <NewDataTable
-	//             columns={columns}
-	//             data={supplier}
-	//             next_page_url={nextPageUrl}
-	//             setData={setSupplier}
-	//             key={"NewDataTAble"}
-	//           />
-	//         );
-	//       }
-
-	//       //   return (
-	//       //     <React.Fragment>
-	//       //       <div className="hidden md:flex w-full">
-	//       //         <DataTable
-	//       //           columns={columns}
-	//       //           data={supplier}
-	//       //           setData={setSupplier}
-	//       //           nextPageUrl={nextPageUrl}
-	//       //         />
-	//       //       </div>
-	//       //       <div className="md:hidden w-full">
-	//       //         {/* <DataTable
-	//       //           columns={mobileColumn}
-	//       //           data={supplier}
-	//       //           setData={setSupplier}
-	//       //           nextPageUrl={nextPageUrl}
-	//       //         /> */}
-	//       //       </div>
-	//       //     </React.Fragment>
-	//       //   );
-	//     }
-
-	//     return (
-	//       <div>
-	//         No supplier data yet, <Link to="/supplier/add">create new entry</Link>
-	//       </div>
-	//     );
-	//   };
 
 	return (
 		<div className="w-full flex items-center justify-center">
@@ -147,12 +85,6 @@ const List = () => {
 				textButton="Supplier"
 				key={"SupplierAddTable"}
 			/>
-			{/* {isShowingFilter && (
-        <Filter
-          data={SupplierTableData}
-          setIsShowingFilter={setIsShowingFilter}
-        />
-      )} */}
 		</div>
 	);
 };

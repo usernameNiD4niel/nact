@@ -31,14 +31,16 @@ import OrderGenerator from "./components/order-generator/OrderGenerator";
 import { SupplierTableItem } from "./components/management/supplier/SupplierTableItem";
 import InventoryTableItem from "./components/management/inventory/InventoryTableItem";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import AssignRole from "./components/assign-role/AssignRole";
+import AssignRole from "./components/module/assign-role";
 
 const router = createBrowserRouter(
 	createRoutesFromElements(
 		<Route>
 			<Route element={<Main />} path="/">
 				<Route index element={<Root />} />
-				<Route path="module" element={<Module />} />
+				<Route path="module" element={<Module />}>
+					<Route index element={<AssignRole />} />
+				</Route>
 				<Route path="supplier" element={<SupplierManagement />}>
 					<Route index element={<List />} />
 					<Route path="analytics" element={<Analytics />} />
@@ -64,7 +66,6 @@ const router = createBrowserRouter(
 				</Route>
 				<Route path="account" element={<Account />} />
 				<Route path="order-generator" element={<OrderGenerator />} />
-				<Route path="assign-role" element={<AssignRole />} />
 			</Route>
 			<Route path="login" element={<Index />} />
 		</Route>,

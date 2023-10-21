@@ -117,11 +117,6 @@ const SheetRight = () => {
 									to="/order-generator"
 									buttonList={ButtonList.OrderGenerator}
 								/>
-								<SheetCloseComp
-									text="Assign Roles"
-									to="/assign-role"
-									buttonList={ButtonList.AssignRoles}
-								/>
 							</p>
 
 							<SheetCloseComp
