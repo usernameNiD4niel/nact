@@ -1,7 +1,6 @@
 import { useState } from "react";
 import AssignRoleCard from "./helper/assign-role-card";
-import { Button } from "../ui/button";
-import { MdGroupAdd } from "react-icons/md";
+import AddRole from "./helper/add-role";
 
 const AssignRole = () => {
 	const [selectedCards, setSelectedCards] = useState<string[]>([]);
@@ -48,14 +47,7 @@ const AssignRole = () => {
 				setSelectedCards={setSelectedCards}
 				key={4}
 			/>
-			{selectedCards.length > 0 && (
-				<Button className="fixed bottom-3 right-3 flex gap-2 items-center justify-center">
-					<span>
-						<MdGroupAdd />
-					</span>
-					<span>Assign</span>
-				</Button>
-			)}
+			{selectedCards.length > 0 && <AddRole />}
 		</div>
 	);
 };
