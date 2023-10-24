@@ -44,6 +44,7 @@ const FilteringSheet: FC<FilteringSheetProps> = ({
 						items={suppliers}
 						label="Supplier"
 						setCheck={setCheck}
+						dropdown="businessName"
 						key={"FilteringSheetSupplier"}
 					/>
 					<FilterAccordion
@@ -51,6 +52,7 @@ const FilteringSheet: FC<FilteringSheetProps> = ({
 						items={locations}
 						label="Location"
 						setCheck={setCheck}
+						dropdown="location"
 						key={"FilteringSheetLocation"}
 					/>
 					<FilterAccordion
@@ -58,6 +60,7 @@ const FilteringSheet: FC<FilteringSheetProps> = ({
 						items={contacts}
 						label="Contact"
 						setCheck={setCheck}
+						dropdown="contact"
 						key={"FilteringSheetContact"}
 					/>
 				</div>

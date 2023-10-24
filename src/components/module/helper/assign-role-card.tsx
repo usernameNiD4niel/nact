@@ -38,7 +38,7 @@ const AssignRoleCard: FC<AssignRoleProps> = ({
 	return (
 		<div
 			className={cn(
-				"w-full cursor-pointer md:max-w-[380px] px-3 py-4 border hover:border-[#017DC3] hover:border-2 transition-background duration-150 ease-in border-black border-opacity-20 space-y-2 rounded-md drop-shadow-md",
+				"w-full cursor-pointer md:max-w-[380px] px-3 py-4 border hover:border-[#017DC3] hover:border-2 border-black border-opacity-20 space-y-2 rounded-md drop-shadow-sm",
 				isSelected ? "bg-[#017DC3] text-white" : "bg-white text-black",
 			)}
 			onClick={handleOnClick}>
