@@ -64,7 +64,6 @@ const List = () => {
 									data={supplier}
 									next_page_url={nextPageUrl}
 									setData={setSupplier}
-									key={"NewDataTAble"}
 								/>
 							</div>
 							<div className="md:hidden w-full">
@@ -73,7 +72,6 @@ const List = () => {
 									data={supplier}
 									next_page_url={nextPageUrl}
 									setData={setSupplier}
-									key={"NewDataTAble"}
 								/>
 							</div>
 						</>

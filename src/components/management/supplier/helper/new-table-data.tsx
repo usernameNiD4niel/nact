@@ -28,6 +28,7 @@ import { DataTablePagination } from "./DataTablePagination";
 import { SupplierTableProps } from "@/constants/props";
 import { useNavigate } from "react-router-dom";
 import SearchWithFilter from "./SearchWithFilter";
+import { cn } from "@/lib/utils";
 
 interface DataTableProps<TValue> {
 	columns: ColumnDef<SupplierTableProps, TValue>[];
@@ -85,6 +86,11 @@ export function NewDataTable<TValue>({
 	const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) =>
 		table.getColumn("businessName")?.setFilterValue(event.target.value);
 
+	const getLocation = (businessName: string) => {
+		const location = data.find((item) => item.businessName === businessName);
+		return location?.location;
+	};
+
 	return (
 		<div className="w-full">
 			<div className="my-4 w-full space-y-2">
@@ -131,6 +137,12 @@ export function NewDataTable<TValue>({
 											{flexRender(
 												cell.column.columnDef.cell,
 												cell.getContext(),
+											)}
+
+											{cell.id.substring(2) !== "companyPhoneNumber" && (
+												<span className={cn("md:hidden text-center ms-4")}>
+													{getLocation(row.getValue("businessName"))}{" "}
+												</span>
 											)}
 										</TableCell>
 									))}

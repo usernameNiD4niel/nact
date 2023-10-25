@@ -274,7 +274,6 @@ const filterVastData = async (searchedQueries: string[]) => {
 	 * 				location: ...,
 	 * 				businessName: ...,
 	 * 				companyPhoneNumber: ...,
-	 * 				city: ...
 	 * 			},
 	 * 			...
 	 * 		]
@@ -282,7 +281,7 @@ const filterVastData = async (searchedQueries: string[]) => {
 	 */
 
 	const response = await fetch(
-		`${import.meta.env.VITE_BASE_URL}/api/supplier`,
+		`${import.meta.env.VITE_BASE_URL}/api/supplier/filter`,
 		{
 			method: "POST",
 			headers: {
@@ -294,7 +293,7 @@ const filterVastData = async (searchedQueries: string[]) => {
 
 	if (response.ok) {
 		const data = await response.json();
-		const suppliers: SupplierTableProps[] = data.suppliers;
+		const suppliers: SupplierTableProps[] = data.filtered;
 
 		return suppliers;
 	}
