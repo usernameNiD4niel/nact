@@ -56,6 +56,17 @@ const FilterAccordion: FC<FilterAccordionProps> = ({
 
 	useEffect(() => setData(items), [items]);
 
+	const getColumn = () => {
+		switch (dropdown) {
+			case "businessName":
+				return "business_name";
+			case "contact":
+				return "phone_number";
+			case "location":
+				return dropdown;
+		}
+	};
+
 	useEffect(() => {
 		const getData = async () => {
 			setIsSearching(true);
@@ -71,6 +82,7 @@ const FilterAccordion: FC<FilterAccordionProps> = ({
 								cleanedData.push({
 									id: value.id,
 									label: value.businessName,
+									column: getColumn(),
 								}),
 							);
 
@@ -94,6 +106,7 @@ const FilterAccordion: FC<FilterAccordionProps> = ({
 								cleanedData.push({
 									id: value.id,
 									label: value.companyPhoneNumber,
+									column: getColumn(),
 								}),
 							);
 
@@ -117,6 +130,7 @@ const FilterAccordion: FC<FilterAccordionProps> = ({
 								cleanedData.push({
 									id: value.id,
 									label: value.location,
+									column: getColumn(),
 								}),
 							);
 
