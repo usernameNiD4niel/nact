@@ -96,10 +96,10 @@ export function NewDataTable<TValue>({
 			<div className="my-4 w-full space-y-2">
 				<SearchWithFilter
 					placeHolder="Search Supplier"
-					isList={true}
 					value={getValue()}
 					onChange={handleOnChange}
 					data={data}
+					setData={setData}
 				/>
 			</div>
 			<div className="rounded-md border w-full">
