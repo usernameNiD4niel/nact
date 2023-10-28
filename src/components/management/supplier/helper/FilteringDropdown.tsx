@@ -15,6 +15,9 @@ import {
 	getContactFilter,
 	getLocationFilter,
 } from "@/api/supplier";
+import { Button } from "@/components/ui/button";
+
+import "../../../../../styles/styled-scrollbar.css";
 
 type FilteringDropdownProps = {
 	label: string;
@@ -184,14 +187,33 @@ const FilteringDropdown: FC<FilteringDropdownProps> = ({
 					{label} <BsChevronDown />
 				</button>
 			</DropdownMenuTrigger>
-			<DropdownMenuContent className="px-4 py-5 flex flex-col gap-4 justify-center z-0">
-				<Input
-					placeholder="Search"
-					className="w-full"
-					value={search}
-					onChange={handleOnChange}
-				/>
-				<ComponentLoader />
+			<DropdownMenuContent className="px-4 py-5 flex flex-col gap-2 justify-center z-0">
+				<div className="flex items-center gap-2">
+					<Button variant={"link"} className="text-[#017DC3] text-xs m-0 p-0">
+						Select All
+					</Button>{" "}
+					-{" "}
+					<Button variant={"link"} className="text-[#017DC3] text-xs m-0 p-0">
+						Clear
+					</Button>
+				</div>
+				<div className="flex flex-col gap-4">
+					<Input
+						placeholder="Search"
+						className="w-full"
+						value={search}
+						onChange={handleOnChange}
+					/>
+					<div className="max-h-32 overflow-y-auto flex flex-col gap-4 filter-dropdown">
+						<ComponentLoader />
+					</div>
+				</div>
+				<div className="w-full flex justify-end items-center gap-2">
+					<Button variant={"outline"}>Cancel</Button>
+					<Button className="bg-[#017DC3] text-white w-20 m-0 p-0 hover:bg-[#017DC3]/80">
+						OK
+					</Button>
+				</div>
 			</DropdownMenuContent>
 		</DropdownMenu>
 	);

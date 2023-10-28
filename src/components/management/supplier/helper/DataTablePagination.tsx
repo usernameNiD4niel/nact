@@ -9,8 +9,6 @@ const getInitialData = async (
 	setData: React.Dispatch<React.SetStateAction<SupplierTableProps[]>>,
 	page: number | null,
 ) => {
-	console.log("the next url is ", page);
-
 	if (page) {
 		const response = await fetch(
 			`${import.meta.env.VITE_BASE_URL}/api/supplier?page=${page}&per_page=10`,
@@ -24,9 +22,6 @@ const getInitialData = async (
 		if (response.ok) {
 			const data: Promise<HelperType> = await response.json();
 			const supplier: SupplierTableProps[] = (await data).suppliers;
-
-			console.log("the data:", data);
-			console.log("the supplier:", supplier);
 
 			setNextPageUrl((await data).next_page);
 			setData((prev) => [...prev, ...supplier]);
