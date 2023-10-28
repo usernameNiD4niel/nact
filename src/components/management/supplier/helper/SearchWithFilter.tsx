@@ -14,6 +14,22 @@ type SearchWithFilterProps = {
 	setData: React.Dispatch<React.SetStateAction<SupplierTableProps[]>>;
 };
 
+type TemporarySupplierType = {
+	/**
+	 * "id": 47,
+            "businessName": "Banana Republic",
+            "city": "New York City",
+            "state": "New York",
+            "country": "USA",
+            "companyPhoneNumber": "09154814993"
+	 */
+	id: string;
+	businessName: string;
+	state: string;
+	country: string;
+	companyPhoneNumber: string;
+};
+
 const getUniqueFilterData = async () => {
 	const response = await fetch(`${import.meta.env.VITE_BASE_URL}/supplier`, {
 		headers: {
@@ -23,7 +39,7 @@ const getUniqueFilterData = async () => {
 
 	if (response.ok) {
 		const data = await response.json();
-		const suppliers: SupplierTableProps[] = data.suppliers;
+		const suppliers: TemporarySupplierType[] = data.suppliers;
 
 		return suppliers;
 	}
@@ -61,7 +77,7 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 	data,
 }) => {
 	const [check, setCheck] = useState<CheckboxShape[]>([]);
-	const [uniqueFilter, seUniqueFilter] = useState<SupplierTableProps[]>([]);
+	const [uniqueFilter, seUniqueFilter] = useState<TemporarySupplierType[]>([]);
 
 	const getSupplier = () => {
 		const checkboxArray: CheckboxShape[] = [];
@@ -127,8 +143,11 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 	const getLocation = () => {
 		const uniqueLocations = new Set<string>(); // Create a Set to store unique locations
 
+		// uniqueFilter.forEach((location) => {
+		// 	uniqueLocations.add(location.location); // Add each location to the Set
+		// });
 		uniqueFilter.forEach((location) => {
-			uniqueLocations.add(location.location); // Add each location to the Set
+			uniqueLocations.add(`${location.country}, ${location.state}`);
 		});
 
 		// Convert the Set back to an array of objects
