@@ -14,6 +14,23 @@ type SearchWithFilterProps = {
 	setData: React.Dispatch<React.SetStateAction<SupplierTableProps[]>>;
 };
 
+const getUniqueFilterData = async () => {
+	const response = await fetch(`${import.meta.env.VITE_BASE_URL}/supplier`, {
+		headers: {
+			"Content-Type": "application/json",
+		},
+	});
+
+	if (response.ok) {
+		const data = await response.json();
+		const suppliers: SupplierTableProps[] = data.suppliers;
+
+		return suppliers;
+	}
+
+	throw new Error("Cannot get all the supplier");
+};
+
 const getInitialData = async (
 	setData: React.Dispatch<React.SetStateAction<SupplierTableProps[]>>,
 ) => {
@@ -44,10 +61,11 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 	data,
 }) => {
 	const [check, setCheck] = useState<CheckboxShape[]>([]);
+	const [uniqueFilter, seUniqueFilter] = useState<SupplierTableProps[]>([]);
 
 	const getSupplier = () => {
 		const checkboxArray: CheckboxShape[] = [];
-		data.forEach((supplier) => {
+		uniqueFilter.forEach((supplier) => {
 			const object: CheckboxShape = {
 				id: supplier.id! + "supplier",
 				label: supplier.businessName,
@@ -97,10 +115,19 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [check]);
 
+	const fetchUniqueFilter = async () => {
+		const actualDataFilter = await getUniqueFilterData();
+		seUniqueFilter(actualDataFilter);
+	};
+
+	useEffect(() => {
+		fetchUniqueFilter();
+	}, []);
+
 	const getLocation = () => {
 		const uniqueLocations = new Set<string>(); // Create a Set to store unique locations
 
-		data.forEach((location) => {
+		uniqueFilter.forEach((location) => {
 			uniqueLocations.add(location.location); // Add each location to the Set
 		});
 
@@ -118,7 +145,7 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 	const getContact = () => {
 		const uniqueContacts = new Set<string>(); // Create a Set to store unique locations
 
-		data.forEach((contact) => {
+		uniqueFilter.forEach((contact) => {
 			uniqueContacts.add(contact.companyPhoneNumber); // Add each contact to the Set
 		});
 
