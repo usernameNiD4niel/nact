@@ -14,6 +14,28 @@ type SearchWithFilterProps = {
 	setData: React.Dispatch<React.SetStateAction<SupplierTableProps[]>>;
 };
 
+const getInitialData = async (
+	setData: React.Dispatch<React.SetStateAction<SupplierTableProps[]>>,
+) => {
+	const response = await fetch(
+		`${import.meta.env.VITE_BASE_URL}/api/supplier?page=1&per_page=10`,
+		{
+			headers: {
+				"Content-Type": "application/json",
+			},
+		},
+	);
+
+	if (response.ok) {
+		const data = await response.json();
+		const supplier: SupplierTableProps[] = (await data).suppliers;
+		setData(supplier);
+		return;
+	}
+
+	throw new Error("cannot get the data");
+};
+
 const SearchWithFilter: FC<SearchWithFilterProps> = ({
 	placeHolder,
 	onChange,
@@ -48,8 +70,6 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 			params = params.substring(0, params.length - 1);
 		}
 
-		console.log("params: ", params);
-
 		const response = await fetch(
 			`${import.meta.env.VITE_BASE_URL}/api/filter?${params}`,
 			{
@@ -67,9 +87,12 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 			throw new Error("Error processing response");
 		}
 	};
+
 	useEffect(() => {
 		if (check && check.length > 0) {
 			requestFiltered();
+		} else if (check.length === 0 && data.length <= 1) {
+			getInitialData(setData);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [check]);

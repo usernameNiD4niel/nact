@@ -1,6 +1,7 @@
 import {
 	DropdownMenu,
 	DropdownMenuContent,
+	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { BsChevronDown } from "react-icons/bs";
@@ -209,7 +210,9 @@ const FilteringDropdown: FC<FilteringDropdownProps> = ({
 					</div>
 				</div>
 				<div className="w-full flex justify-end items-center gap-2">
-					<Button variant={"outline"}>Cancel</Button>
+					<DropdownMenuItem asChild className="cursor-pointer">
+						<Button variant={"outline"}>Cancel</Button>
+					</DropdownMenuItem>
 					<Button className="bg-[#017DC3] text-white w-20 m-0 p-0 hover:bg-[#017DC3]/80">
 						OK
 					</Button>
