@@ -12,6 +12,7 @@ type SearchWithFilterProps = {
 	value: string;
 	data: SupplierTableProps[];
 	setData: React.Dispatch<React.SetStateAction<SupplierTableProps[]>>;
+	setIsFiltering: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 type TemporarySupplierType = {
@@ -75,6 +76,7 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 	setData,
 	value,
 	data,
+	setIsFiltering,
 }) => {
 	const [check, setCheck] = useState<CheckboxShape[]>([]);
 	const [uniqueFilter, seUniqueFilter] = useState<TemporarySupplierType[]>([]);
@@ -147,7 +149,7 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 		// 	uniqueLocations.add(location.location); // Add each location to the Set
 		// });
 		uniqueFilter.forEach((location) => {
-			uniqueLocations.add(`${location.country}, ${location.state}`);
+			uniqueLocations.add(`${location.state}, ${location.country}`);
 		});
 
 		// Convert the Set back to an array of objects
@@ -204,6 +206,7 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 					check={check}
 					setCheck={setCheck}
 					dropdown="businessName"
+					setIsFiltering={setIsFiltering}
 					key={"SupplierKeyFilterDropdown"}
 				/>
 				<FilteringDropdown
@@ -212,6 +215,7 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 					check={check}
 					setCheck={setCheck}
 					dropdown="location"
+					setIsFiltering={setIsFiltering}
 					key={"LocationKeyFilterDropdown"}
 				/>
 				<FilteringDropdown
@@ -220,6 +224,7 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 					setCheck={setCheck}
 					label="Contact"
 					dropdown="contact"
+					setIsFiltering={setIsFiltering}
 					key={"ContactKeyFilterDropdown"}
 				/>
 			</div>

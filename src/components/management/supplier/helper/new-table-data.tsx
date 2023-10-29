@@ -50,6 +50,7 @@ export function NewDataTable<TValue>({
 	);
 
 	const [rowSelection, setRowSelection] = React.useState({});
+	const [isFiltering, setIsFiltering] = React.useState(false);
 
 	const table = useReactTable({
 		data,
@@ -91,6 +92,13 @@ export function NewDataTable<TValue>({
 		return location?.location;
 	};
 
+	React.useEffect(() => {
+		console.log(`data ${data.length}`);
+
+		table.setPageSize(data.length);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [data]);
+
 	return (
 		<div className="w-full">
 			<div className="my-4 w-full space-y-2">
@@ -100,6 +108,7 @@ export function NewDataTable<TValue>({
 					onChange={handleOnChange}
 					data={data}
 					setData={setData}
+					setIsFiltering={setIsFiltering}
 				/>
 			</div>
 			<div className="rounded-md border w-full">
@@ -164,6 +173,7 @@ export function NewDataTable<TValue>({
 				setData={setData}
 				table={table}
 				next_page_url={next_page_url}
+				isFiltering={isFiltering}
 			/>
 		</div>
 	);

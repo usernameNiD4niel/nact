@@ -36,19 +36,19 @@ interface DataTablePaginationProps<TData> {
 	table: Table<TData>;
 	setData: React.Dispatch<React.SetStateAction<SupplierTableProps[]>>;
 	next_page_url: number | null;
+	isFiltering: boolean;
 }
 
 export function DataTablePagination<TData>({
 	table,
 	next_page_url,
 	setData,
+	isFiltering,
 }: DataTablePaginationProps<TData>) {
 	const [nextPageUrl, setNextPageUrl] = useState<number | null>(null);
 
 	useEffect(() => {
 		if (next_page_url) {
-			console.log("hindi siya null");
-
 			setNextPageUrl(next_page_url);
 		}
 	}, [next_page_url]);
@@ -65,8 +65,8 @@ export function DataTablePagination<TData>({
 			<Button
 				variant={"custom"}
 				onClick={handleLoadMore}
-				disabled={!nextPageUrl}>
-				{nextPageUrl ? "Load More" : "End of List"}
+				disabled={!nextPageUrl || isFiltering}>
+				{nextPageUrl && !isFiltering ? "Load More" : "End of List"}
 			</Button>
 		</div>
 	);
