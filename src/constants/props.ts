@@ -398,3 +398,16 @@ export type FilteringLocation = {
 	id: string;
 	location: string;
 };
+
+export type UpdateUsersRoleType = {
+	role: string;
+	usersPhoneNumber: UsersPhoneNumber[];
+};
+
+export type DeleteUsersType = {
+	usersPhoneNumber: UsersPhoneNumber[];
+};
+
+type UsersPhoneNumber = {
+	phoneNumber: string;
+};

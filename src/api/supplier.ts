@@ -281,9 +281,8 @@ const filterVastData = async (searchedQueries: string[]) => {
 	 */
 
 	const response = await fetch(
-		`${import.meta.env.VITE_BASE_URL}/api/supplier/filter`,
+		`${import.meta.env.VITE_BASE_URL}/api/suppliers/unique-items`,
 		{
-			method: "POST",
 			headers: {
 				"Content-Type": "application/json",
 			},
