@@ -171,6 +171,10 @@ const FilterAccordion: FC<FilterAccordionProps> = ({
 		setIsFiltering(true);
 	};
 
+	const handleClearAll = () => {
+		setCheckboxState([]);
+	};
+
 	const ComponentLoader = () => {
 		if (isSearching) {
 			return <div className="text-xs text-center">Searching...</div>;
@@ -205,7 +209,10 @@ const FilterAccordion: FC<FilterAccordionProps> = ({
 							Select All
 						</Button>{" "}
 						-{" "}
-						<Button variant={"link"} className="text-[#017DC3] text-xs m-0 p-0">
+						<Button
+							variant={"link"}
+							className="text-[#017DC3] text-xs m-0 p-0"
+							onClick={handleClearAll}>
 							Clear
 						</Button>
 					</div>

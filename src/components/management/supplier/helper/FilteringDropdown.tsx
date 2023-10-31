@@ -199,6 +199,10 @@ const FilteringDropdown: FC<FilteringDropdownProps> = ({
 		setIsFiltering(true);
 	};
 
+	const handleClearAll = () => {
+		setCheckboxState([]);
+	};
+
 	return (
 		<DropdownMenu modal={false}>
 			<DropdownMenuTrigger asChild>
@@ -215,7 +219,10 @@ const FilteringDropdown: FC<FilteringDropdownProps> = ({
 						Select All
 					</Button>{" "}
 					-{" "}
-					<Button variant={"link"} className="text-[#017DC3] text-xs m-0 p-0">
+					<Button
+						variant={"link"}
+						className="text-[#017DC3] text-xs m-0 p-0"
+						onClick={handleClearAll}>
 						Clear
 					</Button>
 				</div>
