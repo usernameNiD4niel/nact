@@ -30,11 +30,18 @@ const Module = () => {
 						"Sales Agent",
 						"Billing and Collection",
 					]}
-					arrayOfRoutes={["/module"]}
+					arrayOfRoutes={[
+						"/module",
+						"/module/supply-chain",
+						"/module/sales-agent",
+						"billing-and-collection",
+					]}
 					key={"ModuleTab"}
 				/>
 			</div>
-			<Outlet />
+			<div className="mt-36 md:mt-20 w-full">
+				<Outlet />
+			</div>
 		</section>
 	);
 };

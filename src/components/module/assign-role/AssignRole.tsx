@@ -1,12 +1,17 @@
-import { useState } from "react";
-import AssignRoleCard from "./helper/assign-role-card";
-import AddRole from "./helper/add-role";
+import { useEffect, useState } from "react";
+import AssignRoleCard from "../helper/assign-role-card";
+import AddRole from "../helper/add-role";
+import { useInventoryState } from "@/utils/InventoryState";
 
 const AssignRole = () => {
 	const [selectedCards, setSelectedCards] = useState<string[]>([]);
 
+	const [setTab] = useInventoryState((state) => [state.setActiveTab]);
+
+	useEffect(() => setTab(0), []);
+
 	return (
-		<div className="flex flex-wrap gap-2 mt-36 md:mt-20 px-5 w-full">
+		<div className="flex flex-wrap gap-2 px-5 w-full">
 			<AssignRoleCard
 				birthday="October 25 2000"
 				contact="09876543211"

@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import { MdGroupAdd } from "react-icons/md";
 import DropdownRoles from "./dropdown-roles";
 
-const AddRole = () => {
+const DemoteRole = () => {
 	return (
 		<AlertDialog>
 			<AlertDialogTrigger asChild>
@@ -21,14 +21,15 @@ const AddRole = () => {
 					<span>
 						<MdGroupAdd />
 					</span>
-					<span>Assign</span>
+					<span>Update Role</span>
 				</Button>
 			</AlertDialogTrigger>
 			<AlertDialogContent className="max-w-md">
 				<AlertDialogHeader>
-					<AlertDialogTitle>Assign Role</AlertDialogTitle>
+					<AlertDialogTitle>Update Role</AlertDialogTitle>
 					<AlertDialogDescription>
-						Please select a role of your selected user.
+						All the selected user will affect their role depending on the role
+						you selected
 					</AlertDialogDescription>
 				</AlertDialogHeader>
 				<DropdownRoles
@@ -39,7 +40,7 @@ const AddRole = () => {
 						"Billing and Collection",
 					]}
 					label="Roles"
-					key={"AssignRoleDropdown"}
+					key={"UpdateRoleDropdown"}
 				/>
 				<AlertDialogFooter>
 					<AlertDialogCancel>Cancel</AlertDialogCancel>
@@ -50,4 +51,4 @@ const AddRole = () => {
 	);
 };
 
-export default AddRole;
+export default DemoteRole;
