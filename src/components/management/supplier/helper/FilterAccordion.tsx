@@ -168,8 +168,6 @@ const FilterAccordion: FC<FilterAccordionProps> = ({
 
 	const handleOk = () => {
 		setCheck(checkboxState);
-		console.log(`the checkbox state ${checkboxState}`);
-
 		setIsFiltering(true);
 	};
 
@@ -222,7 +220,7 @@ const FilterAccordion: FC<FilterAccordionProps> = ({
 					<div className="max-h-32 overflow-y-auto flex flex-col gap-4 filter-dropdown">
 						<ComponentLoader />
 					</div>
-					<div className="w-full flex justify-end items-center gap-2">
+					<div className="w-full flex justify-end items-center gap-2 mt-2">
 						<SheetClose className="cursor-pointer">
 							<Button variant={"outline"}>Cancel</Button>
 						</SheetClose>
