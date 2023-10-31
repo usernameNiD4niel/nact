@@ -16,6 +16,7 @@ type FilteringSheetProps = {
 	contacts: CheckboxShape[];
 	check: CheckboxShape[];
 	setCheck: React.Dispatch<React.SetStateAction<CheckboxShape[]>>;
+	setIsFiltering: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const FilteringSheet: FC<FilteringSheetProps> = ({
@@ -24,6 +25,7 @@ const FilteringSheet: FC<FilteringSheetProps> = ({
 	locations,
 	suppliers,
 	setCheck,
+	setIsFiltering,
 }) => {
 	return (
 		<Sheet>
@@ -45,12 +47,14 @@ const FilteringSheet: FC<FilteringSheetProps> = ({
 						label="Supplier"
 						setCheck={setCheck}
 						dropdown="businessName"
+						setIsFiltering={setIsFiltering}
 						key={"FilteringSheetSupplier"}
 					/>
 					<FilterAccordion
 						check={check}
 						items={locations}
 						label="Location"
+						setIsFiltering={setIsFiltering}
 						setCheck={setCheck}
 						dropdown="location"
 						key={"FilteringSheetLocation"}
@@ -59,6 +63,7 @@ const FilteringSheet: FC<FilteringSheetProps> = ({
 						check={check}
 						items={contacts}
 						label="Contact"
+						setIsFiltering={setIsFiltering}
 						setCheck={setCheck}
 						dropdown="contact"
 						key={"FilteringSheetContact"}

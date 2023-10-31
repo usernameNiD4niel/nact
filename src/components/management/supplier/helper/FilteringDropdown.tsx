@@ -195,7 +195,6 @@ const FilteringDropdown: FC<FilteringDropdownProps> = ({
 
 	const handleOk = () => {
 		setCheck(checkboxState);
-		console.log(`the checkbox state ${checkboxState}`);
 
 		setIsFiltering(true);
 	};

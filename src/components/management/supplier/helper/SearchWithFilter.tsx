@@ -238,6 +238,7 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 				contacts={getContact()}
 				check={check}
 				setCheck={setCheck}
+				setIsFiltering={setIsFiltering}
 			/>
 			{check && check.length > 0 && (
 				<div className="w-full flex flex-wrap p-2 gap-2 bg-zinc-100 rounded-lg">

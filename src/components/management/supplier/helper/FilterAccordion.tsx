@@ -9,18 +9,23 @@ import {
 	AccordionItem,
 	AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { SheetClose } from "@/components/ui/sheet";
 import { CheckboxShape } from "@/constants/props";
 import useDebounce from "@/hooks/useDebounce";
 import { FC, useEffect, useState } from "react";
+
+import "../../../../../styles/styled-scrollbar.css";
 
 type FilterAccordionProps = {
 	label: string;
 	items: CheckboxShape[];
 	check: CheckboxShape[];
 	setCheck: React.Dispatch<React.SetStateAction<CheckboxShape[]>>;
+	setIsFiltering: React.Dispatch<React.SetStateAction<boolean>>;
 	dropdown: "businessName" | "location" | "contact";
 };
 
@@ -30,21 +35,27 @@ const FilterAccordion: FC<FilterAccordionProps> = ({
 	label,
 	setCheck,
 	dropdown,
+	setIsFiltering,
 }) => {
 	const [isSearching, setIsSearching] = useState(false);
 	const [search, setSearch] = useState("");
 	const debounceSearchTerms = useDebounce<string>(search, 300);
 	const [data, setData] = useState<CheckboxShape[]>([]);
+	const [checkboxState, setCheckboxState] = useState<CheckboxShape[]>([]);
+
+	useEffect(() => {
+		setCheckboxState(check);
+	}, [check]);
 
 	const handleCheckbox = (
 		checked: boolean | "indeterminate",
 		item: CheckboxShape,
 	) => {
 		if (checked) {
-			setCheck((prevChecked) => [...prevChecked, item]);
+			setCheckboxState((prevChecked) => [...prevChecked, item]);
 		} else {
-			const filteredChecked = check.filter((i) => i.id !== item.id);
-			setCheck(filteredChecked);
+			const filteredChecked = checkboxState.filter((i) => i.id !== item.id);
+			setCheckboxState(filteredChecked);
 		}
 		return checked;
 	};
@@ -150,6 +161,18 @@ const FilterAccordion: FC<FilterAccordionProps> = ({
 		getData();
 	}, [debounceSearchTerms]);
 
+	const handleSelectAll = () => {
+		// setCheck(items);
+		setCheckboxState(items);
+	};
+
+	const handleOk = () => {
+		setCheck(checkboxState);
+		console.log(`the checkbox state ${checkboxState}`);
+
+		setIsFiltering(true);
+	};
+
 	const ComponentLoader = () => {
 		if (isSearching) {
 			return <div className="text-xs text-center">Searching...</div>;
@@ -162,7 +185,7 @@ const FilterAccordion: FC<FilterAccordionProps> = ({
 		return data.map((item) => (
 			<Label className="flex gap-2 px-1 items-center pb-2" key={item.id}>
 				<Checkbox
-					checked={check.find((i) => i.id === item.id)?.id === item.id}
+					checked={checkboxState.find((i) => i.id === item.id)?.id === item.id}
 					onCheckedChange={(checked) => handleCheckbox(checked, item)}
 					className="border-gray-400"
 				/>{" "}
@@ -176,6 +199,18 @@ const FilterAccordion: FC<FilterAccordionProps> = ({
 			<AccordionItem value="item-1">
 				<AccordionTrigger>{label}</AccordionTrigger>
 				<AccordionContent className="w-full">
+					<div className="flex items-center gap-2">
+						<Button
+							variant={"link"}
+							className="text-[#017DC3] text-xs m-0 p-0"
+							onClick={handleSelectAll}>
+							Select All
+						</Button>{" "}
+						-{" "}
+						<Button variant={"link"} className="text-[#017DC3] text-xs m-0 p-0">
+							Clear
+						</Button>
+					</div>
 					<div className="w-full px-1 pb-3 pt-1">
 						<Input
 							placeholder="Search"
@@ -184,7 +219,21 @@ const FilterAccordion: FC<FilterAccordionProps> = ({
 							value={search}
 						/>
 					</div>
-					<ComponentLoader />
+					<div className="max-h-32 overflow-y-auto flex flex-col gap-4 filter-dropdown">
+						<ComponentLoader />
+					</div>
+					<div className="w-full flex justify-end items-center gap-2">
+						<SheetClose className="cursor-pointer">
+							<Button variant={"outline"}>Cancel</Button>
+						</SheetClose>
+						<SheetClose className="cursor-pointer">
+							<Button
+								className="bg-[#017DC3] text-white w-20 m-0 p-0 hover:bg-[#017DC3]/80"
+								onClick={handleOk}>
+								OK
+							</Button>
+						</SheetClose>
+					</div>
 				</AccordionContent>
 			</AccordionItem>
 		</Accordion>
