@@ -9,6 +9,7 @@ import {
 	SupplierDataProps,
 	SupplierItem,
 	SupplierTableProps,
+	UniqueItems,
 } from "@/constants/props";
 import Cookies from "js-cookie";
 
@@ -97,6 +98,23 @@ const addShippingSupplier = async (
 		setMessage(message);
 		return false;
 	}
+};
+
+const getUniqueItems = async () => {
+	const response = await fetch(
+		`${import.meta.env.VITE_BASE_URL}/api/supplier/unique`,
+		{
+			headers: {
+				"Content-Type": "application/json",
+			},
+		},
+	);
+
+	if (response.ok) {
+		const data: UniqueItems = await response.json();
+		return data;
+	}
+	throw new Error("Unable to retrieve unique items");
 };
 
 const getBusinessNameFilter = async (searchQuery: string) => {
@@ -354,6 +372,7 @@ export {
 	updateSpecificSupplier,
 	deleteSupplier,
 	getPaginatedSupplier,
+	getUniqueItems,
 
 	// ! use this function
 	getBusinessNameFilter,

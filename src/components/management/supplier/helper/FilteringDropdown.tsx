@@ -38,14 +38,14 @@ const FilteringDropdown: FC<FilteringDropdownProps> = ({
 	setIsFiltering,
 }) => {
 	const [search, setSearch] = useState("");
-	const debounceSearchTerms = useDebounce<string>(search, 300);
+	const debounceSearchTerms = useDebounce<string>(search, 100);
 	const [data, setData] = useState<CheckboxShape[]>([]);
 	const [isSearching, setIsSearching] = useState(false);
 	const [checkboxState, setCheckboxState] = useState<CheckboxShape[]>([]);
 
 	useEffect(() => {
 		setCheckboxState(check);
-	}, [check]);
+	}, []);
 
 	const handleCheckbox = (
 		checked: boolean | "indeterminate",
@@ -174,10 +174,8 @@ const FilteringDropdown: FC<FilteringDropdownProps> = ({
 			return <div className="text-xs text-center">No data found</div>;
 		}
 
-		return data.map((item, index) => (
-			<Label
-				className="flex gap-2 items-center text-xs"
-				key={item.id + index * Math.random()}>
+		return data.map((item) => (
+			<Label className="flex gap-2 items-center text-xs" key={item.id}>
 				<Checkbox
 					checked={checkboxState.find((i) => i.id === item.id)?.id === item.id}
 					onCheckedChange={(checked) => handleCheckbox(checked, item)}
@@ -194,6 +192,8 @@ const FilteringDropdown: FC<FilteringDropdownProps> = ({
 	};
 
 	const handleOk = () => {
+		console.log(`the selected item is ${checkboxState}`);
+
 		setCheck(checkboxState);
 
 		setIsFiltering(true);
@@ -243,7 +243,8 @@ const FilteringDropdown: FC<FilteringDropdownProps> = ({
 					</DropdownMenuItem>
 					<Button
 						className="bg-[#017DC3] text-white w-20 m-0 p-0 hover:bg-[#017DC3]/80"
-						onClick={handleOk}>
+						onClick={handleOk}
+						type="button">
 						OK
 					</Button>
 				</div>

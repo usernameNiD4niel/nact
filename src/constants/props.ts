@@ -411,3 +411,9 @@ export type DeleteUsersType = {
 type UsersPhoneNumber = {
 	phoneNumber: string;
 };
+
+export type UniqueItems = {
+	businessName: string[];
+	location: string[];
+	contact: string[];
+};

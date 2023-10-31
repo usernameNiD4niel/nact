@@ -1,10 +1,15 @@
 import { FC, useEffect, useState } from "react";
-import { CheckboxShape, SupplierTableProps } from "@/constants/props";
+import {
+	CheckboxShape,
+	SupplierTableProps,
+	UniqueItems,
+} from "@/constants/props";
 import { Input } from "@/components/ui/input";
 import FilteringDialog from "./FilteringDialog";
 import FilteringDropdown from "./FilteringDropdown";
 import Badge from "@/components/reuseable/Badge";
 import FilteringSheet from "./FilteringSheet";
+import { getUniqueItems } from "@/api/supplier";
 
 type SearchWithFilterProps = {
 	placeHolder: string;
@@ -15,38 +20,25 @@ type SearchWithFilterProps = {
 	setIsFiltering: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-type TemporarySupplierType = {
-	/**
-	 * "id": 47,
-            "businessName": "Banana Republic",
-            "city": "New York City",
-            "state": "New York",
-            "country": "USA",
-            "companyPhoneNumber": "09154814993"
-	 */
-	id: string;
-	businessName: string;
-	state: string;
-	country: string;
-	companyPhoneNumber: string;
-};
+// const getUniqueFilterData = async () => {
+// 	const response = await fetch(
+// 		`${import.meta.env.VITE_BASE_URL}/api/supplier/unique`,
+// 		{
+// 			headers: {
+// 				"Content-Type": "application/json",
+// 			},
+// 		},
+// 	);
 
-const getUniqueFilterData = async () => {
-	const response = await fetch(`${import.meta.env.VITE_BASE_URL}/supplier`, {
-		headers: {
-			"Content-Type": "application/json",
-		},
-	});
+// 	if (response.ok) {
+// 		const data = await response.json();
+// 		const suppliers: TemporarySupplierType[] = data.suppliers;
 
-	if (response.ok) {
-		const data = await response.json();
-		const suppliers: TemporarySupplierType[] = data.suppliers;
+// 		return suppliers;
+// 	}
 
-		return suppliers;
-	}
-
-	throw new Error("Cannot get all the supplier");
-};
+// 	throw new Error("Cannot get all the supplier");
+// };
 
 const getInitialData = async (
 	setData: React.Dispatch<React.SetStateAction<SupplierTableProps[]>>,
@@ -80,14 +72,18 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 	setIsFiltering,
 }) => {
 	const [check, setCheck] = useState<CheckboxShape[]>([]);
-	const [uniqueFilter, seUniqueFilter] = useState<TemporarySupplierType[]>([]);
+	const [uniqueFilter, seUniqueFilter] = useState<UniqueItems>({
+		businessName: [],
+		contact: [],
+		location: [],
+	});
 
 	const getSupplier = () => {
 		const checkboxArray: CheckboxShape[] = [];
-		uniqueFilter.forEach((supplier) => {
+		uniqueFilter.businessName.forEach((supplier, index) => {
 			const object: CheckboxShape = {
-				id: supplier.id! + "supplier",
-				label: supplier.businessName,
+				id: index + "supplier",
+				label: supplier,
 				column: "business_name",
 			};
 			checkboxArray.push(object);
@@ -138,7 +134,7 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 	}, [check]);
 
 	const fetchUniqueFilter = async () => {
-		const actualDataFilter = await getUniqueFilterData();
+		const actualDataFilter = await getUniqueItems();
 		seUniqueFilter(actualDataFilter);
 	};
 
@@ -147,41 +143,30 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 	}, []);
 
 	const getLocation = () => {
-		const uniqueLocations = new Set<string>(); // Create a Set to store unique locations
-
-		// uniqueFilter.forEach((location) => {
-		// 	uniqueLocations.add(location.location); // Add each location to the Set
-		// });
-		uniqueFilter.forEach((location) => {
-			uniqueLocations.add(`${location.state}, ${location.country}`);
-		});
-
 		// Convert the Set back to an array of objects
-		const checkboxArray: CheckboxShape[] = Array.from(uniqueLocations).map(
-			(uniqueLocation, index) => ({
+		const checkboxArray: CheckboxShape[] = [];
+		uniqueFilter.location.forEach((uniqueLocation, index) => {
+			const object = {
 				id: `${index}location`,
 				label: uniqueLocation,
 				column: "location",
-			}),
-		);
+			};
+			checkboxArray.push(object);
+		});
 		return checkboxArray;
 	};
 
 	const getContact = () => {
-		const uniqueContacts = new Set<string>(); // Create a Set to store unique locations
-
-		uniqueFilter.forEach((contact) => {
-			uniqueContacts.add(contact.companyPhoneNumber); // Add each contact to the Set
-		});
-
 		// Convert the Set back to an array of objects
-		const checkboxArray: CheckboxShape[] = Array.from(uniqueContacts).map(
-			(uniqueContact, index) => ({
+		const checkboxArray: CheckboxShape[] = [];
+		uniqueFilter.contact.forEach((uniqueContact, index) => {
+			const object = {
 				id: `${index}contact`,
 				label: uniqueContact,
 				column: "phone_number",
-			}),
-		);
+			};
+			checkboxArray.push(object);
+		});
 		return checkboxArray;
 	};
 
