@@ -41,7 +41,11 @@ const FilteringDropdown: FC<FilteringDropdownProps> = ({
 	const debounceSearchTerms = useDebounce<string>(search, 300);
 	const [data, setData] = useState<CheckboxShape[]>([]);
 	const [isSearching, setIsSearching] = useState(false);
-	const [checkboxState, setCheckboxState] = useState<CheckboxShape[]>(check);
+	const [checkboxState, setCheckboxState] = useState<CheckboxShape[]>([]);
+
+	useEffect(() => {
+		setCheckboxState(check);
+	}, [check]);
 
 	const handleCheckbox = (
 		checked: boolean | "indeterminate",
@@ -51,10 +55,10 @@ const FilteringDropdown: FC<FilteringDropdownProps> = ({
 			setSearch("");
 		}
 		if (checked) {
-			setCheck((prevChecked) => [...prevChecked, item]);
+			setCheckboxState((prevChecked) => [...prevChecked, item]);
 		} else {
 			const filteredChecked = checkboxState.filter((i) => i.id !== item.id);
-			setCheck(filteredChecked);
+			setCheckboxState(filteredChecked);
 		}
 
 		return checked;
@@ -191,6 +195,8 @@ const FilteringDropdown: FC<FilteringDropdownProps> = ({
 
 	const handleOk = () => {
 		setCheck(checkboxState);
+		console.log(`the checkbox state ${checkboxState}`);
+
 		setIsFiltering(true);
 	};
 

@@ -63,6 +63,7 @@ const getInitialData = async (
 	if (response.ok) {
 		const data = await response.json();
 		const supplier: SupplierTableProps[] = (await data).suppliers;
+
 		setData(supplier);
 		return;
 	}
@@ -127,7 +128,10 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 	useEffect(() => {
 		if (check && check.length > 0) {
 			requestFiltered();
-		} else if (check.length === 0 && data.length <= 1) {
+			return;
+		}
+
+		if (check.length === 0) {
 			getInitialData(setData);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
