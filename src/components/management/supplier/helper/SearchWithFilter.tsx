@@ -129,6 +129,7 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 
 		if (check.length === 0) {
 			getInitialData(setData);
+			setIsFiltering(false);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [check]);
