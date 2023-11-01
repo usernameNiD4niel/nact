@@ -199,7 +199,7 @@ const FilteringDropdown: FC<FilteringDropdownProps> = ({
 			setCheck(checkboxState);
 			return;
 		}
-		const items = new Set(check);
+		const items = new Set(checkboxState);
 
 		for (let i = 0; i < checkboxState.length; i++) {
 			if (!items.has(checkboxState[i])) {
