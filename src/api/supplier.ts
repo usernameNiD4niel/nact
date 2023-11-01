@@ -5,10 +5,10 @@ import {
 	ExtractedContactFilter,
 	ExtractedLocationFilter,
 	LocationFilterProps,
+	SearchedType,
 	ShippingFormProps,
 	SupplierDataProps,
 	SupplierItem,
-	SupplierTableProps,
 	UniqueItems,
 } from "@/constants/props";
 import Cookies from "js-cookie";
@@ -268,84 +268,10 @@ const deleteSupplier = async (id: string) => {
 	}
 };
 
-// ! Gagamitin ito sa dropdown filtering --- magrerequest dito kapag may nagbabago sa selected checkboxes(useEffect)
-const filterVastData = async (searchedQueries: string[]) => {
-	/**
-	 * URL: /api/supplier/filter/
-	 * REQUEST: POST
-	 * {
-	 * 		filtered: [
-	 * 			"data 1",
-	 * 			"data 2",
-	 * 			"data 3",
-	 * 			"data 4",
-	 * 			"data 5",
-	 * 			...
-	 * 		]
-	 * }
-	 *
-	 * RESPONSE
-	 * {
-	 * 		filtered: [
-	 * 			{
-	 * 				id: ...,
-	 * 				location: ...,
-	 * 				businessName: ...,
-	 * 				companyPhoneNumber: ...,
-	 * 			},
-	 * 			...
-	 * 		]
-	 * }
-	 */
-
-	const response = await fetch(
-		`${import.meta.env.VITE_BASE_URL}/api/suppliers/unique-items`,
-		{
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(searchedQueries),
-		},
-	);
-
-	if (response.ok) {
-		const data = await response.json();
-		const suppliers: SupplierTableProps[] = data.filtered;
-
-		return suppliers;
-	}
-
-	throw new Error(
-		"Fetching suppliers error, please try to reconnect to your internet or refresh your browser",
-	);
-};
-
 // ! Ito dapat ang invoke kapag magsesend si user ng search query --- make this reactive and delay
 const searchData = async (query: string) => {
-	/**
-	 * URL: /api/supplier/search/dito_nakalagay_yung_sinearch_ni_user
-	 * REQUEST: GET
-	 * {
-	 * 		searchedQuery: ...
-	 * }
-	 *
-	 * RESPONSE
-	 * {
-	 * 		suppliers: [
-	 * 			{
-	 * 				id: ...,
-	 * 				location: ...,
-	 * 				businessName: ...,
-	 * 				companyPhoneNumber: ...,
-	 * 				city: ...
-	 * 			},
-	 * 			...
-	 * 		]
-	 * }
-	 *
-	 */
 	const response = await fetch(
-		`${import.meta.env.VITE_BASE_URL}/api/supplier/search/${query}`,
+		`${import.meta.env.VITE_BASE_URL}/api/supplier/search?query=${query}`,
 		{
 			headers: {
 				"Content-Type": "application/json",
@@ -354,10 +280,9 @@ const searchData = async (query: string) => {
 	);
 
 	if (response.ok) {
-		const data = await response.json();
-		const suppliers: SupplierTableProps[] = data.suppliers;
+		const data: SearchedType = await response.json();
 
-		return suppliers;
+		return data;
 	}
 
 	throw new Error(
@@ -377,7 +302,6 @@ export {
 	// ! use this function
 	getBusinessNameFilter,
 	getContactFilter,
-	filterVastData,
 	searchData,
 	getLocationFilter,
 };

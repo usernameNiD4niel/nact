@@ -417,3 +417,8 @@ export type UniqueItems = {
 	location: string[];
 	contact: string[];
 };
+
+export type SearchedType = {
+	filtered: SupplierTableProps[];
+	error?: string;
+};

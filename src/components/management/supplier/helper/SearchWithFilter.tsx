@@ -172,6 +172,8 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 
 	const handleOnSubmit = (event: React.FormEvent) => {
 		event.preventDefault();
+		console.log("searched something");
+		// TODO: use this method => searchData(query)
 	};
 
 	return (
@@ -186,6 +188,7 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 					value={value}
 					onChange={onChange}
 				/>
+				<button type="submit"></button>
 				<FilteringDialog data={data} />
 			</form>
 			<div className="w-full gap-6 justify-end hidden md:flex z-0">
