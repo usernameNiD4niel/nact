@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 import {
 	CheckboxShape,
 	SupplierTableProps,
@@ -78,19 +78,20 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 		location: [],
 	});
 
-	const getSupplier = () => {
+	const getSupplier = useMemo(() => {
 		const checkboxArray: CheckboxShape[] = [];
 		uniqueFilter.businessName.forEach((supplier, index) => {
 			const object: CheckboxShape = {
-				id: index + "supplier",
+				id: `${index}${supplier}`,
 				label: supplier,
 				column: "business_name",
 			};
+
 			checkboxArray.push(object);
 		});
 
 		return checkboxArray;
-	};
+	}, [uniqueFilter.businessName]);
 
 	const requestFiltered = async () => {
 		let params = "";
@@ -173,7 +174,6 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 
 	const handleOnSubmit = (event: React.FormEvent) => {
 		event.preventDefault();
-		console.log("searched something");
 		// TODO: use this method => searchData(query)
 	};
 
@@ -194,7 +194,7 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 			</form>
 			<div className="w-full gap-6 justify-end hidden md:flex z-0">
 				<FilteringDropdown
-					items={getSupplier()}
+					items={getSupplier}
 					label="Supplier"
 					check={check}
 					setCheck={setCheck}
@@ -222,12 +222,13 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 				/>
 			</div>
 			<FilteringSheet
-				suppliers={getSupplier()}
+				suppliers={getSupplier}
 				locations={getLocation()}
 				contacts={getContact()}
 				check={check}
 				setCheck={setCheck}
 				setIsFiltering={setIsFiltering}
+				key={"MobileViewFilteringDropdown"}
 			/>
 			{check && check.length > 0 && (
 				<div className="w-full flex flex-wrap p-2 gap-2 bg-zinc-100 rounded-lg">

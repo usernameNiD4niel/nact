@@ -45,7 +45,7 @@ const FilteringDropdown: FC<FilteringDropdownProps> = ({
 
 	useEffect(() => {
 		setCheckboxState(check);
-	}, []);
+	}, [check]);
 
 	const handleCheckbox = (
 		checked: boolean | "indeterminate",
@@ -175,7 +175,9 @@ const FilteringDropdown: FC<FilteringDropdownProps> = ({
 		}
 
 		return data.map((item) => (
-			<Label className="flex gap-2 items-center text-xs" key={item.id}>
+			<Label
+				className="flex gap-2 items-center text-xs"
+				key={`${item.id}${item.column}${item.label}`}>
 				<Checkbox
 					checked={checkboxState.find((i) => i.id === item.id)?.id === item.id}
 					onCheckedChange={(checked) => handleCheckbox(checked, item)}
@@ -192,7 +194,15 @@ const FilteringDropdown: FC<FilteringDropdownProps> = ({
 	};
 
 	const handleOk = () => {
-		setCheck((prevCheck) => [...prevCheck, ...checkboxState]);
+		const items = new Set(check);
+
+		for (let i = 0; i < checkboxState.length; i++) {
+			if (!items.has(checkboxState[i])) {
+				items.add(checkboxState[i]);
+			}
+		}
+
+		setCheck([...items]);
 
 		setIsFiltering(true);
 	};
