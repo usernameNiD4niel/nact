@@ -194,6 +194,11 @@ const FilteringDropdown: FC<FilteringDropdownProps> = ({
 	};
 
 	const handleOk = () => {
+		setIsFiltering(true);
+		if (checkboxState.length === 0) {
+			setCheck(checkboxState);
+			return;
+		}
 		const items = new Set(check);
 
 		for (let i = 0; i < checkboxState.length; i++) {
@@ -203,8 +208,6 @@ const FilteringDropdown: FC<FilteringDropdownProps> = ({
 		}
 
 		setCheck([...items]);
-
-		setIsFiltering(true);
 	};
 
 	const handleClearAll = () => {
