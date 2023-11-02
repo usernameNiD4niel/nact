@@ -32,17 +32,25 @@ const SupplyChain = () => {
 				</div>
 			) : (
 				<>
-					{users.map((user) => (
-						<AssignRoleCard
-							birthday={user.birthDate}
-							contact={user.mobileNumber}
-							fullName={`${user.firstName} ${user.middleName} ${user.lastName}`}
-							gender={user.gender}
-							selectedCards={selectedCards}
-							setSelectedCards={setSelectedCards}
-							key={user.id}
-						/>
-					))}
+					{!users || users.length === 0 ? (
+						<div className="w-full h-[80vh] flex items-center justify-center">
+							<p>No supply chain user found!</p>
+						</div>
+					) : (
+						<>
+							{users.map((user) => (
+								<AssignRoleCard
+									birthday={user.birthDate}
+									contact={user.mobileNumber}
+									fullName={`${user.firstName} ${user.middleName} ${user.lastName}`}
+									gender={user.gender}
+									selectedCards={selectedCards}
+									setSelectedCards={setSelectedCards}
+									key={user.id}
+								/>
+							))}
+						</>
+					)}
 				</>
 			)}
 

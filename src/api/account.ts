@@ -35,10 +35,13 @@ const getUserBaseOnRole = async (role: string) => {
 	if (response.ok) {
 		const data = await response.json();
 		const users: UsersType[] = data.users;
-		return users;
+		if (users && users.length > 0) {
+			return users;
+		}
+		return [];
 	}
 
-	throw new Error("Error fetching role information from server");
+	return [];
 };
 
 const updateUsersRole = async (usersRole: UpdateUsersRoleType) => {
