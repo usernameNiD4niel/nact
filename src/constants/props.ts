@@ -422,3 +422,14 @@ export type SearchedType = {
 	filtered: SupplierTableProps[];
 	error?: string;
 };
+
+export type UsersType = {
+	id: number;
+	lastName: string;
+	firstName: string;
+	middleName: string;
+	birthDate: string;
+	gender: string;
+	mobileNumber: string;
+	user_type: string;
+};

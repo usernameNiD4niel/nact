@@ -9,7 +9,6 @@ interface AssignRoleProps {
 	birthday: string;
 	contact: string;
 	gender: string;
-	dateCreated: string;
 	selectedCards: string[];
 	setSelectedCards: React.Dispatch<React.SetStateAction<string[]>>;
 }
@@ -17,7 +16,6 @@ interface AssignRoleProps {
 const AssignRoleCard: FC<AssignRoleProps> = ({
 	birthday,
 	contact,
-	dateCreated,
 	fullName,
 	gender,
 	selectedCards,
@@ -67,9 +65,9 @@ const AssignRoleCard: FC<AssignRoleProps> = ({
 				)}
 				<span className="text-sm">{gender}</span>
 			</p>
-			<div className="w-full flex justify-end items-center">
+			{/* <div className="w-full flex justify-end items-center">
 				<span className="text-xs font-light">{dateCreated}</span>
-			</div>
+			</div> */}
 		</div>
 	);
 };

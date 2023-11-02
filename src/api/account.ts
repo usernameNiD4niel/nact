@@ -1,4 +1,8 @@
-import { DeleteUsersType, UpdateUsersRoleType } from "@/constants/props";
+import {
+	DeleteUsersType,
+	UpdateUsersRoleType,
+	UsersType,
+} from "@/constants/props";
 
 const getCurrentAccount = async (userPN: string) => {
 	const response = await fetch(
@@ -20,7 +24,7 @@ const getCurrentAccount = async (userPN: string) => {
 
 const getUserBaseOnRole = async (role: string) => {
 	const response = await fetch(
-		`${import.meta.env.VITE_BASE_URL}/api/accounts?role=${role}`,
+		`${import.meta.env.VITE_BASE_URL}/api/users?role=${role}`,
 		{
 			headers: {
 				"Content-Type": "application/json",
@@ -30,7 +34,8 @@ const getUserBaseOnRole = async (role: string) => {
 
 	if (response.ok) {
 		const data = await response.json();
-		return data;
+		const users: UsersType[] = data.users;
+		return users;
 	}
 
 	throw new Error("Error fetching role information from server");
