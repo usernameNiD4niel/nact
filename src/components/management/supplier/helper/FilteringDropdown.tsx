@@ -190,7 +190,7 @@ const FilteringDropdown: FC<FilteringDropdownProps> = ({
 
 	const handleSelectAll = () => {
 		// setCheck(items);
-		setCheckboxState(items);
+		setCheckboxState((prevCheckbox) => [...prevCheckbox, ...items]);
 	};
 
 	const handleOk = () => {
