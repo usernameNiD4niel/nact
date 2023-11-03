@@ -108,6 +108,7 @@ export function NewDataTable<TValue>({
 					onChange={handleOnChange}
 					data={data}
 					setData={setData}
+					table={table}
 					setIsFiltering={setIsFiltering}
 				/>
 			</div>
@@ -133,7 +134,7 @@ export function NewDataTable<TValue>({
 						))}
 					</TableHeader>
 					<TableBody>
-						{table.getRowModel().rows?.length ? (
+						{table.getRowModel().rows?.length || (data && data.length > 0) ? (
 							table.getRowModel().rows.map((row) => (
 								<TableRow
 									key={row.id}
@@ -158,13 +159,15 @@ export function NewDataTable<TValue>({
 								</TableRow>
 							))
 						) : (
-							<TableRow>
-								<TableCell
-									colSpan={columns.length}
-									className="h-24 text-center">
-									No results.
-								</TableCell>
-							</TableRow>
+							<>
+								<TableRow>
+									<TableCell
+										colSpan={columns.length}
+										className="h-24 text-center">
+										No results.
+									</TableCell>
+								</TableRow>
+							</>
 						)}
 					</TableBody>
 				</Table>

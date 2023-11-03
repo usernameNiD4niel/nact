@@ -10,6 +10,7 @@ import FilteringDropdown from "./FilteringDropdown";
 import Badge from "@/components/reuseable/Badge";
 import FilteringSheet from "./FilteringSheet";
 import { getUniqueItems } from "@/api/supplier";
+import { Table } from "@tanstack/react-table";
 
 type SearchWithFilterProps = {
 	placeHolder: string;
@@ -18,6 +19,7 @@ type SearchWithFilterProps = {
 	data: SupplierTableProps[];
 	setData: React.Dispatch<React.SetStateAction<SupplierTableProps[]>>;
 	setIsFiltering: React.Dispatch<React.SetStateAction<boolean>>;
+	table: Table<SupplierTableProps>;
 };
 
 // const getUniqueFilterData = async () => {
@@ -69,6 +71,7 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 	setData,
 	value,
 	data,
+	table,
 	setIsFiltering,
 }) => {
 	const [check, setCheck] = useState<CheckboxShape[]>([]);
@@ -137,11 +140,22 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 			.then((data_) => data_.json())
 			.then((data_) => {
 				const tableData: SupplierTableProps[] = data_.filtered;
+
+				setIsFiltering(true);
+				if (!tableData || tableData.length === 0) {
+					setData([]);
+					return;
+				}
+
+				table.getColumn("businessName")?.setFilterValue("");
 				setData(tableData);
 			})
 			.catch((err) => {
-				setData([]);
+				// setData([]);
+				console.log("the log");
+
 				console.log("Error", err);
+				// table.getColumn("businessName")?.setFilterValue("");
 			});
 	};
 
