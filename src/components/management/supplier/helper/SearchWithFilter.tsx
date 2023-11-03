@@ -95,31 +95,54 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 
 	const requestFiltered = async () => {
 		let params = "";
+		let business_name = "business_name=";
+		let location = "location=";
+		let contact = "contact=";
 
 		for (let i = 0; i < check.length; i++) {
-			params += `${check[i].column}=${check[i].label}&`;
+			// for supplier
+			if (check[i].column === "business_name") {
+				business_name += check[i].label + ",";
+			} else if (check[i].column === "location") {
+				location += check[i].label + ",";
+			} else {
+				contact += check[i].label + ",";
+			}
+		}
+		if (business_name.length > 14) {
+			params += `${business_name.substring(0, business_name.length - 1)}`;
 		}
 
-		if (params.endsWith("&")) {
-			params = params.substring(0, params.length - 1);
+		if (location.length > 9) {
+			params +=
+				params && params.length > 0
+					? `&${location.substring(0, location.length - 1)}`
+					: location.substring(0, location.length - 1);
 		}
 
-		const response = await fetch(
-			`${import.meta.env.VITE_BASE_URL}/api/filter?${params}`,
-			{
-				headers: {
-					"Content-Type": "application/json",
-				},
+		if (contact.length > 8) {
+			params +=
+				params && params.length > 0
+					? `&${contact.substring(0, contact.length - 1)}`
+					: contact.substring(0, contact.length - 1);
+		}
+
+		console.log("the params: ", params);
+
+		await fetch(`${import.meta.env.VITE_BASE_URL}/api/filter?${params}`, {
+			headers: {
+				"Content-Type": "application/json",
 			},
-		);
-
-		if (response.ok) {
-			const data = await response.json();
-			const tableData: SupplierTableProps[] = data.filtered;
-			setData(tableData);
-		} else {
-			throw new Error("Error processing response");
-		}
+		})
+			.then((data_) => data_.json())
+			.then((data_) => {
+				const tableData: SupplierTableProps[] = data_.filtered;
+				setData(tableData);
+			})
+			.catch((err) => {
+				setData([]);
+				console.log("Error", err);
+			});
 	};
 
 	useEffect(() => {
