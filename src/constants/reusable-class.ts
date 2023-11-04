@@ -16,7 +16,7 @@ export const animatedSpanClassHigh: string =
 export const formClass: string = "w-full px-5 space-y-6";
 
 export const cardClass: string =
-	"flex justify-between px-8 py-10 border-2 border-slate-300 border-opacity-30 rounded-2xl drop-shadow-sm bg-white -z-30";
+	"flex justify-between px-8 py-10 border-2 border-black border-opacity-10 rounded-lg drop-shadow bg-white";
 
 export const headerBackClass =
 	"z-10 absolute inset-0 bg-white h-screen md:inset-auto md:w-[70%] lg:w-[80%] md:top-0";

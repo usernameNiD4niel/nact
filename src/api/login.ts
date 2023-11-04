@@ -44,6 +44,7 @@ export const POST = async ({
 				setIsLoading(false);
 				Cookies.set("csrf_token", data.csrf_access_token);
 				Cookies.set("role", data.user.user_type);
+				Cookies.set("user", JSON.stringify(data.user));
 				return data;
 			} else {
 				console.error("Error: " + data.message);

@@ -3,17 +3,19 @@ import { FC } from "react";
 import avatar from "../assets/avatar.svg";
 
 type ImageProps = {
-	width: string;
-	height: string;
 	alt: string;
 };
 
-const Avatar: FC<ImageProps> = ({ alt, height, width }) => {
+const Avatar: FC<ImageProps> = ({ alt }) => {
 	return (
-		<div className="avatar">
-			<div className={`${width} ${height} bg-primary rounded-full`}>
-				<img src={avatar} alt={alt} />
-			</div>
+		<div>
+			<img
+				src={avatar}
+				alt={alt}
+				width={66}
+				height={66}
+				className="rounded-full bg-[#017DC3]"
+			/>
 		</div>
 	);
 };

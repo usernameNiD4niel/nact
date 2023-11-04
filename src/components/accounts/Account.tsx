@@ -8,18 +8,36 @@ import Avatar from "@/daisyui/Avatar";
 import { useSelectedStore } from "@/utils/HomePageState";
 import React, { FC, useEffect, useState } from "react";
 import AnimatedInputs from "../reuseable/AnimatedInputs";
-import { AiFillEdit } from "react-icons/ai";
 import { FiLogOut } from "react-icons/fi";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
+import { Badge } from "../ui/badge";
+import GenderRadio from "../reuseable/GenderRadio";
+import CalendarComponent from "../reuseable/CalendarComponent";
+import { parse } from "date-fns";
+import { Button } from "../ui/button";
 
 type UserInformation = {
 	firstName: string;
 	lastName: string;
-	isSaved: boolean;
+	role: string;
+	middleInitial: string;
+	birthDate: string;
+	gender: string;
+	setMiddleInitial: React.Dispatch<React.SetStateAction<string>>;
 	setFirstName?: React.Dispatch<React.SetStateAction<string>>;
 	setLastName?: React.Dispatch<React.SetStateAction<string>>;
 };
+
+interface User {
+	birthDate: string;
+	firstName: string;
+	gender: string;
+	id: number;
+	lastName: string;
+	middleName: string;
+	user_type: string;
+}
 
 const Account = () => {
 	const [selected, setSelected] = useSelectedStore((state) => [
@@ -27,8 +45,11 @@ const Account = () => {
 		state.setSelected,
 	]);
 
-	const [firstName, setFirstName] = useState<string>("Daniel");
-	const [lastName, setLastName] = useState<string>("Rey");
+	const user = JSON.parse(Cookies.get("user") ?? "") as User;
+
+	const [firstName, setFirstName] = useState<string>(user.firstName);
+	const [lastName, setLastName] = useState<string>(user.lastName);
+	const [middleInitial, setMiddleInitial] = useState<string>(user.middleName);
 
 	const [isEditing, setIsEditing] = useState<boolean>(false);
 
@@ -37,6 +58,7 @@ const Account = () => {
 	const handleLogout = () => {
 		Cookies.remove("token");
 		Cookies.remove("role");
+		Cookies.remove("user");
 		navigate("/login");
 	};
 
@@ -47,39 +69,36 @@ const Account = () => {
 	}, []);
 	return (
 		<React.Fragment>
-			<section className="flex items-center justify-center p-4 space-y-4 w-full">
+			<section className="flex items-center justify-center py-16 px-4 md:p-8 space-y-4 w-full max-w-6xl">
 				{/* w-[95%] lg:w-4/5 */}
 				<section className="w-full flex flex-col gap-y-5">
 					<div>
-						<h2 className="font-bold">My Profile</h2>
+						<h2 className="font-bold text-lg">My Profile</h2>
 						<p className="text-sm">Update your account information</p>
-					</div>
-					<div className="flex w-full justify-end items-center">
-						{!isEditing && (
-							<button
-								className="bg-primary text-white rounded-lg gap-x-1 py-2 px-3 text-sm font-thin text-center flex items-center justify-center"
-								onClick={() => setIsEditing(true)}>
-								Edit Profile <AiFillEdit />
-							</button>
-						)}
 					</div>
 					<ProfileComponent
 						firstName={firstName}
 						lastName={lastName}
+						middleInitial={middleInitial}
 						isSaved={isEditing}
+						role={user.user_type}
 					/>
 					<PersonalInformation
 						firstName={firstName}
-						isSaved={isEditing}
+						middleInitial={middleInitial}
+						setMiddleInitial={setMiddleInitial}
 						lastName={lastName}
 						setFirstName={setFirstName}
+						gender={user.gender}
+						role={user.user_type}
+						birthDate={user.birthDate}
 						setLastName={setLastName}
 						key="PersonalInformationKey"
 					/>
 					{isEditing && <ChangePassword isSaved={false} />}
 					{isEditing && (
 						<button
-							className="bg-primary text-white text-sm font-medium rounded-md p-3 w-fit hover:opacity-90 transition-opacity duration-150"
+							className="bg-[#017DC3] text-white text-sm font-medium rounded-md p-3 w-fit hover:opacity-90 transition-opacity duration-150"
 							onClick={() => setIsEditing(false)}>
 							Update Changes
 						</button>
@@ -95,126 +114,117 @@ const Account = () => {
 	);
 };
 
-const ProfileComponent: FC<UserInformation> = ({
+interface ProfileComponentProps {
+	firstName: string;
+	lastName: string;
+	isSaved: boolean;
+	role: string;
+	middleInitial: string;
+}
+
+const ProfileComponent: FC<ProfileComponentProps> = ({
 	firstName,
 	lastName,
-	isSaved,
+	middleInitial,
+	role,
 }): JSX.Element => {
 	return (
 		<div
 			className={`${cardClass} items-start gap-y-4 md:items-center flex-col md:flex-row`}>
-			<div className="flex gap-x-3 w-full">
-				<Avatar
-					width={"w-16"}
-					height={"h-16"}
-					alt="User profile logo"
-					key="Account avatar"
-				/>
+			<div className="flex gap-x-3 w-full justify-between">
 				<div className="flex flex-col justify-center">
-					<h3 className="font-bold">
-						{firstName} {lastName}
+					<Badge className="w-fit">{role.toUpperCase()}</Badge>
+					<h3 className="font-bold text-lg">
+						{firstName} {middleInitial} {lastName}
 					</h3>
-					<p className="text-sm">Account Manager</p>
 				</div>
+				<Avatar alt="User profile logo" key="Account avatar" />
 			</div>
-			{isSaved && (
-				<div className="flex gap-x-2 w-full justify-end items-center">
-					<button className="bg-primary hover:bg-primary-focus transition-opacity duration-150 text-white font-light px-3 py-[0.70rem] rounded-md text-xs ">
-						Upload new picture
-					</button>
-					<button className="hover:text-[#EF4D21] text-primary bg-white border-2 border-primary hover:border-[#EF4D21] font-light px-3 py-[0.60rem] rounded-md text-xs">
-						Remove
-					</button>
-				</div>
-			)}
 		</div>
 	);
 };
 
+const dateParser = (date: string) => {
+	const parsedDate = parse(date, "MM-dd-yyyy", new Date());
+	return parsedDate;
+};
+
 const PersonalInformation: FC<UserInformation> = ({
 	firstName,
-	isSaved,
+	middleInitial,
+	setMiddleInitial,
 	lastName,
 	setFirstName = null,
 	setLastName = null,
+	gender,
+	birthDate,
 }): JSX.Element => {
+	console.log(`birthday - ${birthDate}`);
+
 	return (
-		<div className={`${cardClass} flex-col gap-y-4`}>
+		<div className={`${cardClass} flex-col gap-y-4 md:gap-y-6`}>
 			<div>
 				<h2 className="font-bold">Personal Information</h2>
 				<p className="text-sm">Update your personal information</p>
 			</div>
-			<div className="grid sm:grid-cols-2 gap-3 max-w-xl">
-				{!isSaved ? (
-					<div>
-						<h3 className="font-bold text-sm">First Name</h3>
-						<p className="font-thin text-sm">{firstName}</p>
-					</div>
-				) : (
-					<AnimatedInputs
-						isDisabled={false}
-						isRequired={true}
-						inputType="firstName"
-						label="First Name"
-						setValue={setFirstName}
-						type="text"
-						value={firstName}
-						key="firstNameKeyAccount"
-					/>
-				)}
-				{!isSaved ? (
-					<div>
-						<h3 className="font-bold text-sm">Last Name</h3>
-						<p className="font-thin text-sm">{lastName}</p>
-					</div>
-				) : (
-					<AnimatedInputs
-						isDisabled={false}
-						isRequired={true}
-						inputType="lastName"
-						label="Last Name"
-						setValue={setLastName}
-						type="text"
-						value={lastName}
-						key="lastNameKeyAccount"
-					/>
-				)}
+			<div className="grid sm:grid-cols-3 gap-8">
+				<AnimatedInputs
+					isDisabled={false}
+					isRequired={true}
+					inputType="firstName"
+					label="First Name"
+					setValue={setFirstName}
+					type="text"
+					value={firstName}
+					key="firstNameKeyAccount"
+				/>
+				<AnimatedInputs
+					isDisabled={false}
+					isRequired={true}
+					inputType="MiddleInitial"
+					label="Middle Initial"
+					setValue={setMiddleInitial}
+					type="text"
+					value={middleInitial}
+					key="MiddleInitialKeyAccount"
+				/>
+				<AnimatedInputs
+					isDisabled={false}
+					isRequired={true}
+					inputType="lastName"
+					label="Last Name"
+					setValue={setLastName}
+					type="text"
+					value={lastName}
+					key="lastNameKeyAccount"
+				/>
 			</div>
-			<div className="grid sm:grid-cols-2 gap-3 max-w-xl">
-				{!isSaved ? (
-					<div>
-						<h3 className="font-bold text-sm">Email Address</h3>
-						<p className="font-thin text-sm">danielrey@gmail.com</p>
-					</div>
-				) : (
-					<AnimatedInputs
-						isDisabled={false}
-						isRequired={true}
-						inputType="email"
-						label="Email Address"
-						setValue={null}
-						type="email"
-						value={"danielrey@gmail.com"}
-						key="emailKeyAccount"
-					/>
-				)}
-				{!isSaved ? (
-					<div>
-						<h3 className="font-bold text-sm">Phone Number</h3>
-						<p className="font-thin text-sm">09876543212</p>
-					</div>
-				) : (
-					<AnimatedInputs
-						isDisabled={false}
-						isRequired={true}
-						inputType="phoneNumber"
-						label="Phone Number"
-						setValue={null}
-						type="number"
-						value={"09876543212"}
-						key="phoneNumberKeyAccount"
-					/>
-				)}
+			<div className="grid sm:grid-cols-3 gap-3">
+				<div className="w-full space-y-2">
+					<p className="text-xs md:text-sm font-bold">Gender</p>
+					<GenderRadio gender={gender} />
+				</div>
+
+				<div>
+					<p className="text-xs md:text-sm font-bold">Birthdate</p>
+					<CalendarComponent birthDate={dateParser(birthDate)} />
+				</div>
+				<AnimatedInputs
+					isDisabled={false}
+					isRequired={true}
+					inputType="phoneNumber"
+					label="Phone Number"
+					setValue={null}
+					type="number"
+					value={"09876543212"}
+					key="phoneNumberKeyAccount"
+				/>
+			</div>
+			<div className="mt-6 w-full flex justify-end flex-col md:flex-row gap-4">
+				<Button className="md:w-fit bg-[#017DC3] hover:bg-[#017DC3]/90">
+					Update
+				</Button>
+				<Button variant={"ghost"}>Reset</Button>
 			</div>
 		</div>
 	);
