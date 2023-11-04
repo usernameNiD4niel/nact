@@ -4,6 +4,8 @@ import AssignRoleCard from "../helper/assign-role-card";
 import DemoteRole from "../helper/demote-role";
 import { getUserBaseOnRole } from "@/api/account";
 import { UsersType } from "@/constants/props";
+import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const BillingAndCollection = () => {
 	const [setTab] = useInventoryState((state) => [state.setActiveTab]);
@@ -20,7 +22,13 @@ const BillingAndCollection = () => {
 		setIsFetching(false);
 	};
 
+	const router = useNavigate();
+	const role = Cookies.get("role");
+
 	useEffect(() => {
+		if (role === "unset") {
+			router("/");
+		}
 		setTab(3);
 		fetchUsers();
 	}, []);

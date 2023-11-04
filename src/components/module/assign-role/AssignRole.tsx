@@ -4,6 +4,8 @@ import AddRole from "../helper/add-role";
 import { useInventoryState } from "@/utils/InventoryState";
 import { UsersType } from "@/constants/props";
 import { getUserBaseOnRole } from "@/api/account";
+import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const AssignRole = () => {
 	const [selectedCards, setSelectedCards] = useState<string[]>([]);
@@ -20,7 +22,13 @@ const AssignRole = () => {
 		setIsFetching(false);
 	};
 
+	const router = useNavigate();
+	const role = Cookies.get("role");
+
 	useEffect(() => {
+		if (role !== "admin") {
+			router("/");
+		}
 		setTab(0);
 		fetchUsers();
 	}, []);

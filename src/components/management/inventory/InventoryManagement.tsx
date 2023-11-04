@@ -2,8 +2,9 @@ import Tabs from "@/components/reuseable/Tabs";
 import { ButtonList } from "@/constants/enums";
 import { useSelectedStore } from "@/utils/HomePageState";
 import { useInventoryState } from "@/utils/InventoryState";
+import Cookies from "js-cookie";
 import { useEffect } from "react";
-import { Outlet } from "react-router-dom";
+import { Outlet, useNavigate } from "react-router-dom";
 
 const InventoryManagement = () => {
 	const [selected, setSelected] = useSelectedStore((state) => [
@@ -12,8 +13,13 @@ const InventoryManagement = () => {
 	]);
 
 	const [tab] = useInventoryState((state) => [state.tab]);
+	const router = useNavigate();
+	const role = Cookies.get("role");
 
 	useEffect(() => {
+		if (role === "unset") {
+			router("/");
+		}
 		if (selected !== ButtonList.Inventory) {
 			setSelected(ButtonList.Inventory);
 		}
