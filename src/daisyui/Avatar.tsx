@@ -1,21 +1,33 @@
 import { FC } from "react";
 
-import avatar from "../assets/avatar.svg";
+import male from "../assets/male.svg";
+import female from "../assets/female.svg";
 
 type ImageProps = {
 	alt: string;
+	gender: string;
 };
 
-const Avatar: FC<ImageProps> = ({ alt }) => {
+const Avatar: FC<ImageProps> = ({ alt, gender }) => {
 	return (
 		<div>
-			<img
-				src={avatar}
-				alt={alt}
-				width={66}
-				height={66}
-				className="rounded-full bg-[#017DC3]"
-			/>
+			{gender.toLowerCase() === "male" ? (
+				<img
+					src={male}
+					alt={alt}
+					width={66}
+					height={66}
+					className="rounded-full bg-[#017DC3]"
+				/>
+			) : (
+				<img
+					src={female}
+					alt={alt}
+					width={66}
+					height={66}
+					className="rounded-full bg-[#017DC3]"
+				/>
+			)}
 		</div>
 	);
 };

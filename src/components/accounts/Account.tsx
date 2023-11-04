@@ -1,13 +1,8 @@
 import { ButtonList } from "@/constants/enums";
-import {
-	animatedInputClass,
-	animatedSpanClassHigh,
-	cardClass,
-} from "@/constants/reusable-class";
+import { cardClass } from "@/constants/reusable-class";
 import Avatar from "@/daisyui/Avatar";
 import { useSelectedStore } from "@/utils/HomePageState";
 import React, { FC, useEffect, useState } from "react";
-import AnimatedInputs from "../reuseable/AnimatedInputs";
 import { FiLogOut } from "react-icons/fi";
 import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
@@ -16,6 +11,8 @@ import GenderRadio from "../reuseable/GenderRadio";
 import CalendarComponent from "../reuseable/CalendarComponent";
 import { parse } from "date-fns";
 import { Button } from "../ui/button";
+import { Input } from "../ui/input";
+import { Label } from "../ui/label";
 
 type UserInformation = {
 	firstName: string;
@@ -25,8 +22,8 @@ type UserInformation = {
 	birthDate: string;
 	gender: string;
 	setMiddleInitial: React.Dispatch<React.SetStateAction<string>>;
-	setFirstName?: React.Dispatch<React.SetStateAction<string>>;
-	setLastName?: React.Dispatch<React.SetStateAction<string>>;
+	setFirstName: React.Dispatch<React.SetStateAction<string>>;
+	setLastName: React.Dispatch<React.SetStateAction<string>>;
 };
 
 interface User {
@@ -50,8 +47,6 @@ const Account = () => {
 	const [firstName, setFirstName] = useState<string>(user.firstName);
 	const [lastName, setLastName] = useState<string>(user.lastName);
 	const [middleInitial, setMiddleInitial] = useState<string>(user.middleName);
-
-	const [isEditing, setIsEditing] = useState<boolean>(false);
 
 	const navigate = useNavigate();
 
@@ -79,8 +74,8 @@ const Account = () => {
 					<ProfileComponent
 						firstName={firstName}
 						lastName={lastName}
+						gender={user.gender}
 						middleInitial={middleInitial}
-						isSaved={isEditing}
 						role={user.user_type}
 					/>
 					<PersonalInformation
@@ -95,14 +90,6 @@ const Account = () => {
 						setLastName={setLastName}
 						key="PersonalInformationKey"
 					/>
-					{isEditing && <ChangePassword isSaved={false} />}
-					{isEditing && (
-						<button
-							className="bg-[#017DC3] text-white text-sm font-medium rounded-md p-3 w-fit hover:opacity-90 transition-opacity duration-150"
-							onClick={() => setIsEditing(false)}>
-							Update Changes
-						</button>
-					)}
 				</section>
 			</section>
 			<div
@@ -117,9 +104,9 @@ const Account = () => {
 interface ProfileComponentProps {
 	firstName: string;
 	lastName: string;
-	isSaved: boolean;
 	role: string;
 	middleInitial: string;
+	gender: string;
 }
 
 const ProfileComponent: FC<ProfileComponentProps> = ({
@@ -127,6 +114,7 @@ const ProfileComponent: FC<ProfileComponentProps> = ({
 	lastName,
 	middleInitial,
 	role,
+	gender,
 }): JSX.Element => {
 	return (
 		<div
@@ -138,7 +126,7 @@ const ProfileComponent: FC<ProfileComponentProps> = ({
 						{firstName} {middleInitial} {lastName}
 					</h3>
 				</div>
-				<Avatar alt="User profile logo" key="Account avatar" />
+				<Avatar alt="User profile logo" key="Account avatar" gender={gender} />
 			</div>
 		</div>
 	);
@@ -154,8 +142,8 @@ const PersonalInformation: FC<UserInformation> = ({
 	middleInitial,
 	setMiddleInitial,
 	lastName,
-	setFirstName = null,
-	setLastName = null,
+	setFirstName,
+	setLastName,
 	gender,
 	birthDate,
 }): JSX.Element => {
@@ -168,122 +156,50 @@ const PersonalInformation: FC<UserInformation> = ({
 				<p className="text-sm">Update your personal information</p>
 			</div>
 			<div className="grid sm:grid-cols-3 gap-8">
-				<AnimatedInputs
-					isDisabled={false}
-					isRequired={true}
-					inputType="firstName"
-					label="First Name"
-					setValue={setFirstName}
-					type="text"
-					value={firstName}
-					key="firstNameKeyAccount"
-				/>
-				<AnimatedInputs
-					isDisabled={false}
-					isRequired={true}
-					inputType="MiddleInitial"
-					label="Middle Initial"
-					setValue={setMiddleInitial}
-					type="text"
-					value={middleInitial}
-					key="MiddleInitialKeyAccount"
-				/>
-				<AnimatedInputs
-					isDisabled={false}
-					isRequired={true}
-					inputType="lastName"
-					label="Last Name"
-					setValue={setLastName}
-					type="text"
-					value={lastName}
-					key="lastNameKeyAccount"
-				/>
-			</div>
-			<div className="grid sm:grid-cols-3 gap-3">
-				<div className="w-full space-y-2">
-					<p className="text-xs md:text-sm font-bold">Gender</p>
-					<GenderRadio gender={gender} />
+				<div className="w-full space-y-1">
+					<Label htmlFor="firstName">Firstname</Label>
+					<Input
+						id="firstName"
+						value={firstName}
+						onChange={(e) => setFirstName(e.target.value)}
+					/>
 				</div>
-
-				<div>
-					<p className="text-xs md:text-sm font-bold">Birthdate</p>
+				<div className="w-full space-y-1">
+					<Label htmlFor="middleName">Middlename</Label>
+					<Input
+						id="middleName"
+						value={middleInitial}
+						onChange={(e) => setMiddleInitial(e.target.value)}
+					/>
+				</div>
+				<div className="w-full space-y-1">
+					<Label htmlFor="lastName">Lastname</Label>
+					<Input
+						id="lastName"
+						value={lastName}
+						onChange={(e) => setLastName(e.target.value)}
+					/>
+				</div>
+			</div>
+			<div className="grid sm:grid-cols-3 items-center gap-8">
+				<div className="space-y-1">
+					<p className="text-xs md:text-sm">Birthdate</p>
 					<CalendarComponent birthDate={dateParser(birthDate)} />
 				</div>
-				<AnimatedInputs
-					isDisabled={false}
-					isRequired={true}
-					inputType="phoneNumber"
-					label="Phone Number"
-					setValue={null}
-					type="number"
-					value={"09876543212"}
-					key="phoneNumberKeyAccount"
-				/>
+				<div className="w-full space-y-1">
+					<Label htmlFor="phoneNumber">Phone Number</Label>
+					<Input id="phoneNumber" type="number" />
+				</div>
+				<div className="w-full space-y-2">
+					<p className="text-xs md:text-sm">Gender</p>
+					<GenderRadio gender={gender} />
+				</div>
 			</div>
 			<div className="mt-6 w-full flex justify-end flex-col md:flex-row gap-4">
 				<Button className="md:w-fit bg-[#017DC3] hover:bg-[#017DC3]/90">
 					Update
 				</Button>
 				<Button variant={"ghost"}>Reset</Button>
-			</div>
-		</div>
-	);
-};
-const ChangePassword = ({ isSaved }: { isSaved: boolean }) => {
-	const [newPassword, setNewPassword] = useState<string>("");
-
-	return (
-		<div className={`${cardClass} flex-col gap-y-4`}>
-			<div>
-				<h2 className="font-bold">Change Password</h2>
-				<p className="text-sm">
-					Your new password must be different from previous used passwords
-				</p>
-			</div>
-			<div className="max-w-xl flex flex-col gap-y-5">
-				<div className="w-full">
-					<label className="relative" htmlFor="currentPassword">
-						<input
-							type="password"
-							className={`${animatedInputClass}`}
-							id="currentPassword"
-							name="currentPassword"
-							disabled={isSaved}
-							value={newPassword}
-							onChange={(e) => setNewPassword(e.target.value)}
-							required
-						/>
-						<span
-							className={`${animatedSpanClassHigh} ${
-								newPassword && "input-contains"
-							}`}>
-							Current New Password
-						</span>
-					</label>
-				</div>
-				<div className="grid md:grid-cols-2 gap-5">
-					<AnimatedInputs
-						isDisabled={false}
-						isRequired={true}
-						inputType="newPassword"
-						label="New Password"
-						setValue={null}
-						type="password"
-						value={"thisisnotyourpassword"}
-						key="newPasswordKeyAccount"
-					/>
-					<AnimatedInputs
-						isDisabled={false}
-						isRequired={true}
-						inputType="confirmPassword"
-						label="Confirm New Password"
-						setValue={null}
-						type="password"
-						value={"thisisnotyourpassword"}
-						key="confirmPasswordKeyAccount"
-					/>
-				</div>
-				{/* https://www.behance.net/gallery/175120525/Account-Settings-Profile-User-Information?tracking_source=search_projects|account+page */}
 			</div>
 		</div>
 	);
