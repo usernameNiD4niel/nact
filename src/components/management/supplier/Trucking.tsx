@@ -4,7 +4,7 @@ import { headerBackClass } from "@/constants/reusable-class";
 const Trucking = () => {
 	return (
 		<div className={headerBackClass}>
-			<HeaderWithBack text="Trucking" route="/supplier/add" />
+			<HeaderWithBack text="Trucking" />
 		</div>
 	);
 };

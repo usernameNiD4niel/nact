@@ -21,7 +21,7 @@ const Shipping = () => {
 				className={`z-10 absolute inset-0 bg-white h-full w-full ${
 					validation ? "overflow-hidden" : "overflow-auto"
 				}`}>
-				<HeaderWithBack text="Shipping" route="/supplier/add" />
+				<HeaderWithBack text="Shipping" />
 				<BusinessInformationForm
 					validation={validation}
 					setValidation={setValidation}

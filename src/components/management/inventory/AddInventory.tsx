@@ -153,7 +153,7 @@ const AddInventory = () => {
 	return (
 		<div className={headerBackClass}>
 			<div className="flex items-center justify-center flex-col w-full mt-10">
-				<HeaderWithBack text="Add Inventory" route="/inventory" />
+				<HeaderWithBack text="Add Inventory" />
 				<form
 					className="p-2 flex flex-col gap-y-2 w-full lg:w-[60%] py-10 bg-white px-6"
 					onSubmit={handleFormSubmit}>

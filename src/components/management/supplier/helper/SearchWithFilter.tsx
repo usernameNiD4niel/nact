@@ -10,7 +10,6 @@ import FilteringDropdown from "./FilteringDropdown";
 import Badge from "@/components/reuseable/Badge";
 import FilteringSheet from "./FilteringSheet";
 import { getUniqueItems } from "@/api/supplier";
-import { Table } from "@tanstack/react-table";
 
 type SearchWithFilterProps = {
 	placeHolder: string;
@@ -19,28 +18,7 @@ type SearchWithFilterProps = {
 	data: SupplierTableProps[];
 	setData: React.Dispatch<React.SetStateAction<SupplierTableProps[]>>;
 	setIsFiltering: React.Dispatch<React.SetStateAction<boolean>>;
-	table: Table<SupplierTableProps>;
 };
-
-// const getUniqueFilterData = async () => {
-// 	const response = await fetch(
-// 		`${import.meta.env.VITE_BASE_URL}/api/supplier/unique`,
-// 		{
-// 			headers: {
-// 				"Content-Type": "application/json",
-// 			},
-// 		},
-// 	);
-
-// 	if (response.ok) {
-// 		const data = await response.json();
-// 		const suppliers: TemporarySupplierType[] = data.suppliers;
-
-// 		return suppliers;
-// 	}
-
-// 	throw new Error("Cannot get all the supplier");
-// };
 
 const getInitialData = async (
 	setData: React.Dispatch<React.SetStateAction<SupplierTableProps[]>>,
@@ -71,7 +49,6 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 	setData,
 	value,
 	data,
-	table,
 	setIsFiltering,
 }) => {
 	const [check, setCheck] = useState<CheckboxShape[]>([]);
@@ -98,36 +75,19 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 
 	const requestFiltered = async () => {
 		let params = "";
-		let business_name = "business_name=";
-		let location = "location=";
-		let contact = "contact=";
 
 		for (let i = 0; i < check.length; i++) {
-			// for supplier
 			if (check[i].column === "business_name") {
-				business_name += check[i].label + ",";
+				params += "business_name=" + check[i].label + "&";
 			} else if (check[i].column === "location") {
-				location += check[i].label + ",";
+				params += "location=" + check[i].label + "&";
 			} else {
-				contact += check[i].label + ",";
+				params += "contact=" + check[i].label + "&";
 			}
 		}
-		if (business_name.length > 14) {
-			params += `${business_name.substring(0, business_name.length - 1)}`;
-		}
 
-		if (location.length > 9) {
-			params +=
-				params && params.length > 0
-					? `&${location.substring(0, location.length - 1)}`
-					: location.substring(0, location.length - 1);
-		}
-
-		if (contact.length > 8) {
-			params +=
-				params && params.length > 0
-					? `&${contact.substring(0, contact.length - 1)}`
-					: contact.substring(0, contact.length - 1);
+		if (params.endsWith("&")) {
+			params = params.substring(0, params.length - 1);
 		}
 
 		console.log("the params: ", params);
@@ -146,13 +106,12 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 					setData([]);
 					return;
 				}
-
-				table.getColumn("businessName")?.setFilterValue("");
 				setData(tableData);
 			})
 			.catch((err) => {
 				// setData([]);
 				console.log("the log");
+				setData([]);
 
 				console.log("Error", err);
 				// table.getColumn("businessName")?.setFilterValue("");
