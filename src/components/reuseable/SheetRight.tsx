@@ -14,10 +14,13 @@ import { useSelectedStore } from "@/utils/HomePageState";
 import { ButtonList } from "@/constants/enums";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { Button } from "../ui/button";
+import Cookies from "js-cookie";
 
 const SheetRight = () => {
 	const [selected] = useSelectedStore((state) => [state.selected]);
 	const publiClassDrawer = "text-white p-2 text-base flex items-center gap-2";
+
+	const role = Cookies.get("role");
 
 	const buttonClass =
 		"flex gap-x-3 py-2 mb-2 font-medium mx-3 px-2 text-md rounded-md items-center transition-opacity duration-300 w-full";
@@ -82,41 +85,47 @@ const SheetRight = () => {
 									buttonList={ButtonList.Home}
 									to="/"
 								/>
-								<SheetCloseComp
-									text="Module"
-									to="/module"
-									buttonList={ButtonList.Module}
-								/>
-								<SheetCloseComp
-									text="Costumer"
-									to="/costumer"
-									buttonList={ButtonList.Costumer}
-								/>
-								<SheetCloseComp
-									text="Supplier Management"
-									to="/supplier"
-									buttonList={ButtonList.Supplier}
-								/>
-								<SheetCloseComp
-									text="Sales Agent"
-									to="/sales-agent"
-									buttonList={ButtonList.SalesAgent}
-								/>
-								<SheetCloseComp
-									text="Inventory Officer"
-									to="/inventory-officer"
-									buttonList={ButtonList.InventoryOfficer}
-								/>
-								<SheetCloseComp
-									text="Inventory"
-									to="/inventory"
-									buttonList={ButtonList.Inventory}
-								/>
-								<SheetCloseComp
-									text="Order Generator"
-									to="/order-generator"
-									buttonList={ButtonList.OrderGenerator}
-								/>
+								{role === "admin" && (
+									<SheetCloseComp
+										text="Module"
+										to="/module"
+										buttonList={ButtonList.Module}
+									/>
+								)}
+								{role !== "unset" && (
+									<>
+										<SheetCloseComp
+											text="Costumer"
+											to="/costumer"
+											buttonList={ButtonList.Costumer}
+										/>
+										<SheetCloseComp
+											text="Supplier Management"
+											to="/supplier"
+											buttonList={ButtonList.Supplier}
+										/>
+										<SheetCloseComp
+											text="Sales Agent"
+											to="/sales-agent"
+											buttonList={ButtonList.SalesAgent}
+										/>
+										<SheetCloseComp
+											text="Inventory Officer"
+											to="/inventory-officer"
+											buttonList={ButtonList.InventoryOfficer}
+										/>
+										<SheetCloseComp
+											text="Inventory"
+											to="/inventory"
+											buttonList={ButtonList.Inventory}
+										/>
+										<SheetCloseComp
+											text="Order Generator"
+											to="/order-generator"
+											buttonList={ButtonList.OrderGenerator}
+										/>
+									</>
+								)}
 							</p>
 
 							<SheetCloseComp

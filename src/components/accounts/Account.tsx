@@ -36,6 +36,7 @@ const Account = () => {
 
 	const handleLogout = () => {
 		Cookies.remove("token");
+		Cookies.remove("role");
 		navigate("/login");
 	};
 

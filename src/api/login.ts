@@ -41,11 +41,9 @@ export const POST = async ({
 
 			// TODO: change this if there's no status from the response
 			if (data.success) {
-				console.log("Redirecting to the dashboard...");
 				setIsLoading(false);
-				console.log("token", data.access_token);
-				console.log("csrf token", data.csrf_access_token);
 				Cookies.set("csrf_token", data.csrf_access_token);
+				Cookies.set("role", data.user.user_type);
 				return data;
 			} else {
 				console.error("Error: " + data.message);

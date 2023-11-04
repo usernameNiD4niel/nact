@@ -238,6 +238,7 @@ type UserResponseProps = {
 	id: number;
 	firstName: string;
 	lastName: string;
+	user_type: string;
 };
 
 export type RegisterResponse = {

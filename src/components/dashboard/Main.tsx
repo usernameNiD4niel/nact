@@ -50,6 +50,7 @@ const Main = () => {
 };
 
 const SideNavigation = ({ selected }: { selected: ButtonList | null }) => {
+	const role = Cookies.get("role");
 	const buttonClass =
 		"flex gap-x-3 py-2 mb-2 mx-3 px-2 text-sm rounded-md items-center transition-opacity duration-300";
 	const hoverButtonClass =
@@ -77,83 +78,89 @@ const SideNavigation = ({ selected }: { selected: ButtonList | null }) => {
 							Home
 						</Link>
 					</li>
-					<li>
-						<Link
-							to="/module"
-							className={`${buttonClass} ${
-								selected === ButtonList.Module
-									? "text-[#017DC3] font-semibold bg-slate-50"
-									: "text-white font-thin"
-							} ${hoverButtonClass}`}>
-							Module
-						</Link>
-					</li>
-					<li>
-						<Link
-							to="/costumer"
-							className={`${buttonClass} ${
-								selected === ButtonList.Costumer
-									? "text-[#017DC3] font-semibold bg-slate-50"
-									: "text-white font-thin"
-							} ${hoverButtonClass}`}>
-							Customer
-						</Link>
-					</li>
-					<li>
-						<Link
-							to="/supplier"
-							className={`${buttonClass} flex justify-between items-center group ${
-								selected === ButtonList.Supplier
-									? "text-[#017DC3] font-semibold bg-slate-50"
-									: "text-white font-thin"
-							} ${hoverButtonClass}`}>
-							Supplier Management
-						</Link>
-					</li>
-					<li>
-						<Link
-							to="/sales-agent"
-							className={`${buttonClass} ${
-								selected === ButtonList.SalesAgent
-									? "text-[#017DC3] font-semibold bg-slate-50"
-									: "text-white font-thin"
-							} ${hoverButtonClass}`}>
-							Sales Agent
-						</Link>
-					</li>
-					<li>
-						<Link
-							to="/inventory-officer"
-							className={`${buttonClass} ${
-								selected === ButtonList.InventoryOfficer
-									? "text-[#017DC3] font-semibold bg-slate-50"
-									: "text-white font-thin"
-							} ${hoverButtonClass}`}>
-							Inventory Officer
-						</Link>
-					</li>
-					<li>
-						<Link
-							to="/inventory"
-							className={`${buttonClass} ${
-								selected === ButtonList.Inventory
-									? "text-[#017DC3] font-semibold bg-slate-50"
-									: "text-white font-thin"
-							} ${hoverButtonClass}`}>
-							Inventory
-						</Link>
-					</li>
-					<li>
-						<Link
-							to="/order-generator"
-							className={`${buttonClass} ${
-								selected === ButtonList.OrderGenerator
-									? "text-[#017DC3] font-semibold bg-slate-50"
-									: "text-white font-thin"
-							} ${hoverButtonClass}`}>
-							Order Generator
-						</Link>
-					</li>
+					{role === "admin" && (
+						<li>
+							<Link
+								to="/module"
+								className={`${buttonClass} ${
+									selected === ButtonList.Module
+										? "text-[#017DC3] font-semibold bg-slate-50"
+										: "text-white font-thin"
+								} ${hoverButtonClass}`}>
+								Module
+							</Link>
+						</li>
+					)}
+					{role !== "unset" && (
+						<React.Fragment>
+							<li>
+								<Link
+									to="/costumer"
+									className={`${buttonClass} ${
+										selected === ButtonList.Costumer
+											? "text-[#017DC3] font-semibold bg-slate-50"
+											: "text-white font-thin"
+									} ${hoverButtonClass}`}>
+									Customer
+								</Link>
+							</li>
+							<li>
+								<Link
+									to="/supplier"
+									className={`${buttonClass} flex justify-between items-center group ${
+										selected === ButtonList.Supplier
+											? "text-[#017DC3] font-semibold bg-slate-50"
+											: "text-white font-thin"
+									} ${hoverButtonClass}`}>
+									Supplier Management
+								</Link>
+							</li>
+							<li>
+								<Link
+									to="/sales-agent"
+									className={`${buttonClass} ${
+										selected === ButtonList.SalesAgent
+											? "text-[#017DC3] font-semibold bg-slate-50"
+											: "text-white font-thin"
+									} ${hoverButtonClass}`}>
+									Sales Agent
+								</Link>
+							</li>
+							<li>
+								<Link
+									to="/inventory-officer"
+									className={`${buttonClass} ${
+										selected === ButtonList.InventoryOfficer
+											? "text-[#017DC3] font-semibold bg-slate-50"
+											: "text-white font-thin"
+									} ${hoverButtonClass}`}>
+									Inventory Officer
+								</Link>
+							</li>
+							<li>
+								<Link
+									to="/inventory"
+									className={`${buttonClass} ${
+										selected === ButtonList.Inventory
+											? "text-[#017DC3] font-semibold bg-slate-50"
+											: "text-white font-thin"
+									} ${hoverButtonClass}`}>
+									Inventory
+								</Link>
+							</li>
+							<li>
+								<Link
+									to="/order-generator"
+									className={`${buttonClass} ${
+										selected === ButtonList.OrderGenerator
+											? "text-[#017DC3] font-semibold bg-slate-50"
+											: "text-white font-thin"
+									} ${hoverButtonClass}`}>
+									Order Generator
+								</Link>
+							</li>
+						</React.Fragment>
+					)}
 				</div>
 				<li>
 					<Link
