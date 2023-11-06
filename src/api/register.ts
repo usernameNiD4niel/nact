@@ -47,8 +47,6 @@ export const POST = async ({
     pin,
   };
 
-  console.log(`new birthdate: ${newBirthDate}`);
-
   try {
     const response = await fetch(apiEndpoint, {
       method: "POST",
