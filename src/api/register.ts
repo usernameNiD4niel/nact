@@ -8,9 +8,10 @@ function transformDateFormat(dateString: string): string {
     return "Invalid Date";
   }
 
+  //   2000-25-10 -> 2000-10-25
   const year = parseInt(dateParts[0], 10);
-  const month = parseInt(dateParts[1], 10);
-  const day = parseInt(dateParts[2], 10);
+  const month = parseInt(dateParts[2], 10);
+  const day = parseInt(dateParts[1], 10);
 
   // Create a new Date object with the parsed parts
   const date = new Date(year, month - 1, day); // Months are 0-based, so subtract 1 from the month
