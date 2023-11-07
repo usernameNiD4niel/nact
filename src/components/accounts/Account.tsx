@@ -62,6 +62,9 @@ const Account = () => {
 			setSelected(ButtonList.Account);
 		}
 	}, []);
+
+	console.log(`the birthdate is ${user.birthDate}`);
+
 	return (
 		<React.Fragment>
 			<section className="flex items-center justify-center py-16 px-4 md:p-8 space-y-4 w-full max-w-6xl">
@@ -86,7 +89,7 @@ const Account = () => {
 						setFirstName={setFirstName}
 						gender={user.gender}
 						role={user.user_type}
-						birthDate={user.birthDate}
+						birthDate={transformedDateParser(user.birthDate)}
 						setLastName={setLastName}
 						key="PersonalInformationKey"
 					/>
@@ -137,6 +140,19 @@ const dateParser = (date: string) => {
 	return parsedDate;
 };
 
+const transformedDateParser = (date: string) => {
+	const dateArray = date.split("-");
+
+	if (dateArray[0].length === 4) {
+		const year = dateArray[0];
+		const month = dateArray[1];
+		const day = dateArray[2];
+		return `${month}-${day}-${year}`;
+	}
+
+	return date;
+};
+
 const PersonalInformation: FC<UserInformation> = ({
 	firstName,
 	middleInitial,
@@ -148,6 +164,8 @@ const PersonalInformation: FC<UserInformation> = ({
 	birthDate,
 }): JSX.Element => {
 	console.log(`birthday - ${birthDate}`);
+	// const transformedDate = transformedDateParser(birthDate);
+	// console.log(`birthday - ${birthDate}`);
 
 	return (
 		<div className={`${cardClass} flex-col gap-y-4 md:gap-y-6`}>
