@@ -93,72 +93,89 @@ const SideNavigation = ({ selected }: { selected: ButtonList | null }) => {
 					)}
 					{role !== "unset" && (
 						<React.Fragment>
-							<li>
-								<Link
-									to="/costumer"
-									className={`${buttonClass} ${
-										selected === ButtonList.Costumer
-											? "text-[#017DC3] font-semibold bg-slate-50"
-											: "text-white font-thin"
-									} ${hoverButtonClass}`}>
-									Customer
-								</Link>
-							</li>
-							<li>
-								<Link
-									to="/supplier"
-									className={`${buttonClass} flex justify-between items-center group ${
-										selected === ButtonList.Supplier
-											? "text-[#017DC3] font-semibold bg-slate-50"
-											: "text-white font-thin"
-									} ${hoverButtonClass}`}>
-									Supplier Management
-								</Link>
-							</li>
-							<li>
-								<Link
-									to="/sales-agent"
-									className={`${buttonClass} ${
-										selected === ButtonList.SalesAgent
-											? "text-[#017DC3] font-semibold bg-slate-50"
-											: "text-white font-thin"
-									} ${hoverButtonClass}`}>
-									Sales Agent
-								</Link>
-							</li>
-							<li>
-								<Link
-									to="/inventory-officer"
-									className={`${buttonClass} ${
-										selected === ButtonList.InventoryOfficer
-											? "text-[#017DC3] font-semibold bg-slate-50"
-											: "text-white font-thin"
-									} ${hoverButtonClass}`}>
-									Inventory Officer
-								</Link>
-							</li>
-							<li>
-								<Link
-									to="/inventory"
-									className={`${buttonClass} ${
-										selected === ButtonList.Inventory
-											? "text-[#017DC3] font-semibold bg-slate-50"
-											: "text-white font-thin"
-									} ${hoverButtonClass}`}>
-									Inventory
-								</Link>
-							</li>
-							<li>
-								<Link
-									to="/order-generator"
-									className={`${buttonClass} ${
-										selected === ButtonList.OrderGenerator
-											? "text-[#017DC3] font-semibold bg-slate-50"
-											: "text-white font-thin"
-									} ${hoverButtonClass}`}>
-									Order Generator
-								</Link>
-							</li>
+							{role === "costumer" ||
+								(role === "admin" && (
+									<li>
+										<Link
+											to="/costumer"
+											className={`${buttonClass} ${
+												selected === ButtonList.Costumer
+													? "text-[#017DC3] font-semibold bg-slate-50"
+													: "text-white font-thin"
+											} ${hoverButtonClass}`}>
+											Customer
+										</Link>
+									</li>
+								))}
+							{role === "supply_chain" ||
+								(role === "admin" && (
+									<li>
+										<Link
+											to="/supplier"
+											className={`${buttonClass} flex justify-between items-center group ${
+												selected === ButtonList.Supplier
+													? "text-[#017DC3] font-semibold bg-slate-50"
+													: "text-white font-thin"
+											} ${hoverButtonClass}`}>
+											Supplier Management
+										</Link>
+									</li>
+								))}
+							{role === "sales_agent" ||
+								(role === "admin" && (
+									<li>
+										<Link
+											to="/sales-agent"
+											className={`${buttonClass} ${
+												selected === ButtonList.SalesAgent
+													? "text-[#017DC3] font-semibold bg-slate-50"
+													: "text-white font-thin"
+											} ${hoverButtonClass}`}>
+											Sales Agent
+										</Link>
+									</li>
+								))}
+							{role === "inventory" ||
+								(role === "admin" && (
+									<>
+										<li>
+											<Link
+												to="/inventory-officer"
+												className={`${buttonClass} ${
+													selected === ButtonList.InventoryOfficer
+														? "text-[#017DC3] font-semibold bg-slate-50"
+														: "text-white font-thin"
+												} ${hoverButtonClass}`}>
+												Inventory Officer
+											</Link>
+										</li>
+										<li>
+											<Link
+												to="/inventory"
+												className={`${buttonClass} ${
+													selected === ButtonList.Inventory
+														? "text-[#017DC3] font-semibold bg-slate-50"
+														: "text-white font-thin"
+												} ${hoverButtonClass}`}>
+												Inventory
+											</Link>
+										</li>
+									</>
+								))}
+							{role === "order_generator" ||
+								(role === "admin" && (
+									<li>
+										<Link
+											to="/order-generator"
+											className={`${buttonClass} ${
+												selected === ButtonList.OrderGenerator
+													? "text-[#017DC3] font-semibold bg-slate-50"
+													: "text-white font-thin"
+											} ${hoverButtonClass}`}>
+											Order Generator
+										</Link>
+									</li>
+								))}
 						</React.Fragment>
 					)}
 				</div>
