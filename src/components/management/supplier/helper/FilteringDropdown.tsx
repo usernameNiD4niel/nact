@@ -216,19 +216,32 @@ const FilteringDropdown: FC<FilteringDropdownProps> = ({
 		console.log(`checbox ${JSON.stringify(checkboxState, null, 2)}`);
 		console.log(`items ${JSON.stringify(items, null, 2)}`);
 
-		const unique: CheckboxShape[] = checkboxState;
-		for (let i = 0; i < items.length; i++) {
-			for (let j = 0; j < checkboxState.length; j++) {
-				if (i !== j) {
-					console.log(`${checkboxState[j].id} === ${items[i].id}`);
-					if (checkboxState[j].id === items[i].id) {
-						unique.splice(j, 1);
-						console.log(`item ${checkboxState} deleted`);
-					}
-				}
-			}
-			console.log(i);
-		}
+		const unique: CheckboxShape[] = checkboxState.filter((dataItem) => {
+			return !data.some(
+				(checkboxItem) => dataItem.label === checkboxItem.label,
+			);
+		});
+
+		// const unique: CheckboxShape[] = checkboxState;
+		// data.forEach((_item) => {
+		// 	const filter = checkboxState.find((_) => _.label === _item.label);
+		// 	if (filter) {
+		// 		unique.push(filter);
+		// 	}
+		// });
+
+		// for (let i = 0; i < items.length; i++) {
+		// 	for (let j = 0; j < checkboxState.length; j++) {
+		// 		if (i !== j) {
+		// 			console.log(`${checkboxState[j].id} === ${items[i].id}`);
+		// 			if (checkboxState[j].id === items[i].id) {
+		// 				unique.splice(j, 1);
+		// 				console.log(`item ${checkboxState} deleted`);
+		// 			}
+		// 		}
+		// 	}
+		// 	console.log(i);
+		// }
 		console.log(`unique ${JSON.stringify(unique, null, 2)}`);
 
 		setCheckboxState(unique);
