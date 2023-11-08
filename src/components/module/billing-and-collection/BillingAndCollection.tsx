@@ -17,7 +17,7 @@ const BillingAndCollection = () => {
 	const [isFetching, setIsFetching] = useState(true);
 
 	const fetchUsers = async () => {
-		const _users = await getUserBaseOnRole("billing_and_collection");
+		const _users = await getUserBaseOnRole("billing_collection");
 		setUsers(_users);
 		setIsFetching(false);
 	};
