@@ -148,23 +148,24 @@ export function NewDataTable<TValue>({
 												cell.column.columnDef.cell,
 												cell.getContext(),
 											)}
-
-											{cell.id.substring(2) !== "price" && (
-												<>
-													<span className={cn("md:hidden text-center ms-4")}>
-														{getItem(row.getValue("productName"), "city")}{" "}
-													</span>
-													<span className={cn("md:hidden text-center ms-4")}>
-														{getItem(row.getValue("productName"), "state")}{" "}
-													</span>
-													<span className={cn("md:hidden text-center ms-4")}>
-														{getItem(row.getValue("productName"), "quantity")}{" "}
-													</span>
-													<span className={cn("md:hidden text-center ms-4")}>
-														{getItem(row.getValue("productName"), "depot")}{" "}
-													</span>
-												</>
-											)}
+											<div className="md:hidden">
+												{cell.id.substring(2) !== "price" && (
+													<>
+														<span className={cn("md:hidden text-center ms-4")}>
+															{getItem(row.getValue("productName"), "city")}{" "}
+														</span>
+														<span className={cn("md:hidden text-center ms-4")}>
+															{getItem(row.getValue("productName"), "state")}{" "}
+														</span>
+														<span className={cn("md:hidden text-center ms-4")}>
+															{getItem(row.getValue("productName"), "quantity")}{" "}
+														</span>
+														<span className={cn("md:hidden text-center ms-4")}>
+															{getItem(row.getValue("productName"), "depot")}{" "}
+														</span>
+													</>
+												)}
+											</div>
 										</TableCell>
 									))}
 								</TableRow>

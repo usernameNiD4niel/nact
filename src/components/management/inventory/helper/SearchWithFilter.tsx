@@ -113,13 +113,13 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 
 				setIsFiltering(true);
 				if (!tableData || tableData.length === 0) {
-					setData([]);
+					// setData([]);
 					return;
 				}
-				setData(tableData);
+				// setData(tableData);
 			})
 			.catch((err) => {
-				setData([]);
+				// setData([]);
 
 				console.log("Error", err);
 				// table.getColumn("businessName")?.setFilterValue("");
