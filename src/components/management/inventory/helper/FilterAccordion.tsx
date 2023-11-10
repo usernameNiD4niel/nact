@@ -9,10 +9,19 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { SheetClose } from "@/components/ui/sheet";
-import { CheckboxShape } from "@/constants/props";
+import {
+	CheckboxShape,
+	CitySearch,
+	DepotSearch,
+	PriceSearch,
+	ProductNameSearch,
+	StateSearch,
+} from "@/constants/props";
+import useDebounce from "@/hooks/useDebounce";
 import { FC, useEffect, useState } from "react";
 
 import "../../../../../styles/styled-scrollbar.css";
+import { getColumnSearch } from "@/api/inventory";
 
 type FilterAccordionProps = {
 	label: string;
@@ -20,7 +29,7 @@ type FilterAccordionProps = {
 	check: CheckboxShape[];
 	setCheck: React.Dispatch<React.SetStateAction<CheckboxShape[]>>;
 	setIsFiltering: React.Dispatch<React.SetStateAction<boolean>>;
-	// dropdown: "businessName" | "location" | "contact";
+	dropdown: "productName" | "city" | "state" | "quantity" | "depot" | "price";
 };
 
 const FilterAccordion: FC<FilterAccordionProps> = ({
@@ -28,12 +37,12 @@ const FilterAccordion: FC<FilterAccordionProps> = ({
 	items,
 	label,
 	setCheck,
-	// dropdown,
+	dropdown,
 	setIsFiltering,
 }) => {
 	const [isSearching, setIsSearching] = useState(false);
 	const [search, setSearch] = useState("");
-	// const debounceSearchTerms = useDebounce<string>(search, 300);
+	const debounceSearchTerms = useDebounce<string>(search, 300);
 	const [data, setData] = useState<CheckboxShape[]>([]);
 	const [checkboxState, setCheckboxState] = useState<CheckboxShape[]>([]);
 
@@ -61,88 +70,72 @@ const FilterAccordion: FC<FilterAccordionProps> = ({
 
 	useEffect(() => setData(items), [items]);
 
-	// useEffect(() => {
-	// 	const getData = async () => {
-	// 		setIsSearching(true);
-	// 		if (debounceSearchTerms) {
-	// 			if (dropdown == "businessName") {
-	// 				const fetchedData = await getBusinessNameFilter(search);
+	function searchColumnBind<T>(fetchedData: T[]) {
+		if (fetchedData && fetchedData.length > 0) {
+			const cleanedData: CheckboxShape[] = [];
 
-	// 				if (fetchedData) {
-	// 					if (fetchedData.length > 0) {
-	// 						const cleanedData: CheckboxShape[] = [];
+			fetchedData.forEach((item) => {
+				cleanedData.push({
+					// @ts-expect-error - this is always has an id property
+					id: item["id"],
+					// @ts-expect-error - this is always has a property of the passed column
+					label: item[dropdown],
+					column: dropdown,
+				});
+			});
+			setData(cleanedData);
+			return;
+		}
 
-	// 						fetchedData.forEach((value) =>
-	// 							cleanedData.push({
-	// 								id: value.id,
-	// 								label: value.businessName,
-	// 								column: getColumn(),
-	// 							}),
-	// 						);
+		setData([]);
+	}
 
-	// 						setData(cleanedData);
-	// 					} else {
-	// 						const dataFetched: CheckboxShape[] = [];
-	// 						setData(dataFetched);
-	// 					}
-	// 				} else {
-	// 					const dataFetched: CheckboxShape[] = [];
-	// 					setData(dataFetched);
-	// 				}
-	// 			} else if (dropdown === "contact") {
-	// 				const fetchedData = await getContactFilter(search);
+	useEffect(() => {
+		const getData = async () => {
+			setIsSearching(true);
+			if (debounceSearchTerms) {
+				if (dropdown === "productName") {
+					const fetchedData = await getColumnSearch<ProductNameSearch>(
+						search,
+						dropdown,
+					);
 
-	// 				if (fetchedData) {
-	// 					if (fetchedData.length > 0) {
-	// 						const cleanedData: CheckboxShape[] = [];
+					searchColumnBind<ProductNameSearch>(fetchedData);
+				} else if (dropdown === "city") {
+					const fetchedData = await getColumnSearch<CitySearch>(
+						search,
+						dropdown,
+					);
 
-	// 						fetchedData.forEach((value) =>
-	// 							cleanedData.push({
-	// 								id: value.id,
-	// 								label: value.companyPhoneNumber,
-	// 								column: getColumn(),
-	// 							}),
-	// 						);
+					searchColumnBind<CitySearch>(fetchedData);
+				} else if (dropdown === "state") {
+					const fetchedData = await getColumnSearch<StateSearch>(
+						search,
+						dropdown,
+					);
 
-	// 						setData(cleanedData);
-	// 					} else {
-	// 						const dataFetched: CheckboxShape[] = [];
-	// 						setData(dataFetched);
-	// 					}
-	// 				} else {
-	// 					const dataFetched: CheckboxShape[] = [];
-	// 					setData(dataFetched);
-	// 				}
-	// 			} else {
-	// 				const fetchedData = await getLocationFilter(search);
+					searchColumnBind<StateSearch>(fetchedData);
+				} else if (dropdown === "depot") {
+					const fetchedData = await getColumnSearch<DepotSearch>(
+						search,
+						dropdown,
+					);
 
-	// 				if (fetchedData) {
-	// 					if (fetchedData.length > 0) {
-	// 						const cleanedData: CheckboxShape[] = [];
+					searchColumnBind<DepotSearch>(fetchedData);
+				} else {
+					const fetchedData = await getColumnSearch<PriceSearch>(
+						search,
+						dropdown,
+					);
 
-	// 						fetchedData.forEach((value) =>
-	// 							cleanedData.push({
-	// 								id: value.id,
-	// 								label: value.location,
-	// 								column: getColumn(),
-	// 							}),
-	// 						);
-
-	// 						setData(cleanedData);
-	// 					} else {
-	// 						const dataFetched: CheckboxShape[] = [];
-	// 						setData(dataFetched);
-	// 					}
-	// 				} else {
-	// 					const dataFetched: CheckboxShape[] = [];
-	// 					setData(dataFetched);
-	// 				}
-	// 			}
-	// 		}
-	// 		setIsSearching(false);
-	// 	};
-	// 	getData();
-	// }, [debounceSearchTerms]);
+					searchColumnBind<PriceSearch>(fetchedData);
+				}
+			}
+			setIsSearching(false);
+		};
+		getData();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [debounceSearchTerms]);
 
 	const handleSelectAll = () => {
 		// setCheck(items);

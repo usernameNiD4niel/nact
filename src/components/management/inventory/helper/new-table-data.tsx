@@ -108,7 +108,7 @@ export function NewDataTable<TValue>({
 					value={getValue()}
 					onChange={handleOnChange}
 					data={data}
-					// setData={setData}
+					setData={setData}
 					setIsFiltering={setIsFiltering}
 				/>
 			</div>

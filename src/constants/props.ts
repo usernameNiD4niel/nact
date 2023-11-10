@@ -419,6 +419,45 @@ export type UniqueItems = {
 	contact: string[];
 };
 
+export type InventoryUniqueItems = {
+	productName: string[];
+	city: string[];
+	state: string[];
+	quantity: string[];
+	depot: string[];
+	price: string[];
+};
+
+export type ProductNameSearch = {
+	id: string;
+	productName: string;
+};
+
+export type CitySearch = {
+	id: string;
+	city: string;
+};
+
+export type StateSearch = {
+	id: string;
+	state: string;
+};
+
+export type QuantitySearch = {
+	id: string;
+	quantity: string;
+};
+
+export type DepotSearch = {
+	id: string;
+	depot: string;
+};
+
+export type PriceSearch = {
+	id: string;
+	price: string;
+};
+
 export type SearchedType = {
 	filtered: SupplierTableProps[];
 	error?: string;

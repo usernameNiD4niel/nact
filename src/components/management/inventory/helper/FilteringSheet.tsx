@@ -6,14 +6,17 @@ import {
 	SheetTitle,
 	SheetTrigger,
 } from "@/components/ui/sheet";
+import FilterAccordion from "./FilterAccordion";
 import { CheckboxShape } from "@/constants/props";
 import { FC } from "react";
-import FilterAccordion from "./FilterAccordion";
 
 type FilteringSheetProps = {
-	suppliers: CheckboxShape[];
-	locations: CheckboxShape[];
-	contacts: CheckboxShape[];
+	productName: CheckboxShape[];
+	city: CheckboxShape[];
+	state: CheckboxShape[];
+	quantity: CheckboxShape[];
+	price: CheckboxShape[];
+	depot: CheckboxShape[];
 	check: CheckboxShape[];
 	setCheck: React.Dispatch<React.SetStateAction<CheckboxShape[]>>;
 	setIsFiltering: React.Dispatch<React.SetStateAction<boolean>>;
@@ -21,9 +24,12 @@ type FilteringSheetProps = {
 
 const FilteringSheet: FC<FilteringSheetProps> = ({
 	check,
-	contacts,
-	locations,
-	suppliers,
+	quantity,
+	city,
+	depot,
+	price,
+	state,
+	productName,
 	setCheck,
 	setIsFiltering,
 }) => {
@@ -43,30 +49,57 @@ const FilteringSheet: FC<FilteringSheetProps> = ({
 				<div>
 					<FilterAccordion
 						check={check}
-						items={suppliers}
-						label="Supplier"
+						items={productName}
+						label="Product Name"
 						setCheck={setCheck}
-						// dropdown="businessName"
+						dropdown="productName"
 						setIsFiltering={setIsFiltering}
-						key={"FilteringSheetSupplier"}
+						key={"FilteringSheetProductName"}
 					/>
 					<FilterAccordion
 						check={check}
-						items={locations}
-						label="Location"
+						items={city}
+						label="City"
 						setIsFiltering={setIsFiltering}
 						setCheck={setCheck}
-						// dropdown="location"
-						key={"FilteringSheetLocation"}
+						dropdown="city"
+						key={"FilteringSheetCity"}
 					/>
 					<FilterAccordion
 						check={check}
-						items={contacts}
-						label="Contact"
+						items={state}
+						label="State"
 						setIsFiltering={setIsFiltering}
 						setCheck={setCheck}
-						// dropdown="contact"
-						key={"FilteringSheetContact"}
+						dropdown="state"
+						key={"FilteringSheetState"}
+					/>
+					<FilterAccordion
+						check={check}
+						items={quantity}
+						label="quantity"
+						setIsFiltering={setIsFiltering}
+						setCheck={setCheck}
+						dropdown="quantity"
+						key={"FilteringSheetQuantity"}
+					/>
+					<FilterAccordion
+						check={check}
+						items={depot}
+						label="depot"
+						setIsFiltering={setIsFiltering}
+						setCheck={setCheck}
+						dropdown="depot"
+						key={"FilteringSheetDepot"}
+					/>
+					<FilterAccordion
+						check={check}
+						items={price}
+						label="price"
+						setIsFiltering={setIsFiltering}
+						setCheck={setCheck}
+						dropdown="price"
+						key={"FilteringSheetPrice"}
 					/>
 				</div>
 			</SheetContent>

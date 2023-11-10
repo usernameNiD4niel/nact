@@ -159,6 +159,7 @@ const FilterAccordion: FC<FilterAccordionProps> = ({
 			setIsSearching(false);
 		};
 		getData();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [debounceSearchTerms]);
 
 	const handleSelectAll = () => {

@@ -1,131 +1,143 @@
 import { FC, useEffect, useMemo, useState } from "react";
-import { CheckboxShape, InventoryTypes, UniqueItems } from "@/constants/props";
+import {
+	CheckboxShape,
+	InventoryTypes,
+	InventoryUniqueItems,
+} from "@/constants/props";
 import { Input } from "@/components/ui/input";
 import Badge from "@/components/reuseable/Badge";
-import { getUniqueItems } from "@/api/supplier";
 import FilteringDropdown from "./FilteringDropdown";
 import FilteringDialog from "../../supplier/helper/FilteringDialog";
 import FilteringSheet from "./FilteringSheet";
+import { getUniqueItems } from "@/api/inventory";
 
 type SearchWithFilterProps = {
 	placeHolder: string;
 	onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 	value: string;
 	data: InventoryTypes[];
-	// setData: React.Dispatch<React.SetStateAction<InventoryTypes[]>>;
+	setData: React.Dispatch<React.SetStateAction<InventoryTypes[]>>;
 	setIsFiltering: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-// const getInitialData = async (
-// 	setData: React.Dispatch<React.SetStateAction<InventoryTypes[]>>,
-// ) => {
-// 	const response = await fetch(
-// 		`${import.meta.env.VITE_BASE_URL}/api/supplier?page=1&per_page=10`,
-// 		{
-// 			headers: {
-// 				"Content-Type": "application/json",
-// 			},
-// 		},
-// 	);
+const getInitialData = async (
+	setData: React.Dispatch<React.SetStateAction<InventoryTypes[]>>,
+) => {
+	const response = await fetch(
+		`${import.meta.env.VITE_BASE_URL}/api/supplier?page=1&per_page=10`,
+		{
+			headers: {
+				"Content-Type": "application/json",
+			},
+		},
+	);
 
-// 	if (response.ok) {
-// 		const data = await response.json();
-// 		const supplier: InventoryTypes[] = (await data).suppliers;
+	if (response.ok) {
+		const data = await response.json();
+		const supplier: InventoryTypes[] = (await data).suppliers;
 
-// 		setData(supplier);
-// 		return;
-// 	}
+		setData(supplier);
+		return;
+	}
 
-// 	throw new Error("cannot get the data");
-// };
+	throw new Error("cannot get the data");
+};
 
 const SearchWithFilter: FC<SearchWithFilterProps> = ({
 	placeHolder,
 	onChange,
-	// setData,
+	setData,
 	value,
 	data,
 	setIsFiltering,
 }) => {
 	const [check, setCheck] = useState<CheckboxShape[]>([]);
-	const [uniqueFilter, seUniqueFilter] = useState<UniqueItems>({
-		businessName: [],
-		contact: [],
-		location: [],
+	const [uniqueFilter, seUniqueFilter] = useState<InventoryUniqueItems>({
+		productName: [],
+		city: [],
+		state: [],
+		depot: [],
+		price: [],
+		quantity: [],
 	});
 
-	const getSupplier = useMemo(() => {
+	const getProductName = useMemo(() => {
 		const checkboxArray: CheckboxShape[] = [];
-		uniqueFilter.businessName.forEach((supplier, index) => {
+		uniqueFilter.productName.forEach((productName, index) => {
 			const object: CheckboxShape = {
-				id: `${index}${supplier}`,
-				label: supplier,
-				column: "business_name",
+				id: `${index}${productName}`,
+				label: productName,
+				column: "productName",
 			};
 
 			checkboxArray.push(object);
 		});
 
 		return checkboxArray;
-	}, [uniqueFilter.businessName]);
+	}, [uniqueFilter.productName]);
 
-	// const requestFiltered = async () => {
-	// 	let params = "";
+	const requestFiltered = async () => {
+		let params = "";
 
-	// 	for (let i = 0; i < check.length; i++) {
-	// 		if (check[i].column === "business_name") {
-	// 			params += "business_name=" + check[i].label + "&";
-	// 		} else if (check[i].column === "location") {
-	// 			params += "location=" + check[i].label + "&";
-	// 		} else {
-	// 			params += "contact=" + check[i].label + "&";
-	// 		}
-	// 	}
+		for (let i = 0; i < check.length; i++) {
+			if (check[i].column === "productName") {
+				params += "productName=" + check[i].label + "&";
+			} else if (check[i].column === "city") {
+				params += "city=" + check[i].label + "&";
+			} else if (check[i].column === "state") {
+				params += "state=" + check[i].label + "&";
+			} else if (check[i].column === "quantity") {
+				params += "quantity=" + check[i].label + "&";
+			} else if (check[i].column === "depot") {
+				params += "depot=" + check[i].label + "&";
+			} else {
+				params += "contact=" + check[i].label + "&";
+			}
+		}
 
-	// 	if (params.endsWith("&")) {
-	// 		params = params.substring(0, params.length - 1);
-	// 	}
+		if (params.endsWith("&")) {
+			params = params.substring(0, params.length - 1);
+		}
 
-	// 	console.log("the params: ", params);
+		await fetch(
+			`${import.meta.env.VITE_BASE_URL}/api/inventory/filter?${params}`,
+			{
+				headers: {
+					"Content-Type": "application/json",
+				},
+			},
+		)
+			.then((data_) => data_.json())
+			.then((data_) => {
+				const tableData: InventoryTypes[] = data_.filtered;
 
-	// 	await fetch(`${import.meta.env.VITE_BASE_URL}/api/filter?${params}`, {
-	// 		headers: {
-	// 			"Content-Type": "application/json",
-	// 		},
-	// 	})
-	// 		.then((data_) => data_.json())
-	// 		.then((data_) => {
-	// 			const tableData: InventoryTypes[] = data_.filtered;
+				setIsFiltering(true);
+				if (!tableData || tableData.length === 0) {
+					setData([]);
+					return;
+				}
+				setData(tableData);
+			})
+			.catch((err) => {
+				setData([]);
 
-	// 			setIsFiltering(true);
-	// 			if (!tableData || tableData.length === 0) {
-	// 				setData([]);
-	// 				return;
-	// 			}
-	// 			setData(tableData);
-	// 		})
-	// 		.catch((err) => {
-	// 			// setData([]);
-	// 			console.log("the log");
-	// 			setData([]);
+				console.log("Error", err);
+				// table.getColumn("businessName")?.setFilterValue("");
+			});
+	};
 
-	// 			console.log("Error", err);
-	// 			// table.getColumn("businessName")?.setFilterValue("");
-	// 		});
-	// };
+	useEffect(() => {
+		if (check && check.length > 0) {
+			requestFiltered();
+			return;
+		}
 
-	// useEffect(() => {
-	// 	if (check && check.length > 0) {
-	// 		requestFiltered();
-	// 		return;
-	// 	}
-
-	// 	if (check.length === 0) {
-	// 		getInitialData(setData);
-	// 		setIsFiltering(false);
-	// 	}
-	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
-	// }, [check]);
+		if (check.length === 0) {
+			getInitialData(setData);
+			setIsFiltering(false);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [check]);
 
 	const fetchUniqueFilter = async () => {
 		const actualDataFilter = await getUniqueItems();
@@ -136,28 +148,13 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 		fetchUniqueFilter();
 	}, []);
 
-	const getLocation = () => {
-		// Convert the Set back to an array of objects
+	const getColumnData = (column: string[], text: string) => {
 		const checkboxArray: CheckboxShape[] = [];
-		uniqueFilter.location.forEach((uniqueLocation, index) => {
+		column.forEach((uniqueColumn, index) => {
 			const object = {
-				id: `${index}location`,
-				label: uniqueLocation,
-				column: "location",
-			};
-			checkboxArray.push(object);
-		});
-		return checkboxArray;
-	};
-
-	const getContact = () => {
-		// Convert the Set back to an array of objects
-		const checkboxArray: CheckboxShape[] = [];
-		uniqueFilter.contact.forEach((uniqueContact, index) => {
-			const object = {
-				id: `${index}contact`,
-				label: uniqueContact,
-				column: "phone_number",
+				id: `${index}${text}`,
+				label: uniqueColumn,
+				column: text,
 			};
 			checkboxArray.push(object);
 		});
@@ -186,82 +183,67 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 			</form>
 			<div className="w-full gap-6 justify-end hidden md:flex z-0">
 				<FilteringDropdown
-					items={[
-						{ label: "20 STD - CW", column: "productName", id: "1productName" },
-						{ label: "30 STD - CW", column: "productName", id: "2productName" },
-					]}
+					items={getProductName}
 					label="Product Name"
 					check={check}
 					setCheck={setCheck}
-					// dropdown="businessName"
+					dropdown="productName"
 					setIsFiltering={setIsFiltering}
 					key={"ProductNameKeyFilterDropdown"}
 				/>
 				<FilteringDropdown
-					items={[
-						{ label: "Sample City 1", column: "city", id: "1city" },
-						{ label: "Sample City 2", column: "city", id: "2city" },
-					]}
+					items={getColumnData(uniqueFilter.city, "city")}
 					label="City"
 					check={check}
 					setCheck={setCheck}
-					// dropdown="location"
+					dropdown="city"
 					setIsFiltering={setIsFiltering}
 					key={"CityKeyFilterDropdown"}
 				/>
 				<FilteringDropdown
-					items={[
-						{ label: "USA", column: "state", id: "1state" },
-						{ label: "USA", column: "state", id: "2state" },
-					]}
+					items={getColumnData(uniqueFilter.state, "state")}
 					check={check}
 					setCheck={setCheck}
 					label="State"
-					// dropdown="contact"
+					dropdown="state"
 					setIsFiltering={setIsFiltering}
 					key={"StateKeyFilterDropdown"}
 				/>
 				<FilteringDropdown
-					items={[
-						{ label: "12 PCS", column: "quantity", id: "1quantity" },
-						{ label: "121 PCS", column: "quantity", id: "2quantity" },
-					]}
+					items={getColumnData(uniqueFilter.quantity, "quantity")}
 					check={check}
 					setCheck={setCheck}
-					label="State"
-					// dropdown="contact"
+					label="Quantity"
+					dropdown="quantity"
 					setIsFiltering={setIsFiltering}
-					key={"StateKeyFilterDropdown"}
+					key={"QuantityKeyFilterDropdown"}
 				/>
 				<FilteringDropdown
-					items={[
-						{ label: "Sample Depot 1", column: "depot", id: "1depot" },
-						{ label: "Sample Depot 2", column: "depot", id: "2depot" },
-					]}
+					items={getColumnData(uniqueFilter.depot, "depot")}
 					check={check}
 					setCheck={setCheck}
 					label="Depot"
-					// dropdown="contact"
+					dropdown="depot"
 					setIsFiltering={setIsFiltering}
 					key={"DepotKeyFilterDropdown"}
 				/>
 				<FilteringDropdown
-					items={[
-						{ label: "Price 1", column: "price", id: "1price" },
-						{ label: "Price 2", column: "price", id: "2price" },
-					]}
+					items={getColumnData(uniqueFilter.price, "price")}
 					check={check}
 					setCheck={setCheck}
 					label="Price"
-					// dropdown="contact"
+					dropdown="price"
 					setIsFiltering={setIsFiltering}
 					key={"PriceKeyFilterDropdown"}
 				/>
 			</div>
 			<FilteringSheet
-				suppliers={getSupplier}
-				locations={getLocation()}
-				contacts={getContact()}
+				productName={getProductName}
+				city={getColumnData(uniqueFilter.city, "city")}
+				state={getColumnData(uniqueFilter.state, "state")}
+				quantity={getColumnData(uniqueFilter.quantity, "quantity")}
+				depot={getColumnData(uniqueFilter.depot, "depot")}
+				price={getColumnData(uniqueFilter.price, "price")}
 				check={check}
 				setCheck={setCheck}
 				setIsFiltering={setIsFiltering}
