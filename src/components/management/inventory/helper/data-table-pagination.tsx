@@ -1,104 +1,74 @@
+"use client";
 import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
+import { InventoryTypes } from "@/constants/props";
 import { Table } from "@tanstack/react-table";
+import { useEffect, useState } from "react";
 
-import {
-  AiOutlineDoubleLeft,
-  AiOutlineDoubleRight,
-  AiOutlineLeft,
-  AiOutlineRight,
-} from "react-icons/ai";
+const getInitialData = async (
+	setNextPageUrl: React.Dispatch<React.SetStateAction<number | null>>,
+	setData: React.Dispatch<React.SetStateAction<InventoryTypes[]>>,
+	page: number | null,
+) => {
+	if (page) {
+		const response = await fetch(
+			`${import.meta.env.VITE_BASE_URL}/api/inventory?page=${page}&per_page=10`,
+			{
+				headers: {
+					"Content-Type": "application/json",
+				},
+			},
+		);
+
+		if (response.ok) {
+			const data = await response.json();
+			const inventory: InventoryTypes[] = (await data).inventory;
+
+			setNextPageUrl((await data).next_page);
+			setData((prev) => [...prev, ...inventory]);
+			return;
+		}
+
+		throw new Error("cannot get the data");
+	}
+};
 
 interface DataTablePaginationProps<TData> {
-  table: Table<TData>;
+	table: Table<TData>;
+	setData: React.Dispatch<React.SetStateAction<InventoryTypes[]>>;
+	next_page_url: number | null;
+	isFiltering: boolean;
 }
 
 export function DataTablePagination<TData>({
-  table,
+	table,
+	next_page_url,
+	setData,
+	isFiltering,
 }: DataTablePaginationProps<TData>) {
-  return (
-    <div className="flex items-center justify-between px-2">
-      <div className="flex-1 text-sm text-muted-foreground">
-        Rows Available: {table.getFilteredRowModel().flatRows.length}
-      </div>
-      <div className="items-center space-x-6 lg:space-x-8 hidden md:flex">
-        <div className="flex items-center space-x-2">
-          <p className="text-sm font-medium">Rows per page</p>
-          <Select
-            value={`${table.getState().pagination.pageSize}`}
-            onValueChange={(value) => {
-              table.setPageSize(Number(value));
-            }}
-          >
-            <SelectTrigger className="h-8 w-[70px]">
-              <SelectValue placeholder={table.getState().pagination.pageSize} />
-            </SelectTrigger>
-            <SelectContent side="top" className="hover:bg-zinc-100 bg-zinc-50">
-              {[10, 20, 30, 40, 50].map((pageSize) => (
-                <SelectItem
-                  key={pageSize}
-                  value={`${pageSize}`}
-                  className="cursor-pointer hover:bg-zinc-100 bg-zinc-50"
-                >
-                  {pageSize}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-        </div>
-        <div className="flex w-[100px] items-center justify-center text-sm font-medium">
-          Page {table.getState().pagination.pageIndex + 1} of{" "}
-          {table.getPageCount()}
-        </div>
-        <div className="flex items-center space-x-2">
-          <Button
-            variant="outline"
-            className="hidden h-8 w-8 p-0 lg:flex"
-            onClick={() => table.setPageIndex(0)}
-            disabled={!table.getCanPreviousPage()}
-          >
-            <span className="sr-only">Go to first page</span>
-            {/* <DoubleArrowLeftIcon className="h-4 w-4" /> */}
-            <AiOutlineDoubleLeft />
-          </Button>
-          <Button
-            variant="outline"
-            className="h-8 w-8 p-0"
-            onClick={() => table.previousPage()}
-            disabled={!table.getCanPreviousPage()}
-          >
-            <span className="sr-only">Go to previous page</span>
-            {/* <ChevronLeftIcon className="h-4 w-4" /> */}
-            <AiOutlineLeft />
-          </Button>
-          <Button
-            variant="outline"
-            className="h-8 w-8 p-0"
-            onClick={() => table.nextPage()}
-            disabled={!table.getCanNextPage()}
-          >
-            <span className="sr-only">Go to next page</span>
-            {/* <ChevronRightIcon className="h-4 w-4" /> */}
-            <AiOutlineRight />
-          </Button>
-          <Button
-            variant="outline"
-            className="hidden h-8 w-8 p-0 lg:flex"
-            onClick={() => table.setPageIndex(table.getPageCount() - 1)}
-            disabled={!table.getCanNextPage()}
-          >
-            <span className="sr-only">Go to last page</span>
-            {/* <DoubleArrowRightIcon className="h-4 w-4" /> */}
-            <AiOutlineDoubleRight />
-          </Button>
-        </div>
-      </div>
-    </div>
-  );
+	const [nextPageUrl, setNextPageUrl] = useState<number | null>(null);
+
+	useEffect(() => {
+		if (next_page_url) {
+			setNextPageUrl(next_page_url);
+		}
+	}, [next_page_url]);
+
+	const handleLoadMore = () => {
+		getInitialData(setNextPageUrl, setData, nextPageUrl);
+
+		if (nextPageUrl) {
+			table.setPageSize(nextPageUrl * 10);
+		}
+	};
+
+	return (
+		<div className="flex items-center justify-center py-4 w-full">
+			<Button
+				variant={"custom"}
+				onClick={handleLoadMore}
+				disabled={!nextPageUrl || isFiltering}>
+				{nextPageUrl && !isFiltering ? "Load More" : "End of List"}
+			</Button>
+		</div>
+	);
 }

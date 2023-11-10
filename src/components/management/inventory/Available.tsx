@@ -1,37 +1,82 @@
-import Filter from "@/components/reuseable/Filter";
-import { InventoryTableData, inventoryData } from "@/constants/objects";
+import { inventoryData } from "@/constants/objects";
 import { useInventoryState } from "@/utils/InventoryState";
 import { useEffect, useState } from "react";
-import { DataTable } from "./helper/data-table";
 import { columns } from "./helper/columns";
+import { mobileColumn } from "./helper/mobile-column";
+import AddButton from "@/components/reuseable/AddButton";
+import { NewDataTable } from "./helper/new-table-data";
+import { InventoryTypes } from "@/constants/props";
+
+const getInitialData = async (
+	setNextPageUrl: React.Dispatch<React.SetStateAction<number | null>>,
+) => {
+	const response = await fetch(
+		`${import.meta.env.VITE_BASE_URL}/api/supplier?page=1&per_page=10`,
+		{
+			headers: {
+				"Content-Type": "application/json",
+			},
+		},
+	);
+
+	if (response.ok) {
+		const data = await response.json();
+		const inventory: InventoryTypes[] = (await data).inventory;
+		setNextPageUrl((await data).next_page);
+		return inventory;
+	}
+
+	throw new Error("cannot get the data");
+};
 
 const Available = (): JSX.Element => {
-  const [setActiveTab] = useInventoryState((state) => [state.setActiveTab]);
+	const [setActiveTab] = useInventoryState((state) => [state.setActiveTab]);
 
-  const [isShowingFilter, setIsShowingFilter] = useState<boolean>(false);
+	const [nextPageUrl, setNextPageUrl] = useState<number | null>(null);
 
-  const [data, setData] = useState(inventoryData);
+	const [data, setData] = useState(inventoryData);
 
-  useEffect(() => setActiveTab(0), []);
+	const fetchedData = async () => {
+		const data = await getInitialData(setNextPageUrl);
+		setData(data);
+	};
 
-  return (
-    <>
-      <div className="w-full">
-        <div className="md:px-10 px-5">
-          <div className="mt-36 md:mt-24">
-            <DataTable data={data} setData={setData} columns={columns} />
-          </div>
-        </div>
-        {/* <AddButton /> */}
-        {isShowingFilter && (
-          <Filter
-            setIsShowingFilter={setIsShowingFilter}
-            data={InventoryTableData}
-          />
-        )}
-      </div>
-    </>
-  );
+	useEffect(() => {
+		fetchedData();
+		setActiveTab(0);
+	}, []);
+
+	return (
+		<>
+			<div className="w-full flex items-center justify-center">
+				<div className="md:px-10 px-5 w-full">
+					<div className="mt-36 md:mt-24 w-full">
+						<div className="w-full md:flex hidden">
+							<NewDataTable
+								columns={columns}
+								data={data}
+								next_page_url={nextPageUrl}
+								setData={setData}
+							/>
+						</div>
+						<div className="md:hidden w-full">
+							<NewDataTable
+								columns={mobileColumn}
+								data={data}
+								next_page_url={nextPageUrl}
+								setData={setData}
+							/>
+						</div>
+					</div>
+				</div>
+				<AddButton
+					redirectUrl="/inventory/add"
+					textButton="Inventory"
+					key={"InventoryAddTable"}
+				/>
+			</div>
+		</>
+	);
 };
 
 // const AddButton = () => {
