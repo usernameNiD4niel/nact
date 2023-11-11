@@ -41,8 +41,6 @@ const Index = () => {
 
   const [shouldShowAlert, setShouldShowAlert] = useState(false);
 
-  console.log("endpoint login, ", import.meta.env.VITE_BASE_URL);
-
   useEffect(() => {
     const token = Cookies.get("token");
     if (token) {
@@ -60,7 +58,6 @@ const Index = () => {
       } else {
         setServerError("Incorrect phone number or pincode");
       }
-      console.log("success");
     },
   });
 
@@ -97,17 +94,12 @@ const Index = () => {
 
     try {
       if (parseInt(extractedPin) > 999) {
-        console.log("success");
         setOtpError("");
         loginSuccess({ phoneNumber, pin: extractedPin });
       } else {
-        console.log("hahhaha gagi error");
         setOtpError("Invalid pin, pincode must be a number");
       }
     } catch (err: unknown) {
-      if (err instanceof Error) {
-        console.log(err.message);
-      }
       setOtpError("Invalid pin, pincode must be a number");
       throw Error("Error brother" + err);
     }
@@ -149,7 +141,7 @@ const Index = () => {
             {isSignUpClick ? "Create your account" : "Sign in to your account"}
           </h2>
           {/* USE GLOBAL STATE TO WATCH THE CHANGES OF THE REGISTER PAGE */}
-          {shouldShowAlert && <Alert />}
+          {shouldShowAlert && <Alert setShouldShowAlert={setShouldShowAlert} />}
           <form
             className={`w-full px-5 space-y-6 ${
               isSignUpClick ? "hidden" : "flex flex-col"
