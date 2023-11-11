@@ -18,7 +18,7 @@ const SupplierManagement = () => {
 	const role = Cookies.get("role");
 
 	useEffect(() => {
-		if (role === "unset") {
+		if (!(role === "supply_chain" || role === "admin")) {
 			router("/");
 		}
 		if (selected !== ButtonList.Supplier) {

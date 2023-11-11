@@ -14,9 +14,10 @@ const InventoryOfficerManagement = () => {
 	const role = Cookies.get("role");
 
 	useEffect(() => {
-		if (role === "unset") {
+		if (!(role === "admin" || role === "inventory")) {
 			router("/");
 		}
+
 		if (selected !== ButtonList.InventoryOfficer) {
 			setSelected(ButtonList.InventoryOfficer);
 		}

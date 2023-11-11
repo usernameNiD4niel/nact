@@ -14,7 +14,7 @@ const CostumerManagement = () => {
 	const router = useNavigate();
 
 	useEffect(() => {
-		if (role === "unset") {
+		if (!(role === "costumer" || role === "admin")) {
 			router("/");
 		}
 		if (selected !== ButtonList.Costumer) {

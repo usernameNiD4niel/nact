@@ -79,17 +79,30 @@ const SideNavigation = ({ selected }: { selected: ButtonList | null }) => {
 						</Link>
 					</li>
 					{role === "admin" && (
-						<li>
-							<Link
-								to="/module"
-								className={`${buttonClass} ${
-									selected === ButtonList.Module
-										? "text-[#017DC3] font-semibold bg-slate-50"
-										: "text-white font-thin"
-								} ${hoverButtonClass}`}>
-								Module
-							</Link>
-						</li>
+						<>
+							<li>
+								<Link
+									to="/module"
+									className={`${buttonClass} ${
+										selected === ButtonList.Module
+											? "text-[#017DC3] font-semibold bg-slate-50"
+											: "text-white font-thin"
+									} ${hoverButtonClass}`}>
+									Module
+								</Link>
+							</li>
+							<li>
+								<Link
+									to="/role-management"
+									className={`${buttonClass} ${
+										selected === ButtonList.RoleManagement
+											? "text-[#017DC3] font-semibold bg-slate-50"
+											: "text-white font-thin"
+									} ${hoverButtonClass}`}>
+									Role Management
+								</Link>
+							</li>
+						</>
 					)}
 					{role !== "unset" && (
 						<React.Fragment>

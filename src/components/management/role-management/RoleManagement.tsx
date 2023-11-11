@@ -4,7 +4,7 @@ import Cookies from "js-cookie";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const SalesAgentManagement = () => {
+const RoleManagement = () => {
 	const [selected, setSelected] = useSelectedStore((state) => [
 		state.selected,
 		state.setSelected,
@@ -12,15 +12,16 @@ const SalesAgentManagement = () => {
 
 	const router = useNavigate();
 	const role = Cookies.get("role");
+
 	useEffect(() => {
-		if (!(role === "sales-agent" || role === "admin")) {
+		if (role !== "admin") {
 			router("/");
 		}
-		if (selected !== ButtonList.SalesAgent) {
-			setSelected(ButtonList.SalesAgent);
+		if (selected !== ButtonList.RoleManagement) {
+			setSelected(ButtonList.RoleManagement);
 		}
 	}, []);
-	return <div>SalesAgentManagement</div>;
+	return <div>RoleManagement</div>;
 };
 
-export default SalesAgentManagement;
+export default RoleManagement;
