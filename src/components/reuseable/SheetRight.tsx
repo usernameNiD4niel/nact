@@ -101,53 +101,48 @@ const SheetRight = () => {
 								)}
 								{role !== "unset" && (
 									<>
-										{role === "admin" ||
-											(role === "costumer" && (
+										{(role === "admin" || role === "costumer") && (
+											<SheetCloseComp
+												text="Costumer"
+												to="/costumer"
+												buttonList={ButtonList.Costumer}
+											/>
+										)}
+										{(role === "admin" || role === "supplier") && (
+											<SheetCloseComp
+												text="Supplier Management"
+												to="/supplier"
+												buttonList={ButtonList.Supplier}
+											/>
+										)}
+										{(role === "sales-agent" || role === "admin") && (
+											<SheetCloseComp
+												text="Sales Agent"
+												to="/sales-agent"
+												buttonList={ButtonList.SalesAgent}
+											/>
+										)}
+										{(role === "admin" || role === "inventory") && (
+											<>
 												<SheetCloseComp
-													text="Costumer"
-													to="/costumer"
-													buttonList={ButtonList.Costumer}
+													text="Inventory Officer"
+													to="/inventory-officer"
+													buttonList={ButtonList.InventoryOfficer}
 												/>
-											))}
-										{role === "admin" ||
-											(role === "supplier" && (
 												<SheetCloseComp
-													text="Supplier Management"
-													to="/supplier"
-													buttonList={ButtonList.Supplier}
+													text="Inventory"
+													to="/inventory"
+													buttonList={ButtonList.Inventory}
 												/>
-											))}
-										{role === "sales-agent" ||
-											(role === "admin" && (
-												<SheetCloseComp
-													text="Sales Agent"
-													to="/sales-agent"
-													buttonList={ButtonList.SalesAgent}
-												/>
-											))}
-										{role === "admin" ||
-											(role === "inventory" && (
-												<>
-													<SheetCloseComp
-														text="Inventory Officer"
-														to="/inventory-officer"
-														buttonList={ButtonList.InventoryOfficer}
-													/>
-													<SheetCloseComp
-														text="Inventory"
-														to="/inventory"
-														buttonList={ButtonList.Inventory}
-													/>
-												</>
-											))}
-										{role === "admin" ||
-											(role === "order-generator" && (
-												<SheetCloseComp
-													text="Order Generator"
-													to="/order-generator"
-													buttonList={ButtonList.OrderGenerator}
-												/>
-											))}
+											</>
+										)}
+										{(role === "admin" || role === "order-generator") && (
+											<SheetCloseComp
+												text="Order Generator"
+												to="/order-generator"
+												buttonList={ButtonList.OrderGenerator}
+											/>
+										)}
 									</>
 								)}
 							</p>

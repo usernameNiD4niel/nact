@@ -8,4 +8,5 @@ export const buttons: string[] = [
 	"Account",
 	"Inventory",
 	"Order Generator",
+	"Role Management",
 ];

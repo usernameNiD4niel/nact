@@ -36,13 +36,18 @@ import SupplyChain from "./components/module/supply-chain/SupplyChain";
 import SalesAgent from "./components/module/sales-agent/SalesAgent";
 import BillingAndCollection from "./components/module/billing-and-collection/BillingAndCollection";
 import RoleManagement from "./components/management/role-management/RoleManagement";
+import Users from "./components/management/role-management/users/Users";
+import RoleAccess from "./components/management/role-management/role-access/RoleAccess";
 
 const router = createBrowserRouter(
 	createRoutesFromElements(
 		<Route>
 			<Route element={<Main />} path="/">
 				<Route index element={<Root />} />
-				<Route path="role-management" element={<RoleManagement />} />
+				<Route path="role-management" element={<RoleManagement />}>
+					<Route index element={<Users />} />
+					<Route path="role-access" element={<RoleAccess />} />
+				</Route>
 				<Route path="module" element={<Module />}>
 					<Route index element={<AssignRole />} />
 					<Route path="supply-chain" element={<SupplyChain />} />
