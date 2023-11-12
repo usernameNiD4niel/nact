@@ -2,7 +2,7 @@ import { Badge } from "@/components/ui/badge";
 import { ColumnDef } from "@tanstack/react-table";
 
 // This type is used to define the shape of our data.
-// You can use a Zod schema here if you want.
+// You can use a Zod schema here if you want. wwwhat
 
 type Users = {
 	employee: string;
