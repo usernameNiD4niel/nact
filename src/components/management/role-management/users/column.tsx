@@ -104,17 +104,22 @@ export const columns: ColumnDef<Users>[] = [
 		header: () => <div className="ml-5 text-xs">Employee</div>,
 		cell: ({ row }) => {
 			return (
-				<div className=" font-medium ml-5 text-xs">
-					{row.getValue("employee")}
+				<div className=" font-medium ml-5 text-xs flex flex-col">
+					<span>{row.getValue("employee")}</span>
+					<span className="md:hidden">{row.getValue("role")}</span>
 				</div>
 			);
 		},
 	},
 	{
 		accessorKey: "role",
-		header: () => <div className="text-xs">Role</div>,
+		header: () => <div className="text-xs hidden md:flex">Role</div>,
 		cell: ({ row }) => {
-			return <div className="font-medium text-xs">{row.getValue("role")}</div>;
+			return (
+				<div className="font-medium text-xs hidden md:flex">
+					{row.getValue("role")}
+				</div>
+			);
 		},
 	},
 	{
