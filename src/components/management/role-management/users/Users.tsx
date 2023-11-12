@@ -19,7 +19,7 @@ const Users = () => {
 	return (
 		<div className="w-full flex items-center justify-center">
 			<div className="md:px-10 px-5 w-full flex items-center justify-center">
-				<div className="mt-36 md:mt-24 w-full max-w-4xl">
+				<div className="mt-36 md:my-24 w-full max-w-4xl">
 					{/* <div className="w-full md:flex hidden">
 						<NewDataTable
 							columns={columns}

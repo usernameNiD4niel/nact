@@ -17,6 +17,9 @@ import {
 } from "@/components/ui/table";
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
+import { Search } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import FilterSVG from "@/assets/filter.svg";
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
@@ -41,7 +44,11 @@ export function UserTable<TData, TValue>({
 
 	return (
 		<div className="w-full">
-			<div className="flex items-center pb-4 w-full">
+			<div className="flex items-center pb-4 w-full relative">
+				<Search
+					className="absolute left-3 top-[0.9rem] text-gray-400"
+					size={18}
+				/>
 				<Input
 					placeholder="Search employee"
 					value={
@@ -50,8 +57,13 @@ export function UserTable<TData, TValue>({
 					onChange={(event) =>
 						table.getColumn("employee")?.setFilterValue(event.target.value)
 					}
-					className="w-full py-6"
+					className="w-full py-6 px-10"
 				/>
+				<Button
+					variant={"outline"}
+					className="absolute right-0 top-0 h-[3.09rem] rounded-none rounded-e-md">
+					<img src={FilterSVG} width={25} height={25} />
+				</Button>
 			</div>
 			<div className="rounded-md border">
 				<Table>
@@ -79,7 +91,8 @@ export function UserTable<TData, TValue>({
 							table.getRowModel().rows.map((row) => (
 								<TableRow
 									key={row.id}
-									data-state={row.getIsSelected() && "selected"}>
+									data-state={row.getIsSelected() && "selected"}
+									className="cursor-pointer">
 									{row.getVisibleCells().map((cell) => (
 										<TableCell key={cell.id}>
 											{flexRender(

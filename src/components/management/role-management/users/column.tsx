@@ -101,27 +101,29 @@ export const users: Users[] = [
 export const columns: ColumnDef<Users>[] = [
 	{
 		accessorKey: "employee",
-		header: () => <div className="ml-5">Employee</div>,
+		header: () => <div className="ml-5 text-xs">Employee</div>,
 		cell: ({ row }) => {
 			return (
-				<div className=" font-medium ml-5">{row.getValue("employee")}</div>
+				<div className=" font-medium ml-5 text-xs">
+					{row.getValue("employee")}
+				</div>
 			);
 		},
 	},
 	{
 		accessorKey: "role",
-		header: () => <div className="">Role</div>,
+		header: () => <div className="text-xs">Role</div>,
 		cell: ({ row }) => {
-			return <div className="font-medium ">{row.getValue("role")}</div>;
+			return <div className="font-medium text-xs">{row.getValue("role")}</div>;
 		},
 	},
 	{
 		accessorKey: "accountStatus",
-		header: () => <div className="">Account Status</div>,
+		header: () => <div className="text-xs">Account Status</div>,
 		cell: ({ row }) => {
 			return (
 				<Badge
-					className=" font-medium "
+					className=" font-medium text-xs"
 					variant={
 						((
 							row.getValue("accountStatus") as string
