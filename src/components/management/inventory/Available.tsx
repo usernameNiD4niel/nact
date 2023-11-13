@@ -1,45 +1,25 @@
-import { inventoryData } from "@/constants/objects";
 import { useInventoryState } from "@/utils/InventoryState";
 import { useEffect, useState } from "react";
 import { columns } from "./helper/columns";
 import { mobileColumn } from "./helper/mobile-column";
 import AddButton from "@/components/reuseable/AddButton";
 import { NewDataTable } from "./helper/new-table-data";
-// import { InventoryTypes } from "@/constants/props";
-
-// const getInitialData = async (
-// 	setNextPageUrl: React.Dispatch<React.SetStateAction<number | null>>,
-// ) => {
-// 	const response = await fetch(
-// 		`${import.meta.env.VITE_BASE_URL}/api/supplier?page=1&per_page=10`,
-// 		{
-// 			headers: {
-// 				"Content-Type": "application/json",
-// 			},
-// 		},
-// 	);
-
-// 	if (response.ok) {
-// 		const data = await response.json();
-// 		const inventory: InventoryTypes[] = (await data).inventory;
-// 		setNextPageUrl((await data).next_page);
-// 		return inventory;
-// 	}
-
-// 	throw new Error("cannot get the data");
-// };
+import { getPaginatedData } from "@/api/inventory";
+import { InventoryData } from "@/constants/props";
 
 const Available = (): JSX.Element => {
 	const [setActiveTab] = useInventoryState((state) => [state.setActiveTab]);
 
 	const [nextPageUrl, setNextPageUrl] = useState<number | null>(null);
 
-	const [data, setData] = useState(inventoryData);
+	const [data, setData] = useState<InventoryData[]>([]);
 
 	const fetchedData = async () => {
-		// const data = await getInitialData(setNextPageUrl);
-		// setData(data);
-		setNextPageUrl(1);
+		if (nextPageUrl && nextPageUrl !== null) {
+			const data_ = await getPaginatedData(nextPageUrl);
+			setNextPageUrl(data_.next_page);
+			setData(data_.products);
+		}
 	};
 
 	useEffect(() => {

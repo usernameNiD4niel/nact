@@ -1,4 +1,8 @@
-import { InventoryProps, InventoryUniqueItems } from "@/constants/props";
+import {
+	InventoryProps,
+	InventoryUniqueItems,
+	PaginatedInventory,
+} from "@/constants/props";
 
 // ! Store the endpoints to env file
 export const isInventoryAdded = async (inventory: InventoryProps) => {
@@ -57,4 +61,22 @@ export async function getColumnSearch<T>(searchQuery: string, column: string) {
 		});
 
 	return response;
+}
+
+export async function getPaginatedData(page: number) {
+	const response = await fetch(
+		`${import.meta.env.VITE_BASE_URL}/api/inventory?page=${page}&per_page=10`,
+		{
+			headers: {
+				"Content-Type": "application/json",
+			},
+		},
+	);
+
+	if (response.ok) {
+		const data = await response.json();
+		return data as PaginatedInventory;
+	}
+
+	throw new Error("Cannot get the data...");
 }

@@ -473,3 +473,20 @@ export type UsersType = {
 	mobileNumber: string;
 	user_type: string;
 };
+
+export type PaginatedInventory = {
+	products: InventoryData[];
+	page_count: number;
+	previous_page: number | null;
+	next_page: number | null;
+};
+
+export type InventoryData = {
+	id: string;
+	productName: string;
+	city: string;
+	state: string;
+	quantity: string;
+	depot: string;
+	price: string;
+};

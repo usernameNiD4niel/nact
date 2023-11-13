@@ -5,15 +5,10 @@ import { columns, users } from "./column";
 
 const Users = () => {
 	const [setActiveTab] = useInventoryState((state) => [state.setActiveTab]);
+	// const [data, setData] = useState();
 
 	useEffect(() => {
-		console.log("use effect body run");
-
 		setActiveTab(0);
-
-		return () => {
-			console.log("clean up function run");
-		};
 	}, []);
 
 	return (

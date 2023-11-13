@@ -1,6 +1,7 @@
 import { FC, useEffect, useMemo, useState } from "react";
 import {
 	CheckboxShape,
+	InventoryData,
 	InventoryTypes,
 	InventoryUniqueItems,
 } from "@/constants/props";
@@ -15,13 +16,13 @@ type SearchWithFilterProps = {
 	placeHolder: string;
 	onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 	value: string;
-	data: InventoryTypes[];
-	setData: React.Dispatch<React.SetStateAction<InventoryTypes[]>>;
+	data: InventoryData[];
+	setData: React.Dispatch<React.SetStateAction<InventoryData[]>>;
 	setIsFiltering: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 const getInitialData = async (
-	setData: React.Dispatch<React.SetStateAction<InventoryTypes[]>>,
+	setData: React.Dispatch<React.SetStateAction<InventoryData[]>>,
 ) => {
 	const response = await fetch(
 		`${import.meta.env.VITE_BASE_URL}/api/supplier?page=1&per_page=10`,
@@ -34,7 +35,7 @@ const getInitialData = async (
 
 	if (response.ok) {
 		const data = await response.json();
-		const supplier: InventoryTypes[] = (await data).suppliers;
+		const supplier: InventoryData[] = (await data).suppliers;
 
 		setData(supplier);
 		return;

@@ -22,16 +22,16 @@ import {
 } from "@/components/ui/table";
 
 // import { useRouter } from "next/navigation";
-import { InventoryTypes } from "@/constants/props";
+import { InventoryData } from "@/constants/props";
 import { useNavigate } from "react-router-dom";
 import SearchWithFilter from "./SearchWithFilter";
 import { cn } from "@/lib/utils";
 import { DataTablePagination } from "./data-table-pagination";
 
 interface DataTableProps<TValue> {
-	columns: ColumnDef<InventoryTypes, TValue>[];
-	data: InventoryTypes[];
-	setData: React.Dispatch<React.SetStateAction<InventoryTypes[]>>;
+	columns: ColumnDef<InventoryData, TValue>[];
+	data: InventoryData[];
+	setData: React.Dispatch<React.SetStateAction<InventoryData[]>>;
 	next_page_url: number | null;
 }
 

@@ -1,9 +1,9 @@
 import { Button } from "@/components/ui/button";
-import { InventoryTypes } from "@/constants/props";
+import { InventoryData } from "@/constants/props";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 
-export const mobileColumn: ColumnDef<InventoryTypes>[] = [
+export const mobileColumn: ColumnDef<InventoryData>[] = [
 	{
 		accessorKey: "productName",
 		header: ({ column }) => {

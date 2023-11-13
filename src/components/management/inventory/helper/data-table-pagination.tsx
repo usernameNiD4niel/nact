@@ -1,12 +1,12 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { InventoryTypes } from "@/constants/props";
+import { InventoryData } from "@/constants/props";
 import { Table } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
 
 const getInitialData = async (
 	setNextPageUrl: React.Dispatch<React.SetStateAction<number | null>>,
-	setData: React.Dispatch<React.SetStateAction<InventoryTypes[]>>,
+	setData: React.Dispatch<React.SetStateAction<InventoryData[]>>,
 	page: number | null,
 ) => {
 	if (page) {
@@ -21,7 +21,7 @@ const getInitialData = async (
 
 		if (response.ok) {
 			const data = await response.json();
-			const inventory: InventoryTypes[] = (await data).inventory;
+			const inventory: InventoryData[] = (await data).inventory;
 
 			setNextPageUrl((await data).next_page);
 			setData((prev) => [...prev, ...inventory]);
@@ -34,7 +34,7 @@ const getInitialData = async (
 
 interface DataTablePaginationProps<TData> {
 	table: Table<TData>;
-	setData: React.Dispatch<React.SetStateAction<InventoryTypes[]>>;
+	setData: React.Dispatch<React.SetStateAction<InventoryData[]>>;
 	next_page_url: number | null;
 	isFiltering: boolean;
 }
