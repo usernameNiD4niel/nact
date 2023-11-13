@@ -20,6 +20,7 @@ import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import FilterSVG from "@/assets/filter.svg";
+import { useNavigate } from "react-router-dom";
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
@@ -41,6 +42,12 @@ export function UserTable<TData, TValue>({
 			columnFilters,
 		},
 	});
+
+	const router = useNavigate();
+
+	const handleNavigation = (destination: string) => {
+		router(`/user-management/${destination}`);
+	};
 
 	return (
 		<div className="w-full">
@@ -92,7 +99,8 @@ export function UserTable<TData, TValue>({
 								<TableRow
 									key={row.id}
 									data-state={row.getIsSelected() && "selected"}
-									className="cursor-pointer">
+									className="cursor-pointer"
+									onClick={() => handleNavigation(row.id + 1)}>
 									{row.getVisibleCells().map((cell) => (
 										<TableCell key={cell.id}>
 											{flexRender(

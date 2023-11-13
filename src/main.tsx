@@ -38,6 +38,7 @@ import BillingAndCollection from "./components/module/billing-and-collection/Bil
 import RoleManagement from "./components/management/role-management/RoleManagement";
 import Users from "./components/management/role-management/users/Users";
 import RoleAccess from "./components/management/role-management/role-access/RoleAccess";
+import UserManagement from "./components/management/role-management/users/user-management/UserManagement";
 
 const router = createBrowserRouter(
 	createRoutesFromElements(
@@ -47,6 +48,9 @@ const router = createBrowserRouter(
 				<Route path="role-management" element={<RoleManagement />}>
 					<Route index element={<Users />} />
 					<Route path="role-access" element={<RoleAccess />} />
+				</Route>
+				<Route path="user-management">
+					<Route path=":user" element={<UserManagement />} />
 				</Route>
 				<Route path="module" element={<Module />}>
 					<Route index element={<AssignRole />} />
