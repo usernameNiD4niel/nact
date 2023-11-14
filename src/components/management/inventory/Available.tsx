@@ -4,27 +4,26 @@ import { columns } from "./helper/columns";
 import { mobileColumn } from "./helper/mobile-column";
 import AddButton from "@/components/reuseable/AddButton";
 import { NewDataTable } from "./helper/new-table-data";
-import { getPaginatedData } from "@/api/inventory";
 import { InventoryData } from "@/constants/props";
+import { getPaginatedData } from "@/api/inventory";
 
 const Available = (): JSX.Element => {
 	const [setActiveTab] = useInventoryState((state) => [state.setActiveTab]);
 
-	const [nextPageUrl, setNextPageUrl] = useState<number | null>(null);
-
 	const [data, setData] = useState<InventoryData[]>([]);
 
+	const [nextPageUrl, setNextPageUrl] = useState<number | null>(null);
+
 	const fetchedData = async () => {
-		if (nextPageUrl && nextPageUrl !== null) {
-			const data_ = await getPaginatedData(nextPageUrl);
-			setNextPageUrl(data_.next_page);
-			setData(data_.products);
-		}
+		const data_ = await getPaginatedData();
+		setNextPageUrl(data_.next_page);
+		setData(data_.products);
 	};
 
 	useEffect(() => {
 		fetchedData();
 		setActiveTab(0);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return (

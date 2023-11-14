@@ -5,7 +5,7 @@ import { ArrowUpDown } from "lucide-react";
 
 export const mobileColumn: ColumnDef<InventoryData>[] = [
 	{
-		accessorKey: "productName",
+		accessorKey: "containerType",
 		header: ({ column }) => {
 			return (
 				<Button
@@ -18,13 +18,13 @@ export const mobileColumn: ColumnDef<InventoryData>[] = [
 		},
 		cell: ({ row }) => {
 			return (
-				<div className="ml-4 font-medium">{row.getValue("productName")}</div>
+				<div className="ml-4 font-medium">{row.getValue("containerType")}</div>
 			);
 		},
 	},
 
 	{
-		accessorKey: "price",
+		accessorKey: "buyingRate",
 		header: ({ column }) => {
 			return (
 				<Button
@@ -36,7 +36,9 @@ export const mobileColumn: ColumnDef<InventoryData>[] = [
 			);
 		},
 		cell: ({ row }) => {
-			return <div className="ml-4 font-medium">{row.getValue("price")}</div>;
+			return (
+				<div className="ml-4 font-medium">{row.getValue("buyingRate")}</div>
+			);
 		},
 	},
 ];

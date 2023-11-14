@@ -11,11 +11,11 @@ import { CheckboxShape } from "@/constants/props";
 import { FC } from "react";
 
 type FilteringSheetProps = {
-	productName: CheckboxShape[];
+	containerType: CheckboxShape[];
 	city: CheckboxShape[];
 	state: CheckboxShape[];
 	quantity: CheckboxShape[];
-	price: CheckboxShape[];
+	buyingRate: CheckboxShape[];
 	depot: CheckboxShape[];
 	check: CheckboxShape[];
 	setCheck: React.Dispatch<React.SetStateAction<CheckboxShape[]>>;
@@ -27,9 +27,9 @@ const FilteringSheet: FC<FilteringSheetProps> = ({
 	quantity,
 	city,
 	depot,
-	price,
+	buyingRate,
 	state,
-	productName,
+	containerType,
 	setCheck,
 	setIsFiltering,
 }) => {
@@ -49,12 +49,12 @@ const FilteringSheet: FC<FilteringSheetProps> = ({
 				<div>
 					<FilterAccordion
 						check={check}
-						items={productName}
+						items={containerType}
 						label="Product Name"
 						setCheck={setCheck}
-						dropdown="productName"
+						dropdown="containerType"
 						setIsFiltering={setIsFiltering}
-						key={"FilteringSheetProductName"}
+						key={"FilteringSheetcontainerType"}
 					/>
 					<FilterAccordion
 						check={check}
@@ -94,12 +94,12 @@ const FilteringSheet: FC<FilteringSheetProps> = ({
 					/>
 					<FilterAccordion
 						check={check}
-						items={price}
-						label="price"
+						items={buyingRate}
+						label="buyingRate"
 						setIsFiltering={setIsFiltering}
 						setCheck={setCheck}
-						dropdown="price"
-						key={"FilteringSheetPrice"}
+						dropdown="buyingRate"
+						key={"FilteringSheetBuyingRate"}
 					/>
 				</div>
 			</SheetContent>

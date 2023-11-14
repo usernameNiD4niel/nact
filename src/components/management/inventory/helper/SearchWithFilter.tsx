@@ -24,8 +24,10 @@ type SearchWithFilterProps = {
 const getInitialData = async (
 	setData: React.Dispatch<React.SetStateAction<InventoryData[]>>,
 ) => {
+	console.log(`log from search with filter`);
+
 	const response = await fetch(
-		`${import.meta.env.VITE_BASE_URL}/api/supplier?page=1&per_page=10`,
+		`${import.meta.env.VITE_BASE_URL}/api/inventory?page=1&per_page=10`,
 		{
 			headers: {
 				"Content-Type": "application/json",
@@ -54,35 +56,35 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 }) => {
 	const [check, setCheck] = useState<CheckboxShape[]>([]);
 	const [uniqueFilter, seUniqueFilter] = useState<InventoryUniqueItems>({
-		productName: [],
+		containerType: [],
 		city: [],
 		state: [],
 		depot: [],
-		price: [],
+		buyingRate: [],
 		quantity: [],
 	});
 
-	const getProductName = useMemo(() => {
+	const getContainerType = useMemo(() => {
 		const checkboxArray: CheckboxShape[] = [];
-		uniqueFilter.productName.forEach((productName, index) => {
+		uniqueFilter.containerType.forEach((containerType, index) => {
 			const object: CheckboxShape = {
-				id: `${index}${productName}`,
-				label: productName,
-				column: "productName",
+				id: `${index}${containerType}`,
+				label: containerType,
+				column: "containerType",
 			};
 
 			checkboxArray.push(object);
 		});
 
 		return checkboxArray;
-	}, [uniqueFilter.productName]);
+	}, [uniqueFilter.containerType]);
 
 	const requestFiltered = async () => {
 		let params = "";
 
 		for (let i = 0; i < check.length; i++) {
-			if (check[i].column === "productName") {
-				params += "productName=" + check[i].label + "&";
+			if (check[i].column === "containerType") {
+				params += "containerType=" + check[i].label + "&";
 			} else if (check[i].column === "city") {
 				params += "city=" + check[i].label + "&";
 			} else if (check[i].column === "state") {
@@ -92,7 +94,7 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 			} else if (check[i].column === "depot") {
 				params += "depot=" + check[i].label + "&";
 			} else {
-				params += "contact=" + check[i].label + "&";
+				params += "buyingRate=" + check[i].label + "&";
 			}
 		}
 
@@ -133,7 +135,7 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 			return;
 		}
 
-		if (check.length === 0) {
+		if (check.length === 0 && (!data || data.length > 0)) {
 			getInitialData(setData);
 			setIsFiltering(false);
 		}
@@ -184,13 +186,13 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 			</form>
 			<div className="w-full gap-6 justify-end hidden md:flex z-0">
 				<FilteringDropdown
-					items={getProductName}
+					items={getContainerType}
 					label="Product Name"
 					check={check}
 					setCheck={setCheck}
-					dropdown="productName"
+					dropdown="containerType"
 					setIsFiltering={setIsFiltering}
-					key={"ProductNameKeyFilterDropdown"}
+					key={"containerTypeKeyFilterDropdown"}
 				/>
 				<FilteringDropdown
 					items={getColumnData(uniqueFilter.city, "city")}
@@ -229,22 +231,22 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 					key={"DepotKeyFilterDropdown"}
 				/>
 				<FilteringDropdown
-					items={getColumnData(uniqueFilter.price, "price")}
+					items={getColumnData(uniqueFilter.buyingRate, "buyingRate")}
 					check={check}
 					setCheck={setCheck}
 					label="Price"
-					dropdown="price"
+					dropdown="buyingRate"
 					setIsFiltering={setIsFiltering}
-					key={"PriceKeyFilterDropdown"}
+					key={"BuyingRateKeyFilterDropdown"}
 				/>
 			</div>
 			<FilteringSheet
-				productName={getProductName}
+				containerType={getContainerType}
 				city={getColumnData(uniqueFilter.city, "city")}
 				state={getColumnData(uniqueFilter.state, "state")}
 				quantity={getColumnData(uniqueFilter.quantity, "quantity")}
 				depot={getColumnData(uniqueFilter.depot, "depot")}
-				price={getColumnData(uniqueFilter.price, "price")}
+				buyingRate={getColumnData(uniqueFilter.buyingRate, "buyingRate")}
 				check={check}
 				setCheck={setCheck}
 				setIsFiltering={setIsFiltering}

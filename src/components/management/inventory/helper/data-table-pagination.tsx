@@ -9,6 +9,8 @@ const getInitialData = async (
 	setData: React.Dispatch<React.SetStateAction<InventoryData[]>>,
 	page: number | null,
 ) => {
+	console.log("initial data from data table pagination");
+
 	if (page) {
 		const response = await fetch(
 			`${import.meta.env.VITE_BASE_URL}/api/inventory?page=${page}&per_page=10`,
@@ -48,7 +50,7 @@ export function DataTablePagination<TData>({
 	const [nextPageUrl, setNextPageUrl] = useState<number | null>(null);
 
 	useEffect(() => {
-		if (next_page_url) {
+		if (next_page_url && next_page_url !== null) {
 			setNextPageUrl(next_page_url);
 		}
 	}, [next_page_url]);
@@ -67,7 +69,9 @@ export function DataTablePagination<TData>({
 				variant={"custom"}
 				onClick={handleLoadMore}
 				disabled={!nextPageUrl || isFiltering}>
-				{nextPageUrl && !isFiltering ? "Load More" : "End of List"}
+				{nextPageUrl && !isFiltering
+					? `Load More ${nextPageUrl}`
+					: "End of List"}
 			</Button>
 		</div>
 	);

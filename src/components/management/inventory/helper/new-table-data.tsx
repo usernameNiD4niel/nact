@@ -1,5 +1,3 @@
-import * as React from "react";
-
 import {
 	ColumnDef,
 	flexRender,
@@ -25,8 +23,8 @@ import {
 import { InventoryData } from "@/constants/props";
 import { useNavigate } from "react-router-dom";
 import SearchWithFilter from "./SearchWithFilter";
-import { cn } from "@/lib/utils";
 import { DataTablePagination } from "./data-table-pagination";
+import { useEffect, useState } from "react";
 
 interface DataTableProps<TValue> {
 	columns: ColumnDef<InventoryData, TValue>[];
@@ -38,17 +36,15 @@ interface DataTableProps<TValue> {
 export function NewDataTable<TValue>({
 	columns,
 	data,
-	setData,
 	next_page_url,
+	setData,
 }: DataTableProps<TValue>) {
-	const [sorting, setSorting] = React.useState<SortingState>([]);
+	const [sorting, setSorting] = useState<SortingState>([]);
 
-	const [columnFilters, setColumnFilters] = React.useState<ColumnFiltersState>(
-		[],
-	);
+	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
 
-	const [rowSelection, setRowSelection] = React.useState({});
-	const [isFiltering, setIsFiltering] = React.useState(false);
+	const [rowSelection, setRowSelection] = useState({});
+	const [isFiltering, setIsFiltering] = useState(false);
 
 	const table = useReactTable({
 		data,
@@ -70,7 +66,7 @@ export function NewDataTable<TValue>({
 	const router = useNavigate();
 
 	const handleTableItem = (inventory: string) => {
-		const foundObject = data.find((item) => item.productName === inventory);
+		const foundObject = data.find((item) => item.containerType === inventory);
 
 		router(`/inventory/${foundObject?.id}`);
 	};
@@ -80,23 +76,23 @@ export function NewDataTable<TValue>({
 	// };
 
 	const getValue = () =>
-		(table.getColumn("productName")?.getFilterValue() as string) ?? "";
+		(table.getColumn("containerType")?.getFilterValue() as string) ?? "";
 
 	const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) =>
-		table.getColumn("productName")?.setFilterValue(event.target.value);
+		table.getColumn("containerType")?.setFilterValue(event.target.value);
 
-	const getItem = (
-		productName: string,
-		column: "state" | "city" | "quantity" | "depot",
-	): string => {
-		const item = data.find((item) => item.productName === productName);
-		return item![column];
-	};
+	// const getItem = (
+	// 	containerType: string,
+	// 	column: "state" | "city" | "quantity" | "depot",
+	// ): string => {
+	// 	const item = data.find((item) => item.containerType === containerType);
+	// 	return item![column];
+	// };
 
-	React.useEffect(() => {
-		console.log(`data ${data.length}`);
-
-		table.setPageSize(data.length);
+	useEffect(() => {
+		if (data) {
+			table.setPageSize(data.length);
+		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [data]);
 
@@ -104,7 +100,7 @@ export function NewDataTable<TValue>({
 		<div className="w-full">
 			<div className="my-4 w-full space-y-2">
 				<SearchWithFilter
-					placeHolder="Search Supplier"
+					placeHolder="Search Product"
 					value={getValue()}
 					onChange={handleOnChange}
 					data={data}
@@ -139,7 +135,7 @@ export function NewDataTable<TValue>({
 								<TableRow
 									key={row.id}
 									className="hover:cursor-pointer"
-									onClick={() => handleTableItem(row.getValue("productName"))}
+									onClick={() => handleTableItem(row.getValue("containerType"))}
 									// data-state={row.getIsSelected() && "selected"}
 								>
 									{row.getVisibleCells().map((cell) => (
@@ -148,7 +144,7 @@ export function NewDataTable<TValue>({
 												cell.column.columnDef.cell,
 												cell.getContext(),
 											)}
-											<div className="md:hidden">
+											{/* <div className="md:hidden">
 												{cell.id.substring(2) !== "price" && (
 													<>
 														<span className={cn("md:hidden text-center ms-4")}>
@@ -165,7 +161,7 @@ export function NewDataTable<TValue>({
 														</span>
 													</>
 												)}
-											</div>
+											</div> */}
 										</TableCell>
 									))}
 								</TableRow>

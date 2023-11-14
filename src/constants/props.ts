@@ -132,43 +132,13 @@ export const SupplierManagementProps: SupplierManagementCard[] = [
 
 export type InventoryTypes = {
 	id: number;
-	productName: string;
+	containerType: string;
 	state: string;
 	city: string;
-	price: string;
+	buyingRate: string;
 	quantity: string;
 	depot: string;
 };
-
-export const InventoryObjects: InventoryTypes[] = [
-	{
-		id: 1,
-		productName: "20 STD - CW",
-		city: "Chicago",
-		state: "USA",
-		depot: "Depot",
-		price: "$ 1,250",
-		quantity: "12 PCS",
-	},
-	{
-		id: 2,
-		productName: "40 HC - CW",
-		city: "Chicago",
-		state: "USA",
-		depot: "Depot",
-		price: "$ 1,250",
-		quantity: "12 PCS",
-	},
-	{
-		id: 3,
-		productName: "20 STD - OT",
-		city: "Chicago",
-		state: "USA",
-		depot: "Depot",
-		price: "$ 1,250",
-		quantity: "12 PCS",
-	},
-];
 
 export type ContainerInformationProps = {
 	containerType: string;
@@ -420,12 +390,12 @@ export type UniqueItems = {
 };
 
 export type InventoryUniqueItems = {
-	productName: string[];
+	containerType: string[];
 	city: string[];
 	state: string[];
 	quantity: string[];
 	depot: string[];
-	price: string[];
+	buyingRate: string[];
 };
 
 export type ProductNameSearch = {
@@ -483,10 +453,10 @@ export type PaginatedInventory = {
 
 export type InventoryData = {
 	id: string;
-	productName: string;
+	containerType: string;
 	city: string;
 	state: string;
 	quantity: string;
 	depot: string;
-	price: string;
+	buyingRate: string;
 };

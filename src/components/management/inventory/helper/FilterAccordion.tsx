@@ -29,7 +29,13 @@ type FilterAccordionProps = {
 	check: CheckboxShape[];
 	setCheck: React.Dispatch<React.SetStateAction<CheckboxShape[]>>;
 	setIsFiltering: React.Dispatch<React.SetStateAction<boolean>>;
-	dropdown: "productName" | "city" | "state" | "quantity" | "depot" | "price";
+	dropdown:
+		| "containerType"
+		| "city"
+		| "state"
+		| "quantity"
+		| "depot"
+		| "buyingRate";
 };
 
 const FilterAccordion: FC<FilterAccordionProps> = ({
@@ -94,7 +100,7 @@ const FilterAccordion: FC<FilterAccordionProps> = ({
 		const getData = async () => {
 			setIsSearching(true);
 			if (debounceSearchTerms) {
-				if (dropdown === "productName") {
+				if (dropdown === "containerType") {
 					const fetchedData = await getColumnSearch<ProductNameSearch>(
 						search,
 						dropdown,
@@ -109,6 +115,13 @@ const FilterAccordion: FC<FilterAccordionProps> = ({
 
 					searchColumnBind<CitySearch>(fetchedData);
 				} else if (dropdown === "state") {
+					const fetchedData = await getColumnSearch<StateSearch>(
+						search,
+						dropdown,
+					);
+
+					searchColumnBind<StateSearch>(fetchedData);
+				} else if (dropdown === "quantity") {
 					const fetchedData = await getColumnSearch<StateSearch>(
 						search,
 						dropdown,

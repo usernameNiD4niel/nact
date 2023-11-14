@@ -28,7 +28,13 @@ type FilteringDropdownProps = {
 	items: CheckboxShape[];
 	check: CheckboxShape[];
 	setCheck: React.Dispatch<React.SetStateAction<CheckboxShape[]>>;
-	dropdown: "productName" | "city" | "state" | "quantity" | "depot" | "price";
+	dropdown:
+		| "containerType"
+		| "city"
+		| "state"
+		| "quantity"
+		| "depot"
+		| "buyingRate";
 	setIsFiltering: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
@@ -98,7 +104,7 @@ const FilteringDropdown: FC<FilteringDropdownProps> = ({
 		const getData = async () => {
 			setIsSearching(true);
 			if (debounceSearchTerms) {
-				if (dropdown === "productName") {
+				if (dropdown === "containerType") {
 					const fetchedData = await getColumnSearch<ProductNameSearch>(
 						search,
 						dropdown,
@@ -113,6 +119,13 @@ const FilteringDropdown: FC<FilteringDropdownProps> = ({
 
 					searchColumnBind<CitySearch>(fetchedData);
 				} else if (dropdown === "state") {
+					const fetchedData = await getColumnSearch<StateSearch>(
+						search,
+						dropdown,
+					);
+
+					searchColumnBind<StateSearch>(fetchedData);
+				} else if (dropdown === "quantity") {
 					const fetchedData = await getColumnSearch<StateSearch>(
 						search,
 						dropdown,

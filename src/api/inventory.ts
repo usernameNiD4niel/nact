@@ -63,9 +63,9 @@ export async function getColumnSearch<T>(searchQuery: string, column: string) {
 	return response;
 }
 
-export async function getPaginatedData(page: number) {
+export async function getPaginatedData() {
 	const response = await fetch(
-		`${import.meta.env.VITE_BASE_URL}/api/inventory?page=${page}&per_page=10`,
+		`${import.meta.env.VITE_BASE_URL}/api/inventory?page=1&per_page=10`,
 		{
 			headers: {
 				"Content-Type": "application/json",
@@ -75,6 +75,8 @@ export async function getPaginatedData(page: number) {
 
 	if (response.ok) {
 		const data = await response.json();
+		console.log(JSON.stringify(data, null, 2));
+
 		return data as PaginatedInventory;
 	}
 
