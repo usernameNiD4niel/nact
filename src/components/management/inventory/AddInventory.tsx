@@ -10,6 +10,7 @@ import {
 } from "@/constants/props";
 import { headerBackClass } from "@/constants/reusable-class";
 import { useEffect, useState } from "react";
+import AlertDialog from "./helper/alert-dialog";
 
 const AddInventory = () => {
 	// Container Information state fields
@@ -90,6 +91,7 @@ const AddInventory = () => {
 	};
 
 	const [error, setError] = useState("");
+	const [containerTypeError, setContainerTypeError] = useState("");
 
 	useEffect(() => {
 		let interval: number;
@@ -128,6 +130,11 @@ const AddInventory = () => {
 	const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
 
+		if (!containerType || containerType === null) {
+			setContainerTypeError("Container type is a required field");
+			return;
+		}
+
 		setIsLoadingButton(true);
 
 		const inventory: InventoryProps = {
@@ -147,6 +154,8 @@ const AddInventory = () => {
 			validUntil,
 		};
 
+		console.log(`the inventory data ::: ${JSON.stringify(inventory, null, 2)}`);
+
 		isAlreadyAdded(inventory);
 	};
 
@@ -162,6 +171,7 @@ const AddInventory = () => {
 						<ContainerInformationForm
 							isDisabled={false}
 							props={containerInformation}
+							containerTypeError={containerTypeError}
 							key="AddInventoryFormKey"
 						/>
 					</div>
@@ -188,29 +198,39 @@ const AddInventory = () => {
 					</div>
 				</form>
 			</div>
-			{counter <= 10 && counter >= 1 && <ShowAlert error={error} />}
+			{counter <= 10 && counter >= 1 && <AlertDialog error={error} />}
 		</div>
 	);
 };
 
-const ShowAlert = ({ error }: { error: string }) => {
-	return (
-		<>
-			{error ? (
-				<div className="toast toast-end">
-					<div className="alert alert-error">
-						<span>{error}</span>
-					</div>
-				</div>
-			) : (
-				<div className="toast toast-end">
-					<div className="alert alert-success">
-						<span>New data successfully added to the inventory.</span>
-					</div>
-				</div>
-			)}
-		</>
-	);
-};
+// const ShowAlert = ({ error }: { error: string }) => {
+// 	const mainParent =
+// 		"absolute overflow-hidden inset-0 z-20 bg-gray-600 bg-opacity-50 flex items-center justify-center";
+// 	const card = "w-[320px] p-4 rounded-md";
+
+// 	return (
+// 		<>
+// 			{error ? (
+// 				<div className={mainParent}>
+// 					<p>
+// 						<MdOutlineError />
+// 					</p>
+// 					<div className={card}>
+// 						<span>{error}</span>
+// 					</div>
+// 				</div>
+// 			) : (
+// 				<div className={mainParent}>
+// 					<p>
+// 						<FaCircleCheck />
+// 					</p>
+// 					<div className={card}>
+// 						<span>New data successfully added to the inventory.</span>
+// 					</div>
+// 				</div>
+// 			)}
+// 		</>
+// 	);
+// };
 
 export default AddInventory;

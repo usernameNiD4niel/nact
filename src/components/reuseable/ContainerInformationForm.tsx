@@ -1,27 +1,25 @@
 import React, { FC } from "react";
 import AnimatedInputs from "./AnimatedInputs";
 import { ContainerInformationProps } from "@/constants/props";
+import DropdownContainerType from "../management/inventory/helper/dropdown-container-type";
 
 type ContainerInformationFormProps = {
 	isDisabled: boolean;
 	props: ContainerInformationProps;
+	containerTypeError: string;
 };
 
 const ContainerInformationForm: FC<ContainerInformationFormProps> = ({
 	isDisabled,
 	props,
+	containerTypeError,
 }) => {
 	return (
 		<React.Fragment>
-			<AnimatedInputs
-				isDisabled={isDisabled}
-				isRequired={true}
-				type="text"
-				inputType="containerType"
+			<DropdownContainerType
 				value={props.containerType}
+				containerTypeError={containerTypeError}
 				setValue={props.setContainerType}
-				label="Container Type"
-				key="ContainerTypeKey"
 			/>
 			<AnimatedInputs
 				isDisabled={isDisabled}
