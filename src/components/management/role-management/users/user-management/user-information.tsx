@@ -33,8 +33,8 @@ const UserInformation: FC<UserInformationProps> = ({
 				</div> */}
         <FormDropdown
           setIsDisabled={setIsDisabled}
-          key="InventoryFormDropdown"
-          endpoint={`/inventory/${id}`}
+          key="UsersFormDropdown"
+          endpoint={`api/users/${id}`}
         />
       </div>
       <div className="flex flex-col gap-2">

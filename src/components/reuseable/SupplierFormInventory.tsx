@@ -40,7 +40,10 @@ const SupplierFormInventory: FC<SupplierFormProps> = ({ props }) => {
         setInputValue={props.setSupplierName}
       />
       <div className="flex w-full justify-end items-center">
-        <button className="text-[#017DC3] flex items-center text-lg gap-x-2">
+        <button
+          className="text-[#017DC3] flex items-center text-lg gap-x-2"
+          type="button"
+        >
           <IoIosAddCircle /> <span className="text-sm">ADD</span>
         </button>
       </div>

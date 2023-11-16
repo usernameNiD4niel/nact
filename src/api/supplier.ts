@@ -5,7 +5,6 @@ import {
   ExtractedContactFilter,
   ExtractedLocationFilter,
   LocationFilterProps,
-  SearchedType,
   ShippingFormProps,
   SupplierDataProps,
   SupplierItem,
@@ -253,38 +252,15 @@ const deleteSupplier = async (endpoint: string) => {
     },
   });
 
-  if (response.ok) {
-    const data = await response.json();
+  const data = await response.json();
 
+  if (response.status === 200) {
     const { message } = await data;
-    return message;
-  } else {
-    const data = await response.json();
-    const { message } = await data;
-    return message;
-  }
-};
-
-// ! Ito dapat ang invoke kapag magsesend si user ng search query --- make this reactive and delay
-const searchData = async (query: string) => {
-  const response = await fetch(
-    `${import.meta.env.VITE_BASE_URL}/api/supplier/search?query=${query}`,
-    {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
-
-  if (response.ok) {
-    const data: SearchedType = await response.json();
-
-    return data;
+    return { message, success: true } as { message: string; success: boolean };
   }
 
-  throw new Error(
-    "Cannot search your data, please check your search query or reset your internet"
-  );
+  const { message } = await data;
+  return { message, success: false } as { message: string; success: boolean };
 };
 
 export {
@@ -295,10 +271,7 @@ export {
   deleteSupplier,
   getPaginatedSupplier,
   getUniqueItems,
-
-  // ! use this function
   getBusinessNameFilter,
   getContactFilter,
-  searchData,
   getLocationFilter,
 };

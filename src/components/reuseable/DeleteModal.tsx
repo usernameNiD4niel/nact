@@ -21,18 +21,12 @@ const DeleteModal: FC<DeleteModalProps> = ({ setIsModalWarning, endpoint }) => {
     // Create a delete action here
     const deleteData = await deleteSupplier(endpoint);
 
-    console.log("the delete ", deleteData);
-
-    if (
-      deleteData ===
-      "Supplier and associated contact persons deleted successfully"
-    ) {
+    if (deleteData.success) {
       toast({
         title: "Successfully deleted",
-        description: deleteData,
+        description: deleteData.message,
       });
       navigate("/supplier");
-      console.log("log 1");
 
       return;
     } else {
@@ -40,7 +34,6 @@ const DeleteModal: FC<DeleteModalProps> = ({ setIsModalWarning, endpoint }) => {
         title: "Failed to delete",
         description: deleteData.message,
       });
-      console.log("log 2");
     }
     setIsModalWarning(false);
   };
