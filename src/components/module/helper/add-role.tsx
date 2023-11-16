@@ -12,8 +12,46 @@ import {
 import { Button } from "@/components/ui/button";
 import { MdGroupAdd } from "react-icons/md";
 import DropdownRoles from "./dropdown-roles";
+import { FC, useState } from "react";
+import { updateUsersRole } from "@/api/account";
+import { useToast } from "@/components/ui/use-toast";
+import { useNavigate } from "react-router-dom";
 
-const AddRole = () => {
+interface AddRoleProps {
+	phoneNumbers: string[];
+}
+
+const AddRole: FC<AddRoleProps> = ({ phoneNumbers }) => {
+	const [selectedItem, setSelectedItem] = useState("");
+	const [isUpdating, setIsUpdating] = useState(false);
+	const { toast } = useToast();
+	const router = useNavigate();
+
+	const handleContinue = async () => {
+		setIsUpdating(true);
+		const { message, success } = await updateUsersRole({
+			role: selectedItem,
+			usersPN: phoneNumbers,
+		});
+
+		let title;
+
+		if (success) {
+			title = "Update Success";
+		} else {
+			title = "Update Failure";
+		}
+		router(0);
+
+		toast({
+			title: title,
+			description: message,
+			duration: 3000,
+		});
+
+		setIsUpdating(false);
+	};
+
 	return (
 		<AlertDialog>
 			<AlertDialogTrigger asChild>
@@ -39,11 +77,15 @@ const AddRole = () => {
 						"Billing and Collection",
 					]}
 					label="Roles"
+					selectedItem={selectedItem}
+					setSelectedItem={setSelectedItem}
 					key={"AssignRoleDropdown"}
 				/>
 				<AlertDialogFooter>
 					<AlertDialogCancel>Cancel</AlertDialogCancel>
-					<AlertDialogAction>Continue</AlertDialogAction>
+					<AlertDialogAction onClick={handleContinue} disabled={isUpdating}>
+						{isUpdating ? "Updating..." : "Continue"}
+					</AlertDialogAction>
 				</AlertDialogFooter>
 			</AlertDialogContent>
 		</AlertDialog>

@@ -4,6 +4,7 @@ import { useInventoryState } from "@/utils/InventoryState";
 import { useEffect } from "react";
 import Tabs from "../reuseable/Tabs";
 import { Outlet } from "react-router-dom";
+import { Toaster } from "../ui/toaster";
 
 const Module = () => {
 	const [selected, setSelected] = useSelectedStore((state) => [
@@ -41,6 +42,7 @@ const Module = () => {
 			</div>
 			<div className="mt-36 md:mt-20 w-full">
 				<Outlet />
+				<Toaster />
 			</div>
 		</section>
 	);

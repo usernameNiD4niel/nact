@@ -23,6 +23,8 @@ const SupplyChain = () => {
 	useEffect(() => {
 		setTab(1);
 		fetchUsers();
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 	return (
 		<div className="flex flex-wrap gap-2 px-5 w-full pb-5">
@@ -54,7 +56,7 @@ const SupplyChain = () => {
 				</>
 			)}
 
-			{selectedCards.length > 0 && <DemoteRole />}
+			{selectedCards.length > 0 && <DemoteRole phoneNumbers={selectedCards} />}
 		</div>
 	);
 };

@@ -63,7 +63,7 @@ const BillingAndCollection = () => {
 				</>
 			)}
 
-			{selectedCards.length > 0 && <DemoteRole />}
+			{selectedCards.length > 0 && <DemoteRole phoneNumbers={selectedCards} />}
 		</div>
 	);
 };

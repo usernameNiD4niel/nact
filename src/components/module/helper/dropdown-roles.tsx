@@ -12,10 +12,16 @@ import { BsChevronDown } from "react-icons/bs";
 interface DropdownRolesProps {
 	items: string[];
 	label: string;
+	selectedItem: string;
+	setSelectedItem: React.Dispatch<React.SetStateAction<string>>;
 }
 
-const DropdownRoles: React.FC<DropdownRolesProps> = ({ items, label }) => {
-	const [selectedItem, setSelectedItem] = React.useState("");
+const DropdownRoles: React.FC<DropdownRolesProps> = ({
+	items,
+	label,
+	selectedItem,
+	setSelectedItem,
+}) => {
 	const handleOnSelectRole = (item: string) => {
 		setSelectedItem(item);
 	};

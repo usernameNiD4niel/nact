@@ -63,7 +63,7 @@ const AssignRole = () => {
 				</>
 			)}
 
-			{selectedCards.length > 0 && <AddRole />}
+			{selectedCards.length > 0 && <AddRole phoneNumbers={selectedCards} />}
 		</div>
 	);
 };
