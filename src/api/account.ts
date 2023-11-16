@@ -1,87 +1,141 @@
 import {
-	DeleteUsersType,
-	UpdateUsersRoleType,
-	UsersType,
+  DeleteUsersType,
+  RoleManagementAccounts,
+  RoleManagementUser,
+  UpdateUsersRoleType,
+  UsersType,
 } from "@/constants/props";
 
-const getCurrentAccount = async (userPN: string) => {
-	const response = await fetch(
-		`${import.meta.env.VITE_BASE_URL}/accounts/${userPN}`,
-		{
-			headers: {
-				"Content-Type": "application/json",
-			},
-		},
-	);
-
-	if (response.ok) {
-		const data = await response.json();
-		return data;
-	}
-
-	throw new Error("Error fetching account information from server");
-};
-
 const getUserBaseOnRole = async (role: string) => {
-	const response = await fetch(
-		`${import.meta.env.VITE_BASE_URL}/api/users?role=${role}`,
-		{
-			headers: {
-				"Content-Type": "application/json",
-			},
-		},
-	);
+  const response = await fetch(
+    `${import.meta.env.VITE_BASE_URL}/api/users?role=${role}`,
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
 
-	if (response.ok) {
-		const data = await response.json();
-		const users: UsersType[] = data.users;
-		if (users && users.length > 0) {
-			return users;
-		}
-		return [];
-	}
+  if (response.ok) {
+    const data = await response.json();
+    const users: UsersType[] = data.users;
+    if (users && users.length > 0) {
+      return users;
+    }
+    return [];
+  }
 
-	return [];
+  return [];
 };
 
+// ! For updating the selected users in the module tabs
 const updateUsersRole = async (usersRole: UpdateUsersRoleType) => {
-	const response = await fetch(
-		`${import.meta.env.VITE_BASE_URL}/api/accounts`,
-		{
-			method: "PUT",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(usersRole),
-		},
-	);
+  const response = await fetch(
+    `${import.meta.env.VITE_BASE_URL}/api/accounts`,
+    {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(usersRole),
+    }
+  );
 
-	if (response.ok) {
-		const data = await response.json();
-		return data;
-	}
+  const data = await response.json();
 
-	throw new Error("Cant update the users role information from server");
+  if (response.status === 200) {
+    return { message: data.message, success: true } as {
+      message: string;
+      success: boolean;
+    };
+  }
+
+  return { message: data.message, success: false } as {
+    message: string;
+    success: boolean;
+  };
 };
 
+// ! For Module tabs, when the user select a card the user can delete 1 or more user
 const deleteUsers = async (users: DeleteUsersType) => {
-	const response = await fetch(
-		`${import.meta.env.VITE_BASE_URL}/api/accounts`,
-		{
-			method: "DELETE",
-			headers: {
-				"Content-Type": "application/json",
-			},
-			body: JSON.stringify(users),
-		},
-	);
+  const response = await fetch(
+    `${import.meta.env.VITE_BASE_URL}/api/accounts`,
+    {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(users),
+    }
+  );
 
-	if (response.ok) {
-		const data = await response.json();
-		return data;
-	}
+  if (response.ok) {
+    const data = await response.json();
+    return data;
+  }
 
-	throw new Error("Cant delete the users role information from server");
+  throw new Error("Cant delete the users role information from server");
 };
 
-export { getCurrentAccount, getUserBaseOnRole, updateUsersRole, deleteUsers };
+// ! For Role Management item for displaying it to the table
+async function getAllUsers() {
+  const response = await fetch(
+    `${import.meta.env.VITE_BASE_URL}/api/accounts`,
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  if (response.status === 200) {
+    const data = await response.json();
+    return data as RoleManagementAccounts[];
+  }
+
+  return [];
+}
+
+// ! For Role Management item when the users clicks specific user
+async function getSpecificUser(id: string) {
+  const response = await fetch(
+    `${import.meta.env.VITE_BASE_URL}/api/accounts/${id}`,
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  if (response.ok) {
+    const data = await response.json();
+    return data as RoleManagementUser;
+  }
+
+  throw new Error("Cannot fetch the specified user");
+}
+
+// ! For displaying to Module tabs and Role Management item dropdown "Role"
+async function getRoles() {
+  const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/roles`, {
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (response.status === 200) {
+    const data = await response.json();
+    return data.roles as string[];
+  }
+
+  return [];
+}
+
+export {
+  getUserBaseOnRole,
+  updateUsersRole,
+  deleteUsers,
+  getAllUsers,
+  getSpecificUser,
+  getRoles,
+};

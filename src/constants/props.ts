@@ -372,11 +372,11 @@ export type FilteringLocation = {
 
 export type UpdateUsersRoleType = {
   role: string;
-  usersPhoneNumber: UsersPhoneNumber[];
+  usersPN: UsersPhoneNumber[];
 };
 
 export type DeleteUsersType = {
-  usersPhoneNumber: UsersPhoneNumber[];
+  usersPN: UsersPhoneNumber[];
 };
 
 type UsersPhoneNumber = {
@@ -459,4 +459,19 @@ export type InventoryData = {
   quantity: string;
   depot: string;
   buyingRate: string;
+};
+
+export type RoleManagementAccounts = {
+  id: string;
+  name: string;
+  role: string;
+  accountStatus: string;
+};
+
+export type RoleManagementUser = {
+  firstName: string;
+  lastName: string;
+  middleName: string;
+  phoneNumber: string;
+  role: string;
 };
