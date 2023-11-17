@@ -37,8 +37,6 @@ const updateUsersRole = async (usersRole: UpdateUsersRoleType) => {
 		role = usersRole.role.toLowerCase().split(" ").join("_");
 	}
 
-	console.log(`the role ::: ${role}`);
-
 	const response = await fetch(
 		`${import.meta.env.VITE_BASE_URL}/api/user?role=${role}`,
 		{

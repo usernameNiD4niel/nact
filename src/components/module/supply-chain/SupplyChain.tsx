@@ -17,7 +17,7 @@ const SupplyChain = () => {
 	const [isFetching, setIsFetching] = useState(true);
 
 	const fetchUsers = async () => {
-		const _users = await getUserBaseOnRole("supply_chain");
+		const _users = await getUserBaseOnRole("supplier_chain");
 		setUsers(_users);
 		setIsFetching(false);
 	};
