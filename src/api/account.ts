@@ -30,10 +30,17 @@ const getUserBaseOnRole = async (role: string) => {
 
 // ! For updating the selected users in the module tabs
 const updateUsersRole = async (usersRole: UpdateUsersRoleType) => {
+	let role = "";
+	if (usersRole.role === "Billing and Collection") {
+		role = "billing_collection";
+	} else {
+		role = usersRole.role.toLowerCase().split(" ").join("_");
+	}
+
+	console.log(`the role ::: ${role}`);
+
 	const response = await fetch(
-		`${
-			import.meta.env.VITE_BASE_URL
-		}/api/user?role=${usersRole.role.toLowerCase()}`,
+		`${import.meta.env.VITE_BASE_URL}/api/user?role=${role}`,
 		{
 			method: "PATCH",
 			headers: {

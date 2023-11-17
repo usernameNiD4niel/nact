@@ -26,7 +26,7 @@ const BillingAndCollection = () => {
 	const role = Cookies.get("role");
 
 	useEffect(() => {
-		if (role === "unset") {
+		if (role !== "admin") {
 			router("/");
 		}
 		setTab(3);

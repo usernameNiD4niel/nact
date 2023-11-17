@@ -108,14 +108,14 @@ const SheetRight = () => {
 												buttonList={ButtonList.Costumer}
 											/>
 										)}
-										{(role === "admin" || role === "supplier") && (
+										{(role === "admin" || role === "supplier_chain") && (
 											<SheetCloseComp
 												text="Supplier Management"
 												to="/supplier"
 												buttonList={ButtonList.Supplier}
 											/>
 										)}
-										{(role === "sales-agent" || role === "admin") && (
+										{(role === "sales_agent" || role === "admin") && (
 											<SheetCloseComp
 												text="Sales Agent"
 												to="/sales-agent"
@@ -136,7 +136,7 @@ const SheetRight = () => {
 												/>
 											</>
 										)}
-										{(role === "admin" || role === "order-generator") && (
+										{(role === "admin" || role === "order_generator") && (
 											<SheetCloseComp
 												text="Order Generator"
 												to="/order-generator"

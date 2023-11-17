@@ -4,6 +4,8 @@ import AssignRoleCard from "../helper/assign-role-card";
 import DemoteRole from "../helper/demote-role";
 import { getUserBaseOnRole } from "@/api/account";
 import { UsersType } from "@/constants/props";
+import { useNavigate } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const SalesAgent = () => {
 	const [setTab] = useInventoryState((state) => [state.setActiveTab]);
@@ -13,6 +15,9 @@ const SalesAgent = () => {
 
 	const [isFetching, setIsFetching] = useState(true);
 
+	const router = useNavigate();
+	const role = Cookies.get("role");
+
 	const fetchUsers = async () => {
 		const _users = await getUserBaseOnRole("sales_agent");
 		setUsers(_users);
@@ -20,6 +25,9 @@ const SalesAgent = () => {
 	};
 
 	useEffect(() => {
+		if (role !== "admin") {
+			router("/");
+		}
 		setTab(2);
 		fetchUsers();
 	}, []);
