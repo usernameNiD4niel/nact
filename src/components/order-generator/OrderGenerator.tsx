@@ -12,6 +12,7 @@ const OrderGenerator = () => {
 		if (selected !== ButtonList.OrderGenerator) {
 			setSelected(ButtonList.OrderGenerator);
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 	return (
 		<div className="px-4 w-[95%] lg:w-4/5">

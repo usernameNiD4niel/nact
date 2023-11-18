@@ -1,4 +1,5 @@
 import { Badge } from "@/components/ui/badge";
+import { RoleManagementAccounts } from "@/constants/props";
 import { ColumnDef } from "@tanstack/react-table";
 
 // This type is used to define the shape of our data.
@@ -98,43 +99,47 @@ export const users: Users[] = [
 	},
 ];
 
-export const columns: ColumnDef<Users>[] = [
+export const columns: ColumnDef<RoleManagementAccounts>[] = [
 	{
-		accessorKey: "employee",
+		accessorKey: "fullName",
 		header: () => <div className="ml-5 text-xs">Employee</div>,
 		cell: ({ row }) => {
+			const employee = row.getValue("fullName") as string;
 			return (
 				<div className=" font-medium ml-5 text-xs flex flex-col">
-					<span>{row.getValue("employee")}</span>
-					<span className="md:hidden">{row.getValue("role")}</span>
+					<span>
+						{employee.length > 20
+							? employee.substring(0, 20) + "..."
+							: employee}
+					</span>
+					<span className="md:hidden">{row.getValue("userType")}</span>
 				</div>
 			);
 		},
 	},
 	{
-		accessorKey: "role",
+		accessorKey: "userType",
 		header: () => <div className="text-xs hidden md:flex">Role</div>,
 		cell: ({ row }) => {
 			return (
 				<div className="font-medium text-xs hidden md:flex">
-					{row.getValue("role")}
+					{row.getValue("userType")}
 				</div>
 			);
 		},
 	},
 	{
-		accessorKey: "accountStatus",
+		accessorKey: "status",
 		header: () => <div className="text-xs">Account Status</div>,
 		cell: ({ row }) => {
 			return (
 				<Badge
 					className=" font-medium text-xs"
 					variant={
-						((
-							row.getValue("accountStatus") as string
-						).toLowerCase() as "active") || "inactive"
+						((row.getValue("status") as string).toLowerCase() as "active") ||
+						"inactive"
 					}>
-					{row.getValue("accountStatus")}
+					{row.getValue("status")}
 				</Badge>
 			);
 		},

@@ -86,21 +86,20 @@ const deleteUsers = async (users: DeleteUsersType) => {
 
 // ! For Role Management item for displaying it to the table
 async function getAllUsers() {
-	const response = await fetch(
-		`${import.meta.env.VITE_BASE_URL}/api/accounts`,
-		{
-			headers: {
-				"Content-Type": "application/json",
-			},
+	const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/users`, {
+		headers: {
+			"Content-Type": "application/json",
 		},
-	);
+	});
 
 	if (response.status === 200) {
 		const data = await response.json();
-		return data as RoleManagementAccounts[];
+		console.log(`the data is: ${JSON.stringify(data, null, 2)}`);
+
+		return data.users as RoleManagementAccounts[];
 	}
 
-	return [];
+	return [] as RoleManagementAccounts[];
 }
 
 // ! For Role Management item when the users clicks specific user

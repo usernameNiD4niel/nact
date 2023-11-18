@@ -3,63 +3,56 @@ import Cookies from "js-cookie";
 // import Cookies from "js-cookie";
 
 export const POST = async ({
-  phoneNumber,
-  pin,
-  setIsLoading,
+	phoneNumber,
+	pin,
+	setIsLoading,
 }: {
-  phoneNumber: string;
-  pin: string;
-  setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
+	phoneNumber: string;
+	pin: string;
+	setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
-  const data = {
-    mobileNumber: phoneNumber,
-    pin,
-  };
+	const data = {
+		mobileNumber: phoneNumber,
+		pin,
+	};
 
-  try {
-    // TODO: add a valid url to the fetch request
+	try {
+		// TODO: add a valid url to the fetch request
 
-    // Cookies.set("token", "hahaha", { expires: 7 / 24 });
+		// Cookies.set("token", "hahaha", { expires: 7 / 24 });
 
-    const response = await fetch(
-      "https://flask-service.gi2fod26lfct0.ap-southeast-1.cs.amazonlightsail.com/login",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data),
-        // credentials: "include",
-      }
-    );
+		const response = await fetch(
+			"https://flask-service.gi2fod26lfct0.ap-southeast-1.cs.amazonlightsail.com/login",
+			{
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify(data),
+				// credentials: "include",
+			},
+		);
 
-    console.log(data);
+		console.log(data);
 
-    if (response.ok) {
-      console.log("Sucessfully created a POST request");
-      const data: LoginSuccessResponse = await response.json();
+		if (response.ok) {
+			console.log("Sucessfully created a POST request");
+			const data: LoginSuccessResponse = await response.json();
 
-      if (data.success) {
-        setIsLoading(false);
-        Cookies.set("csrf_token", data.csrf_access_token);
-        Cookies.set("role", data.user.user_type);
-        Cookies.set("user", JSON.stringify(data.user));
-        return data;
-      } else {
-        console.error("Error: " + data.message);
-        setIsLoading(false);
-        return data;
-      }
-    } else {
-      console.log("Successfully failed!", response);
-      setIsLoading(false);
-    }
-  } catch (e: unknown) {
-    setIsLoading(false);
-    if (typeof e === "string") {
-      console.log(e);
-    } else if (e instanceof Error) {
-      console.log("Error: " + e.message);
-    }
-  }
+			if (data.success) {
+				setIsLoading(false);
+				Cookies.set("csrf_token", data.csrf_access_token, { expires: 7 });
+				Cookies.set("role", data.user.user_type, { expires: 7 });
+				Cookies.set("user", JSON.stringify(data.user), { expires: 7 });
+				return data;
+			} else {
+				setIsLoading(false);
+				return data;
+			}
+		} else {
+			setIsLoading(false);
+		}
+	} catch (e: unknown) {
+		setIsLoading(false);
+	}
 };

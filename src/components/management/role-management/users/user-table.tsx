@@ -59,10 +59,10 @@ export function UserTable<TData, TValue>({
 				<Input
 					placeholder="Search employee"
 					value={
-						(table.getColumn("employee")?.getFilterValue() as string) ?? ""
+						(table.getColumn("fullName")?.getFilterValue() as string) ?? ""
 					}
 					onChange={(event) =>
-						table.getColumn("employee")?.setFilterValue(event.target.value)
+						table.getColumn("fullName")?.setFilterValue(event.target.value)
 					}
 					className="w-full py-6 px-10"
 				/>

@@ -463,9 +463,9 @@ export type InventoryData = {
 
 export type RoleManagementAccounts = {
 	id: string;
-	name: string;
-	role: string;
-	accountStatus: string;
+	fullName: string;
+	userType: string;
+	status: string;
 };
 
 export type RoleManagementUser = {
