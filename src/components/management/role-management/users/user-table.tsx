@@ -1,6 +1,7 @@
 import {
 	ColumnDef,
 	ColumnFiltersState,
+	VisibilityState,
 	flexRender,
 	getCoreRowModel,
 	getFilteredRowModel,
@@ -15,7 +16,7 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Input } from "@/components/ui/input";
 import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -32,14 +33,18 @@ export function UserTable<TData, TValue>({
 	data,
 }: DataTableProps<TData, TValue>) {
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
+	const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
+
 	const table = useReactTable({
 		data,
 		columns,
 		getCoreRowModel: getCoreRowModel(),
 		onColumnFiltersChange: setColumnFilters,
 		getFilteredRowModel: getFilteredRowModel(),
+		onColumnVisibilityChange: setColumnVisibility,
 		state: {
 			columnFilters,
+			columnVisibility,
 		},
 	});
 
@@ -48,6 +53,15 @@ export function UserTable<TData, TValue>({
 	const handleNavigation = (destination: string) => {
 		router(`/user-management/${destination}`);
 	};
+
+	useEffect(() => {
+		table.getColumn("id")?.toggleVisibility(false);
+
+		const width = window.innerWidth;
+		if (width < 768) {
+			table.getColumn("userType")?.toggleVisibility(false);
+		}
+	}, []);
 
 	return (
 		<div className="w-full">
@@ -72,6 +86,29 @@ export function UserTable<TData, TValue>({
 					<img src={FilterSVG} width={25} height={25} />
 				</Button>
 			</div>
+			{/* <DropdownMenu>
+				<DropdownMenuTrigger asChild>
+					<Button variant="outline" className="ml-auto">
+						Columns
+					</Button>
+				</DropdownMenuTrigger>
+				<DropdownMenuContent align="end">
+					{table
+						.getAllColumns()
+						.filter((column) => column.getCanHide())
+						.map((column) => {
+							return (
+								<DropdownMenuCheckboxItem
+									key={column.id}
+									className="capitalize"
+									checked={column.getIsVisible()}
+									onCheckedChange={(value) => column.toggleVisibility(!!value)}>
+									{column.id}
+								</DropdownMenuCheckboxItem>
+							);
+						})}
+				</DropdownMenuContent>
+			</DropdownMenu> */}
 			<div className="rounded-md border">
 				<Table>
 					<TableHeader>
@@ -100,7 +137,7 @@ export function UserTable<TData, TValue>({
 									key={row.id}
 									data-state={row.getIsSelected() && "selected"}
 									className="cursor-pointer"
-									onClick={() => handleNavigation(row.id + 1)}>
+									onClick={() => handleNavigation(row.getValue("id"))}>
 									{row.getVisibleCells().map((cell) => (
 										<TableCell key={cell.id}>
 											{flexRender(

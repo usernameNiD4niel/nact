@@ -105,7 +105,7 @@ async function getAllUsers() {
 // ! For Role Management item when the users clicks specific user
 async function getSpecificUser(id: string) {
 	const response = await fetch(
-		`${import.meta.env.VITE_BASE_URL}/api/accounts/${id}`,
+		`${import.meta.env.VITE_BASE_URL}/api/users/${id}`,
 		{
 			headers: {
 				"Content-Type": "application/json",
@@ -137,6 +137,26 @@ async function getRoles() {
 	return [];
 }
 
+async function updateUser(id: string, data: RoleManagementUser) {
+	const response = await fetch(
+		`${import.meta.env.VITE_BASE_URL}/api/users/${id}`,
+		{
+			method: "PATCH",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(data),
+		},
+	);
+
+	if (response.ok) {
+		const data = await response.json();
+		return data.message as string;
+	}
+
+	return "Cannot update the user profile, please try again";
+}
+
 export {
 	getUserBaseOnRole,
 	updateUsersRole,
@@ -144,4 +164,5 @@ export {
 	getAllUsers,
 	getSpecificUser,
 	getRoles,
+	updateUser,
 };

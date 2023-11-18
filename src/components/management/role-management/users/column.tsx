@@ -101,6 +101,9 @@ export const users: Users[] = [
 
 export const columns: ColumnDef<RoleManagementAccounts>[] = [
 	{
+		accessorKey: "id",
+	},
+	{
 		accessorKey: "fullName",
 		header: () => <div className="ml-5 text-xs">Employee</div>,
 		cell: ({ row }) => {
