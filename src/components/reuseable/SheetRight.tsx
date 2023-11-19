@@ -15,12 +15,14 @@ import { ButtonList } from "@/constants/enums";
 import { HiOutlineMenuAlt3 } from "react-icons/hi";
 import { Button } from "../ui/button";
 import Cookies from "js-cookie";
+import { UsersType } from "@/constants/props";
 
 const SheetRight = () => {
 	const [selected] = useSelectedStore((state) => [state.selected]);
 	const publiClassDrawer = "text-white p-2 text-base flex items-center gap-2";
 
 	const role = Cookies.get("role");
+	const { user_type } = JSON.parse(Cookies.get("user")!) as UsersType;
 
 	const buttonClass =
 		"flex gap-x-3 py-2 mb-2 font-medium mx-3 px-2 text-md rounded-md items-center transition-opacity duration-300 w-full";
@@ -85,7 +87,7 @@ const SheetRight = () => {
 									buttonList={ButtonList.Home}
 									to="/"
 								/>
-								{role === "admin" && (
+								{role === "admin" && user_type === "active" && (
 									<>
 										<SheetCloseComp
 											text="Module"
@@ -99,7 +101,7 @@ const SheetRight = () => {
 										/>
 									</>
 								)}
-								{role !== "unset" && (
+								{role !== "unset" && user_type === "active" && (
 									<>
 										{(role === "admin" || role === "costumer") && (
 											<SheetCloseComp
