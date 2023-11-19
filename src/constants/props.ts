@@ -472,6 +472,7 @@ export type RoleManagementUser = {
 	firstName: string;
 	lastName: string;
 	middleName: string;
-	phoneNumber: string;
-	role: string;
+	mobileNumber: string;
+	status: string;
+	userType: string;
 };

@@ -115,7 +115,7 @@ async function getSpecificUser(id: string) {
 
 	if (response.ok) {
 		const data = await response.json();
-		return data as RoleManagementUser;
+		return data.user as RoleManagementUser;
 	}
 
 	throw new Error("Cannot fetch the specified user");
@@ -149,12 +149,21 @@ async function updateUser(id: string, data: RoleManagementUser) {
 		},
 	);
 
-	if (response.ok) {
+	if (response.status === 200) {
 		const data = await response.json();
-		return data.message as string;
+		return { message: data.message, success: true } as {
+			message: string;
+			success: boolean;
+		};
 	}
 
-	return "Cannot update the user profile, please try again";
+	return {
+		message: "Cannot update the user profile, please try again",
+		success: false,
+	} as {
+		message: string;
+		success: boolean;
+	};
 }
 
 export {
