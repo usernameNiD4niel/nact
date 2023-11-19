@@ -10,7 +10,6 @@ import {
 import Root from "@/components/dashboard/Root.tsx";
 import Account from "@/components/accounts/Account.tsx";
 import Index from "@/authentication";
-import Module from "@/components/module";
 import SupplierManagement from "@/components/management/supplier/SupplierManagement";
 import SalesAgentManagement from "@/components/management/sales-agent/SalesAgentManagement";
 import CostumerManagement from "@/components/management/customer/CustomerManagement";
@@ -31,10 +30,6 @@ import OrderGenerator from "./components/order-generator/OrderGenerator";
 import { SupplierTableItem } from "./components/management/supplier/SupplierTableItem";
 import InventoryTableItem from "./components/management/inventory/InventoryTableItem";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import AssignRole from "./components/module/assign-role/AssignRole";
-import SupplyChain from "./components/module/supply-chain/SupplyChain";
-import SalesAgent from "./components/module/sales-agent/SalesAgent";
-import BillingAndCollection from "./components/module/billing-and-collection/BillingAndCollection";
 import RoleManagement from "./components/management/role-management/RoleManagement";
 import Users from "./components/management/role-management/users/Users";
 import RoleAccess from "./components/management/role-management/role-access/RoleAccess";
@@ -51,15 +46,6 @@ const router = createBrowserRouter(
 				</Route>
 				<Route path="user-management">
 					<Route path=":user" element={<UserManagement />} />
-				</Route>
-				<Route path="module" element={<Module />}>
-					<Route index element={<AssignRole />} />
-					<Route path="supply-chain" element={<SupplyChain />} />
-					<Route path="sales-agent" element={<SalesAgent />} />
-					<Route
-						path="billing-and-collection"
-						element={<BillingAndCollection />}
-					/>
 				</Route>
 				<Route path="supplier" element={<SupplierManagement />}>
 					<Route index element={<List />} />

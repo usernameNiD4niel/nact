@@ -7,7 +7,6 @@ import { buttons } from "@/constants/arrays";
 import Cookies from "js-cookie";
 import SheetRight from "../reuseable/SheetRight";
 import { Toaster } from "../ui/toaster";
-import { UsersType } from "@/constants/props";
 const Main = () => {
 	const [selected] = useSelectedStore((state) => [state.selected]);
 	const navigate = useNavigate();
@@ -52,7 +51,6 @@ const Main = () => {
 
 const SideNavigation = ({ selected }: { selected: ButtonList | null }) => {
 	const role = Cookies.get("role");
-	const { user_type } = JSON.parse(Cookies.get("user")!) as UsersType;
 	const buttonClass =
 		"flex gap-x-3 py-2 mb-2 mx-3 px-2 text-sm rounded-md items-center transition-opacity duration-300";
 	const hoverButtonClass =
@@ -80,19 +78,8 @@ const SideNavigation = ({ selected }: { selected: ButtonList | null }) => {
 							Home
 						</Link>
 					</li>
-					{role === "admin" && user_type === "active" && (
+					{role === "admin" && (
 						<>
-							<li>
-								<Link
-									to="/module"
-									className={`${buttonClass} ${
-										selected === ButtonList.Module
-											? "text-[#017DC3] font-semibold bg-slate-50"
-											: "text-white font-thin"
-									} ${hoverButtonClass}`}>
-									Module
-								</Link>
-							</li>
 							<li>
 								<Link
 									to="/role-management"
@@ -106,7 +93,7 @@ const SideNavigation = ({ selected }: { selected: ButtonList | null }) => {
 							</li>
 						</>
 					)}
-					{role !== "unset" && user_type === "active" && (
+					{role !== "unset" && (
 						<React.Fragment>
 							{(role === "costumer" || role === "admin") && (
 								<li>
