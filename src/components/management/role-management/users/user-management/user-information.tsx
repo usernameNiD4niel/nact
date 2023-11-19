@@ -48,6 +48,8 @@ const UserInformation: FC<UserInformationProps> = ({
 					setIsDisabled={setIsDisabled}
 					key="UsersFormDropdown"
 					endpoint={`api/users/${id}`}
+					modalLabel="This action cannot be undone. This will permanently delete this user and remove this data from our server."
+					navigateTo="role-management"
 				/>
 			</div>
 			<div className="flex flex-col gap-2">

@@ -44,7 +44,7 @@ const DropdownRoles: FC<DropdownRolesProps> = ({
 				<DropdownMenuItem
 					className="p-2 cursor-pointer text-sm"
 					onClick={() => handleRoleSelection("Supplier Chain")}>
-					Supply Chain
+					Supplier Chain
 				</DropdownMenuItem>
 				<DropdownMenuItem
 					className="p-2 cursor-pointer text-sm"

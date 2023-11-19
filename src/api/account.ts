@@ -1,5 +1,4 @@
 import {
-	DeleteUsersType,
 	RoleManagementAccounts,
 	RoleManagementUser,
 	UpdateUsersRoleType,
@@ -64,20 +63,19 @@ const updateUsersRole = async (usersRole: UpdateUsersRoleType) => {
 };
 
 // ! For Module tabs, when the user select a card the user can delete 1 or more user
-const deleteUsers = async (users: DeleteUsersType) => {
+const deleteUsers = async (id: string) => {
 	const response = await fetch(
-		`${import.meta.env.VITE_BASE_URL}/api/accounts`,
+		`${import.meta.env.VITE_BASE_URL}/api/users/${id}`,
 		{
 			method: "DELETE",
 			headers: {
 				"Content-Type": "application/json",
 			},
-			body: JSON.stringify(users),
 		},
 	);
 
 	if (response.ok) {
-		const data = await response.json();
+		const data: { message: string; success: boolean } = await response.json();
 		return data;
 	}
 
