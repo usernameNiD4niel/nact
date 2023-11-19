@@ -40,10 +40,16 @@ export const POST = async ({
 			const data: LoginSuccessResponse = await response.json();
 
 			if (data.success) {
+				const expirationDate = new Date();
+				expirationDate.setDate(expirationDate.getDate() + 7);
 				setIsLoading(false);
-				Cookies.set("csrf_token", data.csrf_access_token, { expires: 7 });
-				Cookies.set("role", data.user.user_type, { expires: 7 });
-				Cookies.set("user", JSON.stringify(data.user), { expires: 7 });
+				Cookies.set("csrf_token", data.csrf_access_token, {
+					expires: expirationDate,
+				});
+				Cookies.set("role", data.user.user_type, { expires: expirationDate });
+				Cookies.set("user", JSON.stringify(data.user), {
+					expires: expirationDate,
+				});
 				return data;
 			} else {
 				setIsLoading(false);
