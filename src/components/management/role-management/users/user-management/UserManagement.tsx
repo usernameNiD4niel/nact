@@ -67,7 +67,7 @@ const UserManagement = () => {
 			middleName,
 			mobileNumber,
 			status,
-			userType: type,
+			user_type: type,
 		};
 
 		setUpdating(true);
@@ -90,7 +90,7 @@ const UserManagement = () => {
 			setLastName(data.lastName);
 			setMiddleName(data.middleName);
 			setStatus(data.status);
-			setUserType(data.userType);
+			setUserType(data.user_type);
 			setMobileNumber(data.mobileNumber);
 		}
 	}, [data]);
