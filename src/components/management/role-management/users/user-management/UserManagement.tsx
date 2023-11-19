@@ -7,9 +7,10 @@ import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { getSpecificUser, updateUser } from "@/api/account";
-import { RoleManagementUser } from "@/constants/props";
+import { RoleManagementUser, UsersType } from "@/constants/props";
 import SuccessModal from "@/components/reuseable/SuccessModal";
 import { useQuery } from "@tanstack/react-query";
+import Cookies from "js-cookie";
 
 const UserManagement = () => {
 	const location = useLocation();
@@ -36,6 +37,19 @@ const UserManagement = () => {
 		return getSpecificUser(id);
 	});
 
+	const updateCookies = () => {
+		const user = JSON.parse(Cookies.get("user")!) as UsersType;
+		user["firstName"] = firstName;
+		user["middleName"] = middleName;
+		user["lastName"] = lastName;
+		user["user_type"] = userType;
+
+		Cookies.set("user", JSON.stringify(user), { expires: 7 });
+		Cookies.set("role", userType, { expires: 7 });
+
+		console.log(`user ::: ${JSON.stringify(user, null, 2)}`);
+	};
+
 	const handleUpdateButton = async (
 		event: React.FormEvent<HTMLFormElement>,
 	) => {
@@ -61,11 +75,11 @@ const UserManagement = () => {
 
 		if (message_.success) {
 			setValidation("success");
+			updateCookies();
 		} else {
 			setValidation("error");
 		}
 		setUpdating(false);
-		console.log(`this should be active now ::: ${status}`);
 
 		setMessage(message_.message);
 	};
