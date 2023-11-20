@@ -17,7 +17,6 @@ const ContainerInformationForm: FC<ContainerInformationFormProps> = ({
 	return (
 		<React.Fragment>
 			<DropdownContainerType
-				value={props.containerType}
 				containerTypeError={containerTypeError}
 				setValue={props.setContainerType}
 			/>

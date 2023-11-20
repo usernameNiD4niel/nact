@@ -85,6 +85,7 @@ const InventoryTableItem = () => {
 			setContainerTypeError("Container type is a required field");
 			return;
 		}
+
 		// ! add a code here
 	};
 

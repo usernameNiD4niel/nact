@@ -9,8 +9,9 @@ import {
 	SuplierFormInventoryProps,
 } from "@/constants/props";
 import { headerBackClass } from "@/constants/reusable-class";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import AlertDialog from "./helper/alert-dialog";
+import { useMutation } from "@tanstack/react-query";
 
 const AddInventory = () => {
 	// Container Information state fields
@@ -31,8 +32,6 @@ const AddInventory = () => {
 	const [businessName, setBusinessName] = useState<string>("");
 	const [completeAddress, setCompleteAddress] = useState<string>("");
 	const [contactNumber, setContactNumber] = useState<string>("");
-
-	const [counter, setCounter] = useState(11);
 
 	const [isLoadingButton, setIsLoadingButton] = useState(false);
 
@@ -90,42 +89,15 @@ const AddInventory = () => {
 		setSupplierName("");
 	};
 
-	const [error, setError] = useState("");
 	const [containerTypeError, setContainerTypeError] = useState("");
 
-	useEffect(() => {
-		let interval: number;
-		console.log("count");
-
-		if (counter < 11 && counter > 0) {
-			console.log("count 1");
-			interval = window.setInterval(() => {
-				setCounter((prevCount) => prevCount - 1);
-			}, 1000);
-		}
-
-		return () => window.clearInterval(interval);
-	}, [counter]);
-
-	const isAlreadyAdded = async (inventoryData: InventoryProps) => {
-		await isInventoryAdded(inventoryData)
-			.then((data) => {
-				if (
-					data.message &&
-					data.message === "Inventory item added successfully"
-				) {
-					setCounter(14);
-					setError("");
-					clearUserInput();
-				} else {
-					setCounter(14);
-					setError(data.message);
-				}
-				setIsLoadingButton(false);
-				console.log(data);
-			})
-			.catch((err) => setError(err));
-	};
+	const mutation = useMutation({
+		mutationKey: ["inventory", "add"],
+		mutationFn: isInventoryAdded,
+		onSuccess: () => {
+			clearUserInput();
+		},
+	});
 
 	const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
@@ -154,9 +126,9 @@ const AddInventory = () => {
 			validUntil,
 		};
 
-		console.log(`the inventory data ::: ${JSON.stringify(inventory, null, 2)}`);
+		mutation.mutate(inventory);
 
-		isAlreadyAdded(inventory);
+		console.log(`the inventory data ::: ${JSON.stringify(inventory, null, 2)}`);
 	};
 
 	return (
@@ -198,7 +170,11 @@ const AddInventory = () => {
 					</div>
 				</form>
 			</div>
-			{counter <= 10 && counter >= 1 && <AlertDialog error={error} />}
+			{mutation.isError ? (
+				<AlertDialog error={mutation.error as unknown as string} />
+			) : (
+				mutation.isSuccess && <AlertDialog error={""} />
+			)}
 		</div>
 	);
 };
