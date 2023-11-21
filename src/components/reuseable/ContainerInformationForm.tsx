@@ -1,122 +1,109 @@
 import React, { FC } from "react";
-import AnimatedInputs from "./AnimatedInputs";
-import { ContainerInformationProps } from "@/constants/props";
+// import AnimatedInputs from "./AnimatedInputs";
+// import { ContainerInformationProps } from "@/constants/props";
 import DropdownContainerType from "../management/inventory/helper/dropdown-container-type";
+import CustomInput from "./CustomInput";
+import { InventoryProps } from "@/constants/props";
 
 type ContainerInformationFormProps = {
 	isDisabled: boolean;
-	props: ContainerInformationProps;
-	containerTypeError: string;
+	containerInfo?: InventoryProps;
 };
 
 const ContainerInformationForm: FC<ContainerInformationFormProps> = ({
 	isDisabled,
-	props,
-	containerTypeError,
+	containerInfo,
 }) => {
 	return (
 		<React.Fragment>
-			<DropdownContainerType
-				containerTypeError={containerTypeError}
-				setValue={props.setContainerType}
-			/>
-			<AnimatedInputs
+			<DropdownContainerType defaultValue={containerInfo?.containerType} />
+			<CustomInput
 				isDisabled={isDisabled}
 				isRequired={true}
 				type="text"
 				inputType="condition"
-				value={props.condition}
-				setValue={props.setCondition}
 				label="Condition"
+				defaultValue={containerInfo?.condition}
 				key="ConditionKey"
 			/>
-			<AnimatedInputs
+			<CustomInput
 				isDisabled={isDisabled}
 				isRequired={true}
 				type="text"
 				inputType="city"
-				value={props.city}
-				setValue={props.setCity}
 				label="City"
+				defaultValue={containerInfo?.city}
 				key="CityKey"
 			/>
-			<AnimatedInputs
+			<CustomInput
 				isDisabled={isDisabled}
 				isRequired={true}
 				type="text"
-				inputType="city"
-				value={props.state}
-				setValue={props.setState}
+				inputType="state"
 				label="State"
+				defaultValue={containerInfo?.state}
 				key="StateKey"
 			/>
-			<AnimatedInputs
+			<CustomInput
 				isDisabled={isDisabled}
 				isRequired={true}
 				type="text"
 				inputType="region"
-				value={props.region}
-				setValue={props.setRegion}
 				label="Region"
+				defaultValue={containerInfo?.region}
 				key="RegionKey"
 			/>
-			<AnimatedInputs
+			<CustomInput
 				isDisabled={isDisabled}
 				isRequired={true}
 				type="text"
 				inputType="country"
-				value={props.country}
-				setValue={props.setCountry}
+				defaultValue={containerInfo?.country}
 				label="Country"
 				key="CountryKey"
 			/>
-			<AnimatedInputs
+			<CustomInput
 				isDisabled={isDisabled}
 				isRequired={true}
 				type="text"
 				inputType="depot"
-				value={props.depot}
-				setValue={props.setDepot}
 				label="Depot"
 				key="DepotKey"
+				defaultValue={containerInfo?.depot}
 			/>
-			<AnimatedInputs
+			<CustomInput
 				isDisabled={isDisabled}
 				isRequired={true}
 				type="text"
 				inputType="validUntil"
-				value={props.validUntil}
-				setValue={props.setValidUntil}
 				label="Valid Until"
+				defaultValue={containerInfo?.validUntil}
 				key="ValidUntilKey"
 			/>
-			<AnimatedInputs
+			<CustomInput
 				isDisabled={isDisabled}
 				isRequired={true}
 				type="text"
 				inputType="quantity"
-				value={props.quantity}
-				setValue={props.setQuantity}
+				defaultValue={containerInfo?.quantity}
 				label="Quantity"
 				key="QuantityKey"
 			/>
-			<AnimatedInputs
+			<CustomInput
 				isDisabled={isDisabled}
 				isRequired={true}
 				type="text"
-				inputType="buyingRates"
-				value={props.buyingRate}
-				setValue={props.setBuyingRate}
+				inputType="buyingRate"
 				label="Buying Rate"
+				defaultValue={containerInfo?.buyingRate}
 				key="BuyingRateKey"
 			/>
-			<AnimatedInputs
+			<CustomInput
 				isDisabled={isDisabled}
 				isRequired={true}
 				type="text"
 				inputType="sellingRate"
-				value={props.sellingRate}
-				setValue={props.setSellingRate}
+				defaultValue={containerInfo?.sellingRate}
 				label="Selling Rate"
 				key="SellingRateKey"
 			/>

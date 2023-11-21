@@ -476,3 +476,14 @@ export type RoleManagementUser = {
 	status: string;
 	user_type: string;
 };
+
+export type SupplierInventory = {
+	businessName: string;
+	completeAddress: string;
+	contactNumber: string;
+};
+
+export type InventorySupplierType = {
+	containerInformation: InventoryProps;
+	supplier: SupplierInventory;
+};

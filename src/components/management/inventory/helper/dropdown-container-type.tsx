@@ -16,24 +16,27 @@ import {
 } from "@/components/ui/select";
 import { FC } from "react";
 
+// interface DropdownContainerTypeProps {
+// 	setValue: React.Dispatch<React.SetStateAction<string>>;
+// 	containerTypeError: string;
+// }
+
 interface DropdownContainerTypeProps {
-	setValue: React.Dispatch<React.SetStateAction<string>>;
-	containerTypeError: string;
+	defaultValue?: string;
 }
 
 const DropdownContainerType: FC<DropdownContainerTypeProps> = ({
-	setValue,
-	containerTypeError,
+	defaultValue,
 }) => {
-	const handleOnSelect = (val: string) => {
-		setValue(val);
-	};
-
 	return (
 		<div className="space-y-1">
-			<Select onValueChange={handleOnSelect}>
+			<Select name="containerType">
 				<SelectTrigger className="w-full py-6 border-black border-opacity-20">
-					<SelectValue placeholder="Select a container type" />
+					<SelectValue
+						placeholder={
+							defaultValue ? defaultValue : "Select a container type"
+						}
+					/>
 				</SelectTrigger>
 				<SelectContent>
 					<SelectGroup>
@@ -46,9 +49,9 @@ const DropdownContainerType: FC<DropdownContainerTypeProps> = ({
 					</SelectGroup>
 				</SelectContent>
 			</Select>
-			{containerTypeError && (
+			{/* {containerTypeError && (
 				<p className="text-xs md:text-sm text-red-500">{containerTypeError}</p>
-			)}
+			)} */}
 		</div>
 	);
 };
