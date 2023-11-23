@@ -4,9 +4,9 @@ import HeaderWithBack from "@/components/reuseable/HeaderWithBack";
 import LoadingButton from "@/components/reuseable/LoadingButton";
 import SupplierFormInventory from "@/components/reuseable/SupplierFormInventory";
 import {
-  ContainerInformationProps,
   InventoryProps,
-  SuplierFormInventoryProps,
+  InventorySupplierType,
+  SupplierInventory,
 } from "@/constants/props";
 import { headerBackClass } from "@/constants/reusable-class";
 import { useState } from "react";
@@ -14,121 +14,75 @@ import AlertDialog from "./helper/alert-dialog";
 import { useMutation } from "@tanstack/react-query";
 
 const AddInventory = () => {
-  // Container Information state fields
-  const [containerType, setContainerType] = useState<string>("");
-  const [condition, setCondition] = useState<string>("");
-  const [city, setCity] = useState<string>("");
-  const [state, setState] = useState<string>("");
-  const [region, setRegion] = useState<string>("");
-  const [country, setCountry] = useState<string>("");
-  const [depot, setDepot] = useState<string>("");
-  const [validUntil, setValidUntil] = useState<string>("");
-  const [quantity, setQuantity] = useState<string>("");
-  const [buyingRate, setBuyingRate] = useState<string>("");
-  const [sellingRate, setSellingRate] = useState<string>("");
-
-  // Supplier state fields
-  const [supplierName, setSupplierName] = useState<string>("");
-  const [businessName, setBusinessName] = useState<string>("");
-  const [completeAddress, setCompleteAddress] = useState<string>("");
-  const [contactNumber, setContactNumber] = useState<string>("");
-
   const [isLoadingButton, setIsLoadingButton] = useState(false);
 
-  const containerInformation: ContainerInformationProps = {
-    buyingRate,
-    city,
-    country,
-    condition,
-    state,
-    containerType,
-    depot,
-    quantity,
-    region,
-    sellingRate,
-    validUntil,
-    setBuyingRate,
-    setCity,
-    setCountry,
-    setCondition,
-    setContainerType,
-    setDepot,
-    setQuantity,
-    setRegion,
-    setSellingRate,
-    setState,
-    setValidUntil,
+  const initialInventory: InventorySupplierType = {
+    containerInformation: {
+      buyingRate: "",
+      city: "",
+      condition: "",
+      containerType: "",
+      country: "",
+      depot: "",
+      quantity: "",
+      region: "",
+      sellingRate: "",
+      state: "",
+      validUntil: "",
+    },
+    supplier: {
+      businessName: "",
+      completeAddress: "",
+      contactNumber: "",
+    },
   };
-
-  const supplierStateFieldObject: SuplierFormInventoryProps = {
-    businessName,
-    completeAddress,
-    contactNumber,
-    setBusinessName,
-    setCompleteAddress,
-    setContactNumber,
-    setSupplierName,
-    supplierName,
-  };
-
-  const clearUserInput = () => {
-    setBusinessName("");
-    setBuyingRate("");
-    setCity("");
-    setCompleteAddress("");
-    setCondition("");
-    setContactNumber("");
-    setContainerType("");
-    setCountry("");
-    setDepot("");
-    setQuantity("");
-    setRegion("");
-    setSellingRate("");
-    setState("");
-    setValidUntil("");
-    setSupplierName("");
-  };
-
-  const [containerTypeError, setContainerTypeError] = useState("");
 
   const mutation = useMutation({
     mutationKey: ["inventory", "add"],
     mutationFn: isInventoryAdded,
     onSuccess: () => {
-      clearUserInput();
+      setIsLoadingButton(false);
+    },
+    onError: () => {
+      setIsLoadingButton(false);
     },
   });
 
   const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    if (!containerType || containerType === null) {
-      setContainerTypeError("Container type is a required field");
-      return;
-    }
+    const formData = new FormData(event.currentTarget);
 
     setIsLoadingButton(true);
 
     const inventory: InventoryProps = {
-      businessName,
-      buyingRate,
-      city,
-      completeAddress,
-      condition,
-      contactNumber,
-      containerType,
-      country,
-      depot,
-      quantity,
-      region,
-      sellingRate,
-      state,
-      validUntil,
+      buyingRate: formData.get("buyingRate")?.toString()!,
+      city: formData.get("city")?.toString()!,
+      condition: formData.get("condition")?.toString()!,
+      containerType: formData.get("containerType")?.toString()!,
+      country: formData.get("country")?.toString()!,
+      depot: formData.get("depot")?.toString()!,
+      quantity: formData.get("quantity")?.toString()!,
+      region: formData.get("region")?.toString()!,
+      sellingRate: formData.get("sellingRate")?.toString()!,
+      state: formData.get("state")?.toString()!,
+      validUntil: formData.get("validUntil")?.toString()!,
     };
 
-    mutation.mutate(inventory);
+    const supplier: SupplierInventory = {
+      businessName: formData.get("businessName")?.toString()!,
+      completeAddress: formData.get("completeAddress")?.toString()!,
+      contactNumber: formData.get("contactNumber")?.toString()!,
+    };
 
-    console.log(`the inventory data ::: ${JSON.stringify(inventory, null, 2)}`);
+    const request: InventorySupplierType = {
+      containerInformation: inventory,
+      supplier,
+    };
+
+    mutation.mutate(request);
+
+    console.log(`the inventory data ::: ${JSON.stringify(request, null, 2)}`);
   };
 
   return (
@@ -143,15 +97,16 @@ const AddInventory = () => {
           <div className="flex flex-col w-full gap-y-4">
             <ContainerInformationForm
               isDisabled={false}
-              props={containerInformation}
-              containerTypeError={containerTypeError}
+              containerInfo={initialInventory.containerInformation}
               key="AddInventoryFormKey"
             />
           </div>
           <hr className="mt-7 mb-2" />
           <h3 className="text-sm font-bold my-3">Supplier</h3>
           <div className="flex flex-col w-full gap-y-4">
-            <SupplierFormInventory props={supplierStateFieldObject} />
+            <SupplierFormInventory
+              supplierInventory={initialInventory.supplier}
+            />
           </div>
           <div className="w-full flex flex-col md:flex-row-reverse items-center gap-3 mt-5">
             {isLoadingButton ? (

@@ -1,11 +1,11 @@
 import {
-  InventoryProps,
+  InventorySupplierAlter,
   InventorySupplierType,
   InventoryUniqueItems,
   PaginatedInventory,
 } from "@/constants/props";
 
-export const isInventoryAdded = async (inventory: InventoryProps) => {
+export const isInventoryAdded = async (inventory: InventorySupplierType) => {
   const response = await fetch(
     `${import.meta.env.VITE_BASE_URL}/inventory/add`,
     {
@@ -99,4 +99,22 @@ export async function getSpecificItem(id: string) {
 
   const data = await response.json();
   return data as InventorySupplierType;
+}
+
+export async function getSupplierInventory() {
+  const response = await fetch(
+    `${import.meta.env.VITE_BASE_URL}/api/inventory/data`,
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+
+  if (!response.ok) {
+    throw new Error("Cannot fetch all of the avaialble supplier");
+  }
+
+  const data = await response.json();
+  return data.suppliers as InventorySupplierAlter[];
 }

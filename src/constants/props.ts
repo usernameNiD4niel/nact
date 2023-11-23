@@ -229,9 +229,6 @@ export type InventoryProps = {
   country: string;
   depot: string;
   validUntil: string;
-  businessName: string;
-  completeAddress: string;
-  contactNumber: string;
   quantity: string;
   buyingRate: string;
   sellingRate: string;
@@ -486,4 +483,10 @@ export type SupplierInventory = {
 export type InventorySupplierType = {
   containerInformation: InventoryProps;
   supplier: SupplierInventory;
+};
+
+export type InventorySupplierAlter = {
+  businessName: string;
+  completeAddress: string;
+  companyPhoneNumber: string;
 };
