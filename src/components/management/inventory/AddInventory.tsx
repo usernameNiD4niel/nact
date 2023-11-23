@@ -16,25 +16,22 @@ import { useMutation } from "@tanstack/react-query";
 const AddInventory = () => {
   const [isLoadingButton, setIsLoadingButton] = useState(false);
 
-  const initialInventory: InventorySupplierType = {
-    containerInformation: {
-      buyingRate: "",
-      city: "",
-      condition: "",
-      containerType: "",
-      country: "",
-      depot: "",
-      quantity: "",
-      region: "",
-      sellingRate: "",
-      state: "",
-      validUntil: "",
-    },
-    supplier: {
-      businessName: "",
-      completeAddress: "",
-      contactNumber: "",
-    },
+  const [businessName, setBusinessName] = useState("");
+  const [completeAddress, setCompleteAddress] = useState("");
+  const [contactNumber, setContactNumber] = useState("");
+
+  const initialInventory: InventoryProps = {
+    buyingRate: "",
+    city: "",
+    condition: "",
+    containerType: "",
+    country: "",
+    depot: "",
+    quantity: "",
+    region: "",
+    sellingRate: "",
+    state: "",
+    validUntil: "",
   };
 
   const mutation = useMutation({
@@ -70,10 +67,12 @@ const AddInventory = () => {
     };
 
     const supplier: SupplierInventory = {
-      businessName: formData.get("businessName")?.toString()!,
-      completeAddress: formData.get("completeAddress")?.toString()!,
-      contactNumber: formData.get("contactNumber")?.toString()!,
+      businessName,
+      completeAddress,
+      contactNumber,
     };
+
+    console.log(`the supplier ::: ${JSON.stringify(supplier, null, 2)}`);
 
     const request: InventorySupplierType = {
       containerInformation: inventory,
@@ -97,7 +96,7 @@ const AddInventory = () => {
           <div className="flex flex-col w-full gap-y-4">
             <ContainerInformationForm
               isDisabled={false}
-              containerInfo={initialInventory.containerInformation}
+              containerInfo={initialInventory}
               key="AddInventoryFormKey"
             />
           </div>
@@ -105,7 +104,12 @@ const AddInventory = () => {
           <h3 className="text-sm font-bold my-3">Supplier</h3>
           <div className="flex flex-col w-full gap-y-4">
             <SupplierFormInventory
-              supplierInventory={initialInventory.supplier}
+              businessName={businessName}
+              setBusinessName={setBusinessName}
+              completeAddress={completeAddress}
+              setCompleteAddress={setCompleteAddress}
+              contactNumber={contactNumber}
+              setContactNumber={setContactNumber}
             />
           </div>
           <div className="w-full flex flex-col md:flex-row-reverse items-center gap-3 mt-5">
@@ -136,35 +140,5 @@ const AddInventory = () => {
     </div>
   );
 };
-
-// const ShowAlert = ({ error }: { error: string }) => {
-// 	const mainParent =
-// 		"absolute overflow-hidden inset-0 z-20 bg-gray-600 bg-opacity-50 flex items-center justify-center";
-// 	const card = "w-[320px] p-4 rounded-md";
-
-// 	return (
-// 		<>
-// 			{error ? (
-// 				<div className={mainParent}>
-// 					<p>
-// 						<MdOutlineError />
-// 					</p>
-// 					<div className={card}>
-// 						<span>{error}</span>
-// 					</div>
-// 				</div>
-// 			) : (
-// 				<div className={mainParent}>
-// 					<p>
-// 						<FaCircleCheck />
-// 					</p>
-// 					<div className={card}>
-// 						<span>New data successfully added to the inventory.</span>
-// 					</div>
-// 				</div>
-// 			)}
-// 		</>
-// 	);
-// };
 
 export default AddInventory;

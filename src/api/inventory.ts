@@ -6,20 +6,30 @@ import {
 } from "@/constants/props";
 
 export const isInventoryAdded = async (inventory: InventorySupplierType) => {
+  const request = {
+    containerInformation: inventory.containerInformation,
+    supplierInformation: inventory.supplier,
+  };
+
   const response = await fetch(
-    `${import.meta.env.VITE_BASE_URL}/inventory/add`,
+    `${import.meta.env.VITE_BASE_URL}/api/inventory/add`,
     {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(inventory),
+      body: JSON.stringify(request),
     }
   );
 
   if (response.ok) {
     return response.json();
   } else {
+    if (response.status === 500) {
+      throw new Error(
+        "Kapag nakita moto internal error, means ang error sa backend"
+      );
+    }
     return new Error("Please enter a valid input");
   }
 };
@@ -85,7 +95,7 @@ export async function getPaginatedData() {
 
 export async function getSpecificItem(id: string) {
   const response = await fetch(
-    `${import.meta.env.VITE_BASE_URL}/api/inventory/${id}`,
+    `${import.meta.env.VITE_BASE_URL}/api/inventory/retrieve/${id}`,
     {
       headers: {
         "Content-Type": "application/json",

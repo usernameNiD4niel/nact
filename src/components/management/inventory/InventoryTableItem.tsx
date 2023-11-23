@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { headerBackClass } from "@/constants/reusable-class";
 import { cn } from "@/lib/utils";
 import { useQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 const InventoryTableItem = () => {
@@ -16,6 +16,10 @@ const InventoryTableItem = () => {
   const [isDisabled, setIsDisabled] = useState(true);
   const arrayEndpoint = location.pathname.split("/");
   const id = arrayEndpoint[arrayEndpoint.length - 1];
+
+  const [businessName, setBusinessName] = useState("");
+  const [completeAddress, setCompleteAddress] = useState("");
+  const [contactNumber, setContactNumber] = useState("");
 
   const { data, isLoading, isError } = useQuery(["inventory-item", "form"], {
     queryFn: () => getSpecificItem(id),
@@ -35,8 +39,16 @@ const InventoryTableItem = () => {
 
     console.log(`here's the dataaa ::: ${JSON.stringify(formData, null, 2)}`);
 
-    // ! create a POST request here...
+    // ! create a PATCH request here...
   };
+
+  useEffect(() => {
+    if (data) {
+      setBusinessName(data.supplier.businessName);
+      setCompleteAddress(data.supplier.completeAddress);
+      setContactNumber(data.supplier.contactNumber);
+    }
+  }, [data]);
 
   const content = () => {
     if (isError) {
@@ -83,7 +95,12 @@ const InventoryTableItem = () => {
         <h3 className="text-sm font-bold mb-3">Supplier</h3>
         <div className="flex flex-col w-full gap-y-4">
           <SupplierFormInventory
-            supplierInventory={data.supplier}
+            businessName={businessName}
+            setBusinessName={setBusinessName}
+            completeAddress={completeAddress}
+            setCompleteAddress={setCompleteAddress}
+            contactNumber={contactNumber}
+            setContactNumber={setContactNumber}
             key={"InventoryTableItem"}
           />
         </div>
