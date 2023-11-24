@@ -25,6 +25,8 @@ export const isInventoryAdded = async (inventory: InventorySupplierType) => {
   if (response.ok) {
     return response.json();
   } else {
+    console.log(`the response status code ::: ${response.status}`);
+    
     if (response.status === 500) {
       throw new Error(
         "Kapag nakita moto internal error, means ang error sa backend"
