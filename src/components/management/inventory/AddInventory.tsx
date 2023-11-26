@@ -4,9 +4,9 @@ import HeaderWithBack from "@/components/reuseable/HeaderWithBack";
 import LoadingButton from "@/components/reuseable/LoadingButton";
 import SupplierFormInventory from "@/components/reuseable/SupplierFormInventory";
 import {
-  InventoryProps,
-  InventorySupplierType,
-  SupplierInventory,
+	InventoryProps,
+	InventorySupplierPostType,
+	SupplierInventoryPost,
 } from "@/constants/props";
 import { headerBackClass } from "@/constants/reusable-class";
 import { useState } from "react";
@@ -14,157 +14,140 @@ import AlertDialog from "./helper/alert-dialog";
 import { useMutation } from "@tanstack/react-query";
 
 const AddInventory = () => {
-  const [isLoadingButton, setIsLoadingButton] = useState(false);
+	const [isLoadingButton, setIsLoadingButton] = useState(false);
 
-  const initialInventory: InventorySupplierType = {
-    containerInformation: {
-      buyingRate: "",
-      city: "",
-      condition: "",
-      containerType: "",
-      country: "",
-      depot: "",
-      quantity: "",
-      region: "",
-      sellingRate: "",
-      state: "",
-      validUntil: "",
-    },
-    supplier: {
-      businessName: "",
-      completeAddress: "",
-      contactNumber: "",
-    },
-  };
+	const [businessName, setBusinessName] = useState("");
+	const [completeAddress, setCompleteAddress] = useState("");
+	const [contactNumber, setContactNumber] = useState("");
 
-  const mutation = useMutation({
-    mutationKey: ["inventory", "add"],
-    mutationFn: isInventoryAdded,
-    onSuccess: () => {
-      setIsLoadingButton(false);
-    },
-    onError: () => {
-      setIsLoadingButton(false);
-    },
-  });
+	const initialInventory: InventoryProps = {
+		buyingRate: "",
+		city: "",
+		condition: "",
+		containerType: "",
+		country: "",
+		depot: "",
+		quantity: "",
+		region: "",
+		sellingRate: "",
+		state: "",
+		validUntil: "",
+	};
 
-  const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+	const mutation = useMutation({
+		mutationKey: ["inventory", "add"],
+		mutationFn: isInventoryAdded,
+		onSuccess: () => {
+			setIsLoadingButton(false);
+		},
+		onError: () => {
+			setIsLoadingButton(false);
+		},
+	});
 
-    const formData = new FormData(event.currentTarget);
+	const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+		event.preventDefault();
 
-    setIsLoadingButton(true);
+		const formData = new FormData(event.currentTarget);
 
-    const inventory: InventoryProps = {
-      buyingRate: formData.get("buyingRate")?.toString()!,
-      city: formData.get("city")?.toString()!,
-      condition: formData.get("condition")?.toString()!,
-      containerType: formData.get("containerType")?.toString()!,
-      country: formData.get("country")?.toString()!,
-      depot: formData.get("depot")?.toString()!,
-      quantity: formData.get("quantity")?.toString()!,
-      region: formData.get("region")?.toString()!,
-      sellingRate: formData.get("sellingRate")?.toString()!,
-      state: formData.get("state")?.toString()!,
-      validUntil: formData.get("validUntil")?.toString()!,
-    };
+		setIsLoadingButton(true);
 
-    const supplier: SupplierInventory = {
-      businessName: formData.get("businessName")?.toString()!,
-      completeAddress: formData.get("completeAddress")?.toString()!,
-      contactNumber: formData.get("contactNumber")?.toString()!,
-    };
+		const inventory: InventoryProps = {
+			buyingRate: formData.get("buyingRate")!.toString(),
+			city: formData.get("city")!.toString(),
+			condition: formData.get("condition")!.toString(),
+			containerType: formData.get("containerType")!.toString(),
+			country: formData.get("country")!.toString(),
+			depot: formData.get("depot")!.toString(),
+			quantity: formData.get("quantity")!.toString(),
+			region: formData.get("region")!.toString(),
+			sellingRate: formData.get("sellingRate")!.toString(),
+			state: formData.get("state")!.toString(),
+			validUntil: formData.get("validUntil")!.toString(),
+		};
 
-    const request: InventorySupplierType = {
-      containerInformation: inventory,
-      supplier,
-    };
+		const supplier: SupplierInventoryPost = {
+			businessName,
+		};
 
-    mutation.mutate(request);
+		const request: InventorySupplierPostType = {
+			containerInformation: inventory,
+			supplier,
+		};
 
-    console.log(`the inventory data ::: ${JSON.stringify(request, null, 2)}`);
-  };
+		mutation.mutate(request);
+	};
 
-  return (
-    <div className={headerBackClass}>
-      <div className="flex items-center justify-center flex-col w-full mt-10">
-        <HeaderWithBack text="Add Inventory" />
-        <form
-          className="p-2 flex flex-col gap-y-2 w-full lg:w-[60%] py-10 bg-white px-6"
-          onSubmit={handleFormSubmit}
-        >
-          <h3 className="text-sm font-bold my-3">Container Information</h3>
-          <div className="flex flex-col w-full gap-y-4">
-            <ContainerInformationForm
-              isDisabled={false}
-              containerInfo={initialInventory.containerInformation}
-              key="AddInventoryFormKey"
-            />
-          </div>
-          <hr className="mt-7 mb-2" />
-          <h3 className="text-sm font-bold my-3">Supplier</h3>
-          <div className="flex flex-col w-full gap-y-4">
-            <SupplierFormInventory
-              supplierInventory={initialInventory.supplier}
-            />
-          </div>
-          <div className="w-full flex flex-col md:flex-row-reverse items-center gap-3 mt-5">
-            {isLoadingButton ? (
-              <LoadingButton />
-            ) : (
-              <button
-                type="submit"
-                className="w-full text-center p-3 md:w-fit md:px-9 text-white rounded-md bg-[#017DC3]"
-              >
-                Submit
-              </button>
-            )}
-            <button
-              type="reset"
-              className="w-full text-center p-3 md:w-fit md:px-9 text-[#017DC3]"
-            >
-              Reset
-            </button>
-          </div>
-        </form>
-      </div>
-      {mutation.isError ? (
-        <AlertDialog error={mutation.error as unknown as string} />
-      ) : (
-        mutation.isSuccess && <AlertDialog error={""} />
-      )}
-    </div>
-  );
+	return (
+		<div className={headerBackClass}>
+			<div className="flex items-center justify-center flex-col w-full mt-10">
+				<HeaderWithBack text="Add Inventory" />
+				<form
+					className="p-2 flex flex-col gap-y-2 w-full lg:w-[60%] py-10 bg-white px-6"
+					onSubmit={handleFormSubmit}>
+					<h3 className="text-sm font-bold my-3">Container Information</h3>
+					<div className="flex flex-col w-full gap-y-4">
+						<ContainerInformationForm
+							isDisabled={false}
+							containerInfo={initialInventory}
+							key="AddInventoryFormKey"
+						/>
+					</div>
+					<hr className="mt-7 mb-2" />
+					<h3 className="text-sm font-bold my-3">Supplier</h3>
+					<div className="flex flex-col w-full gap-y-4">
+						<SupplierFormInventory
+							businessName={businessName}
+							setBusinessName={setBusinessName}
+							completeAddress={completeAddress}
+							setCompleteAddress={setCompleteAddress}
+							contactNumber={contactNumber}
+							setContactNumber={setContactNumber}
+							isDisabled={false}
+						/>
+					</div>
+					<div className="w-full flex flex-col md:flex-row-reverse items-center gap-3 mt-5">
+						{isLoadingButton ? (
+							<LoadingButton />
+						) : (
+							<button
+								type="submit"
+								className="w-full text-center p-3 md:w-fit md:px-9 text-white rounded-md bg-[#017DC3]">
+								Submit
+							</button>
+						)}
+						<button
+							type="reset"
+							className="w-full text-center p-3 md:w-fit md:px-9 text-[#017DC3]">
+							Reset
+						</button>
+					</div>
+				</form>
+			</div>
+			{mutation.isError ? (
+				// <AlertDialog error={mutation.error as unknown as string} />
+				<AlertDialog
+					description="Cannot create new record for inventory, please try again"
+					hasAnError={true}
+					href="inventory"
+					linkText="Go to inventory table"
+					title="Failed adding data"
+					key={"AddInventoryAlertDialogError"}
+				/>
+			) : (
+				mutation.isSuccess && (
+					<AlertDialog
+						description="New data successfully added to the inventory."
+						hasAnError={false}
+						href="inventory"
+						linkText="Go to inventory table"
+						title="Successfully created"
+						key={"AddInventoryAlertDialogSuccess"}
+					/>
+				)
+			)}
+		</div>
+	);
 };
-
-// const ShowAlert = ({ error }: { error: string }) => {
-// 	const mainParent =
-// 		"absolute overflow-hidden inset-0 z-20 bg-gray-600 bg-opacity-50 flex items-center justify-center";
-// 	const card = "w-[320px] p-4 rounded-md";
-
-// 	return (
-// 		<>
-// 			{error ? (
-// 				<div className={mainParent}>
-// 					<p>
-// 						<MdOutlineError />
-// 					</p>
-// 					<div className={card}>
-// 						<span>{error}</span>
-// 					</div>
-// 				</div>
-// 			) : (
-// 				<div className={mainParent}>
-// 					<p>
-// 						<FaCircleCheck />
-// 					</p>
-// 					<div className={card}>
-// 						<span>New data successfully added to the inventory.</span>
-// 					</div>
-// 				</div>
-// 			)}
-// 		</>
-// 	);
-// };
 
 export default AddInventory;

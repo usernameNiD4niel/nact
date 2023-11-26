@@ -3,29 +3,30 @@ import ComboBoxInput from "./ComboBoxInput";
 import { animatedInputClass } from "@/constants/reusable-class";
 import { Link } from "react-router-dom";
 import React, { FC, useEffect, useState } from "react";
-import { SupplierInventory } from "@/constants/props";
 import { useQuery } from "@tanstack/react-query";
 import { getSupplierInventory } from "@/api/inventory";
 
 interface SupplierFormInventoryProps {
-	supplierInventory: SupplierInventory;
+	businessName: string;
+	setBusinessName: React.Dispatch<React.SetStateAction<string>>;
+	completeAddress: string;
+	setCompleteAddress: React.Dispatch<React.SetStateAction<string>>;
+	contactNumber: string;
+	setContactNumber: React.Dispatch<React.SetStateAction<string>>;
+	isDisabled: boolean;
 }
 
 const SupplierFormInventory: FC<SupplierFormInventoryProps> = ({
-	supplierInventory,
+	businessName,
+	completeAddress,
+	contactNumber,
+
+	isDisabled,
+
+	setBusinessName,
+	setCompleteAddress,
+	setContactNumber,
 }) => {
-	const [businessName, setBusinessName] = useState(
-		supplierInventory.businessName,
-	);
-
-	const [completeAddress, setCompleteAddress] = useState(
-		supplierInventory.completeAddress,
-	);
-
-	const [contactNumber, setContactNumber] = useState(
-		supplierInventory.contactNumber,
-	);
-
 	const [selectedSupplier, setSelectedSupplier] = useState("");
 
 	const { data } = useQuery(["inventory-get-business-name"], {
@@ -48,18 +49,21 @@ const SupplierFormInventory: FC<SupplierFormInventoryProps> = ({
 			{data && (
 				<ComboBoxInput
 					supplierName={data}
+					isDisabled={isDisabled}
 					inputValue={selectedSupplier}
 					setInputValue={setSelectedSupplier}
 				/>
 			)}
-			<div className="flex w-full justify-end items-center">
-				<Link
-					to={"/supplier/add/shipping"}
-					className="text-[#017DC3] flex items-center text-lg gap-x-2"
-					type="button">
-					<IoIosAddCircle /> <span className="text-sm">ADD</span>
-				</Link>
-			</div>
+			{!isDisabled && (
+				<div className="flex w-full justify-end items-center">
+					<Link
+						to={"/supplier/add/shipping"}
+						className="text-[#017DC3] flex items-center text-lg gap-x-2"
+						type="button">
+						<IoIosAddCircle /> <span className="text-sm">ADD</span>
+					</Link>
+				</div>
+			)}
 			<label className="relative" htmlFor="businessName">
 				<input
 					type="text"
