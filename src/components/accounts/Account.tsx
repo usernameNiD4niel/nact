@@ -67,9 +67,9 @@ const Account = () => {
 
   return (
     <React.Fragment>
-      <section className="flex items-center justify-center py-16 px-4 md:p-8 space-y-4 w-full max-w-6xl">
+      <section className="flex items-center justify-center py-16 px-4 md:p-8 space-y-4 w-full">
         {/* w-[95%] lg:w-4/5 */}
-        <section className="w-full flex flex-col gap-y-5">
+        <section className="w-full flex flex-col gap-y-5 max-w-7xl">
           <div>
             <h2 className="font-bold text-lg">My Profile</h2>
             <p className="text-sm">Update your account information</p>
