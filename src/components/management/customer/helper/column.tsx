@@ -45,7 +45,7 @@ export const customer: Customer[] = [
 
 export const columns: ColumnDef<Customer>[] = [
   {
-    accessorKey: "custumer",
+    accessorKey: "customer",
     header: ({ column }) => {
       return (
         <Button
@@ -58,7 +58,7 @@ export const columns: ColumnDef<Customer>[] = [
       );
     },
     cell: ({ row }) => {
-      return <div className="ml-4 font-medium">{row.getValue("custumer")}</div>;
+      return <div className="ml-4 font-medium">{row.getValue("customer")}</div>;
     },
   },
   {
