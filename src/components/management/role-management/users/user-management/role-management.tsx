@@ -30,7 +30,6 @@ const RoleManagement: FC<RoleManagementProps> = ({
           disabled={isDisabled}
           checked={status === "active"}
           onCheckedChange={handleOnCheckChange}
-          className="bg-green-500 active:border-4 border-x-red-500"
         />
       </div>
       <div className="w-full">
