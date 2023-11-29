@@ -1,10 +1,16 @@
 import { Input } from "@/components/ui/input";
+import FilteringDialog from "../../supplier/helper/FilteringDialog";
+import { Customer } from "./column";
 
-interface SearchWithFilterProps {
+interface SearchWithFilterProps<CustomerType> {
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  data: CustomerType[];
 }
 
-export default function SearchWithFilter({ onChange }: SearchWithFilterProps) {
+export default function SearchWithFilter<CustomerType>({
+  onChange,
+  data,
+}: SearchWithFilterProps<CustomerType>) {
   return (
     <form className="w-full flex items-center rounded-md justify-center relative border-[1px] border-black border-opacity-20">
       <Input
@@ -14,7 +20,7 @@ export default function SearchWithFilter({ onChange }: SearchWithFilterProps) {
         onChange={onChange}
       />
       <button type="submit"></button>
-      {/* <FilteringDialog data={data} /> */}
+      <FilteringDialog data={data as Customer[]} />
     </form>
   );
 }

@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 
-type Customer = {
+export type Customer = {
   customer: string;
   location: number;
   abcde: "pending" | "processing" | "success" | "failed";
