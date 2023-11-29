@@ -58,7 +58,7 @@ const router = createBrowserRouter(
           </Route>
           <Route path=":route" element={<SupplierTableItem />} />
         </Route>
-        <Route path="costumer" element={<CustumerManagement />}>
+        <Route path="customer" element={<CustumerManagement />}>
           <Route index element={<CustomerList />} />
           <Route path="analytics" element={<CustomerAnalytics />} />
         </Route>

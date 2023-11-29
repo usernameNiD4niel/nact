@@ -8,188 +8,197 @@ import Cookies from "js-cookie";
 import SheetRight from "../reuseable/SheetRight";
 import { Toaster } from "../ui/toaster";
 const Main = () => {
-	const [selected] = useSelectedStore((state) => [state.selected]);
-	const navigate = useNavigate();
+  const [selected] = useSelectedStore((state) => [state.selected]);
+  const navigate = useNavigate();
 
-	useEffect(() => {
-		const token = Cookies.get("token");
-		if (!token) {
-			navigate("/login");
-		}
-	}, []);
+  useEffect(() => {
+    const token = Cookies.get("token");
+    if (!token) {
+      navigate("/login");
+    }
+  }, []);
 
-	return (
-		<React.Fragment>
-			<Toaster />
-			<header className="w-full flex px-4 py-2 bg-[#017DC3] md:hidden text-white fixed z-10 top-0">
-				<div className="flex items-center justify-center flex-1">
-					<Link to="/" className="font-bold">
-						{selected ? buttons[parseInt(selected?.toString())] : "NACT"}
-					</Link>
-				</div>
+  return (
+    <React.Fragment>
+      <Toaster />
+      <header className="w-full flex px-4 py-2 bg-[#017DC3] md:hidden text-white fixed z-10 top-0">
+        <div className="flex items-center justify-center flex-1">
+          <Link to="/" className="font-bold">
+            {selected ? buttons[parseInt(selected?.toString())] : "NACT"}
+          </Link>
+        </div>
 
-				<div className="md:hidden w-[50px] flex items-center justify-center h-full">
-					{/* <DrawerRight
+        <div className="md:hidden w-[50px] flex items-center justify-center h-full">
+          {/* <DrawerRight
             isDrawerOpen={isDrawerOpen}
             setIsDrawerOpen={setIsDrawerOpen}
             drawerId="my-drawer-4"
           /> */}
-					<SheetRight />
-				</div>
-			</header>
-			<main className="flex">
-				<aside className="w-[30%] lg:w-[20%] bg-[#017DC3] text-white box-border fixed h-full hidden pt-5 md:flex flex-col items-center">
-					<SideNavigation selected={selected} />
-				</aside>
-				<section className="md:w-[70%] md:ml-[30%] lg:w-[80%] lg:ml-[20%] md:box-border w-full ml-0">
-					<Outlet />
-				</section>
-			</main>
-		</React.Fragment>
-	);
+          <SheetRight />
+        </div>
+      </header>
+      <main className="flex">
+        <aside className="w-[30%] lg:w-[20%] bg-[#017DC3] text-white box-border fixed h-full hidden pt-5 md:flex flex-col items-center">
+          <SideNavigation selected={selected} />
+        </aside>
+        <section className="md:w-[70%] md:ml-[30%] lg:w-[80%] lg:ml-[20%] md:box-border w-full ml-0">
+          <Outlet />
+        </section>
+      </main>
+    </React.Fragment>
+  );
 };
 
 const SideNavigation = ({ selected }: { selected: ButtonList | null }) => {
-	const role = Cookies.get("role");
-	const buttonClass =
-		"flex gap-x-3 py-2 mb-2 mx-3 px-2 text-sm rounded-md items-center transition-opacity duration-300";
-	const hoverButtonClass =
-		"hover:text-blue-500 hover:font-semibold hover:bg-white";
-	return (
-		<React.Fragment>
-			<Link to="/" className="mx-5">
-				<img
-					className="rounded-full bg-white w-14 p-3"
-					src={logo}
-					id="home-id"
-					alt="NACT logo"
-				/>
-			</Link>
-			<ul className="mt-10 flex flex-col justify-between h-full w-full">
-				<div>
-					<li>
-						<Link
-							to="/"
-							className={`${buttonClass} ${
-								selected === ButtonList.Home
-									? "text-[#017DC3] font-semibold bg-slate-50"
-									: "text-white font-thin"
-							} ${hoverButtonClass}`}>
-							Home
-						</Link>
-					</li>
-					{role === "admin" && (
-						<>
-							<li>
-								<Link
-									to="/role-management"
-									className={`${buttonClass} ${
-										selected === ButtonList.RoleManagement
-											? "text-[#017DC3] font-semibold bg-slate-50"
-											: "text-white font-thin"
-									} ${hoverButtonClass}`}>
-									Role Management
-								</Link>
-							</li>
-						</>
-					)}
-					{role !== "unset" && (
-						<React.Fragment>
-							{(role === "costumer" || role === "admin") && (
-								<li>
-									<Link
-										to="/costumer"
-										className={`${buttonClass} ${
-											selected === ButtonList.Costumer
-												? "text-[#017DC3] font-semibold bg-slate-50"
-												: "text-white font-thin"
-										} ${hoverButtonClass}`}>
-										Customer
-									</Link>
-								</li>
-							)}
-							{(role === "supplier_chain" || role === "admin") && (
-								<li>
-									<Link
-										to="/supplier"
-										className={`${buttonClass} flex justify-between items-center group ${
-											selected === ButtonList.Supplier
-												? "text-[#017DC3] font-semibold bg-slate-50"
-												: "text-white font-thin"
-										} ${hoverButtonClass}`}>
-										Supplier Management
-									</Link>
-								</li>
-							)}
-							{(role === "sales_agent" || role === "admin") && (
-								<li>
-									<Link
-										to="/sales-agent"
-										className={`${buttonClass} ${
-											selected === ButtonList.SalesAgent
-												? "text-[#017DC3] font-semibold bg-slate-50"
-												: "text-white font-thin"
-										} ${hoverButtonClass}`}>
-										Sales Agent
-									</Link>
-								</li>
-							)}
-							{(role === "inventory" || role === "admin") && (
-								<>
-									<li>
-										<Link
-											to="/inventory-officer"
-											className={`${buttonClass} ${
-												selected === ButtonList.InventoryOfficer
-													? "text-[#017DC3] font-semibold bg-slate-50"
-													: "text-white font-thin"
-											} ${hoverButtonClass}`}>
-											Inventory Officer
-										</Link>
-									</li>
-									<li>
-										<Link
-											to="/inventory"
-											className={`${buttonClass} ${
-												selected === ButtonList.Inventory
-													? "text-[#017DC3] font-semibold bg-slate-50"
-													: "text-white font-thin"
-											} ${hoverButtonClass}`}>
-											Inventory
-										</Link>
-									</li>
-								</>
-							)}
-							{(role === "order_generator" || role === "admin") && (
-								<li>
-									<Link
-										to="/order-generator"
-										className={`${buttonClass} ${
-											selected === ButtonList.OrderGenerator
-												? "text-[#017DC3] font-semibold bg-slate-50"
-												: "text-white font-thin"
-										} ${hoverButtonClass}`}>
-										Order Generator
-									</Link>
-								</li>
-							)}
-						</React.Fragment>
-					)}
-				</div>
-				<li>
-					<Link
-						to="/account"
-						className={`${buttonClass} ${
-							selected === ButtonList.Account
-								? "text-[#017DC3] font-semibold bg-slate-50"
-								: "text-white font-thin"
-						} ${hoverButtonClass}`}>
-						Account
-					</Link>
-				</li>
-			</ul>
-		</React.Fragment>
-	);
+  const role = Cookies.get("role");
+  const buttonClass =
+    "flex gap-x-3 py-2 mb-2 mx-3 px-2 text-sm rounded-md items-center transition-opacity duration-300";
+  const hoverButtonClass =
+    "hover:text-blue-500 hover:font-semibold hover:bg-white";
+  return (
+    <React.Fragment>
+      <Link to="/" className="mx-5">
+        <img
+          className="rounded-full bg-white w-14 p-3"
+          src={logo}
+          id="home-id"
+          alt="NACT logo"
+        />
+      </Link>
+      <ul className="mt-10 flex flex-col justify-between h-full w-full">
+        <div>
+          <li>
+            <Link
+              to="/"
+              className={`${buttonClass} ${
+                selected === ButtonList.Home
+                  ? "text-[#017DC3] font-semibold bg-slate-50"
+                  : "text-white font-thin"
+              } ${hoverButtonClass}`}
+            >
+              Home
+            </Link>
+          </li>
+          {role === "admin" && (
+            <>
+              <li>
+                <Link
+                  to="/role-management"
+                  className={`${buttonClass} ${
+                    selected === ButtonList.RoleManagement
+                      ? "text-[#017DC3] font-semibold bg-slate-50"
+                      : "text-white font-thin"
+                  } ${hoverButtonClass}`}
+                >
+                  Role Management
+                </Link>
+              </li>
+            </>
+          )}
+          {role !== "unset" && (
+            <React.Fragment>
+              {(role === "custumer" || role === "admin") && (
+                <li>
+                  <Link
+                    to="/custumer"
+                    className={`${buttonClass} ${
+                      selected === ButtonList.Custumer
+                        ? "text-[#017DC3] font-semibold bg-slate-50"
+                        : "text-white font-thin"
+                    } ${hoverButtonClass}`}
+                  >
+                    Customer
+                  </Link>
+                </li>
+              )}
+              {(role === "supplier_chain" || role === "admin") && (
+                <li>
+                  <Link
+                    to="/supplier"
+                    className={`${buttonClass} flex justify-between items-center group ${
+                      selected === ButtonList.Supplier
+                        ? "text-[#017DC3] font-semibold bg-slate-50"
+                        : "text-white font-thin"
+                    } ${hoverButtonClass}`}
+                  >
+                    Supplier Management
+                  </Link>
+                </li>
+              )}
+              {(role === "sales_agent" || role === "admin") && (
+                <li>
+                  <Link
+                    to="/sales-agent"
+                    className={`${buttonClass} ${
+                      selected === ButtonList.SalesAgent
+                        ? "text-[#017DC3] font-semibold bg-slate-50"
+                        : "text-white font-thin"
+                    } ${hoverButtonClass}`}
+                  >
+                    Sales Agent
+                  </Link>
+                </li>
+              )}
+              {(role === "inventory" || role === "admin") && (
+                <>
+                  <li>
+                    <Link
+                      to="/inventory-officer"
+                      className={`${buttonClass} ${
+                        selected === ButtonList.InventoryOfficer
+                          ? "text-[#017DC3] font-semibold bg-slate-50"
+                          : "text-white font-thin"
+                      } ${hoverButtonClass}`}
+                    >
+                      Inventory Officer
+                    </Link>
+                  </li>
+                  <li>
+                    <Link
+                      to="/inventory"
+                      className={`${buttonClass} ${
+                        selected === ButtonList.Inventory
+                          ? "text-[#017DC3] font-semibold bg-slate-50"
+                          : "text-white font-thin"
+                      } ${hoverButtonClass}`}
+                    >
+                      Inventory
+                    </Link>
+                  </li>
+                </>
+              )}
+              {(role === "order_generator" || role === "admin") && (
+                <li>
+                  <Link
+                    to="/order-generator"
+                    className={`${buttonClass} ${
+                      selected === ButtonList.OrderGenerator
+                        ? "text-[#017DC3] font-semibold bg-slate-50"
+                        : "text-white font-thin"
+                    } ${hoverButtonClass}`}
+                  >
+                    Order Generator
+                  </Link>
+                </li>
+              )}
+            </React.Fragment>
+          )}
+        </div>
+        <li>
+          <Link
+            to="/account"
+            className={`${buttonClass} ${
+              selected === ButtonList.Account
+                ? "text-[#017DC3] font-semibold bg-slate-50"
+                : "text-white font-thin"
+            } ${hoverButtonClass}`}
+          >
+            Account
+          </Link>
+        </li>
+      </ul>
+    </React.Fragment>
+  );
 };
 
 export default Main;
