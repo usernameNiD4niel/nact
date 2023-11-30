@@ -39,6 +39,7 @@ const ComboBoxInput: React.FC<ComboBoxProps> = ({
 					variant="outline"
 					role="combobox"
 					disabled={isDisabled}
+					aria-required={"true"}
 					aria-expanded={open}
 					className="w-full justify-between py-6 disabled:bg-gray-200 disabled:border disabled:border-black disabled:border-opacity-50">
 					{inputValue
@@ -55,9 +56,9 @@ const ComboBoxInput: React.FC<ComboBoxProps> = ({
 					<CommandInput placeholder="Search supplier name..." />
 					<CommandEmpty>No supplier name found.</CommandEmpty>
 					<CommandGroup>
-						{supplierName.map((supplier) => (
+						{supplierName.map((supplier, index) => (
 							<CommandItem
-								key={supplier.businessName}
+								key={`${supplier.businessName}${index}`}
 								value={supplier.businessName}
 								onSelect={(currentValue: React.SetStateAction<string>) => {
 									setInputValue(

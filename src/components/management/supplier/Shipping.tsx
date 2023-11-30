@@ -234,7 +234,11 @@ const BusinessInformationForm: FC<ShippingProps> = ({
 							<DisplayErrorMessage errorMessage={`${businessNameError}`} />
 						)}
 					</label>
-					<ComboBox setInputValue={setCity} inputValue={city} />
+					<ComboBox
+						setInputValue={setCity}
+						inputValue={city}
+						key={"ShippingComboBox"}
+					/>
 					{cityError && <DisplayErrorMessage errorMessage={cityError} />}
 					<label className="relative" htmlFor="state">
 						<input

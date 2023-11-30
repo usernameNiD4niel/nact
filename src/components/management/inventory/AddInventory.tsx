@@ -13,12 +13,29 @@ import { useState } from "react";
 import AlertDialog from "./helper/alert-dialog";
 import { useMutation } from "@tanstack/react-query";
 
+import {
+	Dialog,
+	DialogClose,
+	DialogContent,
+	DialogDescription,
+	DialogHeader,
+	DialogTitle,
+} from "@/components/ui/dialog";
+import { MdOutlineError } from "react-icons/md";
+import { Link } from "react-router-dom";
+
 const AddInventory = () => {
 	const [isLoadingButton, setIsLoadingButton] = useState(false);
 
 	const [businessName, setBusinessName] = useState("");
 	const [completeAddress, setCompleteAddress] = useState("");
 	const [contactNumber, setContactNumber] = useState("");
+
+	const [state, setState] = useState("");
+	const [country, setCountry] = useState("");
+	const [validUntil, setValidUntil] = useState("");
+
+	const [validationError, setValidationError] = useState("");
 
 	const initialInventory: InventoryProps = {
 		buyingRate: "",
@@ -47,6 +64,14 @@ const AddInventory = () => {
 
 	const handleFormSubmit = (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
+		setValidUntil("");
+
+		if (!(businessName && contactNumber && completeAddress)) {
+			setValidationError("Supplier is a required field.");
+			return;
+		}
+
+		setValidUntil("");
 
 		const formData = new FormData(event.currentTarget);
 
@@ -57,13 +82,13 @@ const AddInventory = () => {
 			city: formData.get("city")!.toString(),
 			condition: formData.get("condition")!.toString(),
 			containerType: formData.get("containerType")!.toString(),
-			country: formData.get("country")!.toString(),
+			country,
 			depot: formData.get("depot")!.toString(),
 			quantity: formData.get("quantity")!.toString(),
 			region: formData.get("region")!.toString(),
 			sellingRate: formData.get("sellingRate")!.toString(),
-			state: formData.get("state")!.toString(),
-			validUntil: formData.get("validUntil")!.toString(),
+			state,
+			validUntil,
 		};
 
 		const supplier: SupplierInventoryPost = {
@@ -74,6 +99,8 @@ const AddInventory = () => {
 			containerInformation: inventory,
 			supplier,
 		};
+
+		console.log(`request ::: ${JSON.stringify(request)}`);
 
 		mutation.mutate(request);
 	};
@@ -90,6 +117,12 @@ const AddInventory = () => {
 						<ContainerInformationForm
 							isDisabled={false}
 							containerInfo={initialInventory}
+							country={country}
+							setCountry={setCountry}
+							setState={setState}
+							setValidUntil={setValidUntil}
+							state={state}
+							validUntil={validUntil}
 							key="AddInventoryFormKey"
 						/>
 					</div>
@@ -146,8 +179,52 @@ const AddInventory = () => {
 					/>
 				)
 			)}
+			{validationError && (
+				<HomeMadeError
+					setValidationError={setValidationError}
+					validationError={validationError}
+				/>
+			)}
 		</div>
 	);
 };
+
+interface HomeMadeErrorProps {
+	validationError: string;
+	setValidationError: React.Dispatch<React.SetStateAction<string>>;
+}
+
+function HomeMadeError({
+	validationError,
+	setValidationError,
+}: HomeMadeErrorProps) {
+	const handleOpen = (isOpen: boolean) => {
+		if (!isOpen) {
+			setValidationError("");
+		}
+	};
+	return (
+		<Dialog defaultOpen={true} onOpenChange={handleOpen}>
+			<DialogContent className={"text-red-500"}>
+				<DialogHeader className="flex items-center justify-center gap-3">
+					<div className="text-5xl">
+						<MdOutlineError />
+					</div>
+					<DialogTitle>Failed adding data</DialogTitle>
+					<DialogDescription className="max-w-sm text-center">
+						{validationError}
+					</DialogDescription>
+				</DialogHeader>
+				<DialogClose asChild>
+					<Link
+						to={`/inventory`}
+						className="bg-[#017DC3] hover:bg-[#017DC3]/90 text-center w-full py-2 text-white rounded-md">
+						Go to inventory table
+					</Link>
+				</DialogClose>
+			</DialogContent>
+		</Dialog>
+	);
+}
 
 export default AddInventory;

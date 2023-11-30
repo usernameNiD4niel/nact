@@ -23,6 +23,9 @@ const InventoryTableItem = () => {
 	const [businessName, setBusinessName] = useState("");
 	const [completeAddress, setCompleteAddress] = useState("");
 	const [contactNumber, setContactNumber] = useState("");
+	const [state, setState] = useState("");
+	const [country, setCountry] = useState("");
+	const [validUntil, setValidUntil] = useState("");
 
 	const [isLoadingButton, setIsLoadingButton] = useState(false);
 	const [updateResponse, setUpdateResponse] = useState({
@@ -50,11 +53,8 @@ const InventoryTableItem = () => {
 		const containerType = formData.get("containerType")?.toString() || "";
 		const condition = formData.get("condition")?.toString() || "";
 		const city = formData.get("city")?.toString() || "";
-		const state = formData.get("state")?.toString() || "";
 		const region = formData.get("region")?.toString() || "";
-		const country = formData.get("country")?.toString() || "";
 		const depot = formData.get("depot")?.toString() || "";
-		const validUntil = formData.get("validUntil")?.toString() || "";
 		const quantity = formData.get("quantity")?.toString() || "";
 		const buyingRate = formData.get("buyingRate")?.toString() || "";
 		const sellingRate = formData.get("sellingRate")?.toString() || "";
@@ -92,6 +92,10 @@ const InventoryTableItem = () => {
 			setBusinessName(data.supplier.businessName);
 			setCompleteAddress(data.supplier.completeAddress);
 			setContactNumber(data.supplier.contactNumber);
+
+			setState(data.containerInformation.state);
+			setCountry(data.containerInformation.country);
+			setValidUntil(data.containerInformation.validUntil);
 		}
 	}, [data]);
 
@@ -161,6 +165,12 @@ const InventoryTableItem = () => {
 					<ContainerInformationForm
 						containerInfo={data.containerInformation}
 						isDisabled={isDisabled}
+						country={country}
+						setCountry={setCountry}
+						setState={setState}
+						setValidUntil={setValidUntil}
+						state={state}
+						validUntil={validUntil}
 						key="InventoryTableItemFormKey"
 					/>
 				</div>

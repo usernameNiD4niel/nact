@@ -20,7 +20,7 @@ const DropdownContainerType: FC<DropdownContainerTypeProps> = ({
 }) => {
 	return (
 		<div className="space-y-1">
-			<Select name="containerType">
+			<Select name="containerType" required>
 				<SelectTrigger
 					className="w-full py-6 border-[1px] disabled:border-black disabled:border-opacity-50 disabled:bg-gray-100"
 					disabled={isDisabled}>

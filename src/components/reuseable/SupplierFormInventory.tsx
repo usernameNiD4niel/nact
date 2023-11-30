@@ -42,6 +42,7 @@ const SupplierFormInventory: FC<SupplierFormInventoryProps> = ({
 				setContactNumber(item.companyPhoneNumber);
 			}
 		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [selectedSupplier]);
 
 	return (
