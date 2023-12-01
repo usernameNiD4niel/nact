@@ -249,6 +249,14 @@ export type SupplierTableProps = {
   id: string;
 };
 
+export type CustomerTableProps = {
+  customer: string;
+  city: string;
+  companyPhoneNumber: string;
+  location: string;
+  id: string;
+};
+
 export type BusinessFilterProps = {
   businessNames: ExtractedBusinessFilter[];
 };
@@ -382,6 +390,12 @@ type UsersPhoneNumber = {
 
 export type UniqueItems = {
   businessName: string[];
+  location: string[];
+  contact: string[];
+};
+
+export type UniqueItemsCustomer = {
+  customer: string[];
   location: string[];
   contact: string[];
 };

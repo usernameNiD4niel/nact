@@ -51,7 +51,13 @@ export function DataTable<TData, TValue>({
   return (
     <div className="w-full">
       <div className="flex items-center py-4">
-        <SearchWithFilter onChange={handleOnChange} data={data} />
+        <SearchWithFilter
+          onChange={handleOnChange}
+          data={data}
+          setData={setData}
+          setIsFiltering={setIsFiltering}
+          value=""
+        />
       </div>
       <div className="rounded-md border">
         <Table>
