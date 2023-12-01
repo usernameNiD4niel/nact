@@ -107,7 +107,7 @@ const FilteringDropdown: FC<FilteringDropdownProps> = ({
         if (dropdown === "containerType") {
           const fetchedData = await getColumnSearch<ProductNameSearch>(
             search,
-            dropdown
+            "type"
           );
 
           searchColumnBind<ProductNameSearch>(fetchedData);
