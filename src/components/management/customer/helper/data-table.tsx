@@ -49,21 +49,24 @@ export function DataTable<TData, TValue>({
 		},
 	});
 
+	const getValue = () =>
+		(table.getColumn("businessName")?.getFilterValue() as string) ?? "";
+
 	const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) =>
 		table.getColumn("customer")?.setFilterValue(event.target.value);
 
 	return (
 		<div className="w-full">
-			<div className="flex items-center py-4">
+			<div className="my-4 w-full space-y-2">
 				<SearchWithFilter
 					onChange={handleOnChange}
 					data={data}
 					setData={setData}
 					setIsFiltering={setIsFiltering}
-					value=""
+					value={getValue()}
 				/>
 			</div>
-			<div className="rounded-md border">
+			<div className="rounded-md border w-full">
 				<Table>
 					<TableHeader>
 						{table.getHeaderGroups().map((headerGroup) => (
@@ -111,13 +114,13 @@ export function DataTable<TData, TValue>({
 						)}
 					</TableBody>
 				</Table>
-				<DataTablePagination
-					table={table}
-					next_page_url={next_page_url}
-					isFiltering={isFiltering}
-					setData={setData}
-				/>
 			</div>
+			<DataTablePagination
+				table={table}
+				next_page_url={next_page_url}
+				isFiltering={isFiltering}
+				setData={setData}
+			/>
 		</div>
 	);
 }
