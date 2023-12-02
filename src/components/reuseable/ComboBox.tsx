@@ -75,7 +75,7 @@ const ComboBox: React.FC<ComboBoxProps> = ({ inputValue, setInputValue }) => {
 					name="city"
 					id="city"
 					onChange={handleInputChange}
-					autoComplete="no"
+					autoComplete="false"
 				/>
 				<span
 					className={`${`text-[14px] text-black hover:cursor-text text-opacity-30 absolute left-0 top-[2px] mx-2 px-2 transition duration-200 bg-white input-text whitespace-nowrap`} ${

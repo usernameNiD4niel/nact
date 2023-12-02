@@ -7,7 +7,7 @@ export default function CustomerAdd() {
 	return (
 		<div className={`${headerBackClass}`}>
 			<HeaderWithBack text="Add Customer" />
-			<div className="py-4 mt-16 px-6 md:mt-12 lg:w-full">
+			<div className="py-2 md:py-4 mt-16 px-6 md:mt-12 lg:w-full">
 				<p className="text-sm py-2">Select customer type</p>
 				<hr />
 				<ul className="space-y-0 lg:flex lg:gap-x-4 flex-col">
