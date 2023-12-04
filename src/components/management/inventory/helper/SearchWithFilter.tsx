@@ -97,6 +97,8 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 			}
 		}
 
+		console.log(`the params ::: ${params}`);
+
 		if (params.endsWith("&")) {
 			params = params.substring(0, params.length - 1);
 		}

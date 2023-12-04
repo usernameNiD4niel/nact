@@ -18,7 +18,7 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { DataTablePagination } from "./data-table-pagination";
 import SearchWithFilter from "./search-with-filter";
 import useScreenSize from "@/hooks/useScreenSize";
@@ -68,15 +68,19 @@ export function DataTable<TData, TValue>({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [width]);
 
-	const getLocation = (customer: "location" | "abcde") => {
-		// @ts-expect-error - This is a mistake
-		const location = data.find((item) => item[customer] === customer);
-		// @ts-expect-error - This is a mistake
-		return location?.[`${customer}`];
-	};
+	const getMemoizedData = useCallback(
+		(customer: "location" | "abcde") => {
+			console.log(`the data ::: ${JSON.stringify(data, null, 2)}`);
+			// @ts-expect-error - This is a mistake
+			const location = data.find((item) => item[customer] === customer);
+			// @ts-expect-error - This is a mistake
+			return location?.[`${customer}`];
+		},
+		[data],
+	);
 
 	const getValue = () =>
-		(table.getColumn("businessName")?.getFilterValue() as string) ?? "";
+		(table.getColumn("customer")?.getFilterValue() as string) ?? "";
 
 	const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) =>
 		table.getColumn("customer")?.setFilterValue(event.target.value);
@@ -125,13 +129,13 @@ export function DataTable<TData, TValue>({
 												cell.column.columnDef.cell,
 												cell.getContext(),
 											)}
-											{cell.id.substring(2) !== "companyPhoneNumber" && (
+											{cell.id.substring(2) !== "contact" && (
 												<>
 													<span className={cn("md:hidden text-center ms-4")}>
-														{getLocation(row.getValue("businessName"))}{" "}
+														{getMemoizedData(row.getValue("customer"))}{" "}
 													</span>
 													<span className={cn("md:hidden text-center ms-4")}>
-														{getLocation(row.getValue("businessName"))}{" "}
+														{getMemoizedData(row.getValue("customer"))}{" "}
 													</span>
 												</>
 											)}
