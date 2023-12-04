@@ -18,9 +18,11 @@ import {
 	TableHeader,
 	TableRow,
 } from "@/components/ui/table";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DataTablePagination } from "./data-table-pagination";
 import SearchWithFilter from "./search-with-filter";
+import useScreenSize from "@/hooks/useScreenSize";
+import { cn } from "@/lib/utils";
 
 interface DataTableProps<TData, TValue> {
 	columns: ColumnDef<TData, TValue>[];
@@ -37,6 +39,8 @@ export function DataTable<TData, TValue>({
 	const [data, setData] = useState<TData[]>(data_);
 	const [isFiltering, setIsFiltering] = useState(false);
 
+	const width = useScreenSize();
+
 	const table = useReactTable({
 		data,
 		columns,
@@ -48,6 +52,28 @@ export function DataTable<TData, TValue>({
 			columnFilters,
 		},
 	});
+
+	useEffect(() => {
+		function handleWidthChange(width: number) {
+			if (width < 768) {
+				table.getColumn("location")?.toggleVisibility(false);
+				table.getColumn("abcde")?.toggleVisibility(false);
+			} else {
+				table.getColumn("location")?.toggleVisibility(true);
+				table.getColumn("abcde")?.toggleVisibility(true);
+			}
+		}
+		handleWidthChange(width);
+
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [width]);
+
+	const getLocation = (customer: "location" | "abcde") => {
+		// @ts-expect-error - This is a mistake
+		const location = data.find((item) => item[customer] === customer);
+		// @ts-expect-error - This is a mistake
+		return location?.[`${customer}`];
+	};
 
 	const getValue = () =>
 		(table.getColumn("businessName")?.getFilterValue() as string) ?? "";
@@ -98,6 +124,16 @@ export function DataTable<TData, TValue>({
 											{flexRender(
 												cell.column.columnDef.cell,
 												cell.getContext(),
+											)}
+											{cell.id.substring(2) !== "companyPhoneNumber" && (
+												<>
+													<span className={cn("md:hidden text-center ms-4")}>
+														{getLocation(row.getValue("businessName"))}{" "}
+													</span>
+													<span className={cn("md:hidden text-center ms-4")}>
+														{getLocation(row.getValue("businessName"))}{" "}
+													</span>
+												</>
 											)}
 										</TableCell>
 									))}

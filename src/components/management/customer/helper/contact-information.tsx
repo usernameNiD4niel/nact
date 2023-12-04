@@ -2,7 +2,7 @@ import CustomInput from "./custom-input";
 
 export default function ContactInformation() {
 	return (
-		<div>
+		<div className="flex flex-col w-full gap-y-4">
 			<CustomInput
 				isRequired={true}
 				label="Contact Person First Name"

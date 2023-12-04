@@ -2,7 +2,6 @@ import { FC, useEffect, useMemo, useState } from "react";
 import {
 	CheckboxShape,
 	InventoryData,
-	InventoryTypes,
 	InventoryUniqueItems,
 } from "@/constants/props";
 import { Input } from "@/components/ui/input";
@@ -37,9 +36,9 @@ const getInitialData = async (
 
 	if (response.ok) {
 		const data = await response.json();
-		const supplier: InventoryData[] = (await data).suppliers;
+		const inventory: InventoryData[] = (await data).products;
 
-		setData(supplier);
+		setData(inventory);
 		return;
 	}
 
@@ -84,7 +83,7 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 
 		for (let i = 0; i < check.length; i++) {
 			if (check[i].column === "containerType") {
-				params += "containerType=" + check[i].label + "&";
+				params += "container_type=" + check[i].label + "&";
 			} else if (check[i].column === "city") {
 				params += "city=" + check[i].label + "&";
 			} else if (check[i].column === "state") {
@@ -94,7 +93,7 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 			} else if (check[i].column === "depot") {
 				params += "depot=" + check[i].label + "&";
 			} else {
-				params += "buyingRate=" + check[i].label + "&";
+				params += "buying_rate=" + check[i].label + "&";
 			}
 		}
 
@@ -112,20 +111,19 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 		)
 			.then((data_) => data_.json())
 			.then((data_) => {
-				const tableData: InventoryTypes[] = data_.filtered;
+				const tableData: InventoryData[] = data_.filtered_inventory;
 
 				setIsFiltering(true);
 				if (!tableData || tableData.length === 0) {
-					// setData([]);
+					setData([]);
 					return;
 				}
-				// setData(tableData);
+				setData(tableData);
 			})
 			.catch((err) => {
-				// setData([]);
+				setData([]);
 
 				console.log("Error", err);
-				// table.getColumn("businessName")?.setFilterValue("");
 			});
 	};
 
