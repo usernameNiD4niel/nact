@@ -1,180 +1,200 @@
 import {
-  InventorySupplierAlter,
-  InventorySupplierPostType,
-  InventorySupplierType,
-  InventoryUniqueItems,
-  PaginatedInventory,
+	InventorySupplierAlter,
+	InventorySupplierPostType,
+	InventorySupplierType,
+	InventoryUniqueItems,
+	PaginatedInventory,
 } from "@/constants/props";
 
 export const isInventoryAdded = async (
-  inventory: InventorySupplierPostType
+	inventory: InventorySupplierPostType,
 ) => {
-  const request = {
-    containerInformation: inventory.containerInformation,
-    supplierInformation: inventory.supplier,
-  };
+	const request = {
+		containerInformation: inventory.containerInformation,
+		supplierInformation: inventory.supplier,
+	};
 
-  console.log(`${JSON.stringify(request, null, 2)}`);
+	console.log(`${JSON.stringify(request, null, 2)}`);
 
-  const response = await fetch(
-    `${import.meta.env.VITE_BASE_URL}/api/inventory/add`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(request),
-    }
-  );
+	const response = await fetch(
+		`${import.meta.env.VITE_BASE_URL}/api/inventory/add`,
+		{
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(request),
+		},
+	);
 
-  if (response.ok) {
-    return response.json();
-  } else {
-    console.log(`the response status code ::: ${response.status}`);
+	if (response.ok) {
+		return response.json();
+	} else {
+		console.log(`the response status code ::: ${response.status}`);
 
-    if (response.status === 500) {
-      throw new Error(
-        "Kapag nakita moto internal error, means ang error sa backend"
-      );
-    }
-    return new Error("Please enter a valid input");
-  }
+		if (response.status === 500) {
+			throw new Error(
+				"Kapag nakita moto internal error, means ang error sa backend",
+			);
+		}
+		return new Error("Please enter a valid input");
+	}
 };
 
 export const getUniqueItems = async () => {
-  const response = await fetch(
-    `${import.meta.env.VITE_BASE_URL}/api/inventory/unique`,
-    {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
+	const response = await fetch(
+		`${import.meta.env.VITE_BASE_URL}/api/inventory/unique`,
+		{
+			headers: {
+				"Content-Type": "application/json",
+			},
+		},
+	);
 
-  if (response.ok) {
-    const data: InventoryUniqueItems = await response.json();
-    return data;
-  }
-  throw new Error("Unable to retrieve unique items");
+	if (response.ok) {
+		const data: InventoryUniqueItems = await response.json();
+		return data;
+	}
+	throw new Error("Unable to retrieve unique items");
 };
 
 export async function getColumnSearch<T>(searchQuery: string, column: string) {
-  const response = await fetch(
-    `${import.meta.env.VITE_BASE_URL}/api/inventory/${column}/${searchQuery}`,
-    {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  )
-    .then((response) => response.json())
-    .then((d) => {
-      const data: T[] = d.products;
-      return data;
-    })
-    .catch((error) => {
-      console.log("the error: ", error);
-      return [] as T[];
-    });
+	const response = await fetch(
+		`${import.meta.env.VITE_BASE_URL}/api/inventory/${column}/${searchQuery}`,
+		{
+			headers: {
+				"Content-Type": "application/json",
+			},
+		},
+	)
+		.then((response) => response.json())
+		.then((d) => {
+			const data: T[] = d.products;
+			return data;
+		})
+		.catch((error) => {
+			console.log("the error: ", error);
+			return [] as T[];
+		});
 
-  return response;
+	return response;
+}
+
+//! use this in mmain search
+export async function getSearch(search: string) {
+	const response = await fetch(
+		`${import.meta.env.VITE_BASE_URL}/api/inventory/search?query=${search}`,
+		{
+			headers: {
+				"Content-Type": "application/json",
+			},
+		},
+	);
+
+	if (response.ok) {
+		const data = await response.json();
+		//add a type here
+		return data;
+	}
+
+	return [];
 }
 
 export async function getPaginatedData() {
-  const response = await fetch(
-    `${import.meta.env.VITE_BASE_URL}/api/inventory?page=1&per_page=10`,
-    {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
+	const response = await fetch(
+		`${import.meta.env.VITE_BASE_URL}/api/inventory?page=1&per_page=10`,
+		{
+			headers: {
+				"Content-Type": "application/json",
+			},
+		},
+	);
 
-  if (response.ok) {
-    const data = await response.json();
-    console.log(JSON.stringify(data, null, 2));
+	if (response.ok) {
+		const data = await response.json();
+		console.log(JSON.stringify(data, null, 2));
 
-    return data as PaginatedInventory;
-  }
+		return data as PaginatedInventory;
+	}
 
-  throw new Error("Cannot get the data...");
+	throw new Error("Cannot get the data...");
 }
 
 export async function updateInventory(
-  id: string,
-  data: InventorySupplierPostType
+	id: string,
+	data: InventorySupplierPostType,
 ) {
-  const response = await fetch(
-    `${import.meta.env.VITE_BASE_URL}/api/inventory/update/${id}`,
-    {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(data),
-    }
-  );
+	const response = await fetch(
+		`${import.meta.env.VITE_BASE_URL}/api/inventory/update/${id}`,
+		{
+			method: "PATCH",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(data),
+		},
+	);
 
-  if (response.ok) {
-    const { message } = await response.json();
+	if (response.ok) {
+		const { message } = await response.json();
 
-    return {
-      success: message,
-      message: "You have successfully updated the selected inventory",
-    } as {
-      success: boolean;
-      message: string;
-    };
-  }
-  console.log(response.status);
+		return {
+			success: message,
+			message: "You have successfully updated the selected inventory",
+		} as {
+			success: boolean;
+			message: string;
+		};
+	}
+	console.log(response.status);
 
-  if (response.status === 500) {
-    console.log("response:::", response);
+	if (response.status === 500) {
+		console.log("response:::", response);
 
-    return {
-      success: false,
-      message: "Cannot update the inventory data, the error is from server",
-    } as { success: boolean; message: string };
-  }
+		return {
+			success: false,
+			message: "Cannot update the inventory data, the error is from server",
+		} as { success: boolean; message: string };
+	}
 
-  return {
-    success: false,
-    message: "Cannot update the inventory data, please try again",
-  } as { success: boolean; message: string };
+	return {
+		success: false,
+		message: "Cannot update the inventory data, please try again",
+	} as { success: boolean; message: string };
 }
 
 export async function getSpecificItem(id: string) {
-  const response = await fetch(
-    `${import.meta.env.VITE_BASE_URL}/api/inventory/retrieve/${id}`,
-    {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
+	const response = await fetch(
+		`${import.meta.env.VITE_BASE_URL}/api/inventory/retrieve/${id}`,
+		{
+			headers: {
+				"Content-Type": "application/json",
+			},
+		},
+	);
 
-  if (!response.ok) {
-    throw new Error("Cannot fetch the specified inventory");
-  }
+	if (!response.ok) {
+		throw new Error("Cannot fetch the specified inventory");
+	}
 
-  const data = await response.json();
-  return data as InventorySupplierType;
+	const data = await response.json();
+	return data as InventorySupplierType;
 }
 
 export async function getSupplierInventory() {
-  const response = await fetch(
-    `${import.meta.env.VITE_BASE_URL}/api/inventory/data`,
-    {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
+	const response = await fetch(
+		`${import.meta.env.VITE_BASE_URL}/api/inventory/data`,
+		{
+			headers: {
+				"Content-Type": "application/json",
+			},
+		},
+	);
 
-  if (!response.ok) {
-    throw new Error("Cannot fetch all of the avaialble supplier");
-  }
+	if (!response.ok) {
+		throw new Error("Cannot fetch all of the avaialble supplier");
+	}
 
-  const data = await response.json();
-  return data.suppliers as InventorySupplierAlter[];
+	const data = await response.json();
+	return data.suppliers as InventorySupplierAlter[];
 }
