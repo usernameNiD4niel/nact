@@ -9,12 +9,12 @@ import Badge from "@/components/reuseable/Badge";
 import FilteringDropdown from "./FilteringDropdown";
 import FilteringDialog from "../../supplier/helper/FilteringDialog";
 import FilteringSheet from "./FilteringSheet";
-import { getUniqueItems } from "@/api/inventory";
+import { getSearch, getUniqueItems } from "@/api/inventory";
+import useDebounce from "@/hooks/useDebounce";
 
 type SearchWithFilterProps = {
 	placeHolder: string;
-	onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-	value: string;
+	duplicate: InventoryData[];
 	data: InventoryData[];
 	setData: React.Dispatch<React.SetStateAction<InventoryData[]>>;
 	setIsFiltering: React.Dispatch<React.SetStateAction<boolean>>;
@@ -23,8 +23,6 @@ type SearchWithFilterProps = {
 const getInitialData = async (
 	setData: React.Dispatch<React.SetStateAction<InventoryData[]>>,
 ) => {
-	console.log(`log from search with filter`);
-
 	const response = await fetch(
 		`${import.meta.env.VITE_BASE_URL}/api/inventory?page=1&per_page=10`,
 		{
@@ -47,9 +45,8 @@ const getInitialData = async (
 
 const SearchWithFilter: FC<SearchWithFilterProps> = ({
 	placeHolder,
-	onChange,
+	duplicate,
 	setData,
-	value,
 	data,
 	setIsFiltering,
 }) => {
@@ -62,6 +59,9 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 		buyingRate: [],
 		quantity: [],
 	});
+
+	const [search, setSearch] = useState("");
+	const searchDebounce = useDebounce(search, 200);
 
 	const getContainerType = useMemo(() => {
 		const checkboxArray: CheckboxShape[] = [];
@@ -151,6 +151,24 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 		fetchUniqueFilter();
 	}, []);
 
+	async function fetchSearch() {
+		const searchQuery: InventoryData[] = await getSearch(search);
+		setData(searchQuery);
+	}
+
+	useEffect(() => {
+		console.log(searchDebounce, duplicate);
+
+		if (searchDebounce) {
+			console.log("if");
+			fetchSearch();
+		} else {
+			console.log("else");
+			setData(duplicate);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [searchDebounce]);
+
 	const getColumnData = (column: string[], text: string) => {
 		const checkboxArray: CheckboxShape[] = [];
 		column.forEach((uniqueColumn, index) => {
@@ -164,26 +182,22 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 		return checkboxArray;
 	};
 
-	const handleOnSubmit = (event: React.FormEvent) => {
-		event.preventDefault();
-		// TODO: use this method => searchData(query)
-	};
+	function handleChangeInput(event: React.ChangeEvent<HTMLInputElement>) {
+		setSearch(event.target.value);
+	}
 
 	return (
 		<>
-			<form
-				className="w-full flex items-center rounded-md justify-center relative border-[1px] border-black border-opacity-20"
-				onSubmit={handleOnSubmit}>
+			<div className="w-full flex items-center rounded-md justify-center relative border-[1px] border-black border-opacity-20">
 				<Input
 					type="text"
 					placeholder={placeHolder}
 					className="py-6 rounded-md outline-none border-0 pr-16"
-					value={value}
-					onChange={onChange}
+					value={search}
+					onChange={handleChangeInput}
 				/>
-				<button type="submit"></button>
 				<FilteringDialog data={data} />
-			</form>
+			</div>
 			<div className="w-full gap-6 justify-end hidden md:flex z-0">
 				<FilteringDropdown
 					items={getContainerType}

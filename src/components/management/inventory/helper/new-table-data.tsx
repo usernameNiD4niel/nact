@@ -30,6 +30,7 @@ import { cn } from "@/lib/utils";
 interface DataTableProps<TValue> {
 	columns: ColumnDef<InventoryData, TValue>[];
 	data: InventoryData[];
+	clone: InventoryData[];
 	setData: React.Dispatch<React.SetStateAction<InventoryData[]>>;
 	next_page_url: number | null;
 }
@@ -39,6 +40,7 @@ export function NewDataTable<TValue>({
 	data,
 	next_page_url,
 	setData,
+	clone,
 }: DataTableProps<TValue>) {
 	const [sorting, setSorting] = useState<SortingState>([]);
 
@@ -72,12 +74,6 @@ export function NewDataTable<TValue>({
 		router(`/inventory/${foundObject?.id}`);
 	};
 
-	const getValue = () =>
-		(table.getColumn("containerType")?.getFilterValue() as string) ?? "";
-
-	const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) =>
-		table.getColumn("containerType")?.setFilterValue(event.target.value);
-
 	const getItem = (
 		containerType: string,
 		column: "state" | "city" | "quantity" | "depot",
@@ -98,8 +94,7 @@ export function NewDataTable<TValue>({
 			<div className="my-4 w-full space-y-2">
 				<SearchWithFilter
 					placeHolder="Search Product"
-					value={getValue()}
-					onChange={handleOnChange}
+					duplicate={clone}
 					data={data}
 					setData={setData}
 					setIsFiltering={setIsFiltering}

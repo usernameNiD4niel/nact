@@ -12,12 +12,15 @@ const Available = (): JSX.Element => {
 
 	const [data, setData] = useState<InventoryData[]>([]);
 
+	const [clone, setClone] = useState<InventoryData[]>([]);
+
 	const [nextPageUrl, setNextPageUrl] = useState<number | null>(null);
 
 	const fetchedData = async () => {
 		const data_ = await getPaginatedData();
 		setNextPageUrl(data_.next_page);
 		setData(data_.products);
+		setClone(data_.products);
 	};
 
 	useEffect(() => {
@@ -36,6 +39,7 @@ const Available = (): JSX.Element => {
 								columns={columns}
 								data={data}
 								next_page_url={nextPageUrl}
+								clone={clone}
 								setData={setData}
 							/>
 						</div>
@@ -43,6 +47,7 @@ const Available = (): JSX.Element => {
 							<NewDataTable
 								columns={mobileColumn}
 								data={data}
+								clone={clone}
 								next_page_url={nextPageUrl}
 								setData={setData}
 							/>

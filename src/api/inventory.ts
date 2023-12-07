@@ -94,7 +94,9 @@ export async function getSearch(search: string) {
 	if (response.ok) {
 		const data = await response.json();
 		//add a type here
-		return data;
+		console.log(`search ::: ${JSON.stringify(data, null, 2)}`);
+
+		return data.filtered;
 	}
 
 	return [];
