@@ -126,7 +126,7 @@ const ContainerInformationForm: FC<ContainerInformationFormProps> = ({
 			</label>
 			<CustomInput
 				isDisabled={isDisabled}
-				isRequired={true}
+				isRequired={false}
 				type="text"
 				inputType="region"
 				label="Region"

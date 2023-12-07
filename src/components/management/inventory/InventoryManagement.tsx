@@ -34,9 +34,9 @@ const InventoryManagement = () => {
 					key="TabsInventoryManagementkey"
 					arrayOfRoutes={[
 						"/inventory/",
-						"/inventory/full-list",
-						"/inventory/abcd",
-						"/inventory/new-feature",
+						// "/inventory/full-list",
+						// "/inventory/abcd",
+						// "/inventory/new-feature",
 					]}
 				/>
 			</div>
