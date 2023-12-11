@@ -24,9 +24,41 @@ const Available = (): JSX.Element => {
 	};
 
 	useEffect(() => {
-		fetchedData();
-		setActiveTab(0);
+		if (data && data.length > 0) {
+			localStorage.setItem("table_data", JSON.stringify(data));
+		}
+	}, [data]);
+
+	useEffect(() => {
+		const tableData = localStorage.getItem("table_data");
+
+		if (tableData) {
+			setData(JSON.parse(tableData));
+		} else {
+			fetchedData();
+			setActiveTab(0);
+		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+	useEffect(() => {
+		const handleBeforeUnload = () => {
+			localStorage.clear();
+			// Custom message to ask for confirmation
+			// const confirmationMessage = "Are you sure you want to leave?";
+
+			// Set the custom message for the confirmation prompt
+			// event.returnValue = confirmationMessage;
+			// return confirmationMessage;
+		};
+
+		window.addEventListener("beforeunload", handleBeforeUnload);
+
+		return () => {
+			// Remove the event listener when the component unmounts
+			window.removeEventListener("beforeunload", handleBeforeUnload);
+		};
 	}, []);
 
 	return (
