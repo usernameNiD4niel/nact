@@ -71,7 +71,9 @@ export function NewDataTable<TValue>({
 	const handleTableItem = (inventory: string) => {
 		const foundObject = data.find((item) => item.containerType === inventory);
 
-		router(`/inventory/${foundObject?.id}`);
+		console.log(`current data ${JSON.stringify(foundObject, null, 2)}`);
+
+		router(`/inventory/${foundObject?.containerType}`);
 	};
 
 	const getItem = (
