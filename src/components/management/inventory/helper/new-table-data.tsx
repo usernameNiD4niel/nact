@@ -73,7 +73,7 @@ export function NewDataTable<TValue>({
 
 		console.log(`current data ${JSON.stringify(foundObject, null, 2)}`);
 
-		router(`/inventory/${foundObject?.containerType}`);
+		router(`/inventory/${foundObject?.id}`);
 	};
 
 	const getItem = (
