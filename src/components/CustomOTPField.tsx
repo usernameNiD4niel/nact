@@ -58,6 +58,7 @@ const OTPField: FC<OTPFieldProps> = ({ otp, setOtp }): JSX.Element => {
 							type="password"
 							value={otp[index]}
 							placeholder={placeHolder[index]}
+							autoComplete="off"
 							required
 							className="w-12 h-12 border-[1px] rounded bg-transparent outline-none text-center text-2xl placeholder:text-[16px] spin-button-none border-black border-opacity-30 focus:border-[#017DC3] focus:text-[#017DC3] text-gray-600 transition"
 						/>
