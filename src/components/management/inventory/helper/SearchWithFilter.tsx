@@ -121,6 +121,7 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 					return;
 				}
 				setData(tableData);
+				localStorage.setItem("filterData", JSON.stringify(check));
 			})
 			.catch((err) => {
 				setData([]);
@@ -137,6 +138,7 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 
 		if (check.length === 0 && (!data || data.length > 0)) {
 			getInitialData(setData);
+			localStorage.removeItem("filterData");
 			setIsFiltering(false);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
@@ -145,6 +147,11 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 	const fetchUniqueFilter = async () => {
 		const actualDataFilter = await getUniqueItems();
 		seUniqueFilter(actualDataFilter);
+		const filterData = localStorage.getItem("filterData");
+
+		if (filterData) {
+			setCheck(JSON.parse(filterData));
+		}
 	};
 
 	useEffect(() => {

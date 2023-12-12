@@ -42,25 +42,6 @@ const Available = (): JSX.Element => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	useEffect(() => {
-		const handleBeforeUnload = () => {
-			localStorage.clear();
-			// Custom message to ask for confirmation
-			// const confirmationMessage = "Are you sure you want to leave?";
-
-			// Set the custom message for the confirmation prompt
-			// event.returnValue = confirmationMessage;
-			// return confirmationMessage;
-		};
-
-		window.addEventListener("beforeunload", handleBeforeUnload);
-
-		return () => {
-			// Remove the event listener when the component unmounts
-			window.removeEventListener("beforeunload", handleBeforeUnload);
-		};
-	}, []);
-
 	return (
 		<>
 			<div className="w-full flex items-center justify-center">
