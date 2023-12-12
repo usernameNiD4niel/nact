@@ -97,8 +97,6 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 			}
 		}
 
-		console.log(`the params ::: ${params}`);
-
 		if (params.endsWith("&")) {
 			params = params.substring(0, params.length - 1);
 		}
@@ -164,13 +162,9 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 	}
 
 	useEffect(() => {
-		console.log(searchDebounce, duplicate);
-
 		if (searchDebounce) {
-			console.log("if");
 			fetchSearch();
 		} else {
-			console.log("else");
 			setData(duplicate);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps

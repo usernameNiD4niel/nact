@@ -108,28 +108,9 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 				localStorage.setItem("filterSupplier", JSON.stringify(check));
 			})
 			.catch(() => {
-				// setData([]);
 				setData([]);
-
-				// table.getColumn("businessName")?.setFilterValue("");
 			});
 	};
-
-	/**
-   * useEffect(() => {
-		if (check && check.length > 0) {
-			requestFiltered();
-			return;
-		}
-
-		if (check.length === 0 && (!data || data.length > 0)) {
-			getInitialData(setData);
-			localStorage.removeItem("filterSupplier");
-			setIsFiltering(false);
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [check]);
-   */
 
 	useEffect(() => {
 		if (check && check.length > 0) {
