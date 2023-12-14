@@ -3,10 +3,21 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useInventoryState } from "@/utils/InventoryState";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import SubmitFormModal from "./submit-form-modal";
 
 const RoleAccess = () => {
+	const [alert, setAlert] = useState({
+		description: "",
+		isSuccess: false,
+		linkText: "Go to user table",
+		title: "",
+		to: "/role-management",
+	});
+
 	const [setActiveTab] = useInventoryState((state) => [state.setActiveTab]);
+
+	const [isModalOpen, setIsModalOpen] = useState(false);
 
 	useEffect(() => {
 		setActiveTab(1);
@@ -28,16 +39,52 @@ const RoleAccess = () => {
 		const inventoryOfficer = formData.get("inventory-officer");
 		const inventory = formData.get("inventory");
 
-		console.log(
-			role,
-			customer,
-			supplierManagement,
-			orderGenerator,
-			roleManagement,
-			salesAgent,
-			inventory,
-			inventoryOfficer,
-		);
+		const form = [];
+
+		if (role) {
+			form.push(role);
+		}
+
+		if (customer) {
+			form.push(customer);
+		}
+
+		if (roleManagement) {
+			form.push(roleManagement);
+		}
+
+		if (supplierManagement) {
+			form.push(supplierManagement);
+		}
+
+		if (orderGenerator) {
+			form.push(orderGenerator);
+		}
+
+		if (salesAgent) {
+			form.push(salesAgent);
+		}
+
+		if (inventoryOfficer) {
+			form.push(inventoryOfficer);
+		}
+
+		if (inventory) {
+			form.push(inventory);
+		}
+
+		if (form.length > 0) {
+			// Create an endpoint for this
+		} else {
+			setAlert({
+				...alert,
+				isSuccess: false,
+				description:
+					"Access module is required, please select at least 1 checkbox",
+				title: "Failed to create",
+			});
+		}
+		setIsModalOpen(true);
 	}
 
 	return (
@@ -88,6 +135,16 @@ const RoleAccess = () => {
 					<Button className="w-fit">Add Role</Button>
 				</div>
 			</form>
+			{isModalOpen && (
+				<SubmitFormModal
+					description={alert.description}
+					isSuccess={alert.isSuccess}
+					linkText={alert.linkText}
+					setIsModalOpen={setIsModalOpen}
+					title={alert.title}
+					to={alert.to}
+				/>
+			)}
 		</div>
 	);
 };

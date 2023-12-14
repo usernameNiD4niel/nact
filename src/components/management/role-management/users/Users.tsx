@@ -4,6 +4,9 @@ import { UserTable } from "./user-table";
 import { columns } from "./column";
 import { getAllUsers } from "@/api/account";
 import { useQuery } from "@tanstack/react-query";
+import AddButton from "@/components/reuseable/AddButton";
+
+// Fall for you - serenade
 
 const Users = () => {
 	const [setActiveTab] = useInventoryState((state) => [state.setActiveTab]);
@@ -28,11 +31,11 @@ const Users = () => {
 					)}
 				</div>
 			</div>
-			{/* <AddButton
-				redirectUrl="/supplier/add"
-				textButton="Supplier"
-				key={"SupplierAddTable"}
-			/> */}
+			<AddButton
+				redirectUrl="/role-management/role-access"
+				textButton="Add Role"
+				key={"RoleManagementAdd"}
+			/>
 		</div>
 	);
 };
