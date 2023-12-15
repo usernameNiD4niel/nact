@@ -288,7 +288,7 @@ export type BusinessInformation = {
   companyEmailWebsite: string;
 };
 
-type ContactInformation = {
+export type ContactInformation = {
   contactPersonFirstName: string;
   contactPersonLastName: string;
   contactPersonMI: string;

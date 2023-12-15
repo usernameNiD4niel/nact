@@ -1,14 +1,18 @@
 import { useState } from "react";
 import BusinessInformationForm from "./business-information-form";
 import { SupplierItem } from "@/constants/props";
+import LoadingButton from "@/components/reuseable/LoadingButton";
+import ContactInformationForm from "./contact-information-form";
 
 interface SupplierAddFormProps {
   id: string;
   formValues: SupplierItem;
+  isLoading: boolean;
 }
 
 export default function SupplierAddForm({
   formValues,
+  isLoading,
   id,
 }: SupplierAddFormProps) {
   const [isDisabled, setIsDisabled] = useState(true);
@@ -27,8 +31,8 @@ export default function SupplierAddForm({
           isDisabled={isDisabled}
           setIsDisabled={setIsDisabled}
         />
-        <DisplayContactInformation
-          contactInfo={contactInformation}
+        <ContactInformationForm
+          contactInformation={contactInformation}
           isDisabled={isDisabled}
         />
         {!isDisabled && (
@@ -44,9 +48,8 @@ export default function SupplierAddForm({
               </button>
             )}
             <button
-              type="button"
+              type="reset"
               className="w-full text-center p-3 md:w-fit md:px-9 text-[#017DC3]"
-              onClick={handleCleanInputs}
             >
               Reset
             </button>
