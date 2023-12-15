@@ -13,6 +13,9 @@ import { ShippingFormProps } from "@/constants/props";
 import FormDropdown from "@/components/reuseable/FormDropdown";
 import ComboBox from "@/components/reuseable/ComboBox";
 import { cities, states } from "@/constants/objects";
+import SupplierAddForm from "./helper/supplier-add-form";
+import { useQuery } from "@tanstack/react-query";
+import { Toaster } from "@/components/ui/toaster";
 
 type DisplayProps = {
   businessName: string;
@@ -97,7 +100,11 @@ export const SupplierTableItem = () => {
   const [validation, setValidation] = useState<string>("");
 
   const [isDisabled, setIsDisabled] = useState(true);
-  const [isLoading, setIsLoading] = useState(false);
+
+  const { data, isLoading } = useQuery({
+    queryKey: ["supplier", id],
+    queryFn: () => getSpecificSupplier(id),
+  });
 
   const getSupplier = async () => {
     const data = await getSpecificSupplier(id);
@@ -169,77 +176,84 @@ export const SupplierTableItem = () => {
     setEmail,
   };
 
-  const isUpdated = async () => {
-    const shipping: ShippingFormProps = {
-      businessInformation: {
-        businessName,
-        city,
-        companyEmailWebsite,
-        companyPhoneNumber,
-        country,
-        state,
-      },
-      contactInformation: [
-        {
-          contactNumber,
-          contactPersonFirstName,
-          contactPersonLastName,
-          contactPersonMI,
-          email,
-          jobTitle,
-        },
-      ],
-    };
+  //   const isUpdated = async () => {
+  //     const shipping: ShippingFormProps = {
+  //       businessInformation: {
+  //         businessName,
+  //         city,
+  //         companyEmailWebsite,
+  //         companyPhoneNumber,
+  //         country,
+  //         state,
+  //       },
+  //       contactInformation: [
+  //         {
+  //           contactNumber,
+  //           contactPersonFirstName,
+  //           contactPersonLastName,
+  //           contactPersonMI,
+  //           email,
+  //           jobTitle,
+  //         },
+  //       ],
+  //     };
 
-    await updateSpecificSupplier(
-      id,
-      shipping,
-      setValidation,
-      setMessage,
-      setTitle
-    );
-    setIsLoading(false);
-  };
+  //     await updateSpecificSupplier(
+  //       id,
+  //       shipping,
+  //       setValidation,
+  //       setMessage,
+  //       setTitle
+  //     );
+  //     setIsLoading(false);
+  //   };
 
-  const handleOnClick = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setIsLoading(true);
-    // Create an update request
-    isUpdated();
+  //   const handleOnClick = (e: React.FormEvent<HTMLFormElement>) => {
+  //     e.preventDefault();
+  //     setIsLoading(true);
+  //     // Create an update request
+  //     isUpdated();
 
-    // Show modal if success or failure
-  };
+  //     // Show modal if success or failure
+  //   };
 
-  const handleCleanInputs = () => {
-    setBusinessName("");
-    setCity("");
-    setState("");
-    setCountry("");
-    setCompanyPhoneNumber("");
-    setCompanyEmailWebsite("");
-    setContactPersonFirstName("");
-    setContactPersonLastName("");
-    setContactPersonMI("");
-    setJobTitle("");
-    setContactNumber("");
-    setEmail("");
-  };
+  //   const handleCleanInputs = () => {
+  //     setBusinessName("");
+  //     setCity("");
+  //     setState("");
+  //     setCountry("");
+  //     setCompanyPhoneNumber("");
+  //     setCompanyEmailWebsite("");
+  //     setContactPersonFirstName("");
+  //     setContactPersonLastName("");
+  //     setContactPersonMI("");
+  //     setJobTitle("");
+  //     setContactNumber("");
+  //     setEmail("");
+  //   };
 
-  const fields: FormProps = {
-    businessInformation,
-    contactInformation,
-    handleOnClick,
-    isDisabled,
-    isLoading,
-    setIsDisabled,
-    handleCleanInputs,
-    id,
-  };
+  //   const fields: FormProps = {
+  //     businessInformation,
+  //     contactInformation,
+  //     handleOnClick,
+  //     isDisabled,
+  //     isLoading,
+  //     setIsDisabled,
+  //     handleCleanInputs,
+  //     id,
+  //   };
 
   return (
     <div className={headerBackClass}>
       <HeaderWithBack text="Inventory Details" />
-      <DisplayForm
+      {isLoading ? (
+        <div className="h-[80vh] w-full flex items-center justify-center">
+          Loading please wait...
+        </div>
+      ) : (
+        data && <SupplierAddForm formValues={data} id={id} />
+      )}
+      {/* <DisplayForm
         businessInformation={fields.businessInformation}
         contactInformation={fields.contactInformation}
         setIsDisabled={setIsDisabled}
@@ -248,18 +262,8 @@ export const SupplierTableItem = () => {
         isLoading={isLoading}
         handleCleanInputs={handleCleanInputs}
         id={id}
-      />
-      {validation && (
-        <SuccessModal
-          message={message}
-          redirectText="Go back to Supplier Table"
-          redirectTo="/supplier"
-          setValidation={setValidation}
-          title={title}
-          validation={validation}
-          key="SupplierFormDaniel"
-        />
-      )}
+      /> */}
+      <Toaster />
     </div>
   );
 };

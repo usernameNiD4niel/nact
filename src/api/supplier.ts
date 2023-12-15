@@ -209,12 +209,12 @@ const getSpecificSupplier = async (id: string) => {
 
 const updateSpecificSupplier = async (
   id: string,
-  shipping: ShippingFormProps,
-  setValidation: React.Dispatch<React.SetStateAction<string>>,
-  setMessage: React.Dispatch<React.SetStateAction<string>>,
-  setTitle: React.Dispatch<React.SetStateAction<string>>
+  shipping: ShippingFormProps
+  // setValidation: React.Dispatch<React.SetStateAction<string>>,
+  // setMessage: React.Dispatch<React.SetStateAction<string>>,
+  // setTitle: React.Dispatch<React.SetStateAction<string>>
 ) => {
-  const response: Promise<ResponseAddShipping> = await fetch(
+  const response /*: Promise<ResponseAddShipping> */ = await fetch(
     `${import.meta.env.VITE_BASE_URL}/supplier/${id}`,
     {
       method: "PATCH",
@@ -227,17 +227,18 @@ const updateSpecificSupplier = async (
   )
     .then((data) => data.json())
     .then((data) => {
-      setMessage("Successfully updated the inventory details");
-      setValidation("success");
-      setTitle("Update Success");
+      // setMessage("Successfully updated the inventory details");
+      // setValidation("success");
+      // setTitle("Update Success");
       console.log(`Success: ${data}`);
-      return data;
+      return { success: true, message: "Update Success" };
     })
     .catch((error) => {
-      setTitle("Failed to update");
-      setValidation("error");
-      setMessage(`Error: ${error}`);
+      // setTitle("Failed to update");
+      // setValidation("error");
+      // setMessage(`Error: ${error}`);
       console.log(`error: ${error}`);
+      return { success: false, message: error };
     });
 
   return response;

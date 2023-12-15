@@ -10,6 +10,10 @@ interface BusinessInformationFormProps {
   id: string;
   businessInformation: BusinessInformation;
   setIsDisabled: React.Dispatch<React.SetStateAction<boolean>>;
+  setCountry: React.Dispatch<React.SetStateAction<string>>;
+  setState: React.Dispatch<React.SetStateAction<string>>;
+  state: string;
+  country: string;
 }
 
 export default function BusinessInformationForm({
@@ -17,6 +21,10 @@ export default function BusinessInformationForm({
   id,
   isDisabled,
   setIsDisabled,
+  setCountry,
+  setState,
+  country,
+  state,
 }: BusinessInformationFormProps) {
   const {
     businessName,
@@ -28,8 +36,6 @@ export default function BusinessInformationForm({
   } = businessInformation;
 
   const [city, setCity] = useState(city_);
-  const [state, setState] = useState(state_);
-  const [country, setCountry] = useState(country_);
 
   useEffect(() => {
     for (const state_ in cities) {
@@ -42,6 +48,11 @@ export default function BusinessInformationForm({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [city]);
+
+  useEffect(() => {
+    setCountry(country_);
+    setState(state_);
+  }, []);
 
   useEffect(() => {
     for (const country_ in states) {
@@ -75,6 +86,7 @@ export default function BusinessInformationForm({
             className={`${animatedInputClass} disabled:bg-gray-100`}
             name="businessName"
             disabled={isDisabled}
+            required={true}
             defaultValue={businessName}
           />
         </label>
@@ -91,6 +103,7 @@ export default function BusinessInformationForm({
             className={`${animatedInputClass} disabled:bg-gray-100`}
             value={state}
             name="state"
+            required={true}
             disabled
             onChange={(e) => setState(e.target.value)}
           />
@@ -101,6 +114,7 @@ export default function BusinessInformationForm({
             className={`${animatedInputClass} disabled:bg-gray-100`}
             value={country}
             name="country"
+            required={true}
             disabled
             onChange={(e) => setCountry(e.target.value)}
           />
@@ -111,6 +125,7 @@ export default function BusinessInformationForm({
             className={`${animatedInputClass} disabled:bg-gray-100`}
             name="companyPhoneNumber"
             defaultValue={companyPhoneNumber}
+            required={true}
             disabled={isDisabled}
           />
         </label>
@@ -120,6 +135,7 @@ export default function BusinessInformationForm({
             className={`${animatedInputClass} disabled:bg-gray-100`}
             name="companyEmailWebsite"
             defaultValue={companyEmailWebsite}
+            required={true}
             disabled={isDisabled}
           />
         </label>

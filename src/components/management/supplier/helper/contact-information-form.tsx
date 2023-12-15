@@ -26,6 +26,7 @@ export default function ContactInformationForm({
             className={`${animatedInputClass} disabled:bg-gray-100`}
             name="contactPersonFirstName"
             disabled={isDisabled}
+            required={true}
             defaultValue={contact.contactPersonFirstName}
           />
         </label>
@@ -36,6 +37,7 @@ export default function ContactInformationForm({
             name="contactPersonLastName"
             disabled={isDisabled}
             defaultValue={contact.contactPersonLastName}
+            required={true}
           />
         </label>
         <label className="relative">
@@ -45,6 +47,7 @@ export default function ContactInformationForm({
             name="contactPersonMI"
             disabled={isDisabled}
             defaultValue={contact.contactPersonMI}
+            required={true}
           />
         </label>
         <label className="relative">
@@ -54,6 +57,7 @@ export default function ContactInformationForm({
             name="jobTitle"
             disabled={isDisabled}
             defaultValue={contact.jobTitle}
+            required={true}
           />
         </label>
         <label className="relative">
@@ -63,6 +67,7 @@ export default function ContactInformationForm({
             name="contactNumber"
             disabled={isDisabled}
             defaultValue={contact.contactNumber}
+            required={true}
           />
         </label>
         <label className="relative">
@@ -72,6 +77,7 @@ export default function ContactInformationForm({
             name="email"
             disabled={isDisabled}
             defaultValue={contact.email}
+            required={true}
           />
         </label>
       </React.Fragment>
