@@ -1,4 +1,5 @@
 import Tabs from "@/components/reuseable/Tabs";
+import { Toaster } from "@/components/ui/toaster";
 import { ButtonList } from "@/constants/enums";
 import { useSelectedStore } from "@/utils/HomePageState";
 import { useInventoryState } from "@/utils/InventoryState";
@@ -38,6 +39,7 @@ const RoleManagement = () => {
 			</div>
 
 			<Outlet />
+			<Toaster />
 		</section>
 	);
 };

@@ -5,6 +5,9 @@ import { Label } from "@/components/ui/label";
 import { useInventoryState } from "@/utils/InventoryState";
 import { useEffect, useState } from "react";
 import SubmitFormModal from "./submit-form-modal";
+import { createNewRole } from "@/api/roles";
+import { useNavigate } from "react-router-dom";
+import { useToast } from "@/components/ui/use-toast";
 
 const RoleAccess = () => {
 	const [alert, setAlert] = useState({
@@ -18,6 +21,9 @@ const RoleAccess = () => {
 	const [setActiveTab] = useInventoryState((state) => [state.setActiveTab]);
 
 	const [isModalOpen, setIsModalOpen] = useState(false);
+
+	const router = useNavigate();
+	const { toast } = useToast();
 
 	useEffect(() => {
 		setActiveTab(1);
@@ -39,42 +45,50 @@ const RoleAccess = () => {
 		const inventoryOfficer = formData.get("inventory-officer");
 		const inventory = formData.get("inventory");
 
-		const form = [];
+		const form: string[] = [];
 
-		if (role) {
-			form.push(role);
+		if (!role) {
+			setAlert({
+				...alert,
+				isSuccess: false,
+				description: "Role is a required field, please fill field also.",
+				title: "Failed to create",
+			});
+			setIsModalOpen(true);
+			return;
 		}
 
 		if (customer) {
-			form.push(customer);
+			form.push(customer.toString());
 		}
 
 		if (roleManagement) {
-			form.push(roleManagement);
+			form.push(roleManagement.toString());
 		}
 
 		if (supplierManagement) {
-			form.push(supplierManagement);
+			form.push(supplierManagement.toString());
 		}
 
 		if (orderGenerator) {
-			form.push(orderGenerator);
+			form.push(orderGenerator.toString());
 		}
 
 		if (salesAgent) {
-			form.push(salesAgent);
+			form.push(salesAgent.toString());
 		}
 
 		if (inventoryOfficer) {
-			form.push(inventoryOfficer);
+			form.push(inventoryOfficer.toString());
 		}
 
 		if (inventory) {
-			form.push(inventory);
+			form.push(inventory.toString());
 		}
 
 		if (form.length > 0) {
 			// Create an endpoint for this
+			processRequest(role.toString(), form);
 		} else {
 			setAlert({
 				...alert,
@@ -83,8 +97,28 @@ const RoleAccess = () => {
 					"Access module is required, please select at least 1 checkbox",
 				title: "Failed to create",
 			});
+			setIsModalOpen(true);
 		}
-		setIsModalOpen(true);
+	}
+
+	async function processRequest(role: string, accessModule: string[]) {
+		const { success, message } = await createNewRole(role, accessModule);
+		if (success) {
+			toast({
+				title: "Successfully created",
+				description: message,
+				duration: 5000,
+			});
+			router("/role-management");
+		} else {
+			setAlert({
+				...alert,
+				isSuccess: false,
+				description: message,
+				title: "Failed to create",
+			});
+			setIsModalOpen(true);
+		}
 	}
 
 	return (
