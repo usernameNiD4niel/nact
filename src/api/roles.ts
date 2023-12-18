@@ -1,10 +1,12 @@
-export async function createNewRole(role: string, accessModule: string[]) {
-	const response = await fetch(`${process.env.VITE_BASE_URL}/api/users/role`, {
+import { AccessModule } from "@/constants/props";
+
+export async function createNewRole(postData: AccessModule) {
+	const response = await fetch(`${process.env.VITE_BASE_URL}/api/roles`, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
 		},
-		body: JSON.stringify({ role, accessModule }),
+		body: JSON.stringify(postData),
 	});
 
 	let message = "";

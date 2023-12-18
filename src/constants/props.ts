@@ -503,3 +503,14 @@ export type InventorySupplierAlter = {
 	completeAddress: string;
 	companyPhoneNumber: string;
 };
+
+export type AccessModule = {
+	role_type: string;
+	customer_module: boolean;
+	role_management: boolean;
+	supplier_management: boolean;
+	order_generator: boolean;
+	sales_agent: boolean;
+	inventory_officer: boolean;
+	inventory_module: boolean;
+};

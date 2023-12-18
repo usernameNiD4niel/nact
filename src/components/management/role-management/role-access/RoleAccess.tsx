@@ -8,6 +8,7 @@ import SubmitFormModal from "./submit-form-modal";
 import { createNewRole } from "@/api/roles";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
+import { AccessModule } from "@/constants/props";
 
 const RoleAccess = () => {
 	const [alert, setAlert] = useState({
@@ -45,8 +46,6 @@ const RoleAccess = () => {
 		const inventoryOfficer = formData.get("inventory-officer");
 		const inventory = formData.get("inventory");
 
-		const form: string[] = [];
-
 		if (!role) {
 			setAlert({
 				...alert,
@@ -58,37 +57,57 @@ const RoleAccess = () => {
 			return;
 		}
 
+		let isValid = false;
+
+		const postData: AccessModule = {
+			customer_module: false,
+			inventory_module: false,
+			inventory_officer: false,
+			order_generator: false,
+			role_management: false,
+			role_type: role.toString(),
+			sales_agent: false,
+			supplier_management: false,
+		};
+
 		if (customer) {
-			form.push(customer.toString());
+			postData.customer_module = true;
+			isValid = true;
 		}
 
 		if (roleManagement) {
-			form.push(roleManagement.toString());
+			postData.role_management = true;
+			isValid = true;
 		}
 
 		if (supplierManagement) {
-			form.push(supplierManagement.toString());
+			postData.supplier_management = true;
+			isValid = true;
 		}
 
 		if (orderGenerator) {
-			form.push(orderGenerator.toString());
+			postData.order_generator = true;
+			isValid = true;
 		}
 
 		if (salesAgent) {
-			form.push(salesAgent.toString());
+			postData.sales_agent = true;
+			isValid = true;
 		}
 
 		if (inventoryOfficer) {
-			form.push(inventoryOfficer.toString());
+			postData.inventory_officer = true;
+			isValid = true;
 		}
 
 		if (inventory) {
-			form.push(inventory.toString());
+			postData.inventory_module = true;
+			isValid = true;
 		}
 
-		if (form.length > 0) {
+		if (isValid) {
 			// Create an endpoint for this
-			processRequest(role.toString(), form);
+			processRequest(postData);
 		} else {
 			setAlert({
 				...alert,
@@ -101,8 +120,8 @@ const RoleAccess = () => {
 		}
 	}
 
-	async function processRequest(role: string, accessModule: string[]) {
-		const { success, message } = await createNewRole(role, accessModule);
+	async function processRequest(postData: AccessModule) {
+		const { success, message } = await createNewRole(postData);
 		if (success) {
 			toast({
 				title: "Successfully created",
