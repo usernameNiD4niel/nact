@@ -11,6 +11,7 @@ import { RoleManagementUser } from "@/constants/props";
 import SuccessModal from "@/components/reuseable/SuccessModal";
 import { useQuery } from "@tanstack/react-query";
 import { Badge } from "@/components/ui/badge";
+import { getSpecificAccessModule } from "@/api/roles";
 
 const UserManagement = () => {
 	const location = useLocation();
@@ -25,6 +26,8 @@ const UserManagement = () => {
 	const [mobileNumber, setMobileNumber] = useState("");
 	const [status, setStatus] = useState("");
 	const [userType, setUserType] = useState("");
+
+	const [modules, setModules] = useState<string[]>([]);
 
 	const [isDisabled, setIsDisabled] = useState(true);
 
@@ -81,6 +84,14 @@ const UserManagement = () => {
 		}
 	}, [data]);
 
+	useEffect(() => {
+		async function fetchAccessModule() {
+			const data_ = await getSpecificAccessModule(userType);
+			setModules(data_);
+		}
+		fetchAccessModule();
+	}, [userType]);
+
 	const variant = isDisabled ? "secondary" : "active";
 
 	return (
@@ -118,11 +129,13 @@ const UserManagement = () => {
 									userType={userType}
 									setUserType={setUserType}
 								/>
-								<div className="flex gap-2 flex-wrap mb-5">
-									<Badge variant={variant}>Inventory</Badge>
-									<Badge variant={variant}>Inventory Office</Badge>
-									<Badge variant={variant}>Supplier Management</Badge>
-								</div>
+								{modules.length > 0 && (
+									<div className="flex flex-wrap gap-2">
+										{modules.map((mod) => (
+											<Badge variant={variant}>{mod}</Badge>
+										))}
+									</div>
+								)}
 								{!isDisabled && (
 									<Button disabled={updating}>
 										{updating ? "Updating..." : "Update"}

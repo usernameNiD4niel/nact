@@ -29,3 +29,21 @@ export async function createNewRole(postData: AccessModule) {
 		message,
 	};
 }
+
+export async function getSpecificAccessModule(role: string) {
+	const response = await fetch(
+		`${import.meta.env.VITE_BASE_URL}/api/roles/${role}`,
+		{
+			headers: {
+				"Content-Type": "application/json",
+			},
+		},
+	);
+
+	if (response.ok) {
+		const data = await response.json();
+		return data.access_module as string[];
+	}
+
+	return [];
+}
