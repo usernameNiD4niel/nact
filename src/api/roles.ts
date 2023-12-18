@@ -1,7 +1,7 @@
 import { AccessModule } from "@/constants/props";
 
 export async function createNewRole(postData: AccessModule) {
-	const response = await fetch(`${process.env.VITE_BASE_URL}/api/roles`, {
+	const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/roles`, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json",
