@@ -45,19 +45,13 @@ const UserManagement = () => {
 	) => {
 		event.preventDefault();
 
-		let type = userType.toLowerCase().split(" ").join("_");
-
-		if (userType === "Billing and Collection") {
-			type = "billing_collection";
-		}
-
 		const data: RoleManagementUser = {
 			firstName,
 			lastName,
 			middleName,
 			mobileNumber,
 			status,
-			user_type: type,
+			user_type: userType,
 		};
 
 		setUpdating(true);
@@ -89,7 +83,10 @@ const UserManagement = () => {
 			const data_ = await getSpecificAccessModule(userType);
 			setModules(data_);
 		}
-		fetchAccessModule();
+
+		if (userType) {
+			fetchAccessModule();
+		}
 	}, [userType]);
 
 	const variant = isDisabled ? "secondary" : "active";

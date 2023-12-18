@@ -47,3 +47,21 @@ export async function getSpecificAccessModule(role: string) {
 
 	return [];
 }
+
+export async function getRoles() {
+	const response = await fetch(
+		`${import.meta.env.VITE_BASE_URL}/api/access_role`,
+		{
+			headers: {
+				"Content-Type": "application/json",
+			},
+		},
+	);
+
+	if (response.ok) {
+		const data = await response.json();
+		return data.roles as string[];
+	}
+
+	return [];
+}

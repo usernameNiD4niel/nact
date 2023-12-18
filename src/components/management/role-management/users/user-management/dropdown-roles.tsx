@@ -1,3 +1,4 @@
+import { getRoles } from "@/api/roles";
 import { Button } from "@/components/ui/button";
 import {
 	DropdownMenu,
@@ -5,7 +6,7 @@ import {
 	DropdownMenuItem,
 	DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { IoIosArrowDown } from "react-icons/io";
 
 interface DropdownRolesProps {
@@ -19,6 +20,16 @@ const DropdownRoles: FC<DropdownRolesProps> = ({
 	setUserType,
 	userType,
 }) => {
+	const [roles, setRoles] = useState<string[]>([]);
+
+	useEffect(() => {
+		async function fetchRoles() {
+			const roles_ = await getRoles();
+			setRoles(roles_);
+		}
+		fetchRoles();
+	}, []);
+
 	const handleRoleSelection = (role: string) => {
 		setUserType(role);
 	};
@@ -36,12 +47,15 @@ const DropdownRoles: FC<DropdownRolesProps> = ({
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent className="md:w-[250px]">
-				<DropdownMenuItem
-					className="p-2 cursor-pointer text-sm"
-					onClick={() => handleRoleSelection("Admin")}>
-					Admin
-				</DropdownMenuItem>
-				<DropdownMenuItem
+				{roles.map((role) => (
+					<DropdownMenuItem
+						className="p-2 cursor-pointer text-sm"
+						onClick={() => handleRoleSelection(role)}
+						key={role}>
+						{role}
+					</DropdownMenuItem>
+				))}
+				{/* <DropdownMenuItem
 					className="p-2 cursor-pointer text-sm"
 					onClick={() => handleRoleSelection("Supplier Chain")}>
 					Supplier Chain
@@ -55,7 +69,7 @@ const DropdownRoles: FC<DropdownRolesProps> = ({
 					className="p-2 cursor-pointer text-sm"
 					onClick={() => handleRoleSelection("Billing and Collection")}>
 					Billing and Collection
-				</DropdownMenuItem>
+				</DropdownMenuItem> */}
 			</DropdownMenuContent>
 		</DropdownMenu>
 	);
