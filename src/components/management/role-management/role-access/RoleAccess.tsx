@@ -6,8 +6,6 @@ import { useInventoryState } from "@/utils/InventoryState";
 import { useEffect, useState } from "react";
 import SubmitFormModal from "./submit-form-modal";
 import { createNewRole } from "@/api/roles";
-import { useNavigate } from "react-router-dom";
-import { useToast } from "@/components/ui/use-toast";
 import { AccessModule } from "@/constants/props";
 
 const RoleAccess = () => {
@@ -22,9 +20,6 @@ const RoleAccess = () => {
 	const [setActiveTab] = useInventoryState((state) => [state.setActiveTab]);
 
 	const [isModalOpen, setIsModalOpen] = useState(false);
-
-	const router = useNavigate();
-	const { toast } = useToast();
 
 	useEffect(() => {
 		setActiveTab(1);
@@ -123,13 +118,16 @@ const RoleAccess = () => {
 
 	async function processRequest(postData: AccessModule) {
 		const { success, message } = await createNewRole(postData);
+		console.log(`message ::: ${message}`);
+
 		if (success) {
-			toast({
-				title: "Successfully created",
+			setAlert({
+				...alert,
+				isSuccess: true,
 				description: message,
-				duration: 5000,
+				title: "Successfully created",
 			});
-			router("/role-management");
+			setIsModalOpen(true);
 		} else {
 			setAlert({
 				...alert,
