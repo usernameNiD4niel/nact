@@ -10,6 +10,7 @@ import { getSpecificUser, updateUser } from "@/api/account";
 import { RoleManagementUser } from "@/constants/props";
 import SuccessModal from "@/components/reuseable/SuccessModal";
 import { useQuery } from "@tanstack/react-query";
+import { Badge } from "@/components/ui/badge";
 
 const UserManagement = () => {
 	const location = useLocation();
@@ -80,6 +81,8 @@ const UserManagement = () => {
 		}
 	}, [data]);
 
+	const variant = isDisabled ? "secondary" : "active";
+
 	return (
 		<>
 			<section className={headerBackClass}>
@@ -115,6 +118,11 @@ const UserManagement = () => {
 									userType={userType}
 									setUserType={setUserType}
 								/>
+								<div className="flex gap-2 flex-wrap mb-5">
+									<Badge variant={variant}>Inventory</Badge>
+									<Badge variant={variant}>Inventory Office</Badge>
+									<Badge variant={variant}>Supplier Management</Badge>
+								</div>
 								{!isDisabled && (
 									<Button disabled={updating}>
 										{updating ? "Updating..." : "Update"}
