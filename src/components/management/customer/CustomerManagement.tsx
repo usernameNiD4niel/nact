@@ -35,7 +35,7 @@ const CustumerManagement = () => {
 				access_module={access_module}
 				selected={ButtonList.Customer}
 				setSelected={setSelected}
-				tabName="customer"
+				tabName="Customer"
 				key={"NavigationTabCustomerKey"}
 			/>
 			<div className="w-full md:w-[70%] lg:w-[80%] z-10 bg-[#1F2123] px-5 mb-0 pt-6 border-t-[#1F2123] border-t-2 fixed top-14 md:top-0">

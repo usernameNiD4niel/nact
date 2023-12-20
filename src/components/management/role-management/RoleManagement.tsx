@@ -31,7 +31,7 @@ const RoleManagement = () => {
 				access_module={access_module}
 				selected={ButtonList.RoleManagement}
 				setSelected={setSelected}
-				tabName="role_management"
+				tabName="Role Management"
 				key={"NavigationTabRoleManagementKey"}
 			/>
 			{/* w-full md:w-[70%] lg:w-[80%] z-[5] bg-[#1F2123] px-5 mb-0 pt-6 border-t-[#1F2123] border-t-2 fixed top-14 md:top-0 */}

@@ -29,7 +29,7 @@ const InventoryManagement = () => {
 			<NavigationTab
 				access_module={access_module}
 				selected={ButtonList.Inventory}
-				tabName="inventory"
+				tabName="Inventory"
 				setSelected={setSelected}
 				key={"NavigationTabInventoryManagementKey"}
 			/>

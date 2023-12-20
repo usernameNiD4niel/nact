@@ -25,7 +25,7 @@ const SalesAgentManagement = () => {
 				access_module={access_module}
 				selected={ButtonList.SalesAgent}
 				setSelected={setSelected}
-				tabName="sales_agent"
+				tabName="Sales Agent"
 				key={"NavigationTabSalesAgentManagementKey"}
 			/>{" "}
 			SalesAgentManagement

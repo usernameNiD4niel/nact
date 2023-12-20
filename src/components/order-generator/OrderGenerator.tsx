@@ -24,7 +24,7 @@ const OrderGenerator = () => {
 				access_module={access_module}
 				selected={ButtonList.OrderGenerator}
 				setSelected={setSelected}
-				tabName="order_generator"
+				tabName="Order Generator"
 				key={"NavigationTabOrderGeneratorKey"}
 			/>
 			<h1>Order Generator</h1>

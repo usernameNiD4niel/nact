@@ -25,7 +25,7 @@ const InventoryOfficerManagement = () => {
 				access_module={access_module}
 				selected={ButtonList.InventoryOfficer}
 				setSelected={setSelected}
-				tabName="inventory_officer"
+				tabName="Inventory Officer"
 				key={"NavigationTabInventoryOfficerManagementKey"}
 			/>{" "}
 			InventoryOfficerManagement
