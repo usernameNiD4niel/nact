@@ -1,13 +1,28 @@
-import React from "react";
-import { Link, Outlet } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useSelectedStore } from "@/utils/HomePageState";
 import { buttons } from "@/constants/arrays";
 import SheetRight from "../reuseable/SheetRight";
 import { Toaster } from "../ui/toaster";
 import SideNavigation from "./side-navigation";
+import Cookies from "js-cookie";
 const Main = () => {
 	const [selected] = useSelectedStore((state) => [state.selected]);
 
+	const router = useNavigate();
+	const access_module = Cookies.get("access_module");
+
+	useEffect(() => {
+		if (!access_module) {
+			Cookies.remove("token");
+			Cookies.remove("role");
+			Cookies.remove("user");
+			Cookies.remove("csrf_token");
+			Cookies.remove("access_module");
+			router("/login");
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 	return (
 		<React.Fragment>
 			<Toaster />
