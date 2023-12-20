@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, Outlet, useNavigate } from "react-router-dom";
 import logo from "@/assets/logo.svg";
 import { ButtonList } from "@/constants/enums";
@@ -7,6 +7,7 @@ import { buttons } from "@/constants/arrays";
 import Cookies from "js-cookie";
 import SheetRight from "../reuseable/SheetRight";
 import { Toaster } from "../ui/toaster";
+import DisplayLink from "./display-link";
 const Main = () => {
 	const [selected] = useSelectedStore((state) => [state.selected]);
 	const navigate = useNavigate();
@@ -50,11 +51,20 @@ const Main = () => {
 };
 
 const SideNavigation = ({ selected }: { selected: ButtonList | null }) => {
-	const role = Cookies.get("role");
+	const access_module = Cookies.get("access_module");
+
+	const [accessModule, setAccessModule] = useState<string[]>([]);
+
+	useEffect(() => {
+		const access_module_ = JSON.parse(access_module!) as string[];
+		setAccessModule(access_module_);
+	}, []);
+
 	const buttonClass =
 		"flex gap-x-3 py-2 mb-2 mx-3 px-2 text-sm rounded-md items-center transition-opacity duration-300";
 	const hoverButtonClass =
 		"hover:text-blue-500 hover:font-semibold hover:bg-white";
+
 	return (
 		<React.Fragment>
 			<Link to="/" className="mx-5">
@@ -78,103 +88,9 @@ const SideNavigation = ({ selected }: { selected: ButtonList | null }) => {
 							Home
 						</Link>
 					</li>
-					{role === "admin" && (
-						<>
-							<li>
-								<Link
-									to="/role-management"
-									className={`${buttonClass} ${
-										selected === ButtonList.RoleManagement
-											? "text-[#017DC3] font-semibold bg-slate-50"
-											: "text-white font-thin"
-									} ${hoverButtonClass}`}>
-									Role Management
-								</Link>
-							</li>
-						</>
-					)}
-					{role !== "unset" && (
-						<React.Fragment>
-							{(role === "customer" || role === "admin") && (
-								<li>
-									<Link
-										to="/customer"
-										className={`${buttonClass} ${
-											selected === ButtonList.Customer
-												? "text-[#017DC3] font-semibold bg-slate-50"
-												: "text-white font-thin"
-										} ${hoverButtonClass}`}>
-										Customer
-									</Link>
-								</li>
-							)}
-							{(role === "supplier_chain" || role === "admin") && (
-								<li>
-									<Link
-										to="/supplier"
-										className={`${buttonClass} flex justify-between items-center group ${
-											selected === ButtonList.Supplier
-												? "text-[#017DC3] font-semibold bg-slate-50"
-												: "text-white font-thin"
-										} ${hoverButtonClass}`}>
-										Supplier Management
-									</Link>
-								</li>
-							)}
-							{(role === "sales_agent" || role === "admin") && (
-								<li>
-									<Link
-										to="/sales-agent"
-										className={`${buttonClass} ${
-											selected === ButtonList.SalesAgent
-												? "text-[#017DC3] font-semibold bg-slate-50"
-												: "text-white font-thin"
-										} ${hoverButtonClass}`}>
-										Sales Agent
-									</Link>
-								</li>
-							)}
-							{(role === "inventory" || role === "admin") && (
-								<>
-									<li>
-										<Link
-											to="/inventory-officer"
-											className={`${buttonClass} ${
-												selected === ButtonList.InventoryOfficer
-													? "text-[#017DC3] font-semibold bg-slate-50"
-													: "text-white font-thin"
-											} ${hoverButtonClass}`}>
-											Inventory Officer
-										</Link>
-									</li>
-									<li>
-										<Link
-											to="/inventory"
-											className={`${buttonClass} ${
-												selected === ButtonList.Inventory
-													? "text-[#017DC3] font-semibold bg-slate-50"
-													: "text-white font-thin"
-											} ${hoverButtonClass}`}>
-											Inventory
-										</Link>
-									</li>
-								</>
-							)}
-							{(role === "order_generator" || role === "admin") && (
-								<li>
-									<Link
-										to="/order-generator"
-										className={`${buttonClass} ${
-											selected === ButtonList.OrderGenerator
-												? "text-[#017DC3] font-semibold bg-slate-50"
-												: "text-white font-thin"
-										} ${hoverButtonClass}`}>
-										Order Generator
-									</Link>
-								</li>
-							)}
-						</React.Fragment>
-					)}
+					{accessModule.map((access) => (
+						<DisplayLink access={access} selected={selected} key={access} />
+					))}
 				</div>
 				<li>
 					<Link

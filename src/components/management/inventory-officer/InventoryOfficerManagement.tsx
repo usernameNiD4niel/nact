@@ -1,28 +1,36 @@
+import NavigationTab from "@/components/reuseable/NavigationTab";
 import { ButtonList } from "@/constants/enums";
 import { useSelectedStore } from "@/utils/HomePageState";
 import Cookies from "js-cookie";
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-
 const InventoryOfficerManagement = () => {
-	const [selected, setSelected] = useSelectedStore((state) => [
-		state.selected,
-		state.setSelected,
-	]);
+	const [setSelected] = useSelectedStore((state) => [state.setSelected]);
 
-	const router = useNavigate();
-	const role = Cookies.get("role");
+	const access_module = Cookies.get("access_module");
 
-	useEffect(() => {
-		if (!(role === "admin" || role === "inventory")) {
-			router("/");
-		}
+	// const router = useNavigate();
+	// const role = Cookies.get("role");
 
-		if (selected !== ButtonList.InventoryOfficer) {
-			setSelected(ButtonList.InventoryOfficer);
-		}
-	}, []);
-	return <div>InventoryOfficerManagement</div>;
+	// useEffect(() => {
+	// 	if (!(role === "admin" || role === "inventory")) {
+	// 		router("/");
+	// 	}
+
+	// 	if (selected !== ButtonList.InventoryOfficer) {
+	// 		setSelected(ButtonList.InventoryOfficer);
+	// 	}
+	// }, []);
+	return (
+		<div>
+			<NavigationTab
+				access_module={access_module}
+				selected={ButtonList.InventoryOfficer}
+				setSelected={setSelected}
+				tabName="inventory_officer"
+				key={"NavigationTabInventoryOfficerManagementKey"}
+			/>{" "}
+			InventoryOfficerManagement
+		</div>
+	);
 };
 
 export default InventoryOfficerManagement;
