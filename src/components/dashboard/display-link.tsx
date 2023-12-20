@@ -14,7 +14,7 @@ export default function DisplayLink({ access, selected }: DisplayLinkProps) {
 
 	return (
 		<>
-			{access === "role_management" && (
+			{access === "Role Management" && (
 				<li>
 					<Link
 						to="/role-management"
@@ -27,7 +27,7 @@ export default function DisplayLink({ access, selected }: DisplayLinkProps) {
 					</Link>
 				</li>
 			)}
-			{access === "customer" && (
+			{access === "Customer" && (
 				<li>
 					<Link
 						to="/customer"
@@ -40,7 +40,7 @@ export default function DisplayLink({ access, selected }: DisplayLinkProps) {
 					</Link>
 				</li>
 			)}
-			{access === "supplier_management" && (
+			{access === "Supplier Management" && (
 				<li>
 					<Link
 						to="/supplier"
@@ -53,7 +53,7 @@ export default function DisplayLink({ access, selected }: DisplayLinkProps) {
 					</Link>
 				</li>
 			)}
-			{access === "sales_agent" && (
+			{access === "Sales Agent" && (
 				<li>
 					<Link
 						to="/sales-agent"
@@ -66,7 +66,7 @@ export default function DisplayLink({ access, selected }: DisplayLinkProps) {
 					</Link>
 				</li>
 			)}
-			{access === "inventory_officer" && (
+			{access === "Inventory Officer" && (
 				<li>
 					<Link
 						to="/inventory-officer"
@@ -79,7 +79,7 @@ export default function DisplayLink({ access, selected }: DisplayLinkProps) {
 					</Link>
 				</li>
 			)}
-			{access === "inventory" && (
+			{access === "Inventory" && (
 				<li>
 					<Link
 						to="/inventory"
@@ -92,7 +92,7 @@ export default function DisplayLink({ access, selected }: DisplayLinkProps) {
 					</Link>
 				</li>
 			)}
-			{access === "order_generator" && (
+			{access === "Order Generator" && (
 				<li>
 					<Link
 						to="/order-generator"
