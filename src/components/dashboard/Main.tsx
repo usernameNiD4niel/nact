@@ -34,7 +34,7 @@ const Main = () => {
 				</div>
 
 				<div className="md:hidden w-[50px] flex items-center justify-center h-full">
-					<SheetRight />
+					<SheetRight key={"DashboardMainSheetRight"} />
 				</div>
 			</header>
 			<main className="flex">

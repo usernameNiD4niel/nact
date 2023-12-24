@@ -36,22 +36,40 @@ export default function ModifyAccess() {
 
 	async function getAccessModule() {
 		const accessModule = await getSpecificAccessModule(selectedRole);
-		const clone = defaultAccess; // so that it won't update the default access multiple times
 
-		for (const modules of accessModule) {
-			if (modules === "Customer") {
+		const clone = {
+			customer: false,
+			roleManagement: false,
+			supplierManagement: false,
+			orderGenerator: false,
+			salesAgent: false,
+			inventoryOfficer: false,
+			inventory: false,
+		}; // so that it won't update the default access multiple times
+
+		for (let i = 0; i < accessModule.length; ++i) {
+			if (accessModule[i] === "Customer") {
 				clone.customer = true;
-			} else if (modules === "Role Management") {
+				console.log("Customer");
+			}
+			if (accessModule[i] === "Role Management") {
 				clone.roleManagement = true;
-			} else if (modules === "Supplier Management") {
+				console.log("Role Management");
+			}
+			if (accessModule[i] === "Supplier Management") {
 				clone.supplierManagement = true;
-			} else if (modules === "Order Generator") {
+				console.log("Supplier Management");
+			}
+			if (accessModule[i] === "Order Generator") {
 				clone.orderGenerator = true;
-			} else if (modules === "Sales Agent") {
+			}
+			if (accessModule[i] === "Sales Agent") {
 				clone.salesAgent = true;
-			} else if (modules === "Inventory Officer") {
+			}
+			if (accessModule[i] === "Inventory Officer") {
 				clone.inventoryOfficer = true;
-			} else {
+			}
+			if (accessModule[i] === "Inventory") {
 				clone.inventory = true;
 			}
 		}

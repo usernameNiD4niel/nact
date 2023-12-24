@@ -30,7 +30,7 @@ const HeaderWithBack: FC<HeaderWithBackProps> = ({ text }) => {
 					{text}
 				</Link> */}
 				<div className="w-[50px] h-[40px]">
-					<SheetRight />
+					<SheetRight key={"ReuseableHeaderWithBackSheetRight"} />
 				</div>
 			</div>
 		</React.Fragment>

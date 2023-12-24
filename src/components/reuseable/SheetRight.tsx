@@ -63,7 +63,7 @@ const SheetRight = () => {
 
 	return (
 		<div className="grid grid-cols-2 gap-2 h-full">
-			<Sheet key="right">
+			<Sheet>
 				<SheetTrigger asChild>
 					<Button
 						className="md:hidden text-white text-2xl w-fit"
