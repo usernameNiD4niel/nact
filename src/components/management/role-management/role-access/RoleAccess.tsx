@@ -195,6 +195,7 @@ const RoleAccess = () => {
 					setIsModalOpen={setIsModalOpen}
 					title={alert.title}
 					to={alert.to}
+					key={"RoleAccess"}
 				/>
 			)}
 		</div>

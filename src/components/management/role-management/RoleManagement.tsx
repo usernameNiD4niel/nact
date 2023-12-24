@@ -38,9 +38,13 @@ const RoleManagement = () => {
 			<div className="w-full md:w-[70%] lg:w-[80%] z-[5] bg-[#1F2123] px-5 mb-0 pt-6 border-t-[#1F2123] border-t-2 fixed top-14 md:top-0">
 				<Tabs
 					activeTabIndex={tab}
-					arrayOfText={["Users", "Role Access"]}
+					arrayOfText={["Users", "Role Access", "Modify Access"]}
 					key="TabsRoleManagementkey"
-					arrayOfRoutes={["/role-management", "/role-management/role-access"]}
+					arrayOfRoutes={[
+						"/role-management",
+						"/role-management/role-access",
+						"/role-management/modify-role",
+					]}
 				/>
 			</div>
 
