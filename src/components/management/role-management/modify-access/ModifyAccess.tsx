@@ -1,4 +1,3 @@
-import { SlOptionsVertical } from "react-icons/sl";
 import ScalableSelect from "@/components/reuseable/ScalableSelect";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
@@ -8,6 +7,7 @@ import { useEffect, useState } from "react";
 import SubmitFormModal from "../role-access/submit-form-modal";
 import { useQuery } from "@tanstack/react-query";
 import { getRoles, getSpecificAccessModule } from "@/api/roles";
+import VerticalOption from "./vertical-option";
 
 export default function ModifyAccess() {
 	const [alert, setAlert] = useState({
@@ -156,9 +156,11 @@ export default function ModifyAccess() {
 				<div className="w-full pb-4">
 					<Label className="space-y-2 w-full flex justify-between items-center">
 						<span>Roles</span>
-						<Button variant={"link"} className="text-xs p-0" type="button">
-							<SlOptionsVertical />
-						</Button>
+						{isLoading ? (
+							<div>...</div>
+						) : (
+							<VerticalOption roles={data ? data : []} />
+						)}
 					</Label>
 					<ScalableSelect
 						items={data ? data : []}
