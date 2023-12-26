@@ -150,9 +150,7 @@ export default function ModifyAccess() {
 
 	return (
 		<div className="md:px-10 px-5 w-full flex items-center justify-center">
-			<form
-				className="flex flex-col mt-36 md:my-24 w-full max-w-4xl"
-				onSubmit={handleFormSubmit}>
+			<div className="mt-36 md:my-24 w-full max-w-4xl">
 				<div className="w-full pb-4">
 					<Label className="space-y-2 w-full flex justify-between items-center">
 						<span>Roles</span>
@@ -171,57 +169,62 @@ export default function ModifyAccess() {
 						key={"ScalableSelectModifyAccess"}
 					/>
 				</div>
-				<Label className="mt-6 font-bold">Access Module</Label>
-				<div className="w-full grid grid-cols-2 ">
-					<div className="flex flex-col gap-3 py-3">
-						<Label className={labelClass}>
-							<Checkbox name="customer" checked={defaultAccess.customer} />
-							Customer
-						</Label>
-						<Label className={labelClass}>
-							<Checkbox
-								name="role-management"
-								checked={defaultAccess.roleManagement}
-							/>
-							Role Management
-						</Label>
-						<Label className={labelClass}>
-							<Checkbox
-								name="supplier-management"
-								checked={defaultAccess.supplierManagement}
-							/>
-							Supplier Management
-						</Label>
-						<Label className={labelClass}>
-							<Checkbox
-								name="order-generator"
-								checked={defaultAccess.orderGenerator}
-							/>
-							Order Generator
-						</Label>
+				<form className="flex flex-col" onSubmit={handleFormSubmit}>
+					<Label className="mt-6 font-bold">Access Module</Label>
+					<div className="w-full grid grid-cols-2 ">
+						<div className="flex flex-col gap-3 py-3">
+							<Label className={labelClass}>
+								<Checkbox name="customer" checked={defaultAccess.customer} />
+								Customer
+							</Label>
+							<Label className={labelClass}>
+								<Checkbox
+									name="role-management"
+									checked={defaultAccess.roleManagement}
+								/>
+								Role Management
+							</Label>
+							<Label className={labelClass}>
+								<Checkbox
+									name="supplier-management"
+									checked={defaultAccess.supplierManagement}
+								/>
+								Supplier Management
+							</Label>
+							<Label className={labelClass}>
+								<Checkbox
+									name="order-generator"
+									checked={defaultAccess.orderGenerator}
+								/>
+								Order Generator
+							</Label>
+						</div>
+						<div className="flex flex-col gap-3 py-3">
+							<Label className={labelClass}>
+								<Checkbox
+									name="sales-agent"
+									checked={defaultAccess.salesAgent}
+								/>
+								Sales Agent
+							</Label>
+							<Label className={labelClass}>
+								<Checkbox
+									name="inventory-officer"
+									checked={defaultAccess.inventoryOfficer}
+								/>
+								Inventory Officer
+							</Label>
+							<Label className={labelClass}>
+								<Checkbox name="inventory" checked={defaultAccess.inventory} />
+								Inventory
+							</Label>
+						</div>
 					</div>
-					<div className="flex flex-col gap-3 py-3">
-						<Label className={labelClass}>
-							<Checkbox name="sales-agent" checked={defaultAccess.salesAgent} />
-							Sales Agent
-						</Label>
-						<Label className={labelClass}>
-							<Checkbox
-								name="inventory-officer"
-								checked={defaultAccess.inventoryOfficer}
-							/>
-							Inventory Officer
-						</Label>
-						<Label className={labelClass}>
-							<Checkbox name="inventory" checked={defaultAccess.inventory} />
-							Inventory
-						</Label>
+					<div className="w-full flex justify-end">
+						<Button className="w-fit">Update Access</Button>
 					</div>
-				</div>
-				<div className="w-full flex justify-end">
-					<Button className="w-fit">Update Access</Button>
-				</div>
-			</form>
+				</form>
+			</div>
 			{isModalOpen && (
 				<SubmitFormModal
 					description={alert.description}

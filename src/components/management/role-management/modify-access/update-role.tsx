@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 interface UpdateRoleProps {
 	roles: string[];
@@ -29,6 +29,7 @@ export default function UpdateRole({
 	updateRoleOpen,
 }: UpdateRoleProps) {
 	const [selectedRole, setSelectedRole] = useState("");
+	const [newRole, setNewRole] = useState("");
 
 	function handleFormSubmit(e: React.FormEvent<HTMLFormElement>) {
 		e.preventDefault();
@@ -45,6 +46,12 @@ export default function UpdateRole({
 	function handleOnValueChange(value: string) {
 		setSelectedRole(value);
 	}
+
+	useEffect(() => {
+		if (selectedRole) {
+			setNewRole(selectedRole);
+		}
+	}, [selectedRole]);
 
 	return (
 		<Dialog onOpenChange={handleOnOpeChange} open={updateRoleOpen}>
@@ -77,7 +84,8 @@ export default function UpdateRole({
 						placeholder="Select role first"
 						name="new_role"
 						required
-						value={selectedRole}
+						value={newRole}
+						onChange={(e) => setNewRole(e.target.value)}
 					/>
 					<Button className="mt-4">Update New Role</Button>
 				</form>
