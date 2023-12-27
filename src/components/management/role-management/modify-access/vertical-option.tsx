@@ -11,6 +11,7 @@ import { useState } from "react";
 import HandleDelete from "./handle-delete";
 interface VerticalOptionProps {
 	roles: string[];
+	selectedRole: string;
 	/*refetch: <TPageData>(
     options?: (RefetchOptions & RefetchQueryFilters<TPageData>) | undefined
   ) => Promise<QueryObserverResult<string[], unknown>>;*/
@@ -18,6 +19,7 @@ interface VerticalOptionProps {
 
 export default function VerticalOption({
 	roles,
+	selectedRole,
 }: //refetch,
 VerticalOptionProps) {
 	const [updateRoleOpen, setUpdateRoleOpen] = useState(false);
@@ -52,10 +54,11 @@ VerticalOptionProps) {
 					//refetch={refetch}
 				/>
 			)}
-			{deleteRoleOpen && (
+			{deleteRoleOpen && selectedRole && (
 				<HandleDelete
 					setDeleteRoleOpen={setDeleteRoleOpen}
 					deleteRoleOpen={deleteRoleOpen}
+					selectedRole={selectedRole}
 				/>
 			)}
 		</>
