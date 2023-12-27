@@ -54,15 +54,12 @@ export default function ModifyAccess() {
 		for (let i = 0; i < accessModule.length; ++i) {
 			if (accessModule[i] === "Customer") {
 				clone.customer = true;
-				console.log("Customer");
 			}
 			if (accessModule[i] === "Role Management") {
 				clone.roleManagement = true;
-				console.log("Role Management");
 			}
 			if (accessModule[i] === "Supplier Management") {
 				clone.supplierManagement = true;
-				console.log("Supplier Management");
 			}
 			if (accessModule[i] === "Order Generator") {
 				clone.orderGenerator = true;
@@ -83,7 +80,6 @@ export default function ModifyAccess() {
 
 	useEffect(() => {
 		// get the access module
-		console.log(`selected role ::: ${selectedRole}`);
 
 		if (selectedRole && selectedRole.length > 0) {
 			getAccessModule();
@@ -120,24 +116,38 @@ export default function ModifyAccess() {
 
 		// Access Module
 		const customer = formData.get("customer")?.toString();
-		const roleManagement = formData.get("roleManagement")?.toString();
-		const supplierManagement = formData.get("supplierManagement")?.toString();
-		const orderGenerator = formData.get("orderGenerator")?.toString();
-		const salesAgent = formData.get("salesAgent")?.toString();
-		const inventoryOfficer = formData.get("inventoryOfficer")?.toString();
+		const roleManagement = formData.get("role-management")?.toString();
+		const supplierManagement = formData.get("supplier-management")?.toString();
+		const orderGenerator = formData.get("order-generator")?.toString();
+		const salesAgent = formData.get("sales-agent")?.toString();
+		const inventoryOfficer = formData.get("inventory-officer")?.toString();
 		const inventory = formData.get("inventory")?.toString();
 
-		if (
-			!(
-				customer ||
-				roleManagement ||
-				supplierManagement ||
-				salesAgent ||
-				inventory ||
-				inventoryOfficer ||
-				orderGenerator
-			)
-		) {
+		const accessModules: string[] = [];
+
+		if (customer) {
+			accessModules.push("Customer");
+		}
+		if (roleManagement) {
+			accessModules.push("Role Management");
+		}
+		if (supplierManagement) {
+			accessModules.push("Supplier Management");
+		}
+		if (orderGenerator) {
+			accessModules.push("Order Generator");
+		}
+		if (salesAgent) {
+			accessModules.push("Sales Agent");
+		}
+		if (inventoryOfficer) {
+			accessModules.push("Inventory Officer");
+		}
+		if (inventory) {
+			accessModules.push("Inventory");
+		}
+
+		if (accessModules.length === 0) {
 			setIsModalOpen(true);
 			setAlert({
 				...alert,
@@ -146,30 +156,6 @@ export default function ModifyAccess() {
 				title: "Error modifying role",
 			});
 			return;
-		}
-
-		const accessModules: string[] = [];
-
-		if (customer) {
-			accessModules.push(customer);
-		}
-		if (roleManagement) {
-			accessModules.push(roleManagement);
-		}
-		if (supplierManagement) {
-			accessModules.push(supplierManagement);
-		}
-		if (orderGenerator) {
-			accessModules.push(orderGenerator);
-		}
-		if (salesAgent) {
-			accessModules.push(salesAgent);
-		}
-		if (inventoryOfficer) {
-			accessModules.push(inventoryOfficer);
-		}
-		if (inventory) {
-			accessModules.push(inventory);
 		}
 
 		// Update roles.
@@ -193,6 +179,7 @@ export default function ModifyAccess() {
 				title: "Error modifying role",
 			});
 		}
+		setIsModalOpen(true);
 	}
 
 	return (
@@ -226,28 +213,52 @@ export default function ModifyAccess() {
 							<Label className={labelClass}>
 								<Checkbox
 									name="customer"
-									defaultChecked={defaultAccess.customer}
+									checked={defaultAccess.customer}
+									onCheckedChange={(e) =>
+										setDefaultAccess({
+											...defaultAccess,
+											customer: e.valueOf() as boolean,
+										})
+									}
 								/>
 								Customer
 							</Label>
 							<Label className={labelClass}>
 								<Checkbox
 									name="role-management"
-									defaultChecked={defaultAccess.roleManagement}
+									checked={defaultAccess.roleManagement}
+									onCheckedChange={(e) =>
+										setDefaultAccess({
+											...defaultAccess,
+											roleManagement: e.valueOf() as boolean,
+										})
+									}
 								/>
 								Role Management
 							</Label>
 							<Label className={labelClass}>
 								<Checkbox
 									name="supplier-management"
-									defaultChecked={defaultAccess.supplierManagement}
+									checked={defaultAccess.supplierManagement}
+									onCheckedChange={(e) =>
+										setDefaultAccess({
+											...defaultAccess,
+											supplierManagement: e.valueOf() as boolean,
+										})
+									}
 								/>
 								Supplier Management
 							</Label>
 							<Label className={labelClass}>
 								<Checkbox
 									name="order-generator"
-									defaultChecked={defaultAccess.orderGenerator}
+									checked={defaultAccess.orderGenerator}
+									onCheckedChange={(e) =>
+										setDefaultAccess({
+											...defaultAccess,
+											orderGenerator: e.valueOf() as boolean,
+										})
+									}
 								/>
 								Order Generator
 							</Label>
@@ -256,21 +267,39 @@ export default function ModifyAccess() {
 							<Label className={labelClass}>
 								<Checkbox
 									name="sales-agent"
-									defaultChecked={defaultAccess.salesAgent}
+									checked={defaultAccess.salesAgent}
+									onCheckedChange={(e) =>
+										setDefaultAccess({
+											...defaultAccess,
+											salesAgent: e.valueOf() as boolean,
+										})
+									}
 								/>
 								Sales Agent
 							</Label>
 							<Label className={labelClass}>
 								<Checkbox
 									name="inventory-officer"
-									defaultChecked={defaultAccess.inventoryOfficer}
+									checked={defaultAccess.inventoryOfficer}
+									onCheckedChange={(e) =>
+										setDefaultAccess({
+											...defaultAccess,
+											inventoryOfficer: e.valueOf() as boolean,
+										})
+									}
 								/>
 								Inventory Officer
 							</Label>
 							<Label className={labelClass}>
 								<Checkbox
 									name="inventory"
-									defaultChecked={defaultAccess.inventory}
+									checked={defaultAccess.inventory}
+									onCheckedChange={(e) =>
+										setDefaultAccess({
+											...defaultAccess,
+											inventory: e.valueOf() as boolean,
+										})
+									}
 								/>
 								Inventory
 							</Label>

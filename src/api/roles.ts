@@ -42,6 +42,7 @@ export async function getSpecificAccessModule(role: string) {
 
 	if (response.ok) {
 		const data = await response.json();
+
 		return data.access_module as string[];
 	}
 
@@ -59,7 +60,7 @@ export async function updateAccessModule(
 			headers: {
 				"Content-Type": "application/json",
 			},
-			body: JSON.stringify(accessModules),
+			body: JSON.stringify({ access_module: accessModules }),
 		},
 	);
 
@@ -98,7 +99,7 @@ export default async function updateRole(
 	updateData: { role: string },
 ) {
 	const response = await fetch(
-		`${import.meta.env.VITE_BASE_URL}/api/roles/edit/${role}`,
+		`${import.meta.env.VITE_BASE_URL}/api/role/${role}`,
 		{
 			method: "PATCH",
 			headers: {
@@ -112,6 +113,14 @@ export default async function updateRole(
 		const data = await response.json();
 		return {
 			success: true,
+			message: data.message as string,
+		};
+	}
+
+	if (response.status === 404) {
+		const data = await response.json();
+		return {
+			success: false,
 			message: data.message as string,
 		};
 	}
