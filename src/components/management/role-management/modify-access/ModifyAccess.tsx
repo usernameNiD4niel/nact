@@ -224,27 +224,30 @@ export default function ModifyAccess() {
 					<div className="w-full grid grid-cols-2 ">
 						<div className="flex flex-col gap-3 py-3">
 							<Label className={labelClass}>
-								<Checkbox name="customer" checked={defaultAccess.customer} />
+								<Checkbox
+									name="customer"
+									defaultChecked={defaultAccess.customer}
+								/>
 								Customer
 							</Label>
 							<Label className={labelClass}>
 								<Checkbox
 									name="role-management"
-									checked={defaultAccess.roleManagement}
+									defaultChecked={defaultAccess.roleManagement}
 								/>
 								Role Management
 							</Label>
 							<Label className={labelClass}>
 								<Checkbox
 									name="supplier-management"
-									checked={defaultAccess.supplierManagement}
+									defaultChecked={defaultAccess.supplierManagement}
 								/>
 								Supplier Management
 							</Label>
 							<Label className={labelClass}>
 								<Checkbox
 									name="order-generator"
-									checked={defaultAccess.orderGenerator}
+									defaultChecked={defaultAccess.orderGenerator}
 								/>
 								Order Generator
 							</Label>
@@ -253,19 +256,22 @@ export default function ModifyAccess() {
 							<Label className={labelClass}>
 								<Checkbox
 									name="sales-agent"
-									checked={defaultAccess.salesAgent}
+									defaultChecked={defaultAccess.salesAgent}
 								/>
 								Sales Agent
 							</Label>
 							<Label className={labelClass}>
 								<Checkbox
 									name="inventory-officer"
-									checked={defaultAccess.inventoryOfficer}
+									defaultChecked={defaultAccess.inventoryOfficer}
 								/>
 								Inventory Officer
 							</Label>
 							<Label className={labelClass}>
-								<Checkbox name="inventory" checked={defaultAccess.inventory} />
+								<Checkbox
+									name="inventory"
+									defaultChecked={defaultAccess.inventory}
+								/>
 								Inventory
 							</Label>
 						</div>
