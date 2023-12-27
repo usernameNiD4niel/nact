@@ -96,10 +96,11 @@ export default function ModifyAccess() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const { data, isLoading } = useQuery({
+  const { data, isLoading /*, refetch*/ } = useQuery({
     queryKey: ["modify-access-role", "get-access-role"],
     queryFn: getRoles,
   });
+
   const labelClass = "flex gap-x-1 items-center";
 
   async function handleFormSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -203,7 +204,7 @@ export default function ModifyAccess() {
             {isLoading ? (
               <div>...</div>
             ) : (
-              <VerticalOption roles={data ? data : []} />
+              <VerticalOption roles={data ? data : []} /*refetch={refetch}*/ />
             )}
           </Label>
           <ScalableSelect

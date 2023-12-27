@@ -515,14 +515,3 @@ export type AccessModule = {
   inventory_officer: boolean;
   inventory_module: boolean;
 };
-
-export type UpdateRole = {
-  role_type: string;
-  role_management: boolean;
-  order_generator: boolean;
-  customer_module: boolean;
-  supplier_management: boolean;
-  sales_agent: boolean;
-  inventory_officer: boolean;
-  inventory_module: boolean;
-};

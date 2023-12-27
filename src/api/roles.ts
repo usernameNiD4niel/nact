@@ -1,4 +1,4 @@
-import { AccessModule, UpdateRole } from "@/constants/props";
+import { AccessModule } from "@/constants/props";
 
 export async function createNewRole(postData: AccessModule) {
   const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/roles`, {
@@ -93,9 +93,12 @@ export async function getRoles() {
   return [];
 }
 
-export default async function updateRole(id: string, updateData: UpdateRole) {
+export default async function updateRole(
+  role: string,
+  updateData: { role: string }
+) {
   const response = await fetch(
-    `${import.meta.env.VITE_BASE_URL}/api/roles/${id}`,
+    `${import.meta.env.VITE_BASE_URL}/api/roles/edit/${role}`,
     {
       method: "PATCH",
       headers: {
