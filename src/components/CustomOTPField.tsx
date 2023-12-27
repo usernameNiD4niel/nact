@@ -53,7 +53,7 @@ const OTPField: FC<OTPFieldProps> = ({ otp, setOtp }): JSX.Element => {
 							ref={index === activeOTPIndex ? inputRef : null}
 							onChange={handleOnChange}
 							key={index}
-							name="pin"
+							name={`pin${index + 1}`}
 							onKeyDown={(e) => handleOnKeyDown(e, index)}
 							type="password"
 							value={otp[index]}

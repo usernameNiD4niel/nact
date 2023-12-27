@@ -5,11 +5,9 @@ import Cookies from "js-cookie";
 export const POST = async ({
 	phoneNumber,
 	pin,
-	setIsLoading,
 }: {
 	phoneNumber: string;
 	pin: string;
-	setIsLoading: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
 	const data = {
 		mobileNumber: phoneNumber,
@@ -34,7 +32,6 @@ export const POST = async ({
 			if (data.success) {
 				const expirationDate = new Date();
 				expirationDate.setDate(expirationDate.getDate() + 7);
-				setIsLoading(false);
 
 				Cookies.set("access_module", JSON.stringify(data.access_module), {
 					expires: expirationDate,
@@ -48,13 +45,13 @@ export const POST = async ({
 				});
 				return data;
 			} else {
-				setIsLoading(false);
 				return data;
 			}
-		} else {
-			setIsLoading(false);
 		}
 	} catch (e: unknown) {
-		setIsLoading(false);
+		return {
+			success: false,
+			access_token_cookie: "",
+		};
 	}
 };

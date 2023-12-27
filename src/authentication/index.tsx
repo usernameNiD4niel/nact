@@ -62,12 +62,20 @@ const Index = () => {
 			} else {
 				setServerError("Incorrect phone number or pincode");
 			}
+			// if (data?.success) {
+			// } else {
+			// }
+		},
+		onError: (error) => {
+			console.log(error);
+
+			setServerError("Incorrect phone number or pincode");
 		},
 	});
 
 	const [otpError, setOtpError] = useState("");
 
-	const [isLoading, setIsLoading] = useState(false);
+	// const [isLoading, setIsLoading] = useState(false);
 
 	const {
 		register,
@@ -87,14 +95,16 @@ const Index = () => {
 		phoneNumber: string;
 		pin: string;
 	}) => {
-		setIsLoading(true);
-		mutation.mutate({ phoneNumber, pin, setIsLoading });
+		// setIsLoading(true);
+		mutation.mutate({ phoneNumber, pin });
 	};
 
 	const handleSubmitForm = async ({ phoneNumber }: LoginProps) => {
 		const extractedPin: string = pin.join("");
 
-		mutation.reset();
+		if (mutation.failureCount > 0) {
+			mutation.reset();
+		}
 
 		try {
 			if (parseInt(extractedPin) > 999) {
@@ -181,7 +191,7 @@ const Index = () => {
 						{serverError && (
 							<p className="text-red-500 text-sm font-bold">{serverError}</p>
 						)}
-						{isLoading ? (
+						{mutation.isLoading ? (
 							<button
 								type="button"
 								className="flex items-center justify-center gap-x-2">

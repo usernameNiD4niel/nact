@@ -95,13 +95,14 @@ const SheetRight = () => {
 									buttonList={ButtonList.Home}
 									to="/"
 								/>
-								{accessModule.map((access) => (
+								{accessModule.map((access, index) => (
 									<>
 										{access === "Role Management" && (
 											<SheetCloseComp
 												text="Role Management"
 												to="/role-management"
 												buttonList={ButtonList.RoleManagement}
+												key={`role-management-${index}-${selected}`}
 											/>
 										)}
 										{access === "Customer" && (
@@ -109,6 +110,7 @@ const SheetRight = () => {
 												text="Customer"
 												to="/customer"
 												buttonList={ButtonList.Customer}
+												key={`customer-${index}-${selected}`}
 											/>
 										)}
 										{access === "Supplier Management" && (
@@ -116,6 +118,7 @@ const SheetRight = () => {
 												text="Supplier Management"
 												to="/supplier"
 												buttonList={ButtonList.Supplier}
+												key={`supplier-${index}-${selected}`}
 											/>
 										)}
 										{access === "Sales Agent" && (
@@ -123,6 +126,7 @@ const SheetRight = () => {
 												text="Sales Agent"
 												to="/sales-agent"
 												buttonList={ButtonList.SalesAgent}
+												key={`sales-agent-${index}-${selected}`}
 											/>
 										)}
 										{access === "Inventory Officer" && (
@@ -130,6 +134,7 @@ const SheetRight = () => {
 												text="Inventory Officer"
 												to="/inventory-officer"
 												buttonList={ButtonList.InventoryOfficer}
+												key={`inventory-officer-${index}-${selected}`}
 											/>
 										)}
 										{access === "Inventory" && (
@@ -137,6 +142,7 @@ const SheetRight = () => {
 												text="Inventory"
 												to="/inventory"
 												buttonList={ButtonList.Inventory}
+												key={`inventory-${index}-${selected}`}
 											/>
 										)}
 										{access === "Order Generator" && (
@@ -144,6 +150,7 @@ const SheetRight = () => {
 												text="Order Generator"
 												to="/order-generator"
 												buttonList={ButtonList.OrderGenerator}
+												key={`order-generator-${index}-${selected}`}
 											/>
 										)}
 									</>
@@ -154,6 +161,7 @@ const SheetRight = () => {
 								text="Account"
 								to="/account"
 								buttonList={ButtonList.Account}
+								key={`account-${selected}`}
 							/>
 						</SheetDescription>
 					</SheetHeader>
