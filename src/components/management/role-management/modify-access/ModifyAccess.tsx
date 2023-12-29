@@ -185,8 +185,8 @@ export default function ModifyAccess() {
 	return (
 		<div className="md:px-10 px-5 w-full flex items-center justify-center">
 			<div className="mt-36 md:my-24 w-full max-w-4xl">
-				<div className="w-full pb-4">
-					<Label className="space-y-2 w-full flex justify-between items-center">
+				<div className="w-full pb-2">
+					<Label className="w-full flex justify-between items-center">
 						<span>Roles</span>
 						{isLoading ? (
 							<div>...</div>
