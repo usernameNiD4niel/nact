@@ -191,10 +191,7 @@ export default function ModifyAccess() {
 						{isLoading ? (
 							<div>...</div>
 						) : (
-							<VerticalOption
-								roles={data ? data : []}
-								/*refetch={refetch}*/ selectedRole={selectedRole}
-							/>
+							<VerticalOption roles={data ? data : []} />
 						)}
 					</Label>
 					<ScalableSelect

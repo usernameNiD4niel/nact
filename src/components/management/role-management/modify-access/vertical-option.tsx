@@ -8,20 +8,12 @@ import {
 import { SlOptionsVertical } from "react-icons/sl";
 import UpdateRole from "./update-role";
 import { useState } from "react";
-import HandleDelete from "./handle-delete";
+import DeleteRole from "./delete-role";
 interface VerticalOptionProps {
 	roles: string[];
-	selectedRole: string;
-	/*refetch: <TPageData>(
-    options?: (RefetchOptions & RefetchQueryFilters<TPageData>) | undefined
-  ) => Promise<QueryObserverResult<string[], unknown>>;*/
 }
 
-export default function VerticalOption({
-	roles,
-	selectedRole,
-}: //refetch,
-VerticalOptionProps) {
+export default function VerticalOption({ roles }: VerticalOptionProps) {
 	const [updateRoleOpen, setUpdateRoleOpen] = useState(false);
 	const [deleteRoleOpen, setDeleteRoleOpen] = useState(false);
 
@@ -54,11 +46,11 @@ VerticalOptionProps) {
 					//refetch={refetch}
 				/>
 			)}
-			{deleteRoleOpen && selectedRole && (
-				<HandleDelete
-					setDeleteRoleOpen={setDeleteRoleOpen}
+			{deleteRoleOpen && (
+				<DeleteRole
 					deleteRoleOpen={deleteRoleOpen}
-					selectedRole={selectedRole}
+					roles={roles}
+					setDeleteRoleOpen={setDeleteRoleOpen}
 				/>
 			)}
 		</>
