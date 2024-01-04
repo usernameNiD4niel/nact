@@ -40,6 +40,7 @@ import CustomerAdd from "./components/management/customer/helper/CustomerAdd";
 import CustomerShipping from "./components/management/customer/CustomerShipping";
 import CustomerTrucking from "./components/management/customer/CustomerTrucking";
 import ModifyAccess from "./components/management/role-management/modify-access/ModifyAccess";
+import AddRole from "./components/management/role-management/role-access/add/AddRole";
 
 const router = createBrowserRouter(
 	createRoutesFromElements(
@@ -48,7 +49,9 @@ const router = createBrowserRouter(
 				<Route index element={<Root />} />
 				<Route path="role-management" element={<RoleManagement />}>
 					<Route index element={<Users />} />
-					<Route path="role-access" element={<RoleAccess />} />
+					<Route path="role-access" element={<RoleAccess />}>
+						<Route path="add" element={<AddRole />} />
+					</Route>
 					<Route path="modify-role" element={<ModifyAccess />} />
 				</Route>
 				<Route path="user-management">

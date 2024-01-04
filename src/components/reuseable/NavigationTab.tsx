@@ -25,9 +25,6 @@ export default function NavigationTab({
 			router(-1);
 		}
 
-		console.log(`should navigate back? ${access}`);
-		console.log(`access modules ::: ${JSON.stringify(accessModule, null, 2)}`);
-
 		if (selected) {
 			setSelected(selected);
 		}
