@@ -29,6 +29,7 @@ const DeleteModal: FC<DeleteModalProps> = ({
 		const deleteData = await deleteSupplier(endpoint);
 
 		if (deleteData.success) {
+			localStorage.removeItem("table_data");
 			toast({
 				title: "Successfully deleted",
 				description: deleteData.message,
