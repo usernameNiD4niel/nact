@@ -23,20 +23,21 @@ import { DataTablePagination } from "./data-table-pagination";
 import SearchWithFilter from "./search-with-filter";
 import useScreenSize from "@/hooks/useScreenSize";
 import { cn } from "@/lib/utils";
+import { CustomerTable } from "@/constants/props";
 
-interface DataTableProps<TData, TValue> {
-	columns: ColumnDef<TData, TValue>[];
-	data_: TData[];
+interface DataTableProps<TValue> {
+	columns: ColumnDef<CustomerTable, TValue>[];
+	data_: CustomerTable[];
 	next_page_url: number | null;
 }
 
-export function DataTable<TData, TValue>({
+export function DataTable<TValue>({
 	columns,
 	data_,
 	next_page_url,
-}: DataTableProps<TData, TValue>) {
+}: DataTableProps<TValue>) {
 	const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
-	const [data, setData] = useState<TData[]>(data_);
+	const [data, setData] = useState<CustomerTable[]>(data_);
 	const [isFiltering, setIsFiltering] = useState(false);
 
 	const width = useScreenSize();
@@ -71,9 +72,7 @@ export function DataTable<TData, TValue>({
 	const getMemoizedData = useCallback(
 		(customer: "location" | "abcde") => {
 			console.log(`the data ::: ${JSON.stringify(data, null, 2)}`);
-			// @ts-expect-error - This is a mistake
 			const location = data.find((item) => item[customer] === customer);
-			// @ts-expect-error - This is a mistake
 			return location?.[`${customer}`];
 		},
 		[data],

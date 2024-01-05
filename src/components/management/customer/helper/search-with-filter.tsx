@@ -1,32 +1,35 @@
 import { Input } from "@/components/ui/input";
 import FilteringDialog from "../../supplier/helper/FilteringDialog";
-import { Customer } from "./column";
 import {
 	getFilteredData,
 	getInitialData,
 	getUniqueItems,
 } from "@/api/customer";
-import { CheckboxShape, UniqueItemsCustomer } from "@/constants/props";
+import {
+	CheckboxShape,
+	CustomerTable,
+	UniqueItemsCustomer,
+} from "@/constants/props";
 import { useEffect, useMemo, useState } from "react";
 import FilteringSheet from "../../supplier/helper/FilteringSheet";
 import Badge from "@/components/reuseable/Badge";
 import FilteringDropdown from "./filtering-dropdown";
 
-interface SearchWithFilterProps<CustomerType> {
+interface SearchWithFilterProps {
 	onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-	data: CustomerType[];
-	setData: React.Dispatch<React.SetStateAction<CustomerType[]>>;
+	data: CustomerTable[];
+	setData: React.Dispatch<React.SetStateAction<CustomerTable[]>>;
 	value: string;
 	setIsFiltering: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-export default function SearchWithFilter<CustomerType>({
+export default function SearchWithFilter({
 	onChange,
 	data,
 	setData,
 	setIsFiltering,
 	value,
-}: SearchWithFilterProps<CustomerType>) {
+}: SearchWithFilterProps) {
 	const [check, setCheck] = useState<CheckboxShape[]>([]);
 
 	const [uniqueFilter, seUniqueFilter] = useState<UniqueItemsCustomer>({
@@ -70,18 +73,18 @@ export default function SearchWithFilter<CustomerType>({
 			params = params.substring(0, params.length - 1);
 		}
 
-		const filteredData = await getFilteredData<CustomerType>(params);
+		const filteredData = await getFilteredData(params);
 
 		if (filteredData && filteredData.length > 0) {
 			setData(filteredData);
 		} else {
-			setData([] as CustomerType[]);
+			setData([] as []);
 		}
 	}
 
 	async function getData() {
-		const _data = await getInitialData<CustomerType>();
-		setData(_data);
+		const _data = await getInitialData(1);
+		setData(_data.customers);
 	}
 
 	useEffect(() => {
@@ -151,7 +154,7 @@ export default function SearchWithFilter<CustomerType>({
 					onChange={onChange}
 				/>
 				<button type="submit"></button>
-				<FilteringDialog data={data as Customer[]} />
+				<FilteringDialog data={data as CustomerTable[]} />
 			</form>
 
 			<div className="w-full gap-6 justify-end hidden md:flex z-0">

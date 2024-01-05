@@ -1,6 +1,11 @@
-import { UniqueItemsCustomer } from "@/constants/props";
+import {
+	Customer,
+	CustomerPage,
+	CustomerTable,
+	UniqueItemsCustomer,
+} from "@/constants/props";
 
-export async function getFilteredData<TData>(params: string) {
+export async function getFilteredData(params: string) {
 	const response = await fetch(
 		`${import.meta.env.VITE_BASE_URL}/api/filter?${params}`,
 		{
@@ -12,7 +17,7 @@ export async function getFilteredData<TData>(params: string) {
 
 	if (response.ok) {
 		const data = await response.json();
-		return data.filtered as TData[];
+		return data.filtered as CustomerTable[];
 	}
 
 	console.log(response);
@@ -20,10 +25,19 @@ export async function getFilteredData<TData>(params: string) {
 	throw new Error("Cannot get the filtered data, please try again later");
 }
 
+/**
+ * 
+ * @param page suppliers: SupplierTableProps[];
+    page_count: number;
+    previous_page: number | null;
+    next_page: number | null;
+ * @returns 
+ */
+
 // use the type "CustomerTableProps" here...
-export async function getInitialData<TData>() {
+export async function getInitialData(page: number) {
 	const response = await fetch(
-		`${import.meta.env.VITE_BASE_URL}/api/customer?page=1&per_page=10`,
+		`${import.meta.env.VITE_BASE_URL}/api/customer?page=${page}&per_page=10`,
 		{
 			headers: {
 				"Content-Type": "application/json",
@@ -32,10 +46,9 @@ export async function getInitialData<TData>() {
 	);
 
 	if (response.ok) {
-		const data = await response.json();
-		const customer: TData[] = (await data).customers;
+		const data: CustomerPage = await response.json();
 
-		return customer;
+		return data;
 	}
 
 	throw new Error("cannot get the data");
@@ -82,4 +95,35 @@ export async function getColumnFilter<TData>(
 		});
 
 	return response;
+}
+
+export async function addCustomer(customerData: Customer) {
+	const response = await fetch(
+		`${import.meta.env.VITE_BASE_URL}/api/customer/add`,
+		{
+			method: "POST",
+			body: JSON.stringify(customerData),
+			headers: {
+				"Content-Type": "application/json",
+			},
+		},
+	);
+
+	if (response.ok) {
+		const data = await response.json();
+		return {
+			success: true,
+			message: data.message as string,
+			customerId: data.customerId as string,
+			customerName: data.customerName as string,
+		};
+	}
+
+	const data = await response.json();
+	return {
+		success: false,
+		message: data.message as string,
+		customerId: "",
+		customerName: "",
+	};
 }

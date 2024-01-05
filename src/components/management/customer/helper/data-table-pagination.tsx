@@ -1,11 +1,13 @@
+import { getInitialData } from "@/api/customer";
 import { Button } from "@/components/ui/button";
+import { CustomerTable } from "@/constants/props";
 import { Table } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
 
 interface DataTablePaginationProps<TData> {
 	table: Table<TData>;
 	next_page_url: number | null;
-	setData: React.Dispatch<React.SetStateAction<TData[]>>;
+	setData: React.Dispatch<React.SetStateAction<CustomerTable[]>>;
 	isFiltering: boolean;
 }
 
@@ -17,10 +19,12 @@ export function DataTablePagination<TData>({
 }: DataTablePaginationProps<TData>) {
 	const [nextPageUrl, setNextPageUrl] = useState<number | null>(null);
 
-	const handleLoadMore = () => {
-		// getInitialData(setNextPageUrl, setData, nextPageUrl);
-
-		console.log(setData);
+	const handleLoadMore = async () => {
+		if (nextPageUrl) {
+			const { customers, next_page } = await getInitialData(nextPageUrl);
+			setNextPageUrl(next_page);
+			setData(customers);
+		}
 
 		if (nextPageUrl) {
 			table.setPageSize(10);
