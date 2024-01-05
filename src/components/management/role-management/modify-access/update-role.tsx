@@ -1,12 +1,4 @@
 import {
-	Select,
-	SelectContent,
-	SelectItem,
-	SelectTrigger,
-	SelectValue,
-} from "@/components/ui/select";
-
-import {
 	Dialog,
 	DialogContent,
 	DialogDescription,
@@ -15,42 +7,42 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useEffect, useState } from "react";
 import updateRole from "@/api/roles";
 import { toast } from "@/components/ui/use-toast";
 import { useQueryClient } from "@tanstack/react-query";
+import { Label } from "@/components/ui/label";
 
 interface UpdateRoleProps {
-	roles: string[];
+	role: string;
 	setUpdateRoleOpen: React.Dispatch<React.SetStateAction<boolean>>;
 	updateRoleOpen: boolean;
 }
 
 export default function UpdateRole({
-	roles,
+	role,
 	setUpdateRoleOpen,
 	updateRoleOpen,
 }: //refetch,
 UpdateRoleProps) {
 	const queryClient = useQueryClient();
 
-	const [selectedRole, setSelectedRole] = useState("");
-	const [newRole, setNewRole] = useState("");
-
 	async function handleFormSubmit(e: React.FormEvent<HTMLFormElement>) {
 		e.preventDefault();
 
 		const formData = new FormData(e.currentTarget);
-		console.log(`role : ${formData.get("role")}`);
-		console.log(`new role : ${formData.get("new_role")}`);
+		const newRole = formData.get("new_role")?.toString();
 
-		const { message, success } = await updateRole(selectedRole, {
+		if (!newRole) {
+			return;
+		}
+
+		const { message, success } = await updateRole(role, {
 			role: newRole,
 		});
 
 		if (success) {
 			//   refetch();
-			queryClient.refetchQueries(["modify-access-role", "get-access-role"]);
+			queryClient.refetchQueries(["modify-access-module", "get-access-module"]);
 			toast({
 				title: "Update Success",
 				description: message,
@@ -69,16 +61,6 @@ UpdateRoleProps) {
 		setUpdateRoleOpen(open);
 	}
 
-	function handleOnValueChange(value: string) {
-		setSelectedRole(value);
-	}
-
-	useEffect(() => {
-		if (selectedRole) {
-			setNewRole(selectedRole);
-		}
-	}, [selectedRole]);
-
 	return (
 		<Dialog onOpenChange={handleOnOpeChange} open={updateRoleOpen}>
 			<DialogContent>
@@ -88,31 +70,15 @@ UpdateRoleProps) {
 						Select a role to update or rename them
 					</DialogDescription>
 				</DialogHeader>
-				<form onSubmit={handleFormSubmit} className="flex flex-col gap-2">
-					<Select
-						required={true}
-						name="role"
-						onValueChange={handleOnValueChange}>
-						<SelectTrigger /*className="w-[180px]"*/>
-							<SelectValue placeholder="Select a role" />
-						</SelectTrigger>
-						<SelectContent>
-							{roles.map((role) => (
-								<SelectItem value={role} key={role}>
-									{role}
-								</SelectItem>
-							))}
-							{/* <SelectItem value="dark">Dark</SelectItem>
-                            <SelectItem value="system">System</SelectItem> */}
-						</SelectContent>
-					</Select>
-					<Input
-						placeholder="Select role first"
-						name="new_role"
-						required
-						value={newRole}
-						onChange={(e) => setNewRole(e.target.value)}
-					/>
+				<form onSubmit={handleFormSubmit} className="flex flex-col gap-3">
+					<Label className="space-y-2">
+						<span>Selected role</span>
+						<Input name="role" required defaultValue={role} disabled />
+					</Label>
+					<Label className="space-y-2">
+						<span>New role</span>
+						<Input placeholder="Enter new role" name="new_role" required />
+					</Label>
 					<Button className="mt-4">Update New Role</Button>
 				</form>
 			</DialogContent>

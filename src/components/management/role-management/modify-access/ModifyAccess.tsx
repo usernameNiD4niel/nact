@@ -1,32 +1,28 @@
-import ScalableSelect from "@/components/reuseable/ScalableSelect";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { useInventoryState } from "@/utils/InventoryState";
 import { useEffect, useState } from "react";
 import SubmitFormModal from "../role-access/submit-form-modal";
 import { useQuery } from "@tanstack/react-query";
-import {
-	getRoles,
-	getSpecificAccessModule,
-	updateAccessModule,
-} from "@/api/roles";
+import { getSpecificAccessModule, updateAccessModule } from "@/api/roles";
 import VerticalOption from "./vertical-option";
+import { headerBackClass } from "@/constants/reusable-class";
+import HeaderWithBack from "@/components/reuseable/HeaderWithBack";
+import { useParams } from "react-router-dom";
+import { Input } from "@/components/ui/input";
 
 export default function ModifyAccess() {
 	const [alert, setAlert] = useState({
 		description: "",
 		isSuccess: false,
-		linkText: "Go to user table",
+		linkText: "Go to Role Access",
 		title: "",
-		to: "/role-management",
+		to: "/role-management/role-access",
 	});
 
-	const [setActiveTab] = useInventoryState((state) => [state.setActiveTab]);
+	const { role } = useParams();
 
 	const [isModalOpen, setIsModalOpen] = useState(false);
-
-	const [selectedRole, setSelectedRole] = useState("");
 
 	const [defaultAccess, setDefaultAccess] = useState({
 		customer: false,
@@ -38,8 +34,10 @@ export default function ModifyAccess() {
 		inventory: false,
 	});
 
-	async function getAccessModule() {
-		const accessModule = await getSpecificAccessModule(selectedRole);
+	function getAccessModule() {
+		if (!data) {
+			return;
+		}
 
 		const clone = {
 			customer: false,
@@ -51,26 +49,26 @@ export default function ModifyAccess() {
 			inventory: false,
 		}; // so that it won't update the default access multiple times
 
-		for (let i = 0; i < accessModule.length; ++i) {
-			if (accessModule[i] === "Customer") {
+		for (let i = 0; i < data.length; ++i) {
+			if (data[i] === "Customer") {
 				clone.customer = true;
 			}
-			if (accessModule[i] === "Role Management") {
+			if (data[i] === "Role Management") {
 				clone.roleManagement = true;
 			}
-			if (accessModule[i] === "Supplier Management") {
+			if (data[i] === "Supplier Management") {
 				clone.supplierManagement = true;
 			}
-			if (accessModule[i] === "Order Generator") {
+			if (data[i] === "Order Generator") {
 				clone.orderGenerator = true;
 			}
-			if (accessModule[i] === "Sales Agent") {
+			if (data[i] === "Sales Agent") {
 				clone.salesAgent = true;
 			}
-			if (accessModule[i] === "Inventory Officer") {
+			if (data[i] === "Inventory Officer") {
 				clone.inventoryOfficer = true;
 			}
-			if (accessModule[i] === "Inventory") {
+			if (data[i] === "Inventory") {
 				clone.inventory = true;
 			}
 		}
@@ -78,31 +76,18 @@ export default function ModifyAccess() {
 		setDefaultAccess(clone);
 	}
 
-	useEffect(() => {
-		// get the access module
-
-		if (selectedRole && selectedRole.length > 0) {
-			getAccessModule();
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [selectedRole]);
-
-	useEffect(() => {
-		setActiveTab(2);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
-
 	const { data, isLoading /*, refetch*/ } = useQuery({
-		queryKey: ["modify-access-role", "get-access-role"],
-		queryFn: getRoles,
+		queryKey: ["modify-access-module", "get-access-module"],
+		queryFn: () => getSpecificAccessModule(role || "No role found"),
 	});
 
 	const labelClass = "flex gap-x-1 items-center";
 
 	async function handleFormSubmit(event: React.FormEvent<HTMLFormElement>) {
 		event.preventDefault();
+		const formData = new FormData(event.currentTarget);
 
-		if (!selectedRole) {
+		if (!role) {
 			setIsModalOpen(true);
 			setAlert({
 				...alert,
@@ -112,7 +97,6 @@ export default function ModifyAccess() {
 			});
 			return;
 		}
-		const formData = new FormData(event.currentTarget);
 
 		// Access Module
 		const customer = formData.get("customer")?.toString();
@@ -159,10 +143,7 @@ export default function ModifyAccess() {
 		}
 
 		// Update roles.
-		const { success, message } = await updateAccessModule(
-			selectedRole,
-			accessModules,
-		);
+		const { success, message } = await updateAccessModule(role, accessModules);
 
 		if (success) {
 			setAlert({
@@ -182,26 +163,35 @@ export default function ModifyAccess() {
 		setIsModalOpen(true);
 	}
 
+	useEffect(() => {
+		if (data && data.length > 0) {
+			getAccessModule();
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [data]);
+
 	return (
-		<div className="md:px-10 px-5 w-full flex items-center justify-center">
-			<div className="mt-36 md:my-24 w-full max-w-4xl">
+		<section className={`${headerBackClass} flex justify-center px-4`}>
+			<HeaderWithBack text="Role Access" />
+			<div className="flex flex-col mt-20 w-full max-w-4xl">
 				<div className="w-full pb-2">
 					<Label className="w-full flex justify-between items-center">
 						<span>Roles</span>
 						{isLoading ? (
 							<div>...</div>
 						) : (
-							<VerticalOption roles={data ? data : []} />
+							<VerticalOption role={role ? role : ""} />
 						)}
 					</Label>
-					<ScalableSelect
+					{/* <ScalableSelect
 						items={data ? data : []}
 						name="role"
 						placeholder={isLoading ? "Loading..." : "Select Role"}
 						isDisabled={isLoading}
 						setSelected={setSelectedRole}
 						key={"ScalableSelectModifyAccess"}
-					/>
+					/> */}
+					<Input defaultValue={role} disabled />
 				</div>
 				<form className="flex flex-col" onSubmit={handleFormSubmit}>
 					<Label className="mt-6 font-bold">Access Module</Label>
@@ -318,6 +308,6 @@ export default function ModifyAccess() {
 					key={"ModifyAccess"}
 				/>
 			)}
-		</div>
+		</section>
 	);
 }

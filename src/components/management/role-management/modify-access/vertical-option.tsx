@@ -8,12 +8,12 @@ import {
 import { SlOptionsVertical } from "react-icons/sl";
 import UpdateRole from "./update-role";
 import { useState } from "react";
-import DeleteRole from "./delete-role";
+import HandleDelete from "./handle-delete";
 interface VerticalOptionProps {
-	roles: string[];
+	role: string;
 }
 
-export default function VerticalOption({ roles }: VerticalOptionProps) {
+export default function VerticalOption({ role }: VerticalOptionProps) {
 	const [updateRoleOpen, setUpdateRoleOpen] = useState(false);
 	const [deleteRoleOpen, setDeleteRoleOpen] = useState(false);
 
@@ -40,18 +40,23 @@ export default function VerticalOption({ roles }: VerticalOptionProps) {
 			</DropdownMenu>
 			{updateRoleOpen && (
 				<UpdateRole
-					roles={roles}
+					role={role}
 					setUpdateRoleOpen={setUpdateRoleOpen}
 					updateRoleOpen={updateRoleOpen}
 					//refetch={refetch}
 				/>
 			)}
 			{deleteRoleOpen && (
-				<DeleteRole
-					deleteRoleOpen={deleteRoleOpen}
-					roles={roles}
+				<HandleDelete
 					setDeleteRoleOpen={setDeleteRoleOpen}
+					deleteRoleOpen={deleteRoleOpen}
+					selectedRole={role}
 				/>
+				// <DeleteRole
+				// 	deleteRoleOpen={deleteRoleOpen}
+				// 	role={role}
+				// 	setDeleteRoleOpen={setDeleteRoleOpen}
+				// />
 			)}
 		</>
 	);

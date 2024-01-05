@@ -14,9 +14,9 @@ const AddRole = () => {
 	const [alert, setAlert] = useState({
 		description: "",
 		isSuccess: false,
-		linkText: "Go to user table",
+		linkText: "Go to Role Access",
 		title: "",
-		to: "/role-management",
+		to: "/role-management/role-access",
 	});
 
 	const [setActiveTab] = useInventoryState((state) => [state.setActiveTab]);
@@ -25,6 +25,7 @@ const AddRole = () => {
 
 	useEffect(() => {
 		setActiveTab(1);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	const labelClass = "flex gap-x-1 items-center";
@@ -141,60 +142,9 @@ const AddRole = () => {
 		}
 	}
 
-	/**
-	 * <section className={headerBackClass}>
-				<HeaderWithBack text="User Management" />
-				<div className="flex flex-col items-center justify-center mt-10">
-					<form
-						className="p-2 flex flex-col gap-y-4 w-full lg:w-[60%] py-10 bg-white px-6"
-						onSubmit={handleUpdateButton}>
-						{isLoading ? (
-							<div>Getting user information...</div>
-						) : (
-							<>
-								<UserInformation
-									id={id}
-									isDisabled={isDisabled}
-									setIsDisabled={setIsDisabled}
-									userInfo={{
-										firstName,
-										lastName,
-										middleName,
-										mobileNumber,
-										setFirstName,
-										setLastName,
-										setMobileNumber,
-										setMiddleName,
-									}}
-								/>
-								<RoleManagement
-									isDisabled={isDisabled}
-									status={status}
-									setStatus={setStatus}
-									userType={userType}
-									setUserType={setUserType}
-								/>
-								{modules.length > 0 && (
-									<div className="flex flex-wrap gap-2">
-										{modules.map((mod) => (
-											<Badge variant={variant}>{mod}</Badge>
-										))}
-									</div>
-								)}
-								{!isDisabled && (
-									<Button disabled={updating}>
-										{updating ? "Updating..." : "Update"}
-									</Button>
-								)}
-							</>
-						)}
-					</form>
-				</div>
-			</section>
-	 */
 	return (
 		<section className={`${headerBackClass} flex justify-center px-4`}>
-			<HeaderWithBack text="Users" />
+			<HeaderWithBack text="Role Access" />
 			<form
 				className="flex flex-col mt-24 md:my-24 w-full max-w-4xl"
 				onSubmit={handleFormSubmit}>

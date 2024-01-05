@@ -33,7 +33,7 @@ export default function Card({ role }: CardProps) {
 				</ul>
 			</div>
 			<Link
-				to={"/role-management/modify-role"}
+				to={`/role-management/modify-role/${role}`}
 				className="hover:underline hover:underline-offset-1 text-[#017DC3] text-xs gap-x-1 flex items-center">
 				<span className="text-lg">
 					<CiEdit />

@@ -10,7 +10,7 @@ import {
 	AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
 import { toast } from "@/components/ui/use-toast";
-import { useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 
 interface HandleDeleteProps {
 	deleteRoleOpen: boolean;
@@ -23,19 +23,19 @@ export default function HandleDelete({
 	setDeleteRoleOpen,
 	selectedRole,
 }: HandleDeleteProps) {
-	const queryClient = useQueryClient();
+	const router = useNavigate();
 
 	async function handleDelete() {
-		console.log(`delete ${selectedRole}`);
 		if (selectedRole.length > 0) {
 			const { message, success } = await deleteRole(selectedRole);
 
 			if (success) {
-				queryClient.refetchQueries(["modify-access-role", "get-access-role"]);
+				// queryClient.refetchQueries(["modify-access-role", "get-access-role"]);
 				toast({
 					title: "Successfully deleted",
 					description: message,
 				});
+				router("/role-management/role-access");
 			} else {
 				toast({
 					title: "Failed to delete",
