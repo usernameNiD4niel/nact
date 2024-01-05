@@ -1,6 +1,6 @@
 import { Input } from "@/components/ui/input";
 import { useInventoryState } from "@/utils/InventoryState";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Card from "./card";
 import { Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -12,12 +12,56 @@ import { Link } from "react-router-dom";
 
 export default function RoleAccesFinal() {
 	const [setActiveTab] = useInventoryState((state) => [state.setActiveTab]);
-	const { data: roles, isLoading } = useQuery(["get-roles"], getRoles);
+	const { data, isLoading } = useQuery(["get-roles"], getRoles);
+
+	const [roles, setRoles] = useState<string[]>([]);
+	const [search, setSearch] = useState<string>("");
+
+	useEffect(() => {
+		if (data) {
+			setRoles(data);
+		}
+	}, [data]);
 
 	useEffect(() => {
 		setActiveTab(1);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
+
+	useEffect(() => {
+		if (search && data) {
+			const newRoles = data.filter((role) => role.includes(search));
+
+			if (newRoles) {
+				setRoles(newRoles);
+			} else {
+				setRoles([]);
+			}
+		} else if (!search && data) {
+			setRoles(data);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [search]);
+
+	function handleOnChange(event: React.ChangeEvent<HTMLInputElement>) {
+		setSearch(event.target.value);
+	}
+
+	function cardContent() {
+		if (isLoading) {
+			return <div>Loading...</div>;
+		}
+
+		if (roles && roles.length > 0) {
+			return roles.map((role) => <Card role={role} key={role} />);
+		}
+
+		return (
+			<div className="w-full flex items-center justify-center h-[60vh]">
+				<p className="text-sm">No roles found</p>
+			</div>
+		);
+	}
 
 	return (
 		<>
@@ -29,7 +73,12 @@ export default function RoleAccesFinal() {
 							className="absolute left-3 top-[0.9rem] text-gray-400"
 							size={18}
 						/>
-						<Input placeholder="Search..." className="w-full py-6 px-10" />
+						<Input
+							placeholder="Search..."
+							className="w-full py-6 px-10"
+							value={search}
+							onChange={handleOnChange}
+						/>
 						<Button
 							variant={"outline"}
 							className="absolute right-0 top-0 h-[3.09rem] rounded-none rounded-e-md">
@@ -37,13 +86,12 @@ export default function RoleAccesFinal() {
 						</Button>
 					</div>
 					<div className="flex flex-col gap-2">
-						{isLoading ? (
+						{/* {isLoading ? (
 							<div>Loading...</div>
-						) : roles ? (
-							roles.map((role) => <Card role={role} key={role} />)
 						) : (
-							<div>No roles found</div>
-						)}
+							roles && roles.map((role) => <Card role={role} key={role} />)
+						)} */}
+						{cardContent()}
 					</div>
 				</div>
 				<Link
