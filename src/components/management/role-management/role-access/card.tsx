@@ -1,7 +1,7 @@
 import { CiEdit } from "react-icons/ci";
-import { Button } from "@/components/ui/button";
 import { useQuery } from "@tanstack/react-query";
 import { getSpecificAccessModule } from "@/api/roles";
+import { Link } from "react-router-dom";
 
 interface CardProps {
 	role: string;
@@ -32,12 +32,14 @@ export default function Card({ role }: CardProps) {
 					)}
 				</ul>
 			</div>
-			<Button variant={"link"} className="text-[#017DC3] space-x-1 text-xs">
+			<Link
+				to={"/role-management/modify-role"}
+				className="hover:underline hover:underline-offset-1 text-[#017DC3] text-xs gap-x-1 flex items-center">
 				<span className="text-lg">
 					<CiEdit />
 				</span>
 				<span>EDIT</span>
-			</Button>
+			</Link>
 		</div>
 	);
 }

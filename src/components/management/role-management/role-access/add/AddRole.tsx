@@ -7,6 +7,8 @@ import { useEffect, useState } from "react";
 import SubmitFormModal from "../submit-form-modal";
 import { createNewRole } from "@/api/roles";
 import { AccessModule } from "@/constants/props";
+import { headerBackClass } from "@/constants/reusable-class";
+import HeaderWithBack from "@/components/reuseable/HeaderWithBack";
 
 const AddRole = () => {
 	const [alert, setAlert] = useState({
@@ -138,10 +140,63 @@ const AddRole = () => {
 			setIsModalOpen(true);
 		}
 	}
+
+	/**
+	 * <section className={headerBackClass}>
+				<HeaderWithBack text="User Management" />
+				<div className="flex flex-col items-center justify-center mt-10">
+					<form
+						className="p-2 flex flex-col gap-y-4 w-full lg:w-[60%] py-10 bg-white px-6"
+						onSubmit={handleUpdateButton}>
+						{isLoading ? (
+							<div>Getting user information...</div>
+						) : (
+							<>
+								<UserInformation
+									id={id}
+									isDisabled={isDisabled}
+									setIsDisabled={setIsDisabled}
+									userInfo={{
+										firstName,
+										lastName,
+										middleName,
+										mobileNumber,
+										setFirstName,
+										setLastName,
+										setMobileNumber,
+										setMiddleName,
+									}}
+								/>
+								<RoleManagement
+									isDisabled={isDisabled}
+									status={status}
+									setStatus={setStatus}
+									userType={userType}
+									setUserType={setUserType}
+								/>
+								{modules.length > 0 && (
+									<div className="flex flex-wrap gap-2">
+										{modules.map((mod) => (
+											<Badge variant={variant}>{mod}</Badge>
+										))}
+									</div>
+								)}
+								{!isDisabled && (
+									<Button disabled={updating}>
+										{updating ? "Updating..." : "Update"}
+									</Button>
+								)}
+							</>
+						)}
+					</form>
+				</div>
+			</section>
+	 */
 	return (
-		<div className="md:px-10 px-5 w-full flex items-center justify-center">
+		<section className={`${headerBackClass} flex justify-center px-4`}>
+			<HeaderWithBack text="Users" />
 			<form
-				className="flex flex-col mt-36 md:my-24 w-full max-w-4xl"
+				className="flex flex-col mt-24 md:my-24 w-full max-w-4xl"
 				onSubmit={handleFormSubmit}>
 				<Label className="space-y-2">
 					<span>Create role</span>
@@ -197,7 +252,7 @@ const AddRole = () => {
 					key={"AddRole"}
 				/>
 			)}
-		</div>
+		</section>
 	);
 };
 

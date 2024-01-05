@@ -49,9 +49,8 @@ const router = createBrowserRouter(
 				<Route index element={<Root />} />
 				<Route path="role-management" element={<RoleManagement />}>
 					<Route index element={<Users />} />
-					<Route path="role-access" element={<RoleAccess />}>
-						<Route path="add" element={<AddRole />} />
-					</Route>
+					<Route path="role-access" element={<RoleAccess />} />
+					<Route path="add" element={<AddRole />} />
 					<Route path="modify-role" element={<ModifyAccess />} />
 				</Route>
 				<Route path="user-management">
