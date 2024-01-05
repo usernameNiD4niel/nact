@@ -57,6 +57,7 @@ const Index = () => {
 				Cookies.set("token", data.access_token_cookie, {
 					expires: expirationDate,
 				});
+				localStorage.clear();
 				setServerError("");
 				navigate("/");
 			} else {
