@@ -142,6 +142,8 @@ export default function ModifyAccess() {
 			return;
 		}
 
+		setIsModalOpen(false);
+
 		// Update roles.
 		const { success, message } = await updateAccessModule(role, accessModules);
 

@@ -9,7 +9,7 @@ import {
 	AlertDialogHeader,
 	AlertDialogTitle,
 } from "@/components/ui/alert-dialog";
-import { toast } from "@/components/ui/use-toast";
+import { useToast } from "@/components/ui/use-toast";
 import { useNavigate } from "react-router-dom";
 
 interface HandleDeleteProps {
@@ -24,6 +24,7 @@ export default function HandleDelete({
 	selectedRole,
 }: HandleDeleteProps) {
 	const router = useNavigate();
+	const { toast } = useToast();
 
 	async function handleDelete() {
 		if (selectedRole.length > 0) {
@@ -34,12 +35,14 @@ export default function HandleDelete({
 				toast({
 					title: "Successfully deleted",
 					description: message,
+					itemID: `success-${selectedRole}`,
 				});
 				router("/role-management/role-access");
 			} else {
 				toast({
 					title: "Failed to delete",
 					description: message,
+					itemID: `failed-${selectedRole}`,
 				});
 			}
 

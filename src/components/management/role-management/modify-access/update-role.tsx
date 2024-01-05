@@ -8,9 +8,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import updateRole from "@/api/roles";
-import { toast } from "@/components/ui/use-toast";
-import { useQueryClient } from "@tanstack/react-query";
+
 import { Label } from "@/components/ui/label";
+import { useNavigate } from "react-router-dom";
+import { toast } from "@/components/ui/use-toast";
 
 interface UpdateRoleProps {
 	role: string;
@@ -24,7 +25,7 @@ export default function UpdateRole({
 	updateRoleOpen,
 }: //refetch,
 UpdateRoleProps) {
-	const queryClient = useQueryClient();
+	const router = useNavigate();
 
 	async function handleFormSubmit(e: React.FormEvent<HTMLFormElement>) {
 		e.preventDefault();
@@ -40,13 +41,16 @@ UpdateRoleProps) {
 			role: newRole,
 		});
 
+		console.log("logger:: update role file");
+
 		if (success) {
 			//   refetch();
-			queryClient.refetchQueries(["modify-access-module", "get-access-module"]);
 			toast({
 				title: "Update Success",
 				description: message,
 			});
+
+			router("/role-management/role-access");
 		} else {
 			toast({
 				title: "Update Failed",
