@@ -9,6 +9,7 @@ export default function FormCityManipulator() {
 	const [city, setCity] = useState("");
 	const [state, setState] = useState("");
 	const [country, setCountry] = useState("");
+	//! finish here the city state country trigger...
 
 	return (
 		<>

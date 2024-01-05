@@ -4,29 +4,35 @@ import SuccessModal from "@/components/reuseable/SuccessModal";
 import { useState } from "react";
 import BusinessInformation from "./helper/business-information";
 import ContactInformation from "./helper/contact-information";
+import { addCustomer } from "@/api/customer";
+import { Customer } from "@/constants/props";
 
 export default function CustomerShipping() {
 	const [validation, setValidation] = useState("");
 	const [message, setMessage] = useState("");
 	const [isLoading, setIsLoading] = useState(false);
 
-	function handleFormSubmit(form: React.FormEvent<HTMLFormElement>) {
+	async function handleFormSubmit(form: React.FormEvent<HTMLFormElement>) {
 		form.preventDefault();
 
 		const formData = new FormData(form.currentTarget);
 		// Business Information
-		const customer = formData.get("customer");
-		const city = formData.get("city");
-		const state = formData.get("state");
-		const country = formData.get("country");
-		const companyPhoneNumber = formData.get("companyPhoneNumber");
-		const companyEmailWebsite = formData.get("companyEmailWebsite");
+		const customer = formData.get("customer")?.toString();
+		const city = formData.get("city")?.toString();
+		const state = formData.get("state")?.toString();
+		const country = formData.get("country")?.toString();
+		const companyPhoneNumber = formData.get("companyPhoneNumber")?.toString();
+		const companyEmailWebsite = formData.get("companyEmailWebsite")?.toString();
 
 		// Contact Information
-		const contactPersonFirstName = formData.get("contactPersonFirstName");
-		const contactPersonLastName = formData.get("contactPersonLastName");
-		const contactPersonMIName = formData.get("contactPersonMIName");
-		const jobTitle = formData.get("jobTitle");
+		const contactPersonFirstName = formData
+			.get("contactPersonFirstName")
+			?.toString();
+		const contactPersonLastName = formData
+			.get("contactPersonLastName")
+			?.toString();
+		const contactPersonMIName = formData.get("contactPersonMIName")?.toString();
+		const jobTitle = formData.get("jobTitle")?.toString();
 
 		// validate the required fields
 		if (!customer) {
@@ -48,7 +54,31 @@ export default function CustomerShipping() {
 		}
 
 		if (!companyEmailWebsite) {
-			setMessage("Comapny email is required");
+			setMessage("Company email is required");
+			setValidation("error");
+			return;
+		}
+
+		if (!contactPersonFirstName) {
+			setMessage("Contact person first name is required");
+			setValidation("error");
+			return;
+		}
+
+		if (!contactPersonLastName) {
+			setMessage("Contact person last name is required");
+			setValidation("error");
+			return;
+		}
+
+		if (!contactPersonMIName) {
+			setMessage("Contact person middle name is required");
+			setValidation("error");
+			return;
+		}
+
+		if (!jobTitle) {
+			setMessage("Job title is required");
 			setValidation("error");
 			return;
 		}
@@ -59,22 +89,34 @@ export default function CustomerShipping() {
 		// If we reach here then there's no error!
 		setIsLoading(true);
 
-		const request = {
-			businessInformation: {
-				customer,
+		const request: Customer = {
+			customerInformation: {
+				customerName: customer,
 				city,
 				state,
 				country,
 				companyPhoneNumber,
-				companyEmailWebsite,
+				companyEmail: companyEmailWebsite,
 			},
-			contactInformation: {
-				contactPersonFirstName,
-				contactPersonLastName,
-				contactPersonMIName,
-				jobTitle,
-			},
+			contactDetails: [
+				{
+					contactPersonFirstName,
+					contactPersonLastName,
+					contactPersonMI: contactPersonMIName,
+					jobTitle,
+				},
+			],
 		};
+
+		const { success, message: mess } = await addCustomer(request);
+
+		setMessage(mess);
+
+		if (success) {
+			setValidation("success");
+		} else {
+			setValidation("error");
+		}
 
 		// Request to the server for appending this request data
 		console.log(`the request data: ${JSON.stringify(request, null, 2)}`);
