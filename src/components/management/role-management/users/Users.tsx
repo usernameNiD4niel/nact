@@ -11,10 +11,10 @@ import AddButton from "@/components/reuseable/AddButton";
 const Users = () => {
 	const [setActiveTab] = useInventoryState((state) => [state.setActiveTab]);
 	const { data, isLoading } = useQuery(["users"], getAllUsers);
-	// const [data, setData] = useState();
 
 	useEffect(() => {
 		setActiveTab(0);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
 	return (

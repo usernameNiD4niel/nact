@@ -14,17 +14,6 @@ const RoleManagement = () => {
 
 	const access_module = Cookies.get("access_module");
 
-	// const router = useNavigate();
-	// const role = Cookies.get("role");
-
-	// useEffect(() => {
-	// 	if (role !== "admin") {
-	// 		router("/");
-	// 	}
-	// 	if (selected !== ButtonList.RoleManagement) {
-	// 		setSelected(ButtonList.RoleManagement);
-	// 	}
-	// }, []);
 	return (
 		<section className="w-full flex flex-col items-center justify-center gap-y-4">
 			<NavigationTab
@@ -38,13 +27,9 @@ const RoleManagement = () => {
 			<div className="w-full md:w-[70%] lg:w-[80%] z-[5] bg-[#1F2123] px-5 mb-0 pt-6 border-t-[#1F2123] border-t-2 fixed top-14 md:top-0">
 				<Tabs
 					activeTabIndex={tab}
-					arrayOfText={["Users", "Role Access", "Modify Access"]}
+					arrayOfText={["Users", "Role Access"]}
 					key="TabsRoleManagementkey"
-					arrayOfRoutes={[
-						"/role-management",
-						"/role-management/role-access",
-						"/role-management/modify-role",
-					]}
+					arrayOfRoutes={["/role-management", "/role-management/role-access"]}
 				/>
 			</div>
 
