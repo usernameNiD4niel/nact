@@ -1,6 +1,5 @@
 import NavigationTab from "@/components/reuseable/NavigationTab";
 import Tabs from "@/components/reuseable/Tabs";
-import { Toaster } from "@/components/ui/toaster";
 import { ButtonList } from "@/constants/enums";
 import { useSelectedStore } from "@/utils/HomePageState";
 import { useInventoryState } from "@/utils/InventoryState";
@@ -32,8 +31,6 @@ const RoleManagement = () => {
 					arrayOfRoutes={["/role-management", "/role-management/role-access"]}
 				/>
 			</div>
-
-			<Toaster />
 			<Outlet />
 		</section>
 	);
