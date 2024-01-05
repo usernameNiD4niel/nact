@@ -37,7 +37,10 @@ export default function SearchWithFilter<CustomerType>({
 
 	const getCustomer = useMemo(() => {
 		const checkboxArray: CheckboxShape[] = [];
-		uniqueFilter.customer.forEach((customer, index) => {
+
+		const customers = uniqueFilter.customer || [];
+
+		customers.forEach((customer, index) => {
 			const object: CheckboxShape = {
 				id: `${index}${customer}`,
 				label: customer,
@@ -102,7 +105,10 @@ export default function SearchWithFilter<CustomerType>({
 	const getLocation = () => {
 		// Convert the Set back to an array of objects
 		const checkboxArray: CheckboxShape[] = [];
-		uniqueFilter.location.forEach((uniqueLocation, index) => {
+
+		const locations = uniqueFilter.location || [];
+
+		locations.forEach((uniqueLocation, index) => {
 			const object = {
 				id: `${index}location`,
 				label: uniqueLocation,
@@ -116,7 +122,10 @@ export default function SearchWithFilter<CustomerType>({
 	const getContact = () => {
 		// Convert the Set back to an array of objects
 		const checkboxArray: CheckboxShape[] = [];
-		uniqueFilter.contact.forEach((uniqueContact, index) => {
+
+		const contacts = uniqueFilter.contact || [];
+
+		contacts.forEach((uniqueContact, index) => {
 			const object = {
 				id: `${index}contact`,
 				label: uniqueContact,
