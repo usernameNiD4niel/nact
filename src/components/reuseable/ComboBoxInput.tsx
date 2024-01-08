@@ -62,8 +62,14 @@ const ComboBoxInput: React.FC<ComboBoxProps> = ({
 								value={supplier.businessName}
 								onSelect={(currentValue: React.SetStateAction<string>) => {
 									setInputValue(
-										currentValue === inputValue ? "" : currentValue,
+										supplier.businessName === inputValue
+											? ""
+											: supplier.businessName,
 									);
+
+									console.log(`supplier value :: ${supplier.businessName}`);
+									console.log(`input value :: ${inputValue}`);
+									console.log(`currentValue :: ${currentValue}`);
 									setOpen(false);
 								}}>
 								<Check

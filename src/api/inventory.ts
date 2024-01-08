@@ -194,7 +194,7 @@ export async function getSupplierInventory() {
 	);
 
 	if (!response.ok) {
-		throw new Error("Cannot fetch all of the avaialble supplier");
+		throw new Error("Cannot fetch all of the available supplier");
 	}
 
 	const data = await response.json();
