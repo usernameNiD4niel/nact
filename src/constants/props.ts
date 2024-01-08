@@ -496,7 +496,7 @@ export type InventorySupplierPostType = {
 
 export type InventorySupplierType = {
 	containerInformation: InventoryProps;
-	supplier: SupplierInventory;
+	supplier: SupplierInventory | null;
 };
 
 export type InventorySupplierAlter = {
