@@ -23,7 +23,7 @@ const getInitialData = async (
 
     if (response.ok) {
       const data = await response.json();
-      const inventory: InventoryData[] = (await data).inventory;
+      const inventory: InventoryData[] = (await data).products;
 
       setNextPageUrl((await data).next_page);
       setData((prev) => [...prev, ...inventory]);
