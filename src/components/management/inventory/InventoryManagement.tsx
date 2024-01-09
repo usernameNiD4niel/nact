@@ -33,15 +33,14 @@ const InventoryManagement = () => {
 				setSelected={setSelected}
 				key={"NavigationTabInventoryManagementKey"}
 			/>
-			{/* w-full md:w-[70%] lg:w-[80%] z-[5] bg-[#1F2123] px-5 mb-0 pt-6 border-t-[#1F2123] border-t-2 fixed top-14 md:top-0 */}
 			<div className="w-full md:w-[70%] lg:w-[80%] z-[5] bg-[#1F2123] px-5 mb-0 pt-6 border-t-[#1F2123] border-t-2 fixed top-14 md:top-0">
 				<Tabs
 					activeTabIndex={tab}
-					arrayOfText={["Available", "Full List", "Abcd", "New Feature"]}
+					arrayOfText={["Available", "Expired"]}
 					key="TabsInventoryManagementkey"
 					arrayOfRoutes={[
 						"/inventory/",
-						// "/inventory/full-list",
+						"/inventory/expired",
 						// "/inventory/abcd",
 						// "/inventory/new-feature",
 					]}

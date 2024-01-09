@@ -41,6 +41,7 @@ import CustomerShipping from "./components/management/customer/CustomerShipping"
 import CustomerTrucking from "./components/management/customer/CustomerTrucking";
 import ModifyAccess from "./components/management/role-management/modify-access/ModifyAccess";
 import AddRole from "./components/management/role-management/role-access/add/AddRole";
+import Expired from "./components/management/inventory/Expired";
 
 const router = createBrowserRouter(
 	createRoutesFromElements(
@@ -80,6 +81,7 @@ const router = createBrowserRouter(
 				/>
 				<Route path="inventory" element={<InventoryManagement />}>
 					<Route index element={<Available />} />
+					<Route path="expired" element={<Expired />} />
 					<Route path="full-list" element={<FullList />} />
 					<Route path="new-feature" element={<NewFeatures />} />
 					<Route path="abcd" element={<Abcd />} />
