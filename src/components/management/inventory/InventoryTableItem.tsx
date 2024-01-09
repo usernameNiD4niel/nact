@@ -49,9 +49,12 @@ const InventoryTableItem = () => {
 		}
 	}, []);
 
-	const { data, isLoading, isError } = useQuery(["inventory-item", "form"], {
-		queryFn: () => getSpecificItem(id),
-	});
+	const { data, isLoading, isError } = useQuery(
+		["inventory-item", "form", id],
+		{
+			queryFn: () => getSpecificItem(id),
+		},
+	);
 
 	const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
