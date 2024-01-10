@@ -16,6 +16,11 @@ import {
 import { InventoryData } from "@/constants/props";
 import { DataTablePagination } from "./data-table-pagination";
 import { useState } from "react";
+import { Search } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+
+import FilterSVG from "@/assets/filter.svg";
 
 interface DataTableProps<TValue> {
 	columns: ColumnDef<InventoryData, TValue>[];
@@ -39,7 +44,23 @@ export function DataTable<TValue>({
 	console.log(`dataaaa ::: ${JSON.stringify(data, null, 2)}`);
 
 	return (
-		<div>
+		<div className="w-full">
+			<form className="flex items-center pb-4 w-full relative">
+				<Search
+					className="absolute left-3 top-[0.9rem] text-gray-400"
+					size={18}
+				/>
+				<Input
+					placeholder="Search product name"
+					className="w-full py-6 px-10"
+					required
+				/>
+				<Button
+					variant={"outline"}
+					className="absolute right-0 top-0 h-[3.09rem] rounded-none rounded-e-md">
+					<img src={FilterSVG} width={25} height={25} />
+				</Button>
+			</form>
 			<div className="rounded-md border">
 				<Table>
 					<TableHeader>
