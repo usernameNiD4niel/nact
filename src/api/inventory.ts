@@ -4,6 +4,7 @@ import {
 	InventorySupplierType,
 	InventoryUniqueItems,
 	PaginatedInventory,
+	PaginatedInventoryExpired,
 } from "@/constants/props";
 
 export const isInventoryAdded = async (
@@ -199,4 +200,24 @@ export async function getSupplierInventory() {
 
 	const data = await response.json();
 	return data.suppliers as InventorySupplierAlter[];
+}
+
+export async function getPaginatedExpired(page: number) {
+	const response = await fetch(
+		`${
+			import.meta.env.VITE_BASE_URL
+		}/api/expired/inventory?page=${page}&per_page=10`,
+		{
+			headers: {
+				"Content-Type": "application/json",
+			},
+		},
+	);
+
+	if (response.ok) {
+		const data = await response.json();
+		return data as PaginatedInventoryExpired;
+	}
+
+	return {} as PaginatedInventoryExpired;
 }

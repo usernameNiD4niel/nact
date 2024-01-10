@@ -453,6 +453,13 @@ export type PaginatedInventory = {
 	next_page: number | null;
 };
 
+export type PaginatedInventoryExpired = {
+	expired_inventory_items: InventoryData[];
+	page_count: number;
+	previous_page: number | null;
+	next_page: number | null;
+};
+
 export type InventoryData = {
 	id: string;
 	containerType: string;
