@@ -26,6 +26,7 @@ import SearchWithFilter from "./SearchWithFilter";
 import { DataTablePagination } from "./data-table-pagination";
 import { useEffect, useState } from "react";
 import { cn } from "@/lib/utils";
+import useScreenSize from "@/hooks/useScreenSize";
 
 interface DataTableProps<TValue> {
   columns: ColumnDef<InventoryData, TValue>[];
@@ -71,8 +72,6 @@ export function NewDataTable<TValue>({
   const handleTableItem = (inventory: string) => {
     const foundObject = data.find((item) => item.containerType === inventory);
 
-    console.log(`current data ${JSON.stringify(foundObject, null, 2)}`);
-
     router(`/inventory/${foundObject?.id}`);
   };
 
@@ -83,6 +82,26 @@ export function NewDataTable<TValue>({
     const item = data.find((item) => item.containerType === containerType);
     return item![column];
   };
+
+  function handleWidth(width: number) {
+    if (width < 768) {
+      table.getColumn("city")?.toggleVisibility(false);
+      table.getColumn("state")?.toggleVisibility(false);
+      table.getColumn("quantity")?.toggleVisibility(false);
+      table.getColumn("depot")?.toggleVisibility(false);
+    } else {
+      table.getColumn("city")?.toggleVisibility(true);
+      table.getColumn("state")?.toggleVisibility(true);
+      table.getColumn("quantity")?.toggleVisibility(true);
+      table.getColumn("depot")?.toggleVisibility(true);
+    }
+  }
+
+  const width = useScreenSize();
+
+  useEffect(() => {
+    setTimeout(() => handleWidth(width), 200);
+  }, [width]);
 
   useEffect(() => {
     if (data) {
