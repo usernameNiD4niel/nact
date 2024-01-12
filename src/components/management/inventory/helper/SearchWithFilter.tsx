@@ -78,6 +78,7 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 		return checkboxArray;
 	}, [uniqueFilter.containerType]);
 
+	// ? Create a filtering
 	const requestFiltered = async () => {
 		let params = "";
 
@@ -171,6 +172,7 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [searchDebounce]);
 
+	// ? Getting specific column value and add it to the array.
 	const getColumnData = (column: string[], text: string) => {
 		const checkboxArray: CheckboxShape[] = [];
 		column.forEach((uniqueColumn, index) => {
