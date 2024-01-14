@@ -13,22 +13,6 @@ const CustumerManagement = () => {
 
 	const access_module = Cookies.get("access_module");
 
-	// const router = useNavigate();
-
-	// useEffect(() => {
-	// 	const accessModule = JSON.parse(access_module!) as string[];
-
-	// 	const access = accessModule.find((item) => item === "customer");
-
-	// 	if (!access) {
-	// 		router(-1);
-	// 	}
-
-	// 	if (selected !== ButtonList.Customer) {
-	// 		setSelected(ButtonList.Customer);
-	// 	}
-	// }, []);
-
 	return (
 		<section className="w-full flex flex-col items-center justify-center gap-y-4">
 			<NavigationTab

@@ -25,15 +25,6 @@ export async function getFilteredData(params: string) {
 	throw new Error("Cannot get the filtered data, please try again later");
 }
 
-/**
- * 
- * @param page suppliers: SupplierTableProps[];
-    page_count: number;
-    previous_page: number | null;
-    next_page: number | null;
- * @returns 
- */
-
 // use the type "CustomerTableProps" here...
 export async function getInitialData(page: number) {
 	const response = await fetch(

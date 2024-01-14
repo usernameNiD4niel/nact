@@ -3,9 +3,17 @@ import { CustomerTable } from "@/constants/props";
 import { ColumnDef } from "@tanstack/react-table";
 import { ArrowUpDown } from "lucide-react";
 
+/**
+ * {
+            "id": 2,
+            "customerName": "Updated Sample",
+            "location": "Updated State, Updated Country",
+            "companyPhoneNumber": "09218404612"
+        },
+ */
 export const columns: ColumnDef<CustomerTable>[] = [
 	{
-		accessorKey: "customer",
+		accessorKey: "customerName",
 		header: ({ column }) => {
 			return (
 				<Button
@@ -17,7 +25,9 @@ export const columns: ColumnDef<CustomerTable>[] = [
 			);
 		},
 		cell: ({ row }) => {
-			return <div className="ml-4 font-medium">{row.getValue("customer")}</div>;
+			return (
+				<div className="ml-4 font-medium">{row.getValue("customerName")}</div>
+			);
 		},
 	},
 	{
@@ -63,7 +73,7 @@ export const columns: ColumnDef<CustomerTable>[] = [
 		},
 	},
 	{
-		accessorKey: "contact",
+		accessorKey: "companyPhoneNumber",
 		header: ({ column }) => {
 			return (
 				<Button
@@ -75,7 +85,11 @@ export const columns: ColumnDef<CustomerTable>[] = [
 			);
 		},
 		cell: ({ row }) => {
-			return <div className="ml-4 font-medium">{row.getValue("contact")}</div>;
+			return (
+				<div className="ml-4 font-medium">
+					{row.getValue("companyPhoneNumber")}
+				</div>
+			);
 		},
 	},
 ];

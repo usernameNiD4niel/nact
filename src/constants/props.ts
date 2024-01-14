@@ -552,8 +552,18 @@ export type CustomerPage = {
 };
 
 export type CustomerTable = {
-	customer: string;
+	id: string;
+	customerName: string;
 	location: string;
-	contact: string;
+	companyPhoneNumber: string;
 	abcde: string;
 };
+
+/**
+ * {
+            "id": 2,
+            "customerName": "Updated Sample",
+            "location": "Updated State, Updated Country",
+            "companyPhoneNumber": "09218404612"
+        },
+ */
