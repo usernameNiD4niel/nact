@@ -207,8 +207,6 @@ const FilteringDropdown: FC<FilteringDropdownProps> = ({
 			}
 		}
 
-		console.log(":::" + items.size);
-
 		setCheck([...items]);
 	};
 
@@ -222,38 +220,7 @@ const FilteringDropdown: FC<FilteringDropdownProps> = ({
 			);
 		});
 
-		// const unique: CheckboxShape[] = checkboxState;
-		// data.forEach((_item) => {
-		// 	const filter = checkboxState.find((_) => _.label === _item.label);
-		// 	if (filter) {
-		// 		unique.push(filter);
-		// 	}
-		// });
-
-		// for (let i = 0; i < items.length; i++) {
-		// 	for (let j = 0; j < checkboxState.length; j++) {
-		// 		if (i !== j) {
-		// 			console.log(`${checkboxState[j].id} === ${items[i].id}`);
-		// 			if (checkboxState[j].id === items[i].id) {
-		// 				unique.splice(j, 1);
-		// 				console.log(`item ${checkboxState} deleted`);
-		// 			}
-		// 		}
-		// 	}
-		// 	console.log(i);
-		// }
-		console.log(`unique ${JSON.stringify(unique, null, 2)}`);
-
 		setCheckboxState(unique);
-		// // checkboxState.forEach((item) => {
-		// // 	const _ = items.find((i) => i.id !== item.id);
-		// // 	if (_) {
-		// // 		unique.push(_);
-		// // 	}
-		// // });
-		// // const set = new Set(unique);
-		// console.log("the clear all ", unique);
-		// setCheckboxState(unique);
 	};
 
 	return (

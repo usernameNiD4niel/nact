@@ -77,7 +77,7 @@ const FilteringSheet: FC<FilteringSheetProps> = ({
 					<FilterAccordion
 						check={check}
 						items={quantity}
-						label="quantity"
+						label="Quantity"
 						setIsFiltering={setIsFiltering}
 						setCheck={setCheck}
 						dropdown="quantity"
@@ -86,7 +86,7 @@ const FilteringSheet: FC<FilteringSheetProps> = ({
 					<FilterAccordion
 						check={check}
 						items={depot}
-						label="depot"
+						label="Depot"
 						setIsFiltering={setIsFiltering}
 						setCheck={setCheck}
 						dropdown="depot"
@@ -95,7 +95,7 @@ const FilteringSheet: FC<FilteringSheetProps> = ({
 					<FilterAccordion
 						check={check}
 						items={buyingRate}
-						label="buyingRate"
+						label="Buying Rate"
 						setIsFiltering={setIsFiltering}
 						setCheck={setCheck}
 						dropdown="buyingRate"
