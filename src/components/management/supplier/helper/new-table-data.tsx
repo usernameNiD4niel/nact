@@ -28,7 +28,6 @@ import { DataTablePagination } from "./DataTablePagination";
 import { SupplierTableProps } from "@/constants/props";
 import { useNavigate } from "react-router-dom";
 import SearchWithFilter from "./SearchWithFilter";
-import { cn } from "@/lib/utils";
 import useScreenSize from "@/hooks/useScreenSize";
 
 interface DataTableProps<TValue> {
@@ -108,10 +107,10 @@ export function NewDataTable<TValue>({
 	const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) =>
 		table.getColumn("businessName")?.setFilterValue(event.target.value);
 
-	const getLocation = (businessName: string) => {
-		const location = data.find((item) => item.businessName === businessName);
-		return location?.location;
-	};
+	// const getLocation = (businessName: string) => {
+	// 	const location = data.find((item) => item.businessName === businessName);
+	// 	return location?.location;
+	// };
 
 	React.useEffect(() => {
 		table.setPageSize(data.length);
