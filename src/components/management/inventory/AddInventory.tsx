@@ -96,15 +96,15 @@ const AddInventory = () => {
 		setIsLoadingButton(true);
 
 		const inventory: InventoryProps = {
-			buyingRate: formData.get("buyingRate")!.toString(),
-			city: formData.get("city")!.toString(),
-			condition: formData.get("condition")!.toString(),
-			containerType: formData.get("containerType")!.toString(),
+			buyingRate: formData.get("buyingRate")?.toString() ?? "",
+			city: formData.get("city")?.toString() ?? "",
+			condition: formData.get("condition")?.toString() ?? "",
+			containerType: formData.get("containerType")?.toString() ?? "",
 			country,
-			depot: formData.get("depot")!.toString(),
-			quantity: formData.get("quantity")!.toString(),
-			region: formData.get("region")!.toString(),
-			sellingRate: formData.get("sellingRate")!.toString(),
+			depot: formData.get("depot")?.toString() ?? "",
+			quantity: formData.get("quantity")?.toString() ?? "",
+			region: formData.get("region")?.toString() ?? "",
+			sellingRate: formData.get("sellingRate")?.toString() ?? "0",
 			state,
 			validUntil,
 		};
