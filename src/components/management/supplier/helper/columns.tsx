@@ -18,13 +18,9 @@ export const columns: ColumnDef<SupplierTableProps>[] = [
 		},
 		cell: ({ row }) => {
 			return (
-				<div className="ml-4 font-medium">
-					{row.getValue("businessName")}
-					<span className="md:hidden">
-						{" "}
-						<br />
-						{row.getValue("location")}
-					</span>
+				<div className="ml-4 font-medium flex flex-col">
+					<span>{row.getValue("businessName")}</span>
+					<span className="md:hidden">{row.getValue("location")}</span>
 				</div>
 			);
 		},
