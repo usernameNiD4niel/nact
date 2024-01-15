@@ -18,7 +18,15 @@ export const columns: ColumnDef<InventoryData>[] = [
 		},
 		cell: ({ row }) => {
 			return (
-				<div className="ml-4 font-medium">{row.getValue("containerType")}</div>
+				<div className="ml-4 font-medium flex flex-col">
+					<span>{row.getValue("containerType")}</span>
+					<div className="flex flex-col md:hidden">
+						<span>{row.getValue("city")}</span>
+						<span>{row.getValue("state")}</span>
+						<span>{row.getValue("quantity")}</span>
+						<span>{row.getValue("depot")}</span>
+					</div>
+				</div>
 			);
 		},
 	},
@@ -35,7 +43,11 @@ export const columns: ColumnDef<InventoryData>[] = [
 			);
 		},
 		cell: ({ row }) => {
-			return <div className="ml-4 font-medium">{row.getValue("city")}</div>;
+			return (
+				<div className="ml-4 font-medium md:flex hidden">
+					{row.getValue("city")}
+				</div>
+			);
 		},
 	},
 	{
@@ -51,7 +63,11 @@ export const columns: ColumnDef<InventoryData>[] = [
 			);
 		},
 		cell: ({ row }) => {
-			return <div className="ml-4 font-medium">{row.getValue("state")}</div>;
+			return (
+				<div className="ml-4 font-medium md:flex hidden">
+					{row.getValue("state")}
+				</div>
+			);
 		},
 	},
 	{
@@ -67,7 +83,11 @@ export const columns: ColumnDef<InventoryData>[] = [
 			);
 		},
 		cell: ({ row }) => {
-			return <div className="ml-4 font-medium">{row.getValue("quantity")}</div>;
+			return (
+				<div className="ml-4 font-medium md:flex hidden">
+					{row.getValue("quantity")}
+				</div>
+			);
 		},
 	},
 	{
@@ -83,7 +103,11 @@ export const columns: ColumnDef<InventoryData>[] = [
 			);
 		},
 		cell: ({ row }) => {
-			return <div className="ml-4 font-medium">{row.getValue("depot")}</div>;
+			return (
+				<div className="ml-4 font-medium md:flex hidden">
+					{row.getValue("depot")}
+				</div>
+			);
 		},
 	},
 	{

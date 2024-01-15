@@ -25,7 +25,6 @@ import { useNavigate } from "react-router-dom";
 import SearchWithFilter from "./SearchWithFilter";
 import { DataTablePagination } from "./data-table-pagination";
 import { useEffect, useState } from "react";
-import { cn } from "@/lib/utils";
 import useScreenSize from "@/hooks/useScreenSize";
 
 interface DataTableProps<TValue> {
@@ -76,13 +75,13 @@ export function NewDataTable<TValue>({
 	};
 
 	// ? get the actual value of an specific column
-	const getItem = (
-		containerType: string,
-		column: "state" | "city" | "quantity" | "depot",
-	): string => {
-		const item = data.find((item) => item.containerType === containerType);
-		return item![column];
-	};
+	// const getItem = (
+	// 	containerType: string,
+	// 	column: "state" | "city" | "quantity" | "depot",
+	// ): string => {
+	// 	const item = data.find((item) => item.containerType === containerType);
+	// 	return item![column];
+	// };
 
 	// ? calls everytime the width changes with the delay of 200ms
 	function handleWidth(width: number) {
@@ -169,7 +168,7 @@ export function NewDataTable<TValue>({
 												cell.column.columnDef.cell,
 												cell.getContext(),
 											)}
-											{cell.id.substring(2) !== "buyingRate" && (
+											{/* {cell.id.substring(2) !== "buyingRate" && (
 												<div className="md:hidden flex flex-col">
 													<span className={cn("md:hidden  ms-4")}>
 														{getItem(row.getValue("containerType"), "city")}{" "}
@@ -184,7 +183,7 @@ export function NewDataTable<TValue>({
 														{getItem(row.getValue("containerType"), "depot")}{" "}
 													</span>
 												</div>
-											)}
+											)} */}
 										</TableCell>
 									))}
 								</TableRow>
