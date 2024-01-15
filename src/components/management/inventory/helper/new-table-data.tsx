@@ -169,27 +169,22 @@ export function NewDataTable<TValue>({
 												cell.column.columnDef.cell,
 												cell.getContext(),
 											)}
-											<div className="md:hidden flex flex-col">
-												{cell.id.substring(2) !== "buyingRate" && (
-													<>
-														<span className={cn("md:hidden  ms-4")}>
-															{getItem(row.getValue("containerType"), "city")}{" "}
-														</span>
-														<span className={cn("md:hidden  ms-4")}>
-															{getItem(row.getValue("containerType"), "state")}{" "}
-														</span>
-														<span className={cn("md:hidden  ms-4")}>
-															{getItem(
-																row.getValue("containerType"),
-																"quantity",
-															)}{" "}
-														</span>
-														<span className={cn("md:hidden  ms-4")}>
-															{getItem(row.getValue("containerType"), "depot")}{" "}
-														</span>
-													</>
-												)}
-											</div>
+											{cell.id.substring(2) !== "buyingRate" && (
+												<div className="md:hidden flex flex-col">
+													<span className={cn("md:hidden  ms-4")}>
+														{getItem(row.getValue("containerType"), "city")}{" "}
+													</span>
+													<span className={cn("md:hidden  ms-4")}>
+														{getItem(row.getValue("containerType"), "state")}{" "}
+													</span>
+													<span className={cn("md:hidden  ms-4")}>
+														{getItem(row.getValue("containerType"), "quantity")}{" "}
+													</span>
+													<span className={cn("md:hidden  ms-4")}>
+														{getItem(row.getValue("containerType"), "depot")}{" "}
+													</span>
+												</div>
+											)}
 										</TableCell>
 									))}
 								</TableRow>
