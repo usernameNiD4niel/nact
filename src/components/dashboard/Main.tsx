@@ -21,6 +21,8 @@ const Main = () => {
 			Cookies.remove("access_module");
 			router("/login");
 		}
+
+		localStorage.clear();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 	return (
