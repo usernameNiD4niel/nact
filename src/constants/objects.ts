@@ -1,4 +1,4 @@
-import { Payment, StatesType, TableDataProps } from "./props";
+import { StatesType, TableDataProps } from "./props";
 
 export type PinObjectProps = {
 	name: string;
@@ -213,6 +213,8 @@ export const states: StatesType = {
 		"New Brunswick",
 		"Manitoba",
 	],
+	Hongkong: ["Hongkong"],
+	Shanghai: ["Shanghai"],
 };
 
 // CITY DUPLICATE - Illinois and Colorado has same city called Aurora
@@ -451,6 +453,12 @@ export const uniqueCities = [
 	"Salt Lake City",
 	"Washington",
 	"Sioux Falls",
+
+	// Hongkong
+	"Hongkong",
+
+	// Shanghai
+	"Shanghai",
 ];
 
 export const cities = {
@@ -652,284 +660,10 @@ export const cities = {
 	Utah: ["Salt Lake City"],
 	"District of Columbia": ["Washington"],
 	"South Dakota": ["Sioux Falls"],
-};
 
-export const payments: Payment[] = [
-	{
-		abcde: "Sample Abcde",
-		contact: "Sample Contact",
-		location: "Sample Location",
-		supplier: "Sample Supplier",
-	},
-	{
-		abcde: "Sample Abcde 1",
-		contact: "Sample Contact 1",
-		location: "Sample Location 1",
-		supplier: "Sample Supplier 1",
-	},
-	{
-		abcde: "Sample Abcde 2",
-		contact: "Sample Contact 2",
-		location: "Sample Location 2",
-		supplier: "Sample Supplier 2",
-	},
-	{
-		abcde: "Sample Abcde 3",
-		contact: "Sample Contact 3",
-		location: "Sample Location 3",
-		supplier: "Sample Supplier 3",
-	},
-	{
-		abcde: "Sample Abcde 4",
-		contact: "Sample Contact 4",
-		location: "Sample Location 4",
-		supplier: "Sample Supplier 4",
-	},
-	{
-		abcde: "Sample Abcde 5",
-		contact: "Sample Contact 5",
-		location: "Sample Location 5",
-		supplier: "Sample Supplier 5",
-	},
-	{
-		abcde: "Sample Abcde 6",
-		contact: "Sample Contact 6",
-		location: "Sample Location 6",
-		supplier: "Sample Supplier 6",
-	},
-	{
-		abcde: "Sample Abcde 7",
-		contact: "Sample Contact 7",
-		location: "Sample Location 7",
-		supplier: "Sample Supplier 7",
-	},
-	{
-		abcde: "Sample Abcde 8",
-		contact: "Sample Contact 8",
-		location: "Sample Location 8",
-		supplier: "Sample Supplier 8",
-	},
-	{
-		abcde: "Sample Abcde 9",
-		contact: "Sample Contact 9",
-		location: "Sample Location 9",
-		supplier: "Sample Supplier 9",
-	},
-	{
-		abcde: "Sample Abcde 10",
-		contact: "Sample Contact 10",
-		location: "Sample Location 10",
-		supplier: "Sample Supplier 10",
-	},
-	{
-		abcde: "Sample Abcde 11",
-		contact: "Sample Contact 11",
-		location: "Sample Location 11",
-		supplier: "Sample Supplier 11",
-	},
-	{
-		abcde: "Sample Abcde 12",
-		contact: "Sample Contact 12",
-		location: "Sample Location 12",
-		supplier: "Sample Supplier 12",
-	},
-	{
-		abcde: "Sample Abcde 13",
-		contact: "Sample Contact 13",
-		location: "Sample Location 13",
-		supplier: "Sample Supplier 13",
-	},
-	{
-		abcde: "Sample Abcde 14",
-		contact: "Sample Contact 14",
-		location: "Sample Location 14",
-		supplier: "Sample Supplier 14",
-	},
-	{
-		abcde: "Sample Abcde 15",
-		contact: "Sample Contact 15",
-		location: "Sample Location 15",
-		supplier: "Sample Supplier 15",
-	},
-	{
-		abcde: "Sample Abcde 16",
-		contact: "Sample Contact 16",
-		location: "Sample Location 16",
-		supplier: "Sample Supplier 16",
-	},
-	{
-		abcde: "Sample Abcde 17",
-		contact: "Sample Contact 17",
-		location: "Sample Location 17",
-		supplier: "Sample Supplier 17",
-	},
-	{
-		abcde: "Sample Abcde 18",
-		contact: "Sample Contact 18",
-		location: "Sample Location 18",
-		supplier: "Sample Supplier 18",
-	},
-	{
-		abcde: "Sample Abcde 19",
-		contact: "Sample Contact 19",
-		location: "Sample Location 19",
-		supplier: "Sample Supplier 19",
-	},
-	{
-		abcde: "Sample Abcde 20",
-		contact: "Sample Contact 20",
-		location: "Sample Location 20",
-		supplier: "Sample Supplier 20",
-	},
-	{
-		abcde: "Sample Abcde 21",
-		contact: "Sample Contact 21",
-		location: "Sample Location 21",
-		supplier: "Sample Supplier 21",
-	},
-	{
-		abcde: "Sample Abcde 22",
-		contact: "Sample Contact 22",
-		location: "Sample Location 22",
-		supplier: "Sample Supplier 22",
-	},
-	{
-		abcde: "Sample Abcde 23",
-		contact: "Sample Contact 23",
-		location: "Sample Location 23",
-		supplier: "Sample Supplier 23",
-	},
-	{
-		abcde: "Sample Abcde 24",
-		contact: "Sample Contact 24",
-		location: "Sample Location 24",
-		supplier: "Sample Supplier 24",
-	},
-	{
-		abcde: "Sample Abcde 25",
-		contact: "Sample Contact 25",
-		location: "Sample Location 25",
-		supplier: "Sample Supplier 25",
-	},
-	{
-		abcde: "Sample Abcde 26",
-		contact: "Sample Contact 26",
-		location: "Sample Location 26",
-		supplier: "Sample Supplier 26",
-	},
-	{
-		abcde: "Sample Abcde 27",
-		contact: "Sample Contact 27",
-		location: "Sample Location 27",
-		supplier: "Sample Supplier 27",
-	},
-	{
-		abcde: "Sample Abcde 28",
-		contact: "Sample Contact 28",
-		location: "Sample Location 28",
-		supplier: "Sample Supplier 28",
-	},
-	{
-		abcde: "Sample Abcde 29",
-		contact: "Sample Contact 29",
-		location: "Sample Location 29",
-		supplier: "Sample Supplier 29",
-	},
-	{
-		abcde: "Sample Abcde 30",
-		contact: "Sample Contact 30",
-		location: "Sample Location 30",
-		supplier: "Sample Supplier 30",
-	},
-	{
-		abcde: "Sample Abcde 31",
-		contact: "Sample Contact 31",
-		location: "Sample Location 31",
-		supplier: "Sample Supplier 31",
-	},
-	{
-		abcde: "Sample Abcde 32",
-		contact: "Sample Contact 32",
-		location: "Sample Location 32",
-		supplier: "Sample Supplier 32",
-	},
-	{
-		abcde: "Sample Abcde 33",
-		contact: "Sample Contact 33",
-		location: "Sample Location 33",
-		supplier: "Sample Supplier 33",
-	},
-	{
-		abcde: "Sample Abcde 34",
-		contact: "Sample Contact 34",
-		location: "Sample Location 34",
-		supplier: "Sample Supplier 34",
-	},
-	{
-		abcde: "Sample Abcde 35",
-		contact: "Sample Contact 35",
-		location: "Sample Location 35",
-		supplier: "Sample Supplier 35",
-	},
-	{
-		abcde: "Sample Abcde 36",
-		contact: "Sample Contact 36",
-		location: "Sample Location 36",
-		supplier: "Sample Supplier 36",
-	},
-	{
-		abcde: "Sample Abcde 37",
-		contact: "Sample Contact 37",
-		location: "Sample Location 37",
-		supplier: "Sample Supplier 37",
-	},
-	{
-		abcde: "Sample Abcde 38",
-		contact: "Sample Contact 38",
-		location: "Sample Location 38",
-		supplier: "Sample Supplier 38",
-	},
-	{
-		abcde: "Sample Abcde 39",
-		contact: "Sample Contact 39",
-		location: "Sample Location 39",
-		supplier: "Sample Supplier 39",
-	},
-	{
-		abcde: "Sample Abcde 40",
-		contact: "Sample Contact 40",
-		location: "Sample Location 40",
-		supplier: "Sample Supplier 40",
-	},
-	{
-		abcde: "Sample Abcde 41",
-		contact: "Sample Contact 41",
-		location: "Sample Location 41",
-		supplier: "Sample Supplier 41",
-	},
-	{
-		abcde: "Sample Abcde 42",
-		contact: "Sample Contact 42",
-		location: "Sample Location 42",
-		supplier: "Sample Supplier 42",
-	},
-	{
-		abcde: "Sample Abcde 44",
-		contact: "Sample Contact 44",
-		location: "Sample Location 44",
-		supplier: "Sample Supplier 44",
-	},
-	{
-		abcde: "Sample Abcde 44",
-		contact: "Sample Contact 44",
-		location: "Sample Location 44",
-		supplier: "Sample Supplier 44",
-	},
-	{
-		abcde: "Sample Abcde 45",
-		contact: "Sample Contact 45",
-		location: "Sample Location 45",
-		supplier: "Sample Supplier 45",
-	},
-	// Create me 50+ dummy items
-];
+	// Hongkong
+	Hongkong: ["Hongkong"],
+
+	// Shanghai
+	Shanghai: ["Shanghai"],
+};

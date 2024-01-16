@@ -209,6 +209,8 @@ export type RegisterResponse = {
 export type StatesType = {
 	USA: string[];
 	Canada: string[];
+	Hongkong: string[];
+	Shanghai: string[];
 };
 
 export type InventoryProps = {
