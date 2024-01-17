@@ -206,7 +206,7 @@ export async function getPaginatedExpired(page: number) {
 	const response = await fetch(
 		`${
 			import.meta.env.VITE_BASE_URL
-		}/api/expired/inventory?page=${page}&per_page=10`,
+		}/api/expire/inventory?page=${page}&per_page=10`,
 		{
 			headers: {
 				"Content-Type": "application/json",

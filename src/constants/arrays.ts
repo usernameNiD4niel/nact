@@ -47,4 +47,5 @@ export const containerType = [
 	"53' HC CW",
 	"53 HC New",
 	"20' STD IICL",
+	"40HC 2 TRIPPER",
 ];

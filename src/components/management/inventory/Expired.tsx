@@ -17,8 +17,6 @@ export default function Expired() {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	console.log(`data table ::: ${JSON.stringify(data, null, 2)}`);
-
 	function content() {
 		if (isLoading) {
 			return (
