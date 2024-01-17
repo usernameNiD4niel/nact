@@ -16,6 +16,7 @@ import {
   PriceSearch,
   ProductNameSearch,
   StateSearch,
+  SupplierSearch,
 } from "@/constants/props";
 import useDebounce from "@/hooks/useDebounce";
 import { FC, useEffect, useState } from "react";
@@ -35,7 +36,8 @@ type FilterAccordionProps = {
     | "state"
     | "quantity"
     | "depot"
-    | "buyingRate";
+    | "buyingRate"
+    | "supplier";
 };
 
 const FilterAccordion: FC<FilterAccordionProps> = ({
@@ -60,6 +62,9 @@ const FilterAccordion: FC<FilterAccordionProps> = ({
     checked: boolean | "indeterminate",
     item: CheckboxShape
   ) => {
+    console.log(`item ::: ${JSON.stringify(item, null, 2)}`);
+    console.log(`checked ::: ${JSON.stringify(checked, null, 2)}`);
+
     if (checked) {
       setCheckboxState((prevChecked) => [...prevChecked, item]);
     } else {
@@ -135,6 +140,13 @@ const FilterAccordion: FC<FilterAccordionProps> = ({
           );
 
           searchColumnBind<DepotSearch>(fetchedData);
+        } else if (dropdown === "supplier") {
+          const fetchedData = await getColumnSearch<SupplierSearch>(
+            search,
+            dropdown
+          );
+
+          searchColumnBind<SupplierSearch>(fetchedData);
         } else {
           const fetchedData = await getColumnSearch<PriceSearch>(
             search,
