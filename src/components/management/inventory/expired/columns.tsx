@@ -38,13 +38,6 @@ export const columns: ColumnDef<InventoryData>[] = [
 		),
 	},
 	{
-		accessorKey: "price",
-		header: "Price",
-		cell: ({ row }) => (
-			<div className="capitalize">{row.getValue("price")}</div>
-		),
-	},
-	{
 		accessorKey: "depot",
 		header: "Depot",
 		cell: ({ row }) => (
