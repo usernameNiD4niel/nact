@@ -36,6 +36,7 @@ const InventoryTableItem = () => {
 	});
 
 	useEffect(() => {
+		localStorage.setItem("nact", "true");
 		const accessModule = JSON.parse(
 			Cookies.get("access_module") || "",
 		) as string[];
