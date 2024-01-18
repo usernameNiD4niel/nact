@@ -11,6 +11,7 @@ import FilteringDialog from "../../supplier/helper/FilteringDialog";
 import FilteringSheet from "./FilteringSheet";
 import { getSearch, getUniqueItems } from "@/api/inventory";
 import useDebounce from "@/hooks/useDebounce";
+import Cookies from "js-cookie";
 
 type SearchWithFilterProps = {
   placeHolder: string;
@@ -111,22 +112,49 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
   };
 
   useEffect(() => {
-    if (check.length === 0 && duplicate.length > 0) {
-      console.log(`checked length ::: ${check.length}`);
-      // getInitialData(setData);
+    setIsFiltering(false);
 
-      setData(duplicate);
-      localStorage.removeItem("filterData");
-      setIsFiltering(false);
+    if (check && check.length > 0) {
+      console.log("check true");
+      requestFiltered();
       return;
     }
 
-    // if (check && check.length > 0) {
-    requestFiltered();
-    //   return;
+    // const isFromAnother = localStorage.getItem("isFromAnother");
+
+    // localStorage.removeItem("filterData");
+
+    // if (check.length === 0 && isFromAnother && isFromAnother === "true") {
+    //   // getInitialData(setData);
+    //   const tableData = JSON.parse(
+    //     JSON.stringify(localStorage.getItem("table_data"))
+    //   ) as InventoryData[];
+
+    //   setData(tableData);
+
+    //   // localStorage.removeItem("filterData");
     // }
+
+    // if (check.length === 0) {
+    //   localStorage.removeItem("filterData");
+    // }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [check]);
+
+  useEffect(() => {
+    const filterData = localStorage.getItem("filterData");
+    const table_data = localStorage.getItem("table_data");
+
+    if (check.length === 0 && filterData && table_data) {
+      const tableData = JSON.parse(
+        JSON.stringify(table_data)
+      ) as InventoryData[];
+
+      setData(tableData);
+      setIsFiltering(true);
+    }
+  }, []);
 
   const fetchUniqueFilter = async () => {
     const actualDataFilter = await getUniqueItems();

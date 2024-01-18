@@ -26,6 +26,7 @@ import { Button } from "@/components/ui/button";
 
 import FilterSVG from "@/assets/filter.svg";
 import useScreenSize from "@/hooks/useScreenSize";
+import { useNavigate } from "react-router-dom";
 
 interface DataTableProps<TValue> {
   columns: ColumnDef<InventoryData, TValue>[];
@@ -72,9 +73,36 @@ export function DataTable<TValue>({
 
   const width = useScreenSize();
 
+  const router = useNavigate();
+
   useEffect(() => {
     setTimeout(() => handleWidth(width), 200);
   }, [width]);
+
+  // ? Make sure that the table is sync with actual data
+  useEffect(() => {
+    if (data && isFiltering) {
+      table.setPageSize(data.length);
+    }
+
+    // ! Remove this condition this is just for deployment purposes
+    if (data.length === 1000000) {
+      setIsFiltering(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data, isFiltering]);
+
+  // ? Always make sure that it clean the table first before appending an item to it.
+  useEffect(() => {
+    table.resetPageSize();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isFiltering]);
+
+  const handleTableItem = (inventory: string) => {
+    const foundObject = data.find((item) => item.containerType === inventory);
+
+    router(`/inventory/${foundObject?.id}`);
+  };
 
   return (
     <div className="w-full">
@@ -121,7 +149,8 @@ export function DataTable<TValue>({
               table.getRowModel().rows.map((row) => (
                 <TableRow
                   key={row.id}
-                  data-state={row.getIsSelected() && "selected"}
+                  className="hover:cursor-pointer"
+                  onClick={() => handleTableItem(row.getValue("containerType"))}
                 >
                   {row.getVisibleCells().map((cell) => (
                     <TableCell key={cell.id}>

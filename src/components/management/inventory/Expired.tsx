@@ -1,9 +1,11 @@
 import { useInventoryState } from "@/utils/InventoryState";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { DataTable } from "./expired/data-table";
 import { columns } from "./helper/columns";
 import { useQuery } from "@tanstack/react-query";
 import { getPaginatedExpired } from "@/api/inventory";
+import { NewDataTable } from "./helper/new-table-data";
+import { InventoryData } from "@/constants/props";
 
 export default function Expired() {
   const [setActiveTab] = useInventoryState((state) => [state.setActiveTab]);
@@ -12,8 +14,13 @@ export default function Expired() {
     queryFn: () => getPaginatedExpired(1),
   });
 
+  const [expired, setExpired] = useState<InventoryData[]>([]);
+
   useEffect(() => {
     setActiveTab(1);
+    if (data && data.expired_inventory_items.length > 0) {
+      setExpired(data.expired_inventory_items);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -37,10 +44,14 @@ export default function Expired() {
     }
 
     return (
-      <DataTable
+      <NewDataTable
         columns={columns}
-        data_={data.expired_inventory_items}
-        nextPage={data.next_page}
+        data={expired}
+        next_page_url={data.next_page}
+        clone={data.expired_inventory_items}
+        isAvailable={false}
+        setData={setExpired}
+        key={"srccomponentsmanagementinventoryexpired"}
       />
     );
   }

@@ -32,6 +32,7 @@ const Available = (): JSX.Element => {
       localStorage.setItem("table_data", JSON.stringify(data));
     }
   }, [data]);
+
   const tableData = localStorage.getItem("table_data");
 
   useEffect(() => {
@@ -47,6 +48,22 @@ const Available = (): JSX.Element => {
     setActiveTab(0);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  //   useEffect(() => {
+  //     console.log(`table data ::: ${JSON.stringify(tableData, null, 2)}`);
+
+  //     if (tableData) {
+  //       setData(JSON.parse(tableData));
+  //       //   if (shouldRefetch && shouldRefetch === "true") {
+  //       //     fetchedData();
+  //       //   } else {
+  //       //     setData(JSON.parse(tableData));
+  //       //   }
+  //     } else {
+  //       fetchedData();
+  //     }
+  //     setActiveTab(0);
+  //     // eslint-disable-next-line react-hooks/exhaustive-deps
+  //   }, []);
 
   return (
     <>
@@ -59,6 +76,7 @@ const Available = (): JSX.Element => {
               next_page_url={nextPageUrl}
               clone={clone}
               setData={setData}
+              isAvailable={true}
             />
           </div>
         </div>

@@ -33,6 +33,7 @@ interface DataTableProps<TValue> {
   clone: InventoryData[];
   setData: React.Dispatch<React.SetStateAction<InventoryData[]>>;
   next_page_url: number | null;
+  isAvailable: boolean;
 }
 
 export function NewDataTable<TValue>({
@@ -41,6 +42,7 @@ export function NewDataTable<TValue>({
   next_page_url,
   setData,
   clone,
+  isAvailable,
 }: DataTableProps<TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
 
@@ -168,22 +170,6 @@ export function NewDataTable<TValue>({
                         cell.column.columnDef.cell,
                         cell.getContext()
                       )}
-                      {/* {cell.id.substring(2) !== "buyingRate" && (
-												<div className="md:hidden flex flex-col">
-													<span className={cn("md:hidden  ms-4")}>
-														{getItem(row.getValue("containerType"), "city")}{" "}
-													</span>
-													<span className={cn("md:hidden  ms-4")}>
-														{getItem(row.getValue("containerType"), "state")}{" "}
-													</span>
-													<span className={cn("md:hidden  ms-4")}>
-														{getItem(row.getValue("containerType"), "quantity")}{" "}
-													</span>
-													<span className={cn("md:hidden  ms-4")}>
-														{getItem(row.getValue("containerType"), "depot")}{" "}
-													</span>
-												</div>
-											)} */}
                     </TableCell>
                   ))}
                 </TableRow>
@@ -208,6 +194,7 @@ export function NewDataTable<TValue>({
         table={table}
         next_page_url={next_page_url}
         isFiltering={isFiltering}
+        isAvailable={isAvailable}
       />
     </div>
   );
