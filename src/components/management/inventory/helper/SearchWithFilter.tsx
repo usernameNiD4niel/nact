@@ -93,9 +93,9 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 		let url = "";
 
 		if (isAvailable) {
-			url = `expire/inventory/filter${params}`;
-		} else {
 			url = `inventory/filter${params}`;
+		} else {
+			url = `expire/inventory/filter${params}`;
 		}
 
 		await fetch(`${import.meta.env.VITE_BASE_URL}/api/${url}`, {
