@@ -103,6 +103,29 @@ export async function getSearch(search: string) {
 	return [];
 }
 
+export async function getSearchExpired(search: string) {
+	const response = await fetch(
+		`${
+			import.meta.env.VITE_BASE_URL
+		}/api/expire/inventory/search?query=${search}`,
+		{
+			headers: {
+				"Content-Type": "application/json",
+			},
+		},
+	);
+
+	if (response.ok) {
+		const data = await response.json();
+		//add a type here
+		console.log(`search ::: ${JSON.stringify(data, null, 2)}`);
+
+		return data.filtered;
+	}
+
+	return [];
+}
+
 export async function getPaginatedData() {
 	const response = await fetch(
 		`${import.meta.env.VITE_BASE_URL}/api/inventory?page=1&per_page=10`,

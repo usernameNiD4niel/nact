@@ -9,7 +9,13 @@ import Badge from "@/components/reuseable/Badge";
 import FilteringDropdown from "./FilteringDropdown";
 import FilteringDialog from "../../supplier/helper/FilteringDialog";
 import FilteringSheet from "./FilteringSheet";
-import { getPaginatedData, getSearch, getUniqueItems } from "@/api/inventory";
+import {
+	getPaginatedData,
+	getPaginatedExpired,
+	getSearch,
+	getSearchExpired,
+	getUniqueItems,
+} from "@/api/inventory";
 import useDebounce from "@/hooks/useDebounce";
 
 type SearchWithFilterProps = {
@@ -18,6 +24,7 @@ type SearchWithFilterProps = {
 	data: InventoryData[];
 	setData: React.Dispatch<React.SetStateAction<InventoryData[]>>;
 	setIsFiltering: React.Dispatch<React.SetStateAction<boolean>>;
+	isAvailable: boolean;
 };
 
 const SearchWithFilter: FC<SearchWithFilterProps> = ({
@@ -26,6 +33,7 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 	setData,
 	data,
 	setIsFiltering,
+	isAvailable,
 }) => {
 	const [check, setCheck] = useState<CheckboxShape[]>([]);
 	const [uniqueFilter, seUniqueFilter] = useState<InventoryUniqueItems>({
@@ -79,17 +87,22 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 		}
 
 		if (params.endsWith("&")) {
-			params = params.substring(0, params.length - 1);
+			params = "?" + params.substring(0, params.length - 1);
 		}
 
-		await fetch(
-			`${import.meta.env.VITE_BASE_URL}/api/inventory/filter?${params}`,
-			{
-				headers: {
-					"Content-Type": "application/json",
-				},
+		let url = "";
+
+		if (isAvailable) {
+			url = `expire/inventory/filter?${params}`;
+		} else {
+			url = `inventory/filter${params}`;
+		}
+
+		await fetch(`${import.meta.env.VITE_BASE_URL}/api/${url}`, {
+			headers: {
+				"Content-Type": "application/json",
 			},
-		)
+		})
 			.then((data_) => data_.json())
 			.then((data_) => {
 				const tableData: InventoryData[] = data_.filtered_inventory;
@@ -99,9 +112,15 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 					setData([]);
 					return;
 				}
-				localStorage.setItem("table_data", JSON.stringify(tableData));
-				localStorage.setItem("filterData", JSON.stringify(check));
-				setData(tableData);
+				if (isAvailable) {
+					localStorage.setItem("table_data", JSON.stringify(tableData));
+					localStorage.setItem("filterData", JSON.stringify(check));
+					setData(tableData);
+				} else {
+					localStorage.setItem("expire_table_data", JSON.stringify(tableData));
+					localStorage.setItem("expireFilterData", JSON.stringify(check));
+					setData(tableData);
+				}
 			})
 			.catch((err) => {
 				setData([]);
@@ -111,9 +130,13 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 	};
 
 	async function handleFetchDefault() {
-		const data_ = await getPaginatedData();
-		setData(data_.products);
-		console.log(`defaut`);
+		if (isAvailable) {
+			const data_ = await getPaginatedData();
+			setData(data_.products);
+		} else {
+			const data_ = await getPaginatedExpired(1);
+			setData(data_.expired_inventory_items);
+		}
 	}
 	useEffect(() => {
 		setIsFiltering(false);
@@ -151,7 +174,13 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 	const fetchUniqueFilter = async () => {
 		const actualDataFilter = await getUniqueItems();
 		seUniqueFilter(actualDataFilter);
-		const filterData = localStorage.getItem("filterData");
+		let filterData: string | null = "";
+
+		if (isAvailable) {
+			filterData = localStorage.getItem("filterData");
+		} else {
+			filterData = localStorage.getItem("expireFilterData");
+		}
 
 		if (filterData) {
 			setCheck(JSON.parse(filterData));
@@ -163,8 +192,13 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 	}, []);
 
 	async function fetchSearch() {
-		const searchQuery: InventoryData[] = await getSearch(search);
-		setData(searchQuery);
+		if (isAvailable) {
+			const searchQuery: InventoryData[] = await getSearch(search);
+			setData(searchQuery);
+		} else {
+			const searchQuery: InventoryData[] = await getSearchExpired(search);
+			setData(searchQuery);
+		}
 	}
 
 	useEffect(() => {

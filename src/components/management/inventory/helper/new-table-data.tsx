@@ -126,6 +126,7 @@ export function NewDataTable<TValue>({
 					data={data}
 					setData={setData}
 					setIsFiltering={setIsFiltering}
+					isAvailable={isAvailable}
 				/>
 			</div>
 			<div className="rounded-md border w-full">
