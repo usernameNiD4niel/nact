@@ -93,7 +93,7 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 		let url = "";
 
 		if (isAvailable) {
-			url = `expire/inventory/filter?${params}`;
+			url = `expire/inventory/filter${params}`;
 		} else {
 			url = `inventory/filter${params}`;
 		}
