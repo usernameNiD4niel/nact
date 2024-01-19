@@ -148,7 +148,11 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 
 		if (duplicate.length > 0) {
 			setData(duplicate);
-			localStorage.removeItem("filterData");
+			if (isAvailable) {
+				localStorage.removeItem("filterData");
+			} else {
+				localStorage.removeItem("expireFilterData");
+			}
 			return;
 		}
 
@@ -248,6 +252,7 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 					setCheck={setCheck}
 					dropdown="containerType"
 					setIsFiltering={setIsFiltering}
+					isAvailable={isAvailable}
 					key={"containerTypeKeyFilterDropdown"}
 				/>
 				<FilteringDropdown
@@ -258,6 +263,7 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 					dropdown="city"
 					setIsFiltering={setIsFiltering}
 					key={"CityKeyFilterDropdown"}
+					isAvailable={isAvailable}
 				/>
 				<FilteringDropdown
 					items={getColumnData(uniqueFilter.state, "state")}
@@ -265,6 +271,7 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 					setCheck={setCheck}
 					label="State"
 					dropdown="state"
+					isAvailable={isAvailable}
 					setIsFiltering={setIsFiltering}
 					key={"StateKeyFilterDropdown"}
 				/>
@@ -275,6 +282,7 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 					label="Quantity"
 					dropdown="quantity"
 					setIsFiltering={setIsFiltering}
+					isAvailable={isAvailable}
 					key={"QuantityKeyFilterDropdown"}
 				/>
 				<FilteringDropdown
@@ -284,6 +292,7 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 					label="Depot"
 					dropdown="depot"
 					setIsFiltering={setIsFiltering}
+					isAvailable={isAvailable}
 					key={"DepotKeyFilterDropdown"}
 				/>
 				<FilteringDropdown
@@ -293,6 +302,7 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 					label="Price"
 					dropdown="buyingRate"
 					setIsFiltering={setIsFiltering}
+					isAvailable={isAvailable}
 					key={"BuyingRateKeyFilterDropdown"}
 				/>
 				<FilteringDropdown
@@ -301,6 +311,7 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 					setCheck={setCheck}
 					label="Supplier"
 					dropdown="supplier"
+					isAvailable={isAvailable}
 					setIsFiltering={setIsFiltering}
 					key={"SupplierKeyFilterDropdown"}
 				/>
@@ -315,6 +326,7 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 				supplier={getColumnData(uniqueFilter.supplier, "supplier")}
 				check={check}
 				setCheck={setCheck}
+				isAvailable={isAvailable}
 				setIsFiltering={setIsFiltering}
 				key={"MobileViewFilteringDropdown"}
 			/>

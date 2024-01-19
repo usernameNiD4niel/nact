@@ -59,15 +59,23 @@ export const getUniqueItems = async () => {
 	throw new Error("Unable to retrieve unique items");
 };
 
-export async function getColumnSearch<T>(searchQuery: string, column: string) {
-	const response = await fetch(
-		`${import.meta.env.VITE_BASE_URL}/api/inventory/${column}/${searchQuery}`,
-		{
-			headers: {
-				"Content-Type": "application/json",
-			},
+export async function getColumnSearch<T>(
+	searchQuery: string,
+	column: string,
+	isAvailable = true,
+) {
+	let url = "";
+	if (isAvailable) {
+		url = `inventory/${column}/${searchQuery}`;
+	} else {
+		url = `expire/inventory/${column}/${searchQuery}`;
+	}
+
+	const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/${url}`, {
+		headers: {
+			"Content-Type": "application/json",
 		},
-	)
+	})
 		.then((response) => response.json())
 		.then((d) => {
 			const data: T[] = d.products;

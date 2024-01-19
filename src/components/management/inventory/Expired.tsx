@@ -14,14 +14,38 @@ export default function Expired() {
 	});
 
 	const [expired, setExpired] = useState<InventoryData[]>([]);
+	const [nextPage, setNextPage] = useState<number | null>(null);
+	const [clone, setClone] = useState<InventoryData[]>([]);
+
+	async function fetchData() {
+		const data = await getPaginatedExpired(1);
+		setClone(data.expired_inventory_items);
+		setExpired(data.expired_inventory_items);
+		setNextPage(data.next_page);
+	}
 
 	useEffect(() => {
 		setActiveTab(1);
-		if (data && data.expired_inventory_items.length > 0) {
-			setExpired(data.expired_inventory_items);
+		const expire_table_data = localStorage.getItem("expire_table_data");
+
+		if (expire_table_data) {
+			setExpired(JSON.parse(expire_table_data));
+			return;
 		}
+
+		fetchData();
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
+
+	useEffect(() => {
+		if (expired && expired.length > 0) {
+			localStorage.setItem(
+				"expire_table_data",
+				JSON.stringify(data?.expired_inventory_items),
+			);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [data]);
 
 	function content() {
 		if (isLoading) {
@@ -46,8 +70,8 @@ export default function Expired() {
 			<NewDataTable
 				columns={columns}
 				data={expired}
-				next_page_url={data.next_page}
-				clone={data.expired_inventory_items}
+				next_page_url={nextPage}
+				clone={clone}
 				isAvailable={false}
 				setData={setExpired}
 				key={"srccomponentsmanagementinventoryexpired"}
