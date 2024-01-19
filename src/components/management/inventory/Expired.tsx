@@ -19,6 +19,7 @@ export default function Expired() {
 
 	async function fetchData() {
 		const data = await getPaginatedExpired(1);
+		console.log(`dataa ::: ${JSON.stringify(data, null, 2)}`);
 		setClone(data.expired_inventory_items);
 		setExpired(data.expired_inventory_items);
 		setNextPage(data.next_page);
