@@ -1,6 +1,7 @@
 // CityDropdown.tsx
 import { uniqueCities } from "@/constants/objects";
 import "@/index.css";
+import { cn } from "@/lib/utils";
 import React, { useState, useRef, useEffect } from "react";
 type ComboBoxProps = {
 	inputValue: string;
@@ -98,9 +99,12 @@ const ComboBox: React.FC<ComboBoxProps> = ({
 					autoComplete="false"
 				/>
 				<span
-					className={`${`text-[14px] text-black hover:cursor-text text-opacity-30 absolute left-0 top-[2px] mx-2 px-2 transition duration-200 bg-white input-text whitespace-nowrap`} ${
-						inputValue && "input-contains"
-					}`}>
+					className={cn(
+						`${`text-[14px] text-black hover:cursor-text text-opacity-30 absolute left-0 top-[2px] mx-2 px-2 transition duration-200 bg-white input-text whitespace-nowrap`} ${
+							inputValue && "input-contains"
+						}`,
+						isDisabled ? "hidden" : "flex",
+					)}>
 					City
 				</span>
 			</label>

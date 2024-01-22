@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import React, { FC, useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getSupplierInventory } from "@/api/inventory";
+import { cn } from "@/lib/utils";
 
 interface SupplierFormInventoryProps {
 	businessName: string;
@@ -66,6 +67,7 @@ const SupplierFormInventory: FC<SupplierFormInventoryProps> = ({
 				</div>
 			)}
 			<label className="relative" htmlFor="businessName">
+				<span className={cn("text-sm")}>Business Name</span>
 				<input
 					type="text"
 					className={`${animatedInputClass} disabled:bg-gray-100`}
@@ -79,6 +81,7 @@ const SupplierFormInventory: FC<SupplierFormInventoryProps> = ({
 				/>
 			</label>
 			<label className="relative" htmlFor="completeAddress">
+				<span className={cn("text-sm")}>Complete Address</span>
 				<input
 					type="text"
 					className={`${animatedInputClass} disabled:bg-gray-100`}
@@ -92,6 +95,7 @@ const SupplierFormInventory: FC<SupplierFormInventoryProps> = ({
 				/>
 			</label>
 			<label className="relative" htmlFor="contactNumber">
+				<span className={cn("text-sm")}>Contact Number</span>
 				<input
 					type="text"
 					className={`${animatedInputClass} disabled:bg-gray-100`}
