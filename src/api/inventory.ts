@@ -78,7 +78,7 @@ export async function getColumnSearch<T>(
 	})
 		.then((response) => response.json())
 		.then((d) => {
-			const data: T[] = d.products;
+			const data: T[] = isAvailable ? d.products : d.expired_inventory;
 			return data;
 		})
 		.catch((error) => {
