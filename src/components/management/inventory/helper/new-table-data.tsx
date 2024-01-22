@@ -71,7 +71,9 @@ export function NewDataTable<TValue>({
 	const router = useNavigate();
 
 	const handleTableItem = (inventory: string) => {
-		const foundObject = data.find((item) => item.containerType === inventory);
+		const foundObject = data.find((item) => item.id === inventory);
+
+		console.log(`inventory ::: ${JSON.stringify(foundObject, null, 2)}`);
 
 		router(`/inventory/${foundObject?.id}`);
 	};
@@ -110,13 +112,18 @@ export function NewDataTable<TValue>({
 	}, [width]);
 
 	// ? Make sure that the table is sync with actual data
-	useEffect(() => {
-		if (data && isFiltering) {
-			table.setPageSize(data.length);
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [data, isFiltering]);
+	// useEffect(() => {
+	// 	table.reset();
+	// 	if (data && isFiltering) {
+	// 		table.setPageSize(data.length);
+	// 	}
+	// 	// eslint-disable-next-line react-hooks/exhaustive-deps
+	// }, [data, isFiltering]);
 
+	useEffect(() => {
+		table.getColumn("id")?.toggleVisibility(false);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
 	return (
 		<div className="w-full">
 			<div className="my-4 w-full space-y-2">
@@ -125,6 +132,7 @@ export function NewDataTable<TValue>({
 					duplicate={clone}
 					data={data}
 					setData={setData}
+					table={table}
 					setIsFiltering={setIsFiltering}
 					isAvailable={isAvailable}
 				/>
@@ -156,7 +164,7 @@ export function NewDataTable<TValue>({
 								<TableRow
 									key={row.id}
 									className="hover:cursor-pointer"
-									onClick={() => handleTableItem(row.getValue("containerType"))}
+									onClick={() => handleTableItem(row.getValue("id"))}
 									// data-state={row.getIsSelected() && "selected"}
 								>
 									{row.getVisibleCells().map((cell) => (

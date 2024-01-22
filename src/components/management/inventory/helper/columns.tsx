@@ -5,6 +5,11 @@ import { ArrowUpDown } from "lucide-react";
 
 export const columns: ColumnDef<InventoryData>[] = [
 	{
+		accessorKey: "id",
+		header: () => <></>,
+		cell: () => <></>,
+	},
+	{
 		accessorKey: "containerType",
 		header: ({ column }) => {
 			return (

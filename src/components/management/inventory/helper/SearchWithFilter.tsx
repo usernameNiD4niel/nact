@@ -17,6 +17,7 @@ import {
 	getUniqueItems,
 } from "@/api/inventory";
 import useDebounce from "@/hooks/useDebounce";
+import { Table } from "@tanstack/react-table";
 
 type SearchWithFilterProps = {
 	placeHolder: string;
@@ -25,6 +26,7 @@ type SearchWithFilterProps = {
 	setData: React.Dispatch<React.SetStateAction<InventoryData[]>>;
 	setIsFiltering: React.Dispatch<React.SetStateAction<boolean>>;
 	isAvailable: boolean;
+	table: Table<InventoryData>;
 };
 
 const SearchWithFilter: FC<SearchWithFilterProps> = ({
@@ -34,6 +36,7 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 	data,
 	setIsFiltering,
 	isAvailable,
+	table,
 }) => {
 	const [check, setCheck] = useState<CheckboxShape[]>([]);
 	const [uniqueFilter, seUniqueFilter] = useState<InventoryUniqueItems>({
@@ -121,6 +124,7 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 					localStorage.setItem("expireFilterData", JSON.stringify(check));
 					setData(tableData);
 				}
+				table.setPageSize(tableData.length);
 			})
 			.catch((err) => {
 				setData([]);
@@ -148,6 +152,7 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 
 		if (duplicate.length > 0) {
 			setData(duplicate);
+			table.setPageSize(duplicate.length);
 			if (isAvailable) {
 				localStorage.removeItem("filterData");
 			} else {
