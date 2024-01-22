@@ -77,7 +77,6 @@ const InventoryTableItem = () => {
 		const depot = formData.get("depot")?.toString() || "";
 		const quantity = formData.get("quantity")?.toString() || "";
 		const buyingRate = formData.get("buyingRate")?.toString() || "";
-		const sellingRate = formData.get("sellingRate")?.toString() || "";
 
 		const supp: InventorySupplierPostType = {
 			containerInformation: {
@@ -89,7 +88,7 @@ const InventoryTableItem = () => {
 				depot,
 				quantity,
 				region,
-				sellingRate,
+				sellingRate: "0",
 				state,
 				validUntil,
 			},
