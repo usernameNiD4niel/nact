@@ -97,6 +97,10 @@ const InventoryTableItem = () => {
 				businessName,
 			},
 		};
+
+		console.log(
+			`the data you want to update ::: ${JSON.stringify(supp, null, 2)}`,
+		);
 		// ! create a PATCH request here...
 		const response = await updateInventory(id, supp);
 

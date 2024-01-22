@@ -187,7 +187,9 @@ export async function updateInventory(
 
 		return {
 			success: false,
-			message: "Cannot update the inventory data, the error is from server",
+			message:
+				"Cannot update the inventory data, the error is from server status " +
+				500,
 		} as { success: boolean; message: string };
 	}
 
