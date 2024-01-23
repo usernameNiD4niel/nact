@@ -15,7 +15,7 @@ const getInitialData = async (
 		if (isAvailable) {
 			url = `inventory?page=${page}&per_page=10`;
 		} else {
-			url = `expire/inventory?page=${page}&per_page=10`;
+			url = `expired/inventory?page=${page}&per_page=10`;
 		}
 
 		const response = await fetch(

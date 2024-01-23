@@ -68,7 +68,7 @@ export async function getColumnSearch<T>(
 	if (isAvailable) {
 		url = `inventory/${column}/${searchQuery}`;
 	} else {
-		url = `expire/inventory/${column}/${searchQuery}`;
+		url = `expired/inventory/${column}/${searchQuery}`;
 	}
 
 	const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/${url}`, {
@@ -115,7 +115,7 @@ export async function getSearchExpired(search: string) {
 	const response = await fetch(
 		`${
 			import.meta.env.VITE_BASE_URL
-		}/api/expire/inventory/search?query=${search}`,
+		}/api/expired/inventory/search?query=${search}`,
 		{
 			headers: {
 				"Content-Type": "application/json",
@@ -239,7 +239,7 @@ export async function getPaginatedExpired(page: number) {
 	const response = await fetch(
 		`${
 			import.meta.env.VITE_BASE_URL
-		}/api/expire/inventory?page=${page}&per_page=10`,
+		}/api/expired/inventory?page=${page}&per_page=10`,
 		{
 			headers: {
 				"Content-Type": "application/json",

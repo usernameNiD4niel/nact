@@ -49,22 +49,6 @@ const Available = (): JSX.Element => {
 		setActiveTab(0);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
-	//   useEffect(() => {
-	//     console.log(`table data ::: ${JSON.stringify(tableData, null, 2)}`);
-
-	//     if (tableData) {
-	//       setData(JSON.parse(tableData));
-	//       //   if (shouldRefetch && shouldRefetch === "true") {
-	//       //     fetchedData();
-	//       //   } else {
-	//       //     setData(JSON.parse(tableData));
-	//       //   }
-	//     } else {
-	//       fetchedData();
-	//     }
-	//     setActiveTab(0);
-	//     // eslint-disable-next-line react-hooks/exhaustive-deps
-	//   }, []);
 
 	return (
 		<>
