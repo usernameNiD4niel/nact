@@ -7,6 +7,50 @@ import { NewDataTable } from "./helper/new-table-data";
 import { InventoryData } from "@/constants/props";
 
 export default function Expired() {
+	/**
+	 * 
+
+	const [data, setData] = useState<InventoryData[]>([]);
+
+	const [clone, setClone] = useState<InventoryData[]>([]);
+
+	const [queryParams] = useSearchParams();
+
+	const shouldRefetch = queryParams.get("shouldRefetch");
+
+	const [nextPageUrl, setNextPageUrl] = useState<number | null>(null);
+
+	const fetchedData = async () => {
+		const data_ = await getPaginatedData();
+		localStorage.setItem("available-inventory", JSON.stringify(data_));
+		setNextPageUrl(data_.next_page);
+		setData(data_.products);
+		setClone(data_.products);
+	};
+
+	useEffect(() => {
+		if (data && data.length > 0) {
+			localStorage.setItem("table_data", JSON.stringify(data));
+		}
+	}, [data]);
+
+	const tableData = localStorage.getItem("table_data");
+
+	useEffect(() => {
+		if (tableData) {
+			if (shouldRefetch && shouldRefetch === "true") {
+				fetchedData();
+			} else {
+				setData(JSON.parse(tableData));
+			}
+		} else {
+			fetchedData();
+		}
+		setActiveTab(0);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+	 */
 	const [setActiveTab] = useInventoryState((state) => [state.setActiveTab]);
 
 	const { data, isLoading, isError } = useQuery(["get-paginated-expired"], {
@@ -46,7 +90,7 @@ export default function Expired() {
 			);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [data]);
+	}, [expired]);
 
 	function content() {
 		if (isLoading) {
