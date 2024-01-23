@@ -110,11 +110,19 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 			.then((data_) => {
 				const tableData: InventoryData[] = data_.filtered_inventory;
 
+				console.log(
+					`is available ${isAvailable} ${JSON.stringify(tableData, null, 2)}`,
+				);
+
 				setIsFiltering(true);
 				if (!tableData || tableData.length === 0) {
 					setData([]);
 					return;
 				}
+
+				console.log(
+					`is available ${isAvailable} ${JSON.stringify(tableData, null, 2)}`,
+				);
 				if (isAvailable) {
 					localStorage.setItem("table_data", JSON.stringify(tableData));
 					localStorage.setItem("filterData", JSON.stringify(check));
@@ -134,6 +142,7 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 	};
 
 	async function handleFetchDefault() {
+		console.log(`should handle re fetch ${isAvailable}`);
 		if (isAvailable) {
 			const data_ = await getPaginatedData();
 			setData(data_.products);
@@ -149,6 +158,8 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 			requestFiltered();
 			return;
 		}
+
+		console.log(`the duplicate length is ${duplicate.length}`);
 
 		if (duplicate.length > 0) {
 			setData(duplicate);
@@ -181,7 +192,7 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 	// }, []);
 
 	const fetchUniqueFilter = async () => {
-		const actualDataFilter = await getUniqueItems();
+		const actualDataFilter = await getUniqueItems(isAvailable);
 		seUniqueFilter(actualDataFilter);
 		let filterData: string | null = "";
 

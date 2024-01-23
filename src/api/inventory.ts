@@ -42,15 +42,18 @@ export const isInventoryAdded = async (
 	}
 };
 
-export const getUniqueItems = async () => {
-	const response = await fetch(
-		`${import.meta.env.VITE_BASE_URL}/api/inventory/unique`,
-		{
-			headers: {
-				"Content-Type": "application/json",
-			},
+export const getUniqueItems = async (isAvailable: boolean) => {
+	let url = "inventory/unique";
+
+	if (!isAvailable) {
+		url = "expired/inventory/unique";
+	}
+
+	const response = await fetch(`${import.meta.env.VITE_BASE_URL}/api/${url}`, {
+		headers: {
+			"Content-Type": "application/json",
 		},
-	);
+	});
 
 	if (response.ok) {
 		const data: InventoryUniqueItems = await response.json();
