@@ -178,11 +178,14 @@ const ContainerInformationForm: FC<ContainerInformationFormProps> = ({
 				<button
 					type="button"
 					className={cn(
-						"absolute w-10 h-8 flex items-center justify-center bg-white  z-[5] right-[2px] top-2 text-black hover:text-primary",
+						"absolute w-10 h-8 flex items-center justify-center bg-white  z-[5] right-[2px] bottom-2 hover:text-primary",
 						isDisabled && "bg-gray-100",
 					)}
 					onClick={handleValidUntil}>
-					<HiOutlineCalendarDays />
+					<span
+						className={cn(isDisabled ? "text-slate-400" : "text-slate-600")}>
+						<HiOutlineCalendarDays />
+					</span>
 				</button>
 				<span
 					className={`${`${animatedSpanClass} whitespace-nowrap ${
@@ -192,12 +195,6 @@ const ContainerInformationForm: FC<ContainerInformationFormProps> = ({
 					}`}>
 					Valid Until
 				</span>
-				<button
-					type="button"
-					className="absolute right-4 top-4 z-100 text-black opacity-90 bg-white md:bg-gray-500 hover:text-[#017DC3] hover:opacity-100"
-					onClick={handleValidUntil}>
-					<HiOutlineCalendarDays />
-				</button>
 			</label>
 			<div className="w-full flex flex-col gap-y-1">
 				<Label className={cn(isDisabled ? "flex" : "hidden")}>Quantity</Label>
