@@ -32,8 +32,6 @@ const AddInventory = () => {
 	const [completeAddress, setCompleteAddress] = useState("");
 	const [contactNumber, setContactNumber] = useState("");
 
-	const [state, setState] = useState("");
-	const [country, setCountry] = useState("");
 	const [validUntil, setValidUntil] = useState("");
 
 	const [validationError, setValidationError] = useState("");
@@ -41,16 +39,13 @@ const AddInventory = () => {
 
 	const initialInventory: InventoryProps = {
 		buyingRate: "",
-		city: "",
 		condition: "",
 		containerType: "",
-		country: "",
 		depot: "",
 		quantity: "",
-		region: "",
 		sellingRate: "",
-		state: "",
 		validUntil: "",
+		location_id: "",
 	};
 
 	const mutation = useMutation({
@@ -97,16 +92,13 @@ const AddInventory = () => {
 
 		const inventory: InventoryProps = {
 			buyingRate: formData.get("buyingRate")?.toString() ?? "",
-			city: formData.get("city")?.toString() ?? "",
 			condition: formData.get("condition")?.toString() ?? "",
 			containerType: formData.get("containerType")?.toString() ?? "",
-			country,
 			depot: formData.get("depot")?.toString() ?? "",
 			quantity: formData.get("quantity")?.toString() ?? "",
-			region: formData.get("region")?.toString() ?? "",
 			sellingRate: formData.get("sellingRate")?.toString() ?? "0",
-			state,
 			validUntil,
+			location_id: formData.get("location_id")?.toString() ?? "0",
 		};
 
 		const supplier: SupplierInventoryPost = {
@@ -136,11 +128,7 @@ const AddInventory = () => {
 						<ContainerInformationForm
 							isDisabled={false}
 							containerInfo={initialInventory}
-							country={country}
-							setCountry={setCountry}
-							setState={setState}
 							setValidUntil={setValidUntil}
-							state={state}
 							validUntil={validUntil}
 							key="AddInventoryFormKey"
 						/>

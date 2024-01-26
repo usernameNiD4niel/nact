@@ -1,23 +1,28 @@
 import { Locations } from "@/constants/props";
 
 export async function getLocations() {
-	const response = await fetch(`${process.env.VITE_BASE_URL}/api/locations`, {
-		headers: {
-			"Content-Type": "application/json",
+	const response = await fetch(
+		`${import.meta.env.VITE_BASE_URL}/api/locations`,
+		{
+			headers: {
+				"Content-Type": "application/json",
+			},
 		},
-	});
+	);
 
 	if (response.ok) {
 		const data = await response.json();
 		return data.locations as Locations[];
 	}
 
+	console.log(response);
+
 	return [];
 }
 
 export async function getSpecificColumnData(column: string) {
 	const response = await fetch(
-		`${process.env.VITE_BASE_URL}/api/locations/${column}`,
+		`${import.meta.env.VITE_BASE_URL}/api/locations/${column}`,
 		{
 			headers: {
 				"Content-Type": "application/json",
@@ -41,13 +46,16 @@ export async function createLocation(location: Locations) {
 		region: location.region,
 	};
 
-	const response = await fetch(`${process.env.VITE_BASE_URL}/api/locations`, {
-		method: "POST",
-		headers: {
-			"Content-Type": "application/json",
+	const response = await fetch(
+		`${import.meta.env.VITE_BASE_URL}/api/locations`,
+		{
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+			},
+			body: JSON.stringify(newLocation),
 		},
-		body: JSON.stringify(newLocation),
-	});
+	);
 
 	const data = await response.json();
 	if (response.ok) {

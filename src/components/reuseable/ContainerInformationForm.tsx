@@ -1,9 +1,7 @@
-import React, { FC, useEffect, useRef, useState } from "react";
+import React, { FC, useRef } from "react";
 import DropdownContainerType from "../management/inventory/helper/dropdown-container-type";
 import CustomInput from "./CustomInput";
 import { InventoryProps } from "@/constants/props";
-import ComboBox from "./ComboBox";
-import { cities, states } from "@/constants/objects";
 import {
 	animatedInputClass,
 	animatedSpanClass,
@@ -11,65 +9,27 @@ import {
 import { HiOutlineCalendarDays } from "react-icons/hi2";
 import { cn } from "@/lib/utils";
 import { Label } from "../ui/label";
+import LocationForm from "./LocationForm";
 
 type ContainerInformationFormProps = {
 	isDisabled: boolean;
 	containerInfo: InventoryProps;
 
-	state: string;
-	country: string;
 	validUntil: string;
-
-	setState: React.Dispatch<React.SetStateAction<string>>;
-	setCountry: React.Dispatch<React.SetStateAction<string>>;
 	setValidUntil: React.Dispatch<React.SetStateAction<string>>;
 };
 
 const ContainerInformationForm: FC<ContainerInformationFormProps> = ({
 	isDisabled,
 	containerInfo,
-	country,
-	setCountry,
-	setState,
 	setValidUntil,
-	state,
 	validUntil,
 }) => {
 	const birthdateRef = useRef<HTMLInputElement | null>(null);
 
-	const [city, setCity] = useState(containerInfo.city);
-
 	const handleValidUntil = () => {
 		birthdateRef.current?.showPicker();
 	};
-
-	useEffect(() => {
-		for (const state_ in cities) {
-			// @ts-expect-error - This should not happen
-			// eslint-disable-next-line no-prototype-builtins
-			if (cities.hasOwnProperty(state_) && cities[state_].includes(city)) {
-				setState(state_);
-				console.log(state_);
-
-				return;
-			}
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [city]);
-
-	useEffect(() => {
-		for (const country_ in states) {
-			// @ts-expect-error - This should not happen
-			// eslint-disable-next-line no-prototype-builtins
-			if (states.hasOwnProperty(country_) && states[country_].includes(state)) {
-				setCountry(country_);
-				console.log(country_);
-
-				return;
-			}
-		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, [state]);
 
 	return (
 		<React.Fragment>
@@ -96,7 +56,13 @@ const ContainerInformationForm: FC<ContainerInformationFormProps> = ({
 				/>
 			</div>
 
-			<div className="w-full flex flex-col gap-y-1">
+			<LocationForm
+				hasRegion={true}
+				isDisabled={isDisabled}
+				defaultCity={containerInfo.city}
+			/>
+
+			{/* <div className="w-full flex flex-col gap-y-1">
 				<Label className={cn(isDisabled ? "flex" : "hidden")}>City</Label>
 				<ComboBox
 					setInputValue={setCity}
@@ -145,7 +111,7 @@ const ContainerInformationForm: FC<ContainerInformationFormProps> = ({
 					defaultValue={containerInfo?.region}
 					key="RegionKey"
 				/>
-			</div>
+			</div> */}
 			<div className="w-full flex flex-col gap-y-1">
 				<Label className={cn(isDisabled ? "flex" : "hidden")}>Depot</Label>
 				<CustomInput

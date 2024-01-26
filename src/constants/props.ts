@@ -216,15 +216,12 @@ export type StatesType = {
 export type InventoryProps = {
 	containerType: string;
 	condition: string;
-	city: string;
-	state: string;
-	region: string;
-	country: string;
 	depot: string;
 	validUntil: string;
 	quantity: string;
 	buyingRate: string;
 	sellingRate: string;
+	location_id: string;
 };
 
 export type SupplierDataProps = {

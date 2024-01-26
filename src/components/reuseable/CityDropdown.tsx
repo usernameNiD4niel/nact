@@ -18,38 +18,76 @@ import {
 	PopoverContent,
 	PopoverTrigger,
 } from "@/components/ui/popover";
+import { cn } from "@/lib/utils";
+import { animatedInputClass } from "@/constants/reusable-class";
+import AddLocationForm from "./AddLocationForm";
 
 interface ComboBoxResponsiveProps {
 	cities: string[];
+	handleCitySelection: (city: string) => void;
+	isDisabled: boolean;
+	defaultValue?: string;
 }
 
 export default function ComboBoxResponsive({
 	cities,
+	handleCitySelection,
+	defaultValue,
+	isDisabled,
 }: ComboBoxResponsiveProps) {
 	const [open, setOpen] = React.useState(false);
 	const isDesktop = useMediaQuery("(min-width: 768px)");
 	const [city, setCity] = React.useState<string>("");
 
+	React.useEffect(() => {
+		if (city && city.length > 0) {
+			handleCitySelection(city);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [city]);
+
+	React.useEffect(() => {
+		if (defaultValue) {
+			setCity(defaultValue);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
 	if (isDesktop) {
 		return (
-			<Popover open={open} onOpenChange={setOpen}>
-				<PopoverTrigger asChild>
-					<Button variant="outline" className="w-[150px] justify-start">
-						{city ? <>{city}</> : <>City</>}
-					</Button>
-				</PopoverTrigger>
-				<PopoverContent className="w-[200px] p-0" align="start">
-					<CityList setOpen={setOpen} setCity={setCity} cities={cities} />
-				</PopoverContent>
-			</Popover>
+			<>
+				<Popover open={open} onOpenChange={setOpen}>
+					<PopoverTrigger asChild>
+						<Button
+							variant="outline"
+							// className="w-full justify-start"
+							className={cn("disabled:bg-gray-200", animatedInputClass)}
+							disabled={isDisabled}>
+							<span className="w-full text-start">
+								{city ? <>{city}</> : <>City</>}
+							</span>
+						</Button>
+					</PopoverTrigger>
+					<PopoverContent className="w-[200px] p-0" align="start">
+						<CityList setOpen={setOpen} setCity={setCity} cities={cities} />
+					</PopoverContent>
+				</Popover>
+				{/* {isModalOpen && <AddLocationForm />} */}
+			</>
 		);
 	}
 
 	return (
 		<Drawer open={open} onOpenChange={setOpen}>
 			<DrawerTrigger asChild>
-				<Button variant="outline" className="w-[150px] justify-start">
-					{city ? <>{city}</> : <>+ Set status</>}
+				<Button
+					variant="outline"
+					// className="w-full justify-start"
+					className={cn("disabled:bg-gray-200", animatedInputClass)}
+					disabled={isDisabled}>
+					<span className="w-full text-start">
+						{city ? <>{city}</> : <>{defaultValue ? defaultValue : "City"}</>}
+					</span>
 				</Button>
 			</DrawerTrigger>
 			<DrawerContent>
@@ -72,17 +110,27 @@ function CityList({
 }) {
 	return (
 		<Command>
-			<CommandInput placeholder="Filter status..." />
+			<CommandInput placeholder="Filter city..." />
 			<CommandList>
 				<CommandEmpty>No results found.</CommandEmpty>
 				<CommandGroup>
+					<CommandItem
+						key={"add-item"}
+						value={""}
+						className="p-0 text-blue-500 cursor-pointer">
+						<AddLocationForm />
+					</CommandItem>
 					{cities.map((city) => (
 						<CommandItem
 							key={city}
 							value={city}
 							onSelect={(value) => {
-								setCity(cities.find((city) => city === value) || "");
+								setCity(
+									cities.find((city) => city.toLowerCase() === value) || "",
+								);
 								setOpen(false);
+								console.log(`city value: ${value}`);
+								console.log(`city: ${city}`);
 							}}>
 							{city}
 						</CommandItem>
