@@ -477,12 +477,12 @@ export type PaginatedInventoryExpired = {
 };
 
 export type InventoryData = {
-	id: string;
-	containerType: string;
 	city: string;
 	state: string;
-	quantity: string;
+	id: string;
+	containerType: string;
 	depot: string;
+	quantity: string;
 	buyingRate: string;
 };
 
