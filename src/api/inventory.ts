@@ -1,10 +1,11 @@
 import {
 	InventorySupplierAlter,
 	InventorySupplierPostType,
-	InventorySupplierType,
 	InventoryUniqueItems,
+	InventoryWithLocationProps,
 	PaginatedInventory,
 	PaginatedInventoryExpired,
+	SupplierInventory,
 } from "@/constants/props";
 
 export const isInventoryAdded = async (
@@ -217,7 +218,10 @@ export async function getSpecificItem(id: string) {
 	}
 
 	const data = await response.json();
-	return data as InventorySupplierType;
+	return data as {
+		containerInformation: InventoryWithLocationProps;
+		supplier: SupplierInventory | null;
+	};
 }
 
 export async function getSupplierInventory() {

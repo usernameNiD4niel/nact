@@ -1,7 +1,7 @@
 import React, { FC, useRef } from "react";
 import DropdownContainerType from "../management/inventory/helper/dropdown-container-type";
 import CustomInput from "./CustomInput";
-import { InventoryProps } from "@/constants/props";
+import { InventoryWithLocationProps } from "@/constants/props";
 import {
 	animatedInputClass,
 	animatedSpanClass,
@@ -13,7 +13,7 @@ import LocationForm from "./LocationForm";
 
 type ContainerInformationFormProps = {
 	isDisabled: boolean;
-	containerInfo: InventoryProps;
+	containerInfo: InventoryWithLocationProps;
 
 	validUntil: string;
 	setValidUntil: React.Dispatch<React.SetStateAction<string>>;
@@ -56,10 +56,11 @@ const ContainerInformationForm: FC<ContainerInformationFormProps> = ({
 				/>
 			</div>
 
+			{/* //! fix the get, the inventory should have a location object and extractable data */}
 			<LocationForm
 				hasRegion={true}
 				isDisabled={isDisabled}
-				defaultCity={containerInfo.city}
+				defaultCity={containerInfo.location.city}
 			/>
 
 			{/* <div className="w-full flex flex-col gap-y-1">

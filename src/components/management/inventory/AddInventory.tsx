@@ -6,6 +6,7 @@ import SupplierFormInventory from "@/components/reuseable/SupplierFormInventory"
 import {
 	InventoryProps,
 	InventorySupplierPostType,
+	InventoryWithLocationProps,
 	SupplierInventoryPost,
 } from "@/constants/props";
 import { headerBackClass } from "@/constants/reusable-class";
@@ -37,7 +38,7 @@ const AddInventory = () => {
 	const [validationError, setValidationError] = useState("");
 	const [hasSupplierAccess, setHasSupplierAccess] = useState(true);
 
-	const initialInventory: InventoryProps = {
+	const initialInventory: InventoryWithLocationProps = {
 		buyingRate: "",
 		condition: "",
 		containerType: "",
@@ -45,7 +46,13 @@ const AddInventory = () => {
 		quantity: "",
 		sellingRate: "",
 		validUntil: "",
-		location_id: "",
+		location: {
+			city: "",
+			country: "",
+			region: "",
+			id: "",
+			state: "",
+		},
 	};
 
 	const mutation = useMutation({
