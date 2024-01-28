@@ -67,6 +67,8 @@ export default function AddLocationForm() {
 		const { message, success } = await createLocation(location);
 
 		if (success) {
+			// queryClient.invalidateQueries(["get-all-location"]);
+			// queryClient.invalidateQueries();
 			resetFields();
 			toast({
 				title: "Created Successfully",
