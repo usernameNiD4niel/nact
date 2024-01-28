@@ -8,19 +8,27 @@ interface LocationFormProps {
 	hasRegion: boolean;
 	isDisabled: boolean;
 	defaultCity?: string;
+	defaultState?: string;
+	defaultCountry?: string;
+	defaultRegion?: string;
 }
 
 export default function LocationForm({
 	hasRegion,
 	isDisabled,
 	defaultCity,
+	defaultCountry,
+	defaultRegion,
+	defaultState,
 }: LocationFormProps) {
 	const [locations, setLocations] = useState<Locations[]>([]);
 	// ! Remove this if city will be use (bcuz city is unique)
 	const [selectedId, setSelectedId] = useState(""); // * send this to the form as location_id
-	const [country, setCountry] = useState("");
-	const [state, setState] = useState("");
-	const [region, setRegion] = useState("");
+	const [country, setCountry] = useState<string>(
+		defaultCountry ? defaultCountry : "",
+	);
+	const [state, setState] = useState(defaultState ? defaultState : "");
+	const [region, setRegion] = useState(defaultRegion ? defaultRegion : "");
 	const [cities, setCities] = useState<string[]>([]);
 
 	async function getLocation() {

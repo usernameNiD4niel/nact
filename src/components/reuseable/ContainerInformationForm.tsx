@@ -1,7 +1,7 @@
 import React, { FC, useRef } from "react";
 import DropdownContainerType from "../management/inventory/helper/dropdown-container-type";
 import CustomInput from "./CustomInput";
-import { InventoryWithLocationProps } from "@/constants/props";
+import { InventoryWithoutLocationProps } from "@/constants/props";
 import {
 	animatedInputClass,
 	animatedSpanClass,
@@ -13,7 +13,7 @@ import LocationForm from "./LocationForm";
 
 type ContainerInformationFormProps = {
 	isDisabled: boolean;
-	containerInfo: InventoryWithLocationProps;
+	containerInfo: InventoryWithoutLocationProps;
 
 	validUntil: string;
 	setValidUntil: React.Dispatch<React.SetStateAction<string>>;
@@ -60,7 +60,10 @@ const ContainerInformationForm: FC<ContainerInformationFormProps> = ({
 			<LocationForm
 				hasRegion={true}
 				isDisabled={isDisabled}
-				defaultCity={containerInfo.location.city}
+				defaultCity={containerInfo.city}
+				defaultState={containerInfo.state}
+				defaultCountry={containerInfo.country}
+				defaultRegion={containerInfo.region}
 			/>
 
 			{/* <div className="w-full flex flex-col gap-y-1">

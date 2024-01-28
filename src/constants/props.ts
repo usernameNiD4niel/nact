@@ -235,6 +235,20 @@ export type InventoryWithLocationProps = {
 	location: Locations;
 };
 
+export type InventoryWithoutLocationProps = {
+	containerType: string;
+	condition: string;
+	depot: string;
+	validUntil: string;
+	quantity: string;
+	buyingRate: string;
+	sellingRate: string;
+	city: string;
+	state: string;
+	region: string;
+	country: string;
+};
+
 export type SupplierDataProps = {
 	suppliers: SupplierTableProps[];
 	page_count: number;

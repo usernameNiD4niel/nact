@@ -2,7 +2,7 @@ import {
 	InventorySupplierAlter,
 	InventorySupplierPostType,
 	InventoryUniqueItems,
-	InventoryWithLocationProps,
+	InventoryWithoutLocationProps,
 	PaginatedInventory,
 	PaginatedInventoryExpired,
 	SupplierInventory,
@@ -219,7 +219,7 @@ export async function getSpecificItem(id: string) {
 
 	const data = await response.json();
 	return data as {
-		containerInformation: InventoryWithLocationProps;
+		containerInformation: InventoryWithoutLocationProps;
 		supplier: SupplierInventory | null;
 	};
 }
