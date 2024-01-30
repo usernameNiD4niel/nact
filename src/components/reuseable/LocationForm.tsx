@@ -34,9 +34,16 @@ export default function LocationForm({
 	async function getLocation() {
 		const locations_ = await getLocations();
 		setLocations(locations_);
-
 		const newCity = locations_.map((loc) => loc.city);
 		setCities(newCity);
+
+		if (defaultCity) {
+			const newCity = locations_.find((loc) => loc.city === defaultCity);
+
+			if (newCity) {
+				setSelectedId(newCity.id);
+			}
+		}
 	}
 
 	// ! Will only work if the city is unique
@@ -49,6 +56,7 @@ export default function LocationForm({
 
 	function handleCitySelection(selectedCity: string) {
 		const newCity = locations.find((loc) => loc.city === selectedCity);
+
 		if (newCity) {
 			setSelectedId(newCity.id);
 			setCountry(newCity.country);
