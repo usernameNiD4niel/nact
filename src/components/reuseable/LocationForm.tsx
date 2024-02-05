@@ -109,18 +109,20 @@ export default function LocationForm({
 				/>
 			</label>
 
-			<label className="relative" htmlFor="region">
-				<span className="text-sm">Region</span>
-				<input
-					type="text"
-					className={`${animatedInputClass} disabled:bg-gray-100`}
-					value={region}
-					name="region"
-					disabled
-					id="region"
-					onChange={(e) => setRegion(e.target.value)}
-				/>
-			</label>
+			{defaultRegion && (
+				<label className="relative" htmlFor="region">
+					<span className="text-sm">Region</span>
+					<input
+						type="text"
+						className={`${animatedInputClass} disabled:bg-gray-100`}
+						value={region}
+						name="region"
+						disabled
+						id="region"
+						onChange={(e) => setRegion(e.target.value)}
+					/>
+				</label>
+			)}
 
 			<input
 				value={selectedId}

@@ -304,6 +304,19 @@ export type ShippingFormProps = {
 	contactInformation: ContactInformation[];
 };
 
+// * Use this if you are not fetching, update or post
+export type ShippingFormItemProps = {
+	businessInformation: BusinessInformationItem;
+	contactInformation: ContactInformation[];
+};
+
+export type BusinessInformationItem = {
+	businessName: string;
+	location_id: string;
+	companyPhoneNumber: string;
+	companyEmailWebsite: string;
+};
+
 export type BusinessInformation = {
 	businessName: string;
 	city: string;
