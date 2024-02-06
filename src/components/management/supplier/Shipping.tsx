@@ -89,7 +89,7 @@ const BusinessInformationForm = () => {
 			});
 		}
 
-		router(-1);
+		router("/supplier?shouldRefetch=true");
 	}
 	return (
 		<div className={`flex flex-col items-center justify-center mt-10`}>

@@ -49,13 +49,17 @@ const List = () => {
 	}, [supplier]);
 
 	useEffect(() => {
-		const tableSupplier = localStorage.getItem("table_supplier");
-
-		if (tableSupplier) {
+		if (shouldRefetch && shouldRefetch === "true") {
 			if (shouldRefetch && shouldRefetch === "true") {
 				fetchedData();
 			} else {
-				setSupplier(JSON.parse(tableSupplier));
+				const tableSupplier = localStorage.getItem("table_supplier");
+
+				if (tableSupplier) {
+					setSupplier(JSON.parse(tableSupplier));
+				} else {
+					fetchedData();
+				}
 			}
 		} else {
 			fetchedData();
