@@ -34,9 +34,8 @@ const Available = (): JSX.Element => {
 		}
 	}, [data]);
 
-	const tableData = localStorage.getItem("table_data");
-
 	useEffect(() => {
+		const tableData = localStorage.getItem("table_data");
 		if (tableData) {
 			if (shouldRefetch && shouldRefetch === "true") {
 				fetchedData();

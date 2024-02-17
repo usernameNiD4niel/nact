@@ -10,7 +10,6 @@ import {
 	SupplierItem,
 	UniqueItems,
 } from "@/constants/props";
-import Cookies from "js-cookie";
 
 const getSupplierTableData = async (
 	setIsFetching: React.Dispatch<React.SetStateAction<boolean>>,
@@ -20,7 +19,7 @@ const getSupplierTableData = async (
 	const response = await fetch(`${import.meta.env.VITE_BASE_URL}/supplier`, {
 		headers: {
 			"Content-Type": "application/json",
-			Authorization: "Bearer " + Cookies.get("token")!,
+			// Authorization: "Bearer " + Cookies.get("token")!,
 			// token: csrf_token!,
 			// "X-CSRF-TOKEN": csrf_token!,
 		},

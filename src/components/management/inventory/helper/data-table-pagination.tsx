@@ -60,9 +60,13 @@ export function DataTablePagination<TData>({
 	isFiltering,
 	isAvailable,
 }: DataTablePaginationProps<TData>) {
-	const [nextPageUrl, setNextPageUrl] = useState<number | null>(1);
+	const [nextPageUrl, setNextPageUrl] = useState<number | null>(null);
+
+	console.log(`next page url : ${nextPageUrl}`);
+	console.log(`is filtering : ${isFiltering}`);
 
 	useEffect(() => {
+		console.log("page hydrated");
 		if (next_page_url) {
 			setNextPageUrl(next_page_url);
 		}
