@@ -21,8 +21,10 @@ export const containerType = [
 	"40' HC 1 TRIPPER",
 	"40' HC CW",
 	"40' HC DD",
-	"40' HC 4D",
-	"40' HC OS",
+	"40 HC OS 4D", // --
+	// "40' HC 4D", Pinabago - 02-20-2024 12:35am
+	// "40' HC OS", Pinabago - 02-20-2024 12:35am
+	"40 HC OS FULL", // ---
 	"40' HC REEFER (NEW)",
 	"40' HC REEFER (WORKING)",
 	"40' HC WWT",
