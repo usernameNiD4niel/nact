@@ -8,7 +8,7 @@ import { InventorySupplierPostType } from "@/constants/props";
 import { headerBackClass } from "@/constants/reusable-class";
 import { cn } from "@/lib/utils";
 
-import { useQuery } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import AlertDialog from "./helper/alert-dialog";
@@ -20,6 +20,8 @@ const InventoryTableItem = () => {
 	const [isDisabled, setIsDisabled] = useState(true);
 	const arrayEndpoint = location.pathname.split("/");
 	const id = arrayEndpoint[arrayEndpoint.length - 1];
+
+	const queryClient = useQueryClient();
 
 	const [businessName, setBusinessName] = useState("");
 	const [completeAddress, setCompleteAddress] = useState("");
@@ -48,12 +50,9 @@ const InventoryTableItem = () => {
 		}
 	}, []);
 
-	const { data, isLoading, isError } = useQuery(
-		["inventory-item", "form", id],
-		{
-			queryFn: () => getSpecificItem(id),
-		},
-	);
+	const { data, isLoading, isError } = useQuery([`inventory-item-${id}`], {
+		queryFn: () => getSpecificItem(id),
+	});
 
 	const handleFormSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
 		event.preventDefault();
@@ -90,12 +89,11 @@ const InventoryTableItem = () => {
 				businessName,
 			},
 		};
-
-		console.log(
-			`the data you want to update ::: ${JSON.stringify(supp, null, 2)}`,
-		);
-		// ! create a PATCH request here...
 		const response = await updateInventory(id, supp);
+
+		if (response.success) {
+			queryClient.invalidateQueries([`inventory-item-${id}`]);
+		}
 
 		setUpdateResponse(response);
 		setIsLoadingButton(false);

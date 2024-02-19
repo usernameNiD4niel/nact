@@ -6,6 +6,7 @@ import ContactInformationForm from "./contact-information-form";
 import { updateSpecificSupplier } from "@/api/supplier";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/components/ui/use-toast";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface SupplierAddFormProps {
 	id: string;
@@ -18,6 +19,8 @@ export default function SupplierAddForm({
 }: SupplierAddFormProps) {
 	const [isDisabled, setIsDisabled] = useState(true);
 	const [isLoading, setIsLoading] = useState(false);
+
+	const queryClient = useQueryClient();
 
 	const { toast } = useToast();
 
@@ -84,6 +87,7 @@ export default function SupplierAddForm({
 				title: message,
 				description: "You have successfully updated 1 supplier record",
 			});
+			queryClient.invalidateQueries([`supplier-${id}`]);
 			navigate("/supplier?shouldRefetch=true");
 		} else {
 			toast({
