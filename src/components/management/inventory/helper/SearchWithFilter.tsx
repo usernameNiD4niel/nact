@@ -356,6 +356,7 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 				supplier={getColumnData(uniqueFilter.supplier, "supplier")}
 				check={check}
 				setCheck={setCheck}
+				hasSupplierAccess={hasSupplierAccess}
 				isAvailable={isAvailable}
 				setIsFiltering={setIsFiltering}
 				key={"MobileViewFilteringDropdown"}

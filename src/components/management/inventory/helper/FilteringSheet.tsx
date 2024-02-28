@@ -22,6 +22,7 @@ type FilteringSheetProps = {
 	setCheck: React.Dispatch<React.SetStateAction<CheckboxShape[]>>;
 	setIsFiltering: React.Dispatch<React.SetStateAction<boolean>>;
 	isAvailable: boolean;
+	hasSupplierAccess: boolean;
 };
 
 const FilteringSheet: FC<FilteringSheetProps> = ({
@@ -36,6 +37,7 @@ const FilteringSheet: FC<FilteringSheetProps> = ({
 	setIsFiltering,
 	supplier,
 	isAvailable,
+	hasSupplierAccess,
 }) => {
 	return (
 		<Sheet>
@@ -111,16 +113,18 @@ const FilteringSheet: FC<FilteringSheetProps> = ({
 						dropdown="buyingRate"
 						key={"FilteringSheetBuyingRate"}
 					/>
-					<FilterAccordion
-						check={check}
-						items={supplier}
-						label="Supplier"
-						setIsFiltering={setIsFiltering}
-						setCheck={setCheck}
-						isAvailable={isAvailable}
-						dropdown="supplier"
-						key={"FilteringSheetSupplier"}
-					/>
+					{hasSupplierAccess && (
+						<FilterAccordion
+							check={check}
+							items={supplier}
+							label="Supplier"
+							setIsFiltering={setIsFiltering}
+							setCheck={setCheck}
+							isAvailable={isAvailable}
+							dropdown="supplier"
+							key={"FilteringSheetSupplier"}
+						/>
+					)}
 				</div>
 			</SheetContent>
 		</Sheet>
