@@ -40,7 +40,7 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 	table,
 }) => {
 	const [check, setCheck] = useState<CheckboxShape[]>([]);
-	const [hasSupplierAccess, setHasSupplierAccess] = useState(true);
+	const [hasSupplierAccess, setHasSupplierAccess] = useState(false);
 	const [uniqueFilter, seUniqueFilter] = useState<InventoryUniqueItems>({
 		containerType: [],
 		city: [],
