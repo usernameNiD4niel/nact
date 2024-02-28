@@ -18,6 +18,7 @@ import {
 } from "@/api/inventory";
 import useDebounce from "@/hooks/useDebounce";
 import { Table } from "@tanstack/react-table";
+import Cookies from "js-cookie";
 
 type SearchWithFilterProps = {
 	placeHolder: string;
@@ -39,6 +40,7 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 	table,
 }) => {
 	const [check, setCheck] = useState<CheckboxShape[]>([]);
+	const [hasSupplierAccess, setHasSupplierAccess] = useState(true);
 	const [uniqueFilter, seUniqueFilter] = useState<InventoryUniqueItems>({
 		containerType: [],
 		city: [],
@@ -159,8 +161,6 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 			return;
 		}
 
-		console.log(`the duplicate length is ${duplicate.length}`);
-
 		if (duplicate.length > 0) {
 			setData(duplicate);
 			table.setPageSize(duplicate.length);
@@ -208,6 +208,18 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 	};
 
 	useEffect(() => {
+		const accessModule = JSON.parse(
+			Cookies.get("access_module") || "",
+		) as string[];
+
+		const supplierManagement = accessModule.find(
+			(access) => access === "Supplier Management",
+		);
+
+		if (supplierManagement) {
+			setHasSupplierAccess(true);
+		}
+
 		fetchUniqueFilter();
 	}, []);
 
@@ -321,16 +333,18 @@ const SearchWithFilter: FC<SearchWithFilterProps> = ({
 					isAvailable={isAvailable}
 					key={"BuyingRateKeyFilterDropdown"}
 				/>
-				<FilteringDropdown
-					items={getColumnData(uniqueFilter.supplier, "supplier")}
-					check={check}
-					setCheck={setCheck}
-					label="Supplier"
-					dropdown="supplier"
-					isAvailable={isAvailable}
-					setIsFiltering={setIsFiltering}
-					key={"SupplierKeyFilterDropdown"}
-				/>
+				{hasSupplierAccess && (
+					<FilteringDropdown
+						items={getColumnData(uniqueFilter.supplier, "supplier")}
+						check={check}
+						setCheck={setCheck}
+						label="Supplier"
+						dropdown="supplier"
+						isAvailable={isAvailable}
+						setIsFiltering={setIsFiltering}
+						key={"SupplierKeyFilterDropdown"}
+					/>
+				)}
 			</div>
 			<FilteringSheet
 				containerType={getContainerType}
