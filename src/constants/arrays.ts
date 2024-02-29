@@ -27,6 +27,8 @@ export const containerType = [
 	"40 HC OS FULL", // ---
 	"20'STD IICL", // Pinadagdag - 02-28-2024 5:08am
 	"40 HC OS (2D)", // Pinadagdag - 02-28-2024 5:08am
+	"40 HC 1 TRIPPER  (3D)", // Pinadagdag - 02-29-2024 8am
+	"20 STD OS (2D)", // Pinadagdag - 02-29-2024 8am
 	"40' HC REEFER (NEW)",
 	"40' HC REEFER (WORKING)",
 	"40' HC WWT",
