@@ -193,6 +193,7 @@ export type LoginSuccessResponse = {
 	access_token: string;
 	access_token_cookie: string;
 	access_module: string[];
+	access_role: string;
 };
 
 type UserResponseProps = {

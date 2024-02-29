@@ -18,6 +18,8 @@ const Available = (): JSX.Element => {
 
 	const shouldRefetch = queryParams.get("shouldRefetch");
 
+	const [isSalesAssociate, setIsSalesAssociate] = useState(false);
+
 	const [nextPageUrl, setNextPageUrl] = useState<number | null>(null);
 
 	const fetchedData = async () => {
@@ -35,6 +37,13 @@ const Available = (): JSX.Element => {
 	}, [data]);
 
 	useEffect(() => {
+		const isSales = localStorage.getItem("isSales");
+
+		if (isSales && Boolean(isSales) === true) {
+			setIsSalesAssociate(true);
+		} else {
+			setIsSalesAssociate(false);
+		}
 		const tableData = localStorage.getItem("table_data");
 		if (tableData) {
 			if (shouldRefetch && shouldRefetch === "true") {
@@ -64,11 +73,13 @@ const Available = (): JSX.Element => {
 						/>
 					</div>
 				</div>
-				<AddButton
-					redirectUrl="/inventory/add"
-					textButton="Inventory"
-					key={"InventoryAddTable"}
-				/>
+				{!isSalesAssociate && (
+					<AddButton
+						redirectUrl="/inventory/add"
+						textButton="Inventory"
+						key={"InventoryAddTable"}
+					/>
+				)}
 			</div>
 		</>
 	);
