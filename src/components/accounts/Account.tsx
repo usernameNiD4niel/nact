@@ -56,6 +56,7 @@ const Account = () => {
 		Cookies.remove("user");
 		Cookies.remove("access_module");
 		Cookies.remove("csrf_token");
+		localStorage.clear();
 		navigate("/login");
 	};
 
