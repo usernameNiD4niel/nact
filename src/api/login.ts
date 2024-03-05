@@ -43,9 +43,10 @@ export const POST = async ({
 				Cookies.set("user", JSON.stringify(data.user), {
 					expires: expirationDate,
 				});
-				const isSales = data.access_role.toLowerCase() === "sales associate";
 
-				localStorage.setItem("isSales", `${isSales}`);
+				Cookies.set("access_role", data.access_role, {
+					expires: expirationDate,
+				});
 				return data;
 			} else {
 				return data;

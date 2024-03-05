@@ -6,6 +6,7 @@ import { NewDataTable } from "./helper/new-table-data";
 import { InventoryData } from "@/constants/props";
 import { getPaginatedData } from "@/api/inventory";
 import { useSearchParams } from "react-router-dom";
+import Cookies from "js-cookie";
 
 const Available = (): JSX.Element => {
 	const [setActiveTab] = useInventoryState((state) => [state.setActiveTab]);
@@ -37,9 +38,9 @@ const Available = (): JSX.Element => {
 	}, [data]);
 
 	useEffect(() => {
-		const isSales = localStorage.getItem("isSales");
+		const access_role = Cookies.get("access_role")?.toString();
 
-		if (isSales && Boolean(isSales) === true) {
+		if (access_role && access_role === "Sales Associate") {
 			setIsSalesAssociate(true);
 		} else {
 			setIsSalesAssociate(false);
