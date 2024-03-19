@@ -58,6 +58,7 @@ export const AccountDetailSchema: ZodType<AccountDetailDatatypes> = z
 				required_error: requiredErrorMessage("Pin Code"),
 				invalid_type_error: invalidTypeErrorMessage("Pin Code"),
 			})
+			.length(4, { message: "Pin Code must be 4 digits long" }) // Enforcing pin to be exactly 4 digits
 			.refine((value) => /^\d+$/.test(value), {
 				message: "Only numbers are allowed",
 			}),
