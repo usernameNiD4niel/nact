@@ -21,11 +21,15 @@ const OTPField: FC<OTPFieldProps> = ({ otp, setOtp }): JSX.Element => {
 	}: React.ChangeEvent<HTMLInputElement>): void => {
 		const { value } = target;
 		const newOTP: string[] = [...otp];
-		newOTP[currentOtpIndex] = value.substring(value.length - 1);
+		const onlyNumbers = value.replace(/[^0-9]/g, "");
+		newOTP[currentOtpIndex] = onlyNumbers.substring(onlyNumbers.length - 1);
 		setOtp(newOTP);
 		if (!value) {
 			setActiveOTPIndex(currentOtpIndex - 1);
 		} else {
+			if (onlyNumbers.length === 0) {
+				return;
+			}
 			setActiveOTPIndex(currentOtpIndex + 1);
 		}
 	};
@@ -42,6 +46,7 @@ const OTPField: FC<OTPFieldProps> = ({ otp, setOtp }): JSX.Element => {
 
 	useEffect(() => {
 		inputRef.current?.focus();
+		console.log(activeOTPIndex);
 	}, [activeOTPIndex]);
 
 	return (

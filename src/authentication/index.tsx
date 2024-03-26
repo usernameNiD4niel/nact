@@ -9,7 +9,6 @@ import {
 	animatedInputClass,
 	animatedSpanClass,
 } from "../constants/reusable-class";
-import OTPField from "../components/CustomOTPField";
 import { usePersonalDetailStore } from "../utils/personal-detail";
 import { useAccountDetailStore } from "../utils/account-detail";
 import { useForm } from "react-hook-form";
@@ -23,6 +22,8 @@ import { useNavigate } from "react-router-dom";
 
 import Cookies from "js-cookie";
 import Alert from "@/components/reuseable/Alert";
+import Pin from "@/components/Pin";
+import { toast } from "@/components/ui/use-toast";
 
 type LoginProps = {
 	phoneNumber: string;
@@ -33,7 +34,7 @@ type LoginProps = {
 const Index = () => {
 	const [phoneNumber, setPhoneNumber] = useState("");
 	const [isSignUpClick, setIsSignUpClick] = useState(false);
-	const [pin, setPin] = useState<string[]>(new Array(4).fill(""));
+	const [pin, setPin] = useState<string>("");
 
 	const [serverError, setServerError] = useState("");
 
@@ -52,10 +53,9 @@ const Index = () => {
 		mutationFn: POST,
 		onSuccess: (data) => {
 			if (data?.success) {
-				const expirationDate = new Date();
-				expirationDate.setDate(expirationDate.getDate() + 7);
-				Cookies.set("token", data.access_token_cookie, {
-					expires: expirationDate,
+				const firstName = data.firstName;
+				toast({
+					title: `Hi ${firstName} welcome!`,
 				});
 				localStorage.clear();
 				setServerError("");
@@ -63,9 +63,6 @@ const Index = () => {
 			} else {
 				setServerError("Incorrect phone number or pincode");
 			}
-			// if (data?.success) {
-			// } else {
-			// }
 		},
 		onError: (error) => {
 			console.log(error);
@@ -73,10 +70,6 @@ const Index = () => {
 			setServerError("Incorrect phone number or pincode");
 		},
 	});
-
-	const [otpError, setOtpError] = useState("");
-
-	// const [isLoading, setIsLoading] = useState(false);
 
 	const {
 		register,
@@ -101,23 +94,18 @@ const Index = () => {
 	};
 
 	const handleSubmitForm = async ({ phoneNumber }: LoginProps) => {
-		const extractedPin: string = pin.join("");
-
 		if (mutation.failureCount > 0) {
 			mutation.reset();
 		}
 
-		try {
-			if (parseInt(extractedPin) > 999) {
-				setOtpError("");
-				loginSuccess({ phoneNumber, pin: extractedPin });
-			} else {
-				setOtpError("Invalid pin, pincode must be a number");
-			}
-		} catch (err: unknown) {
-			setOtpError("Invalid pin, pincode must be a number");
-			throw Error("Error brother" + err);
+		if (pin.length !== 4) {
+			toast({
+				title: "Pin is a required field and should be 4 characters",
+			});
+			return;
 		}
+
+		loginSuccess({ phoneNumber, pin });
 	};
 
 	return (
@@ -179,8 +167,8 @@ const Index = () => {
 						</label>
 						<label>
 							<span className="text-black opacity-80 ml-3">Pin code</span>
-							<OTPField otp={pin} setOtp={setPin} />
-							{otpError && <DisplayErrorMessage errorMessage={otpError} />}
+							{/* <OTPField otp={pin} setOtp={setPin} /> */}
+							<Pin setPin={setPin} />
 						</label>
 						<div className="w-full flex justify-end">
 							<a

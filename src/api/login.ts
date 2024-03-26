@@ -47,15 +47,26 @@ export const POST = async ({
 				Cookies.set("access_role", data.access_role, {
 					expires: expirationDate,
 				});
-				return data;
+
+				Cookies.set("token", data.access_token_cookie, {
+					expires: expirationDate,
+				});
+
+				return {
+					success: true,
+					firstName: data.user.firstName,
+				};
 			} else {
-				return data;
+				return {
+					success: false,
+					firstName: "",
+				};
 			}
 		}
 	} catch (e: unknown) {
 		return {
 			success: false,
-			access_token_cookie: "",
+			firstName: "",
 		};
 	}
 };

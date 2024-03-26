@@ -42,6 +42,7 @@ import CustomerTrucking from "./components/management/customer/CustomerTrucking"
 import ModifyAccess from "./components/management/role-management/modify-access/ModifyAccess";
 import AddRole from "./components/management/role-management/role-access/add/AddRole";
 import Expired from "./components/management/inventory/Expired";
+import { Toaster } from "./components/ui/toaster";
 
 const router = createBrowserRouter(
 	createRoutesFromElements(
@@ -102,6 +103,7 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
 	<React.StrictMode>
 		<QueryClientProvider client={queryClient}>
 			<RouterProvider router={router} />
+			<Toaster />
 		</QueryClientProvider>
 	</React.StrictMode>,
 );
